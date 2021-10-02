@@ -9,6 +9,8 @@
 
 class USpringArmComponent;
 class UCameraComponent;
+class UFMBHealthComponent;
+class UTextRenderComponent;
 
 UCLASS()
 class FORMAIDBILBERRY_API AFMBBaseCharacter : public ACharacter
@@ -24,9 +26,27 @@ protected:
 
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="Components")
     UCameraComponent* TPPCameraComponent;
-
+  
     //UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="Components")
     //UCameraComponent* FPPCameraComponent;
+        
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="Components")
+    UFMBHealthComponent* HealthComponent;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="Components")
+    UTextRenderComponent* HealthTextComponent;
+
+    UPROPERTY(EditDefaultsOnly, Category="Animation")
+    UAnimMontage* DeathAnimMontage;
+
+    UPROPERTY(EditDefaultsOnly, Category="Damage")
+    float LifeSpanOnDeath = 5.0f;
+    
+    UPROPERTY(EditDefaultsOnly, Category="Damage")
+    FVector2D LandedVelocityZ = {900.f, 1200.0f};
+
+    UPROPERTY(EditDefaultsOnly, Category="Damage")
+    FVector2D LandedDamage = {10.f, 100.0f};
 
     virtual void BeginPlay() override;
 
@@ -55,5 +75,9 @@ private:
     void OnStartRunning();
     void OnStopRunning();
 
+    void OnDeath();
+    void OnHealthChange(float Health);
 
+    UFUNCTION()
+    void OnGroundLanded(const FHitResult& Hitresult);
 };

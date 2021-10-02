@@ -6,6 +6,11 @@
 #include "Components/InputComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Components/FMBCharacterMovementComponent.h"
+#include "Components/FMBHealthComponent.h"
+#include "Components/TextRenderComponent.h"
+#include "GameFramework/Controller.h"
+
+DECLARE_LOG_CATEGORY_CLASS(BaseCharacterLog, All, All);
 
 AFMBBaseCharacter::AFMBBaseCharacter(const FObjectInitializer& ObjInit)
     : Super(ObjInit.SetDefaultSubobjectClass<UFMBCharacterMovementComponent>(ACharacter::CharacterMovementComponentName))
@@ -22,11 +27,31 @@ AFMBBaseCharacter::AFMBBaseCharacter(const FObjectInitializer& ObjInit)
     //FPPCameraComponent = CreateDefaultSubobject<UCameraComponent>("FPPCameraComponent");
     //FPPCameraComponent->SetupAttachment(GetMesh(), FPPCameraSocketName);
     //FPPCameraComponent->SetAutoActivate(false);
+
+    HealthComponent = CreateDefaultSubobject<UFMBHealthComponent>("HealthComponent");
+
+    HealthTextComponent = CreateDefaultSubobject<UTextRenderComponent>("HealthTextComponent");
+    HealthTextComponent->SetupAttachment(GetRootComponent());
 }
 
 void AFMBBaseCharacter::BeginPlay()
 {
     Super::BeginPlay();
+
+    check(HealthComponent);
+    check(HealthTextComponent);
+    check(GetCharacterMovement());
+
+    OnHealthChange(HealthComponent->GetHealth());
+    HealthComponent->OnDeath.AddUObject(this, &AFMBBaseCharacter::OnDeath);
+    HealthComponent->OnHealthChange.AddUObject(this, &AFMBBaseCharacter::OnHealthChange);
+
+    LandedDelegate.AddDynamic(this, &AFMBBaseCharacter::OnGroundLanded);
+}
+
+void AFMBBaseCharacter::OnHealthChange(float Health)
+{
+    HealthTextComponent->SetText(FText::FromString(FString::Printf(TEXT("%0.0f"), Health)));
 }
 
 void AFMBBaseCharacter::Tick(float DeltaTime)
@@ -37,6 +62,7 @@ void AFMBBaseCharacter::Tick(float DeltaTime)
 void AFMBBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
     Super::SetupPlayerInputComponent(PlayerInputComponent);
+    check(PlayerInputComponent);
 
     PlayerInputComponent->BindAxis("MoveForward", this, &AFMBBaseCharacter::MoveForward);
     PlayerInputComponent->BindAxis("MoveRight", this, &AFMBBaseCharacter::MoveRight);
@@ -102,4 +128,31 @@ float AFMBBaseCharacter::GetMovementDirection() const
     const auto CrossProduct = FVector::CrossProduct(GetActorForwardVector(), VelosityNormal);
     const auto Degrees = FMath::RadiansToDegrees(AngleBetween);
     return CrossProduct.IsZero() ? Degrees : Degrees * FMath::Sign(CrossProduct.Z);
+}
+
+void AFMBBaseCharacter::OnDeath()
+{
+    UE_LOG(BaseCharacterLog, Display, TEXT("Player %s is dead"), *GetName());
+
+    PlayAnimMontage(DeathAnimMontage);
+
+    GetCharacterMovement()->DisableMovement();
+    SetLifeSpan(LifeSpanOnDeath);
+
+    if (Controller)
+    {
+        Controller->ChangeState(NAME_Spectating);
+    }
+}
+
+void AFMBBaseCharacter::OnGroundLanded(const FHitResult& Hitresult)
+{
+    const auto VelocityZ = GetVelocity().Z * (-1);
+    UE_LOG (BaseCharacterLog, Display, TEXT("VelocityZ %f"), VelocityZ);
+
+    if (VelocityZ < LandedVelocityZ.X) return;
+    
+    const auto FinalDamage = FMath::GetMappedRangeValueClamped(LandedVelocityZ, LandedDamage, VelocityZ);
+    UE_LOG (BaseCharacterLog, Display, TEXT("FinalDamage %f"), FinalDamage);
+    TakeDamage(FinalDamage, FDamageEvent{}, nullptr, nullptr);
 }

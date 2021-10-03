@@ -3,12 +3,14 @@
 
 #include "Player/FMBBaseCharacter.h"
 #include "Camera/CameraComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Components/FMBCharacterMovementComponent.h"
 #include "Components/FMBHealthComponent.h"
 #include "Components/TextRenderComponent.h"
 #include "GameFramework/Controller.h"
+#include "Weapon/FMBBaseWeapon.h"
 
 DECLARE_LOG_CATEGORY_CLASS(BaseCharacterLog, All, All);
 
@@ -17,6 +19,14 @@ AFMBBaseCharacter::AFMBBaseCharacter(const FObjectInitializer& ObjInit)
 {
     PrimaryActorTick.bCanEverTick = true;
 
+    // Camara rotate around Character
+    bUseControllerRotationPitch = false;
+    bUseControllerRotationYaw = false;
+    bUseControllerRotationRoll = false;
+    GetCharacterMovement()->bOrientRotationToMovement = true;
+    GetCharacterMovement()->RotationRate = FRotator(0.0f, 540.0f, 0.0f);
+    //
+    
     SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>("SpringArmComponent");
     SpringArmComponent->SetupAttachment(GetRootComponent());
     SpringArmComponent->bUsePawnControlRotation = true;
@@ -24,9 +34,11 @@ AFMBBaseCharacter::AFMBBaseCharacter(const FObjectInitializer& ObjInit)
     TPPCameraComponent = CreateDefaultSubobject<UCameraComponent>("TPPCameraComponent");
     TPPCameraComponent->SetupAttachment(SpringArmComponent);
 
-    //FPPCameraComponent = CreateDefaultSubobject<UCameraComponent>("FPPCameraComponent");
-    //FPPCameraComponent->SetupAttachment(GetMesh(), FPPCameraSocketName);
-    //FPPCameraComponent->SetAutoActivate(false);
+    FPPCameraComponent = CreateDefaultSubobject<UCameraComponent>("FPPCameraComponent");
+    FPPCameraComponent->SetupAttachment(GetMesh(), FPPCameraSocketName);
+    FPPCameraComponent->SetRelativeLocation(FVector(-3.0f, 30.0f, 1.0f));
+    FPPCameraComponent->SetRelativeRotation(FRotator(-90.0f, 0.0f, 90.0f));
+    FPPCameraComponent->bUsePawnControlRotation = true;
 
     HealthComponent = CreateDefaultSubobject<UFMBHealthComponent>("HealthComponent");
 
@@ -47,6 +59,8 @@ void AFMBBaseCharacter::BeginPlay()
     HealthComponent->OnHealthChange.AddUObject(this, &AFMBBaseCharacter::OnHealthChange);
 
     LandedDelegate.AddDynamic(this, &AFMBBaseCharacter::OnGroundLanded);
+
+    SpawnWeapon();
 }
 
 void AFMBBaseCharacter::OnHealthChange(float Health)
@@ -69,6 +83,9 @@ void AFMBBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
     PlayerInputComponent->BindAxis("LookUp", this, &AFMBBaseCharacter::AddControllerPitchInput);
     PlayerInputComponent->BindAxis("TurnAround", this, &AFMBBaseCharacter::AddControllerYawInput);
+    
+    //PlayerInputComponent->BindAxis("LookUpRate", this, &AFMBBaseCharacter::LookUpAtRate);
+    //PlayerInputComponent->BindAxis("TurnAroundRate", this, &AFMBBaseCharacter::TurnAroundAtRate);
 
     PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &AFMBBaseCharacter::Jump);
 
@@ -78,31 +95,53 @@ void AFMBBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
     PlayerInputComponent->BindAction("Run", IE_Released, this, &AFMBBaseCharacter::OnStopRunning);
 }
 
-/*void AFMBBaseCharacter::SwitchCamera()
+/*void AFMBBaseCharacter::LimitViewPitchRotation ()//
 {
-    if (TPPCameraComponent->bAutoActivate)
+    const auto PlayerController = Cast<APlayerController>(Controller);
+    if (PlayerController && PlayerController->PlayerCameraManager)
     {
-        FPPCameraComponent->SetAutoActivate(true);
-        TPPCameraComponent->SetAutoActivate(false);
+        PlayerController->PlayerCameraManager->ViewPitchMax = 50.0f;
+        PlayerController->PlayerCameraManager->ViewPitchMin = 50.0f;
     }
-    else if (FPPCameraComponent->bAutoActivate)
-    {
-        TPPCameraComponent->SetAutoActivate(true);
-        FPPCameraComponent->SetAutoActivate(false);
-    }
+}
+
+void AFMBBaseCharacter::SwitchCamera()//
+{
+    
+}*/
+/*void AFMBBaseCharacter::TurnAroundAtRate(float Rate)
+{
+    AddControllerYawInput(Rate * BaseTurnAroundRate * GetWorld()->GetDeltaSeconds());
+}
+
+void AFMBBaseCharacter::LookUpAtRate(float Rate)
+{
+    AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
 }*/
 
 void AFMBBaseCharacter::MoveForward(float Amount)
 {
-    IsMovingForward = Amount > 0.0f;
+    //IsMovingForward = Amount > 0.0f;
     if (Amount == 0.0f) return;
-    AddMovementInput(GetActorForwardVector(), Amount);
+    
+    const FRotator Rotation = Controller->GetControlRotation();
+    const FRotator RotationYaw  (0.0f, Rotation.Yaw, 0.0f);
+
+    const FVector Direction = FRotationMatrix(RotationYaw).GetUnitAxis(EAxis::X);
+    
+    AddMovementInput(Direction, Amount);
 }
 
 void AFMBBaseCharacter::MoveRight(float Amount)
 {
     if (Amount == 0.0f) return;
-    AddMovementInput(GetActorRightVector(), Amount);
+
+    const FRotator Rotation = Controller->GetControlRotation();
+    const FRotator RotationYaw  (0.0f, Rotation.Yaw, 0.0f);
+
+    const FVector Direction = FRotationMatrix(RotationYaw).GetUnitAxis(EAxis::Y);
+    
+    AddMovementInput(Direction, Amount);
 }
 
 void AFMBBaseCharacter::OnStartRunning()
@@ -117,10 +156,10 @@ void AFMBBaseCharacter::OnStopRunning()
 
 bool AFMBBaseCharacter::IsRunning() const
 {
-    return WantToRun && IsMovingForward && !GetVelocity().IsZero();
+    return WantToRun /*&& IsMovingForward*/ && !GetVelocity().IsZero();
 }
 
-float AFMBBaseCharacter::GetMovementDirection() const
+/*float AFMBBaseCharacter::GetMovementDirection() const
 {
     if (GetVelocity().IsZero()) return 0.0f;
     const auto VelosityNormal = GetVelocity().GetSafeNormal();
@@ -128,7 +167,7 @@ float AFMBBaseCharacter::GetMovementDirection() const
     const auto CrossProduct = FVector::CrossProduct(GetActorForwardVector(), VelosityNormal);
     const auto Degrees = FMath::RadiansToDegrees(AngleBetween);
     return CrossProduct.IsZero() ? Degrees : Degrees * FMath::Sign(CrossProduct.Z);
-}
+}*/
 
 void AFMBBaseCharacter::OnDeath()
 {
@@ -148,11 +187,23 @@ void AFMBBaseCharacter::OnDeath()
 void AFMBBaseCharacter::OnGroundLanded(const FHitResult& Hitresult)
 {
     const auto VelocityZ = GetVelocity().Z * (-1);
-    UE_LOG (BaseCharacterLog, Display, TEXT("VelocityZ %f"), VelocityZ);
+    UE_LOG(BaseCharacterLog, Display, TEXT("VelocityZ %f"), VelocityZ);
 
     if (VelocityZ < LandedVelocityZ.X) return;
-    
+
     const auto FinalDamage = FMath::GetMappedRangeValueClamped(LandedVelocityZ, LandedDamage, VelocityZ);
-    UE_LOG (BaseCharacterLog, Display, TEXT("FinalDamage %f"), FinalDamage);
+    UE_LOG(BaseCharacterLog, Display, TEXT("FinalDamage %f"), FinalDamage);
     TakeDamage(FinalDamage, FDamageEvent{}, nullptr, nullptr);
+}
+
+void AFMBBaseCharacter::SpawnWeapon()
+{
+    if (!GetWorld()) return;
+
+    const auto Weapon = GetWorld()->SpawnActor<AFMBBaseWeapon>(WeaponClass);
+    if (Weapon)
+    {
+        const FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, false);
+        Weapon->AttachToComponent(GetMesh(), AttachmentRules, "LeftWeaponShield");
+    }
 }

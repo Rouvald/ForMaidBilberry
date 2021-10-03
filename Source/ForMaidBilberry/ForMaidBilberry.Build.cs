@@ -8,14 +8,22 @@ public class ForMaidBilberry : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore" });
+		PublicDependencyModuleNames.AddRange(new string[]
+		{
+			"Core",
+			"CoreUObject",
+			"Engine",
+			"InputCore"
+		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] { });
 
 		PublicIncludePaths.AddRange(new string[]
 		{
 			"ForMaidBilberry/Public/Player",
-			"ForMaidBilberry/Public/Components"
+			"ForMaidBilberry/Public/Components",
+			"ForMaidBilberry/Public/Dev",
+			"ForMaidBilberry/Public/Weapon"
 		});
 
 		// Uncomment if you are using Slate UI

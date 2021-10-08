@@ -12,7 +12,7 @@ class USpringArmComponent;
 class UCameraComponent;
 class UFMBHealthComponent;
 class UTextRenderComponent;
-class AFMBBaseWeapon;
+class UFMBWeaponComponent;
 
 UCLASS()
 class FORMAIDBILBERRY_API AFMBBaseCharacter : public ACharacter
@@ -35,14 +35,17 @@ protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="Components")
     UCameraComponent* TPPCameraComponent;
 
-    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="Components")
-    UCameraComponent* FPPCameraComponent;
+    //UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="Components")
+    //UCameraComponent* FPPCameraComponent;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="Components")
     UFMBHealthComponent* HealthComponent;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="Components")
     UTextRenderComponent* HealthTextComponent;
+    
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="Components")
+    UFMBWeaponComponent* WeaponComponent;
 
     UPROPERTY(EditDefaultsOnly, Category="Animation")
     UAnimMontage* DeathAnimMontage;
@@ -55,9 +58,6 @@ protected:
 
     UPROPERTY(EditDefaultsOnly, Category="Damage")
     FVector2D LandedDamage = {10.f, 100.0f};
-
-    UPROPERTY(EditDefaultsOnly, Category="Weapon")
-    TSubclassOf<AFMBBaseWeapon> WeaponClass;
 
     virtual void BeginPlay() override;
 
@@ -78,12 +78,12 @@ private:
     bool WantToRun = false;
     //bool IsMovingForward = false;
 
-    void SwitchCamera();
+    //void SwitchCamera();
 
     void MoveForward(float Amount);
     void MoveRight(float Amount);
 
-    void LimitViewPitchRotation ();
+    //void LimitViewPitchRotation ();
     //void TurnAroundAtRate(float Rate);
     //void LookUpAtRate(float Rate);
 
@@ -95,6 +95,4 @@ private:
 
     UFUNCTION()
     void OnGroundLanded(const FHitResult& Hitresult);
-
-    void SpawnWeapon();
 };

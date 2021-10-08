@@ -8,6 +8,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Components/FMBCharacterMovementComponent.h"
 #include "Components/FMBHealthComponent.h"
+#include "Components/FMBWeaponComponent.h"
 #include "Components/TextRenderComponent.h"
 #include "GameFramework/Controller.h"
 #include "Weapon/FMBBaseWeapon.h"
@@ -26,24 +27,31 @@ AFMBBaseCharacter::AFMBBaseCharacter(const FObjectInitializer& ObjInit)
     GetCharacterMovement()->bOrientRotationToMovement = true;
     GetCharacterMovement()->RotationRate = FRotator(0.0f, 540.0f, 0.0f);
     //
-    
+
     SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>("SpringArmComponent");
     SpringArmComponent->SetupAttachment(GetRootComponent());
+    SpringArmComponent->SocketOffset = FVector(0.0f, 0.0f, 50.0f);
+    SpringArmComponent->TargetArmLength = 500.0f;
     SpringArmComponent->bUsePawnControlRotation = true;
 
     TPPCameraComponent = CreateDefaultSubobject<UCameraComponent>("TPPCameraComponent");
     TPPCameraComponent->SetupAttachment(SpringArmComponent);
 
+    /*
     FPPCameraComponent = CreateDefaultSubobject<UCameraComponent>("FPPCameraComponent");
     FPPCameraComponent->SetupAttachment(GetMesh(), FPPCameraSocketName);
     FPPCameraComponent->SetRelativeLocation(FVector(-3.0f, 30.0f, 1.0f));
     FPPCameraComponent->SetRelativeRotation(FRotator(-90.0f, 0.0f, 90.0f));
     FPPCameraComponent->bUsePawnControlRotation = true;
+    */
 
     HealthComponent = CreateDefaultSubobject<UFMBHealthComponent>("HealthComponent");
 
     HealthTextComponent = CreateDefaultSubobject<UTextRenderComponent>("HealthTextComponent");
     HealthTextComponent->SetupAttachment(GetRootComponent());
+    HealthTextComponent->SetOwnerNoSee(true);
+
+    WeaponComponent=CreateDefaultSubobject<UFMBWeaponComponent>("WeaponComponent");
 }
 
 void AFMBBaseCharacter::BeginPlay()
@@ -59,8 +67,6 @@ void AFMBBaseCharacter::BeginPlay()
     HealthComponent->OnHealthChange.AddUObject(this, &AFMBBaseCharacter::OnHealthChange);
 
     LandedDelegate.AddDynamic(this, &AFMBBaseCharacter::OnGroundLanded);
-
-    SpawnWeapon();
 }
 
 void AFMBBaseCharacter::OnHealthChange(float Health)
@@ -77,13 +83,14 @@ void AFMBBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 {
     Super::SetupPlayerInputComponent(PlayerInputComponent);
     check(PlayerInputComponent);
+    check(WeaponComponent);
 
     PlayerInputComponent->BindAxis("MoveForward", this, &AFMBBaseCharacter::MoveForward);
     PlayerInputComponent->BindAxis("MoveRight", this, &AFMBBaseCharacter::MoveRight);
 
     PlayerInputComponent->BindAxis("LookUp", this, &AFMBBaseCharacter::AddControllerPitchInput);
     PlayerInputComponent->BindAxis("TurnAround", this, &AFMBBaseCharacter::AddControllerYawInput);
-    
+
     //PlayerInputComponent->BindAxis("LookUpRate", this, &AFMBBaseCharacter::LookUpAtRate);
     //PlayerInputComponent->BindAxis("TurnAroundRate", this, &AFMBBaseCharacter::TurnAroundAtRate);
 
@@ -93,6 +100,9 @@ void AFMBBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
     PlayerInputComponent->BindAction("Run", IE_Pressed, this, &AFMBBaseCharacter::OnStartRunning);
     PlayerInputComponent->BindAction("Run", IE_Released, this, &AFMBBaseCharacter::OnStopRunning);
+
+    PlayerInputComponent->BindAction("FastMeleeAttack", IE_Pressed, WeaponComponent, &UFMBWeaponComponent::FastMeleeAttack);
+    PlayerInputComponent->BindAction("StrongMeleeAttack", IE_Pressed, WeaponComponent, &UFMBWeaponComponent::StrongMeleeAttack);
 }
 
 /*void AFMBBaseCharacter::LimitViewPitchRotation ()//
@@ -123,12 +133,12 @@ void AFMBBaseCharacter::MoveForward(float Amount)
 {
     //IsMovingForward = Amount > 0.0f;
     if (Amount == 0.0f) return;
-    
+
     const FRotator Rotation = Controller->GetControlRotation();
-    const FRotator RotationYaw  (0.0f, Rotation.Yaw, 0.0f);
+    const FRotator RotationYaw(0.0f, Rotation.Yaw, 0.0f);
 
     const FVector Direction = FRotationMatrix(RotationYaw).GetUnitAxis(EAxis::X);
-    
+
     AddMovementInput(Direction, Amount);
 }
 
@@ -137,10 +147,10 @@ void AFMBBaseCharacter::MoveRight(float Amount)
     if (Amount == 0.0f) return;
 
     const FRotator Rotation = Controller->GetControlRotation();
-    const FRotator RotationYaw  (0.0f, Rotation.Yaw, 0.0f);
+    const FRotator RotationYaw(0.0f, Rotation.Yaw, 0.0f);
 
     const FVector Direction = FRotationMatrix(RotationYaw).GetUnitAxis(EAxis::Y);
-    
+
     AddMovementInput(Direction, Amount);
 }
 
@@ -194,16 +204,4 @@ void AFMBBaseCharacter::OnGroundLanded(const FHitResult& Hitresult)
     const auto FinalDamage = FMath::GetMappedRangeValueClamped(LandedVelocityZ, LandedDamage, VelocityZ);
     UE_LOG(BaseCharacterLog, Display, TEXT("FinalDamage %f"), FinalDamage);
     TakeDamage(FinalDamage, FDamageEvent{}, nullptr, nullptr);
-}
-
-void AFMBBaseCharacter::SpawnWeapon()
-{
-    if (!GetWorld()) return;
-
-    const auto Weapon = GetWorld()->SpawnActor<AFMBBaseWeapon>(WeaponClass);
-    if (Weapon)
-    {
-        const FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, false);
-        Weapon->AttachToComponent(GetMesh(), AttachmentRules, "LeftWeaponShield");
-    }
 }

@@ -34,6 +34,8 @@ void UFMBHealthComponent::OnTakeAnyDamage(AActor* DamagedActor, float Damage, co
 
     GetWorld()->GetTimerManager().ClearTimer(HealTimeHandle);
 
+    UE_LOG(HealthLog, Display, TEXT("Health: %f"), GetHealth());
+
     if (IsDead())
     {
         OnDeath.Broadcast();

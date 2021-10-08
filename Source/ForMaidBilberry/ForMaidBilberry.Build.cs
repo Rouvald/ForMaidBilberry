@@ -23,7 +23,8 @@ public class ForMaidBilberry : ModuleRules
 			"ForMaidBilberry/Public/Player",
 			"ForMaidBilberry/Public/Components",
 			"ForMaidBilberry/Public/Dev",
-			"ForMaidBilberry/Public/Weapon"
+			"ForMaidBilberry/Public/Weapon",
+			"ForMaidBilberry/Public/UI"
 		});
 
 		// Uncomment if you are using Slate UI

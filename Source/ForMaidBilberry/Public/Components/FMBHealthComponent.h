@@ -29,9 +29,9 @@ public:
 protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Health", meta=(ClampMin="0.0", ClampMax="500.0"))
     float MaxHealth = 100.0f;
-
+    
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Heal")
-    bool AutoHeal = true;
+    bool AutoHeal = false;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Heal", meta = (EditCondition = "AutoHeal"))
     float HealUpdateTime = 0.5f;
@@ -41,7 +41,6 @@ protected:
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Heal", meta = (EditCondition = "AutoHeal"))
     float HealModifier = 1.0f;
-
 
     virtual void BeginPlay() override;
 private:

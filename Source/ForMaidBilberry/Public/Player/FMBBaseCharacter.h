@@ -14,13 +14,31 @@ class UFMBHealthComponent;
 class UTextRenderComponent;
 class UFMBWeaponComponent;
 
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnStaminaChangeSignature, float);
+
 UCLASS()
 class FORMAIDBILBERRY_API AFMBBaseCharacter : public ACharacter
 {
     GENERATED_BODY()
 
 public:
+    FOnStaminaChangeSignature OnStaminaChange;
+
+    //FName FPPCameraSocketName = "FPPCameraSocket";
+
     AFMBBaseCharacter(const FObjectInitializer& ObjInit);
+
+    virtual void Tick(float DeltaTime) override;
+
+    virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+    UFUNCTION(BlueprintCallable, Category="Movement")
+    bool IsRunning() const;
+
+    float GetStamina() const { return Stamina; }
+
+    //UFUNCTION(BlueprintCallable, Category="Movement")
+    //float GetMovementDirection() const;
 
 protected:
     //UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
@@ -43,7 +61,7 @@ protected:
 
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="Components")
     UTextRenderComponent* HealthTextComponent;
-    
+
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="Components")
     UFMBWeaponComponent* WeaponComponent;
 
@@ -59,24 +77,27 @@ protected:
     UPROPERTY(EditDefaultsOnly, Category="Damage")
     FVector2D LandedDamage = {10.f, 100.0f};
 
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Stamina", meta=(ClampMin="0.0", ClampMax="200.0"))
+    float MaxStamina = 100.0f;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Stamina")
+    float StaminaModifier = 3.0f;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Stamina")
+    float StaminaUpdateTime = 0.1f;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Stamina")
+    float StaminaAutoHealDelay = 5.0f;
+
     virtual void BeginPlay() override;
-
-public:
-    FName FPPCameraSocketName = "FPPCameraSocket";
-
-    virtual void Tick(float DeltaTime) override;
-
-    virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-    UFUNCTION(BlueprintCallable, Category="Movement")
-    bool IsRunning() const;
-
-    //UFUNCTION(BlueprintCallable, Category="Movement")
-    //float GetMovementDirection() const;
 
 private:
     bool WantToRun = false;
     //bool IsMovingForward = false;
+
+    FTimerHandle StaminaRunningTimerHandle;
+    FTimerHandle StaminaAutoHealTimerHandle;
+    float Stamina = 0.0f;
 
     //void SwitchCamera();
 
@@ -95,4 +116,8 @@ private:
 
     UFUNCTION()
     void OnGroundLanded(const FHitResult& Hitresult);
+
+    void SetStamina(float NewStamina);
+    void DecreaseRunningStamina();
+    void AutoHealStamina();
 };

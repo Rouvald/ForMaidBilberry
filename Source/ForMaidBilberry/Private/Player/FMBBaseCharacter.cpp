@@ -3,7 +3,6 @@
 
 #include "Player/FMBBaseCharacter.h"
 #include "Camera/CameraComponent.h"
-#include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Components/FMBCharacterMovementComponent.h"
@@ -36,6 +35,7 @@ AFMBBaseCharacter::AFMBBaseCharacter(const FObjectInitializer& ObjInit)
 
     TPPCameraComponent = CreateDefaultSubobject<UCameraComponent>("TPPCameraComponent");
     TPPCameraComponent->SetupAttachment(SpringArmComponent);
+    TPPCameraComponent->bUsePawnControlRotation = false;
 
     /*
     FPPCameraComponent = CreateDefaultSubobject<UCameraComponent>("FPPCameraComponent");
@@ -51,7 +51,7 @@ AFMBBaseCharacter::AFMBBaseCharacter(const FObjectInitializer& ObjInit)
     HealthTextComponent->SetupAttachment(GetRootComponent());
     HealthTextComponent->SetOwnerNoSee(true);
 
-    WeaponComponent=CreateDefaultSubobject<UFMBWeaponComponent>("WeaponComponent");
+    WeaponComponent = CreateDefaultSubobject<UFMBWeaponComponent>("WeaponComponent");
 }
 
 void AFMBBaseCharacter::BeginPlay()
@@ -67,6 +67,8 @@ void AFMBBaseCharacter::BeginPlay()
     HealthComponent->OnHealthChange.AddUObject(this, &AFMBBaseCharacter::OnHealthChange);
 
     LandedDelegate.AddDynamic(this, &AFMBBaseCharacter::OnGroundLanded);
+
+    SetStamina(MaxStamina);
 }
 
 void AFMBBaseCharacter::OnHealthChange(float Health)
@@ -156,17 +158,34 @@ void AFMBBaseCharacter::MoveRight(float Amount)
 
 void AFMBBaseCharacter::OnStartRunning()
 {
+    if (GetVelocity().IsNearlyZero()) return;
+    if (GetWorld()->GetTimerManager().IsTimerActive(StaminaAutoHealTimerHandle))
+    {
+        GetWorld()->GetTimerManager().ClearTimer(StaminaAutoHealTimerHandle);
+    }
+
+    GetWorld()->GetTimerManager().SetTimer
+            (
+            StaminaRunningTimerHandle,
+            this,
+            &AFMBBaseCharacter::DecreaseRunningStamina,
+            StaminaUpdateTime,
+            true
+            );
     WantToRun = true;
 }
 
 void AFMBBaseCharacter::OnStopRunning()
 {
+    GetWorld()->GetTimerManager().ClearTimer(StaminaRunningTimerHandle);
     WantToRun = false;
+    GetWorld()->GetTimerManager().SetTimer(StaminaAutoHealTimerHandle, this, &AFMBBaseCharacter::AutoHealStamina, StaminaUpdateTime, true,
+        StaminaAutoHealDelay);
 }
 
 bool AFMBBaseCharacter::IsRunning() const
 {
-    return WantToRun /*&& IsMovingForward*/ && !GetVelocity().IsZero();
+    return WantToRun && GetStamina() > 0.0f && !GetVelocity().IsZero();
 }
 
 /*float AFMBBaseCharacter::GetMovementDirection() const
@@ -204,4 +223,32 @@ void AFMBBaseCharacter::OnGroundLanded(const FHitResult& Hitresult)
     const auto FinalDamage = FMath::GetMappedRangeValueClamped(LandedVelocityZ, LandedDamage, VelocityZ);
     UE_LOG(BaseCharacterLog, Display, TEXT("FinalDamage %f"), FinalDamage);
     TakeDamage(FinalDamage, FDamageEvent{}, nullptr, nullptr);
+}
+
+void AFMBBaseCharacter::SetStamina(float NewStamina)
+{
+    Stamina = FMath::Clamp(NewStamina, 0.0f, MaxStamina);
+    OnStaminaChange.Broadcast(Stamina);
+}
+
+void AFMBBaseCharacter::DecreaseRunningStamina()
+{
+    if (!GetWorld()) return;
+    if (GetStamina() <= 0.0f)
+    {
+        GetWorld()->GetTimerManager().ClearTimer(StaminaRunningTimerHandle);
+    }
+    SetStamina(Stamina - StaminaModifier);
+    UE_LOG(BaseCharacterLog, Display, TEXT("Stamina change: %0.0f"), GetStamina());
+}
+
+void AFMBBaseCharacter::AutoHealStamina()
+{
+    SetStamina(Stamina + StaminaModifier);
+    UE_LOG(BaseCharacterLog, Display, TEXT("Stamina change: %0.0f"), GetStamina());
+
+    if (FMath::IsNearlyEqual(Stamina, MaxStamina) && GetWorld())
+    {
+        GetWorld()->GetTimerManager().ClearTimer(StaminaAutoHealTimerHandle);
+    }
 }

@@ -137,7 +137,7 @@ void AFMBBaseWeapon::MakeDamage(FHitResult& HitResult)
 
 void AFMBBaseWeapon::StartDrawTrace()
 {
-    GetWorld()->GetTimerManager().SetTimer(DrawTraceTimerHandle, this, &AFMBBaseWeapon::TraceLogic, 0.01f, true, 0.1f);
+    GetWorld()->GetTimerManager().SetTimer(DrawTraceTimerHandle, this, &AFMBBaseWeapon::TraceLogic, 0.01f, true);
 }
 
 void AFMBBaseWeapon::StopDrawTrace()

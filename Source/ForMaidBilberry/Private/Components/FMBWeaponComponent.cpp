@@ -28,8 +28,7 @@ void UFMBWeaponComponent::SpawnWeapon()
 {
     if (!GetWorld()) return;
 
-    const auto Character = Cast<ACharacter>(GetOwner());
-    if (!Character) return;
+    const auto Character = GetCharacter();
 
     CurrentWeapon = GetWorld()->SpawnActor<AFMBBaseWeapon>(WeaponClass);
     if (!CurrentWeapon) return;
@@ -39,31 +38,35 @@ void UFMBWeaponComponent::SpawnWeapon()
     CurrentWeapon->SetOwner(Character);
 }
 
-void UFMBWeaponComponent::FastMeleeAttack()
+void UFMBWeaponComponent::MeleeAttack()
 {
     if (!CanAttack()) return;
     if (!CurrentWeapon) return;
-    CurrentWeapon->FastMeleeAttack();
 
     AttackAnimInProgress = true;
     StopMovement();
+}
+
+void UFMBWeaponComponent::FastMeleeAttack()
+{
+    MeleeAttack();
+
+    CurrentWeapon->FastMeleeAttack();
+    
     PlayAnimMontage(FastMeleeAttackAnimMontage);
 }
 
 void UFMBWeaponComponent::StrongMeleeAttack()
 {
-    if (!CanAttack()) return;
-    if (!CurrentWeapon) return;
+    MeleeAttack();
     CurrentWeapon->StrongMeleeAttack();
-
-    AttackAnimInProgress = true;
-    StopMovement();
+    
     PlayAnimMontage(StrongMeleeAttackAnimMontage);
 }
 
 void UFMBWeaponComponent::PlayAnimMontage(UAnimMontage* Animation)
 {
-    const auto Character = Cast<ACharacter>(GetOwner());
+    const auto Character = GetCharacter();
     if (!Character) return;
 
     Character->PlayAnimMontage(Animation);
@@ -87,11 +90,11 @@ void UFMBWeaponComponent::InitAnimation(UAnimMontage* Animation)
 
 void UFMBWeaponComponent::OnAttackFinished(USkeletalMeshComponent* MeshComp)
 {
-    const auto Character = Cast<ACharacter>(GetOwner());
+    const auto Character = GetCharacter();
     if (!Character || Character->GetMesh() != MeshComp) return;
 
     CurrentWeapon->StopDrawTrace();
-    
+
     AttackAnimInProgress = false;
     StartMovement();
     UE_LOG(BaseWeaponComponentLog, Display, TEXT("Attack Finished"));
@@ -110,7 +113,7 @@ bool UFMBWeaponComponent::CanAttack() const
 void UFMBWeaponComponent::StartMovement()
 {
     const auto MovementComponent = GetMovementComponent();
-    
+
     if (!AttackAnimInProgress)
     {
         MovementComponent->SetMovementMode(EMovementMode::MOVE_Walking);
@@ -120,17 +123,24 @@ void UFMBWeaponComponent::StartMovement()
 void UFMBWeaponComponent::StopMovement()
 {
     const auto MovementComponent = GetMovementComponent();
-    
+
     if (AttackAnimInProgress)
     {
         MovementComponent->SetMovementMode(EMovementMode::MOVE_None);
     }
 }
 
-UCharacterMovementComponent* UFMBWeaponComponent::GetMovementComponent()
+AFMBBaseCharacter* UFMBWeaponComponent::GetCharacter()
 {
     const auto Character = Cast<AFMBBaseCharacter>(GetOwner());
     if (!Character) return nullptr;
+
+    return Character;
+}
+
+UCharacterMovementComponent* UFMBWeaponComponent::GetMovementComponent()
+{
+    const auto Character = GetCharacter();
 
     const auto MovementComponent = Cast<UCharacterMovementComponent>(Character->GetMovementComponent());
     if (!MovementComponent) return nullptr;

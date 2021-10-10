@@ -7,6 +7,7 @@
 #include "Components/ActorComponent.h"
 #include "FMBWeaponComponent.generated.h"
 
+class AFMBBaseCharacter;
 class AFMBBaseWeapon;
 class UAnimMontage;
 
@@ -34,6 +35,12 @@ protected:
     UPROPERTY(EditDefaultsOnly, Category="Animation")
     UAnimMontage* StrongMeleeAttackAnimMontage;
 
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Stamina")
+    float FastAttackStaminaSpend = 30.0f;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Stamina")
+    float StrongAttackStaminaSpend = 50.0f;
+
     virtual void BeginPlay() override;
     void PlayAnimMontage(UAnimMontage* Animation);
 
@@ -41,6 +48,8 @@ private:
     UPROPERTY()
     AFMBBaseWeapon* CurrentWeapon = nullptr;
     bool AttackAnimInProgress = false;
+
+    void MeleeAttack();
 
     void SpawnWeapon();
     void InitAnimation(UAnimMontage* Animation);
@@ -50,5 +59,7 @@ private:
 
     void StartMovement();
     void StopMovement();
+
+    AFMBBaseCharacter* GetCharacter();
     UCharacterMovementComponent* GetMovementComponent();
 };

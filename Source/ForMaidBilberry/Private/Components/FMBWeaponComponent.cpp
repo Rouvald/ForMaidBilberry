@@ -22,7 +22,16 @@ void UFMBWeaponComponent::BeginPlay()
     InitAnimation(FastMeleeAttackAnimMontage);
     InitAnimation(StrongMeleeAttackAnimMontage);
     SpawnWeapon();
+    
+    //OnStaminaChange.AddDynamic(this, &UFMBWeaponComponent::DecreaseStaminaAttack);
 }
+
+/*
+void UFMBWeaponComponent::DecreaseStaminaAttack(float DecreaseStamina)
+{
+    UE_LOG(BaseWeaponComponentLog, Display, TEXT("DecreaseStamina: %0.0f"), DecreaseStamina);
+}
+*/
 
 void UFMBWeaponComponent::SpawnWeapon()
 {
@@ -32,35 +41,51 @@ void UFMBWeaponComponent::SpawnWeapon()
 
     CurrentWeapon = GetWorld()->SpawnActor<AFMBBaseWeapon>(WeaponClass);
     if (!CurrentWeapon) return;
-
-    const FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, false);
-    CurrentWeapon->AttachToComponent(Character->GetMesh(), AttachmentRules, WeaponSocketName);
+    
     CurrentWeapon->SetOwner(Character);
+    
+    AttachWeaponToSocket(CurrentWeapon, Character->GetMesh(), WeaponSocketName);
+
 }
 
-void UFMBWeaponComponent::MeleeAttack()
+void UFMBWeaponComponent::AttachWeaponToSocket(AFMBBaseWeapon* Weapon, USkeletalMeshComponent* MeshComp, const FName& WeaponSocket)
 {
-    if (!CanAttack()) return;
-    if (!CurrentWeapon) return;
+    if(!Weapon || !MeshComp) return;
+    
+    const FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, false);
+    CurrentWeapon->AttachToComponent(MeshComp, AttachmentRules, WeaponSocket);
+}
 
-    AttackAnimInProgress = true;
-    StopMovement();
+void UFMBWeaponComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+    CurrentWeapon->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+    CurrentWeapon->Destroy();
+
+    Super::EndPlay(EndPlayReason);
 }
 
 void UFMBWeaponComponent::FastMeleeAttack()
 {
-    MeleeAttack();
+    if (!CanAttack()) return;
+    if (!CurrentWeapon) return;
 
     CurrentWeapon->FastMeleeAttack();
-    
+
+    AttackAnimInProgress = true;
+    StopMovement();
     PlayAnimMontage(FastMeleeAttackAnimMontage);
 }
 
 void UFMBWeaponComponent::StrongMeleeAttack()
 {
-    MeleeAttack();
+    if (!CanAttack()) return;
+    if (!CurrentWeapon) return;
+
+
     CurrentWeapon->StrongMeleeAttack();
     
+    AttackAnimInProgress = true;
+    StopMovement();
     PlayAnimMontage(StrongMeleeAttackAnimMontage);
 }
 
@@ -93,11 +118,16 @@ void UFMBWeaponComponent::OnAttackFinished(USkeletalMeshComponent* MeshComp)
     const auto Character = GetCharacter();
     if (!Character || Character->GetMesh() != MeshComp) return;
 
-    CurrentWeapon->StopDrawTrace();
+    StopDrawTrace();
 
     AttackAnimInProgress = false;
     StartMovement();
-    UE_LOG(BaseWeaponComponentLog, Display, TEXT("Attack Finished"));
+    //UE_LOG(BaseWeaponComponentLog, Display, TEXT("Attack Finished"));
+}
+
+void UFMBWeaponComponent::StopDrawTrace() const
+{
+    CurrentWeapon->StopDrawTrace();
 }
 
 bool UFMBWeaponComponent::CanAttack() const

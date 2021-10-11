@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+//#include "FMBBaseCharacter.h"
 #include "FMBCharacterMovementComponent.h"
 #include "Components/ActorComponent.h"
 #include "FMBWeaponComponent.generated.h"
@@ -19,8 +20,14 @@ class FORMAIDBILBERRY_API UFMBWeaponComponent : public UActorComponent
 public:
     UFMBWeaponComponent();
 
+    //FOnStaminaChangeSignature OnStaminaChange;
+
     void FastMeleeAttack();
     void StrongMeleeAttack();
+
+    void StopDrawTrace() const;
+
+    bool GetAttackAnimInProgress() const { return AttackAnimInProgress;}
 
 protected:
     UPROPERTY(EditDefaultsOnly, Category="Weapon")
@@ -35,24 +42,20 @@ protected:
     UPROPERTY(EditDefaultsOnly, Category="Animation")
     UAnimMontage* StrongMeleeAttackAnimMontage;
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Stamina")
-    float FastAttackStaminaSpend = 30.0f;
-
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Stamina")
-    float StrongAttackStaminaSpend = 50.0f;
-
     virtual void BeginPlay() override;
     void PlayAnimMontage(UAnimMontage* Animation);
+
+    virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
 private:
     UPROPERTY()
     AFMBBaseWeapon* CurrentWeapon = nullptr;
     bool AttackAnimInProgress = false;
 
-    void MeleeAttack();
-
     void SpawnWeapon();
     void InitAnimation(UAnimMontage* Animation);
+
+    UFUNCTION()
     void OnAttackFinished(USkeletalMeshComponent* MeshComp);
 
     bool CanAttack() const;
@@ -62,4 +65,8 @@ private:
 
     AFMBBaseCharacter* GetCharacter();
     UCharacterMovementComponent* GetMovementComponent();
+
+    //void DecreaseStaminaAttack(float DecreaseStamina);
+
+    void AttachWeaponToSocket(AFMBBaseWeapon* Weapon, USkeletalMeshComponent* MeshComp, const FName& WeaponSocket);
 };

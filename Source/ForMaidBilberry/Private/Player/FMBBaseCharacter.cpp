@@ -3,6 +3,7 @@
 
 #include "Player/FMBBaseCharacter.h"
 #include "Camera/CameraComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Components/FMBCharacterMovementComponent.h"
@@ -103,8 +104,8 @@ void AFMBBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
     PlayerInputComponent->BindAction("Run", IE_Pressed, this, &AFMBBaseCharacter::OnStartRunning);
     PlayerInputComponent->BindAction("Run", IE_Released, this, &AFMBBaseCharacter::OnStopRunning);
 
-    PlayerInputComponent->BindAction("FastMeleeAttack", IE_Pressed, WeaponComponent, &UFMBWeaponComponent::FastMeleeAttack);
-    PlayerInputComponent->BindAction("StrongMeleeAttack", IE_Pressed, WeaponComponent, &UFMBWeaponComponent::StrongMeleeAttack);
+    PlayerInputComponent->BindAction("FastMeleeAttack", IE_Pressed, this, &AFMBBaseCharacter::FastMeleeAttack);
+    PlayerInputComponent->BindAction("StrongMeleeAttack", IE_Pressed, this, &AFMBBaseCharacter::StrongMeleeAttack);
 }
 
 /*void AFMBBaseCharacter::LimitViewPitchRotation ()//
@@ -156,16 +157,36 @@ void AFMBBaseCharacter::MoveRight(float Amount)
     AddMovementInput(Direction, Amount);
 }
 
+void AFMBBaseCharacter::Jump()
+{
+    if(!SpendStamina(JumpStaminaSpend)) return;
+    
+    Super::Jump();
+}
+
+bool AFMBBaseCharacter::SpendStamina(float SpendStaminaVal)
+{
+    if (!(FMath::IsWithin(GetStamina()-SpendStaminaVal, 0.0f, MaxStamina))) return false;
+
+    CheckActiveHealStaminaTimer();
+    
+    SetStamina(GetStamina() - SpendStaminaVal);
+
+    SetAutoHealStaminaTimer();
+
+    return true;
+}
+
 void AFMBBaseCharacter::OnStartRunning()
 {
     if (GetVelocity().IsNearlyZero()) return;
-    if (GetWorld()->GetTimerManager().IsTimerActive(StaminaAutoHealTimerHandle))
-    {
-        GetWorld()->GetTimerManager().ClearTimer(StaminaAutoHealTimerHandle);
-    }
+    
+    CheckActiveHealStaminaTimer();
+    
+    if (FMath::IsNearlyZero(GetStamina())) return;
 
     GetWorld()->GetTimerManager().SetTimer
-            (
+        (
             StaminaRunningTimerHandle,
             this,
             &AFMBBaseCharacter::DecreaseRunningStamina,
@@ -179,13 +200,32 @@ void AFMBBaseCharacter::OnStopRunning()
 {
     GetWorld()->GetTimerManager().ClearTimer(StaminaRunningTimerHandle);
     WantToRun = false;
-    GetWorld()->GetTimerManager().SetTimer(StaminaAutoHealTimerHandle, this, &AFMBBaseCharacter::AutoHealStamina, StaminaUpdateTime, true,
-        StaminaAutoHealDelay);
+    SetAutoHealStaminaTimer();
 }
 
 bool AFMBBaseCharacter::IsRunning() const
 {
-    return WantToRun && GetStamina() > 0.0f && !GetVelocity().IsZero();
+    return WantToRun && !(FMath::IsNearlyZero(GetStamina())) && !GetVelocity().IsZero();
+}
+
+void AFMBBaseCharacter::FastMeleeAttack()
+{
+    if (!WeaponComponent || WeaponComponent->GetAttackAnimInProgress()) return;
+
+    if(!SpendStamina(FastAttackStaminaSpend)) return;
+    
+    WeaponComponent->FastMeleeAttack();
+
+}
+
+void AFMBBaseCharacter::StrongMeleeAttack()
+{
+    if (!WeaponComponent || WeaponComponent->GetAttackAnimInProgress()) return;
+    
+    if(!SpendStamina(StrongAttackStaminaSpend)) return;
+    
+    WeaponComponent->StrongMeleeAttack();
+
 }
 
 /*float AFMBBaseCharacter::GetMovementDirection() const
@@ -211,12 +251,14 @@ void AFMBBaseCharacter::OnDeath()
     {
         Controller->ChangeState(NAME_Spectating);
     }
+    GetCapsuleComponent()->SetCollisionResponseToChannels(ECollisionResponse::ECR_Ignore);
+    WeaponComponent->StopDrawTrace();
 }
 
 void AFMBBaseCharacter::OnGroundLanded(const FHitResult& Hitresult)
 {
     const auto VelocityZ = GetVelocity().Z * (-1);
-    UE_LOG(BaseCharacterLog, Display, TEXT("VelocityZ %f"), VelocityZ);
+    //UE_LOG(BaseCharacterLog, Display, TEXT("VelocityZ %f"), VelocityZ);
 
     if (VelocityZ < LandedVelocityZ.X) return;
 
@@ -229,23 +271,50 @@ void AFMBBaseCharacter::SetStamina(float NewStamina)
 {
     Stamina = FMath::Clamp(NewStamina, 0.0f, MaxStamina);
     OnStaminaChange.Broadcast(Stamina);
+    UE_LOG(BaseCharacterLog, Display, TEXT("Stamina change: %0.0f"), GetStamina());
 }
 
 void AFMBBaseCharacter::DecreaseRunningStamina()
 {
-    if (!GetWorld()) return;
+    if (!GetWorld() || GetVelocity().Z != 0.0f) return;
     if (GetStamina() <= 0.0f)
     {
         GetWorld()->GetTimerManager().ClearTimer(StaminaRunningTimerHandle);
     }
     SetStamina(Stamina - StaminaModifier);
-    UE_LOG(BaseCharacterLog, Display, TEXT("Stamina change: %0.0f"), GetStamina());
+}
+
+void AFMBBaseCharacter::SetAutoHealStaminaTimer()
+{
+    if (!GetWorld()) return;
+
+    CheckActiveHealStaminaTimer();
+
+    if (FMath::IsWithin(GetStamina(), 0.0f, MaxStamina))
+    {
+        GetWorld()->GetTimerManager().SetTimer
+            (
+                StaminaAutoHealTimerHandle,
+                this,
+                &AFMBBaseCharacter::AutoHealStamina,
+                StaminaUpdateTime,
+                true,
+                StaminaAutoHealDelay
+                );
+    }
+}
+
+void AFMBBaseCharacter::CheckActiveHealStaminaTimer()
+{
+    if (GetWorld()->GetTimerManager().IsTimerActive(StaminaAutoHealTimerHandle))
+    {
+        GetWorld()->GetTimerManager().ClearTimer(StaminaAutoHealTimerHandle);
+    }
 }
 
 void AFMBBaseCharacter::AutoHealStamina()
 {
     SetStamina(Stamina + StaminaModifier);
-    UE_LOG(BaseCharacterLog, Display, TEXT("Stamina change: %0.0f"), GetStamina());
 
     if (FMath::IsNearlyEqual(Stamina, MaxStamina) && GetWorld())
     {

@@ -89,6 +89,15 @@ protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Stamina")
     float StaminaAutoHealDelay = 5.0f;
 
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Spend Stamina")
+    float JumpStaminaSpend = 10.0f;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Spend Stamina")
+    float FastAttackStaminaSpend = 30.0f;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Spend Stamina")
+    float StrongAttackStaminaSpend = 50.0f;
+
     virtual void BeginPlay() override;
 
 private:
@@ -104,6 +113,8 @@ private:
     void MoveForward(float Amount);
     void MoveRight(float Amount);
 
+    void Jump();
+
     //void LimitViewPitchRotation ();
     //void TurnAroundAtRate(float Rate);
     //void LookUpAtRate(float Rate);
@@ -117,7 +128,15 @@ private:
     UFUNCTION()
     void OnGroundLanded(const FHitResult& Hitresult);
 
+    void FastMeleeAttack();
+    void StrongMeleeAttack();
+
     void SetStamina(float NewStamina);
+
+    bool SpendStamina(float SpendStaminaVal);
+    
     void DecreaseRunningStamina();
+    void SetAutoHealStaminaTimer();
+    void CheckActiveHealStaminaTimer();
     void AutoHealStamina();
 };

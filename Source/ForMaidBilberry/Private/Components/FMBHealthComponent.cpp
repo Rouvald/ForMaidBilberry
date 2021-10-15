@@ -3,6 +3,8 @@
 
 #include "Components/FMBHealthComponent.h"
 
+#include "FMBBaseCharacter.h"
+
 DECLARE_LOG_CATEGORY_CLASS(HealthLog, All, All);
 
 UFMBHealthComponent::UFMBHealthComponent()
@@ -31,6 +33,12 @@ void UFMBHealthComponent::OnTakeAnyDamage(AActor* DamagedActor, float Damage, co
     if (Damage <= 0.0f || IsDead() && GetWorld()) return;
 
     SetHealth(Health - Damage);
+
+    const auto DamagedCharacter = Cast<AFMBBaseCharacter>(DamagedActor);
+    if (DamagedCharacter)
+    {
+        DamagedCharacter->PlayAnimMontage(GetHitAnimMontage);
+    }
 
     GetWorld()->GetTimerManager().ClearTimer(HealTimeHandle);
 

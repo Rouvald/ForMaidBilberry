@@ -41,6 +41,12 @@ public:
     //float GetMovementDirection() const;
 
 protected:
+    UPROPERTY(EditDefaultsOnly, Category="Backpack")
+    UStaticMeshComponent* Backpack;
+
+    UPROPERTY(EditDefaultsOnly, Category="Weapon")
+    FName BackpackSocketName = "Backpack";
+    
     //UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
     //float BaseTurnAroundRate = 45.0f;
 

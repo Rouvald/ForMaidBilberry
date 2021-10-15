@@ -6,7 +6,7 @@
 #include "Animation/AnimNotifies/AnimNotify.h"
 #include "FMBAttackFinishedNotify.generated.h"
 
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnNotifiedSignature, USkeletalMeshComponent*);
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnAttackFinishedNotifySignature, USkeletalMeshComponent*);
 
 UCLASS()
 class FORMAIDBILBERRY_API UFMBAttackFinishedNotify : public UAnimNotify
@@ -16,5 +16,5 @@ class FORMAIDBILBERRY_API UFMBAttackFinishedNotify : public UAnimNotify
 public:
     virtual void Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation) override;
 
-    FOnNotifiedSignature OnNotified;
+    FOnAttackFinishedNotifySignature OnAttackFinishedNotify;
 };

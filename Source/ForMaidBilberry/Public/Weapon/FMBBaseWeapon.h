@@ -24,11 +24,14 @@ public:
     void StopDrawTrace();
 
 protected:
-    //UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="Components")
-    //UCapsuleComponent* CapsuleComponent;
+    UPROPERTY()
+    USceneComponent* DefaultRootComponent;
 
-    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="Components")
-    USkeletalMeshComponent* WeaponMesh;
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Components")
+    UStaticMeshComponent* WeaponMesh;
+
+    //UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="Components")
+    //USkeletalMeshComponent* WeaponMesh;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
     FName StartBladeTraceSocketName = "StartBladeTraceSocket";

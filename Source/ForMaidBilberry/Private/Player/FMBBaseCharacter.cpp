@@ -53,6 +53,10 @@ AFMBBaseCharacter::AFMBBaseCharacter(const FObjectInitializer& ObjInit)
     HealthTextComponent->SetOwnerNoSee(true);
 
     WeaponComponent = CreateDefaultSubobject<UFMBWeaponComponent>("WeaponComponent");
+
+    Backpack=CreateDefaultSubobject<UStaticMeshComponent>("Backpack");
+    Backpack->SetupAttachment(GetMesh(), BackpackSocketName);
+    Backpack->SetCollisionResponseToChannels(ECollisionResponse::ECR_Overlap);
 }
 
 void AFMBBaseCharacter::BeginPlay()
@@ -106,6 +110,8 @@ void AFMBBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
     PlayerInputComponent->BindAction("FastMeleeAttack", IE_Pressed, this, &AFMBBaseCharacter::FastMeleeAttack);
     PlayerInputComponent->BindAction("StrongMeleeAttack", IE_Pressed, this, &AFMBBaseCharacter::StrongMeleeAttack);
+    
+    PlayerInputComponent->BindAction("NextWeapon", IE_Pressed, WeaponComponent, &UFMBWeaponComponent::NextWeapon);
 }
 
 /*void AFMBBaseCharacter::LimitViewPitchRotation ()//
@@ -159,6 +165,8 @@ void AFMBBaseCharacter::MoveRight(float Amount)
 
 void AFMBBaseCharacter::Jump()
 {
+    if(!WeaponComponent || WeaponComponent->GetEquipAnimInProgress()) return;
+    
     if(!SpendStamina(JumpStaminaSpend)) return;
     
     Super::Jump();
@@ -210,7 +218,7 @@ bool AFMBBaseCharacter::IsRunning() const
 
 void AFMBBaseCharacter::FastMeleeAttack()
 {
-    if (!WeaponComponent || WeaponComponent->GetAttackAnimInProgress()) return;
+    if (!WeaponComponent || WeaponComponent->GetAttackAnimInProgress() || WeaponComponent->GetEquipAnimInProgress()) return;
 
     if(!SpendStamina(FastAttackStaminaSpend)) return;
     
@@ -220,7 +228,7 @@ void AFMBBaseCharacter::FastMeleeAttack()
 
 void AFMBBaseCharacter::StrongMeleeAttack()
 {
-    if (!WeaponComponent || WeaponComponent->GetAttackAnimInProgress()) return;
+    if (!WeaponComponent || WeaponComponent->GetAttackAnimInProgress() || WeaponComponent->GetEquipAnimInProgress()) return;
     
     if(!SpendStamina(StrongAttackStaminaSpend)) return;
     

@@ -20,21 +20,25 @@ class FORMAIDBILBERRY_API UFMBWeaponComponent : public UActorComponent
 public:
     UFMBWeaponComponent();
 
-    //FOnStaminaChangeSignature OnStaminaChange;
-
     void FastMeleeAttack();
     void StrongMeleeAttack();
+
+    void NextWeapon();
 
     void StopDrawTrace() const;
 
     bool GetAttackAnimInProgress() const { return AttackAnimInProgress;}
+    bool GetEquipAnimInProgress() const { return EquipAnimInProgress;}
 
-protected:
+protected:    
     UPROPERTY(EditDefaultsOnly, Category="Weapon")
-    TSubclassOf<AFMBBaseWeapon> WeaponClass;
+    TArray<TSubclassOf<AFMBBaseWeapon>> WeaponClasses;
 
     UPROPERTY(EditDefaultsOnly, Category="Weapon")
-    FName WeaponSocketName = "LeftWeaponShield";
+    FName WeaponEquipSocketName = "WeaponEquipSocket_L"; // LeftWeaponShield
+
+    UPROPERTY(EditDefaultsOnly, Category="Weapon")
+    FName WeaponArmorySocketName = "WeaponArmorySocket";
 
     UPROPERTY(EditDefaultsOnly, Category="Animation")
     UAnimMontage* FastMeleeAttackAnimMontage;
@@ -42,31 +46,62 @@ protected:
     UPROPERTY(EditDefaultsOnly, Category="Animation")
     UAnimMontage* StrongMeleeAttackAnimMontage;
 
+    UPROPERTY(EditDefaultsOnly, Category="Animation")
+    UAnimMontage* EquipAnimMontage;
+
     virtual void BeginPlay() override;
     void PlayAnimMontage(UAnimMontage* Animation);
 
     virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
+    //int32 GetCurrentWeaponIndex() const {return CurrentWeaponIndex;}
+
 private:
     UPROPERTY()
     AFMBBaseWeapon* CurrentWeapon = nullptr;
+    
     bool AttackAnimInProgress = false;
 
-    void SpawnWeapon();
-    void InitAnimation(UAnimMontage* Animation);
+    bool EquipAnimInProgress = false;
 
-    UFUNCTION()
+    UPROPERTY()
+    TArray<AFMBBaseWeapon*> Weapons;
+
+    int32 CurrentWeaponIndex = 0;
+
+    void SpawnWeapons();
+    void AttachWeaponToSocket(AFMBBaseWeapon* Weapon, USceneComponent* MeshComp, const FName& WeaponSocket);
+    void EquipWeapon(int32 WeaponIndex);
+    
+    void InitAnimation();
+    
     void OnAttackFinished(USkeletalMeshComponent* MeshComp);
+    void OnEquipFinished(USkeletalMeshComponent* MeshComp);
+    void OnChangeEquipWeapon(USkeletalMeshComponent* MeshComp);
 
     bool CanAttack() const;
+    bool CanEquip() const;
 
     void StartMovement();
     void StopMovement();
 
-    AFMBBaseCharacter* GetCharacter();
-    UCharacterMovementComponent* GetMovementComponent();
+    AFMBBaseCharacter* GetCharacter() const;
+    UCharacterMovementComponent* GetMovementComponent() const;
 
-    //void DecreaseStaminaAttack(float DecreaseStamina);
+    template<typename T>
+    T* FindNotifyByClass(UAnimSequenceBase *Animation)
+    {
+        if(!Animation) return nullptr;
 
-    void AttachWeaponToSocket(AFMBBaseWeapon* Weapon, USkeletalMeshComponent* MeshComp, const FName& WeaponSocket);
+        const auto NotifyEvents = Animation->Notifies;
+        for (const auto NotifyEvent : NotifyEvents)
+        {
+            const auto AnimNotify = Cast<T>(NotifyEvent.Notify);
+            if (AnimNotify)
+            {
+                return AnimNotify;
+            }
+        }
+        return nullptr;
+    }
 };

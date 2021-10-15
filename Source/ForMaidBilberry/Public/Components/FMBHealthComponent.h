@@ -6,6 +6,8 @@
 #include "Components/ActorComponent.h"
 #include "FMBHealthComponent.generated.h"
 
+class UAnimMontage;
+
 DECLARE_MULTICAST_DELEGATE(FOnDeathSignature);
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnHealthChangeSignature, float);
 
@@ -27,6 +29,9 @@ public:
 
 
 protected:
+    UPROPERTY(EditDefaultsOnly, Category="Animation")
+    UAnimMontage* GetHitAnimMontage;
+    
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Health", meta=(ClampMin="0.0", ClampMax="500.0"))
     float MaxHealth = 100.0f;
     

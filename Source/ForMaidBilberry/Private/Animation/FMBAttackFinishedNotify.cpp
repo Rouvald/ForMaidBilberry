@@ -5,6 +5,6 @@
 
 void UFMBAttackFinishedNotify::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation)
 {
-    OnNotified.Broadcast(MeshComp);
+    OnAttackFinishedNotify.Broadcast(MeshComp);
     Super::Notify(MeshComp, Animation);
 }

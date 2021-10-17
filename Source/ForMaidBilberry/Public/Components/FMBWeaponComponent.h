@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-//#include "FMBBaseCharacter.h"
 #include "FMBCharacterMovementComponent.h"
 #include "Components/ActorComponent.h"
 #include "FMBWeaponComponent.generated.h"
@@ -27,8 +26,11 @@ public:
 
     void StopDrawTrace() const;
 
-    bool GetAttackAnimInProgress() const { return AttackAnimInProgress;}
-    bool GetEquipAnimInProgress() const { return EquipAnimInProgress;}
+    //bool GetAttackAnimInProgress() const { return AttackAnimInProgress;}
+    //bool GetEquipAnimInProgress() const { return EquipAnimInProgress;}
+
+    bool CanAttack() const;
+    bool CanEquip() const;
 
 protected:    
     UPROPERTY(EditDefaultsOnly, Category="Weapon")
@@ -50,6 +52,7 @@ protected:
     UAnimMontage* EquipAnimMontage;
 
     virtual void BeginPlay() override;
+    
     void PlayAnimMontage(UAnimMontage* Animation);
 
     virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
@@ -74,34 +77,15 @@ private:
     void EquipWeapon(int32 WeaponIndex);
     
     void InitAnimation();
+    void CheckAttackFinishedAnimNotify(UAnimMontage* Animation);
     
     void OnAttackFinished(USkeletalMeshComponent* MeshComp);
     void OnEquipFinished(USkeletalMeshComponent* MeshComp);
     void OnChangeEquipWeapon(USkeletalMeshComponent* MeshComp);
-
-    bool CanAttack() const;
-    bool CanEquip() const;
-
+    
     void StartMovement();
     void StopMovement();
 
     AFMBBaseCharacter* GetCharacter() const;
     UCharacterMovementComponent* GetMovementComponent() const;
-
-    template<typename T>
-    T* FindNotifyByClass(UAnimSequenceBase *Animation)
-    {
-        if(!Animation) return nullptr;
-
-        const auto NotifyEvents = Animation->Notifies;
-        for (const auto NotifyEvent : NotifyEvents)
-        {
-            const auto AnimNotify = Cast<T>(NotifyEvent.Notify);
-            if (AnimNotify)
-            {
-                return AnimNotify;
-            }
-        }
-        return nullptr;
-    }
 };

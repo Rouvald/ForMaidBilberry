@@ -3,17 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Animation/AnimNotifies/AnimNotify.h"
+#include "FMBAnimNotify.h"
 #include "FMBChangeEquipWeaponAnimNotify.generated.h"
 
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnChangeEquipWeaponSignature, USkeletalMeshComponent*);
 
 UCLASS()
-class FORMAIDBILBERRY_API UFMBChangeEquipWeaponAnimNotify : public UAnimNotify
+class FORMAIDBILBERRY_API UFMBChangeEquipWeaponAnimNotify : public UFMBAnimNotify
 {
 	GENERATED_BODY()
-    public:
-    virtual void Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation) override;
-
-    FOnChangeEquipWeaponSignature OnChangeEquipWeapon;
 };

@@ -6,6 +6,7 @@
 #include "FMBBaseWeapon.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "FMBCoreTypes.h"
 #include "FMBBaseCharacter.generated.h"
 
 class USpringArmComponent;
@@ -13,8 +14,6 @@ class UCameraComponent;
 class UFMBHealthComponent;
 class UTextRenderComponent;
 class UFMBWeaponComponent;
-
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnStaminaChangeSignature, float);
 
 UCLASS()
 class FORMAIDBILBERRY_API AFMBBaseCharacter : public ACharacter
@@ -37,8 +36,8 @@ public:
 
     float GetStamina() const { return Stamina; }
 
-    //UFUNCTION(BlueprintCallable, Category="Movement")
-    //float GetMovementDirection() const;
+    UFUNCTION(BlueprintCallable, Category="Movement")
+    float GetMovementDirection() const;
 
 protected:
     UPROPERTY(EditDefaultsOnly, Category="Backpack")
@@ -46,7 +45,7 @@ protected:
 
     UPROPERTY(EditDefaultsOnly, Category="Weapon")
     FName BackpackSocketName = "Backpack";
-    
+
     //UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
     //float BaseTurnAroundRate = 45.0f;
 
@@ -104,6 +103,9 @@ protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Spend Stamina")
     float StrongAttackStaminaSpend = 50.0f;
 
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Spend Stamina")
+    float RollingStaminaSpend = 15.0f;
+
     virtual void BeginPlay() override;
 
 private:
@@ -114,12 +116,15 @@ private:
     FTimerHandle StaminaAutoHealTimerHandle;
     float Stamina = 0.0f;
 
+    //bool JumpAnimInProgress = false;
+
     //void SwitchCamera();
 
     void MoveForward(float Amount);
     void MoveRight(float Amount);
 
-    void Jump();
+    virtual void Jump() override;
+    //bool CanJump() const;
 
     //void LimitViewPitchRotation ();
     //void TurnAroundAtRate(float Rate);
@@ -140,9 +145,13 @@ private:
     void SetStamina(float NewStamina);
 
     bool SpendStamina(float SpendStaminaVal);
-    
+
     void DecreaseRunningStamina();
     void SetAutoHealStaminaTimer();
     void CheckActiveHealStaminaTimer();
     void AutoHealStamina();
+
+    void Rolling();
+
+    bool CheckAllAnimInProgress() const;
 };

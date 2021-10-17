@@ -4,12 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "FMBCoreTypes.h"
 #include "FMBHealthComponent.generated.h"
 
 class UAnimMontage;
-
-DECLARE_MULTICAST_DELEGATE(FOnDeathSignature);
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnHealthChangeSignature, float);
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class FORMAIDBILBERRY_API UFMBHealthComponent : public UActorComponent
@@ -58,4 +56,6 @@ private:
 
     void AutoHealing();
     void SetHealth(float NewHealth);
+
+    bool CheckAllAnimInProgress() const;
 };

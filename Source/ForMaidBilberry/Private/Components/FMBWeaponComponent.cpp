@@ -3,11 +3,11 @@
 
 #include "Components/FMBWeaponComponent.h"
 #include "FMBBaseCharacter.h"
+#include "Animation/FMBAnimFinishedNotify.h"
 #include "GameFramework/Character.h"
 #include "Weapon/FMBBaseWeapon.h"
-#include "Animation/FMBAttackFinishedNotify.h"
+#include "Animation/FMBAnimUtils.h"
 #include "Animation/FMBChangeEquipWeaponAnimNotify.h"
-#include "Animation/FMBEquipFinishedAnimNotify.h"
 #include "Components/FMBCharacterMovementComponent.h"
 
 DECLARE_LOG_CATEGORY_CLASS(BaseWeaponComponentLog, All, All);
@@ -20,6 +20,8 @@ UFMBWeaponComponent::UFMBWeaponComponent()
 void UFMBWeaponComponent::BeginPlay()
 {
     Super::BeginPlay();
+
+    checkf(Weapons.Num() <=0, TEXT("Character don't have weapon"));
     CurrentWeaponIndex = 0;
 
     InitAnimation();
@@ -90,6 +92,8 @@ void UFMBWeaponComponent::FastMeleeAttack()
 {
     if (!CanAttack()) return;
     if (!CurrentWeapon) return;
+    const auto Character = GetCharacter();
+    if (!Character || Character->GetVelocity().Z != 0.0f) return;
 
     CurrentWeapon->FastMeleeAttack();
 
@@ -102,6 +106,8 @@ void UFMBWeaponComponent::StrongMeleeAttack()
 {
     if (!CanAttack()) return;
     if (!CurrentWeapon) return;
+    const auto Character = GetCharacter();
+    if (!Character || Character->GetVelocity().Z != 0.0f) return;
 
     CurrentWeapon->StrongMeleeAttack();
 
@@ -120,25 +126,41 @@ void UFMBWeaponComponent::PlayAnimMontage(UAnimMontage* Animation)
 
 void UFMBWeaponComponent::InitAnimation()
 {
-    const auto ChangeEquipWeapon = FindNotifyByClass<UFMBChangeEquipWeaponAnimNotify>(EquipAnimMontage);
+    const auto ChangeEquipWeapon = FMBAnimUtils::FindNotifyByClass<UFMBChangeEquipWeaponAnimNotify>(EquipAnimMontage);
     if (ChangeEquipWeapon)
     {
-        ChangeEquipWeapon->OnChangeEquipWeapon.AddUObject(this, &UFMBWeaponComponent::OnChangeEquipWeapon);
+        ChangeEquipWeapon->OnNotify.AddUObject(this, &UFMBWeaponComponent::OnChangeEquipWeapon);
     }
-    const auto EquipFinished = FindNotifyByClass<UFMBEquipFinishedAnimNotify>(EquipAnimMontage);
+    else
+    {
+        UE_LOG(BaseWeaponComponentLog, Error, TEXT("Change weapon anim notify don't set"));
+        checkNoEntry();
+    }
+    const auto EquipFinished = FMBAnimUtils::FindNotifyByClass<UFMBAnimFinishedNotify>(EquipAnimMontage);
     if (EquipFinished)
     {
-        EquipFinished->OnEquipFinishedNotify.AddUObject(this, &UFMBWeaponComponent::OnEquipFinished);
+        EquipFinished->OnNotify.AddUObject(this, &UFMBWeaponComponent::OnEquipFinished);
     }
-    const auto FastMeleeAttackEvent = FindNotifyByClass<UFMBAttackFinishedNotify>(FastMeleeAttackAnimMontage);
-    if (FastMeleeAttackEvent)
+    else
     {
-        FastMeleeAttackEvent->OnAttackFinishedNotify.AddUObject(this, &UFMBWeaponComponent::OnAttackFinished);
+        UE_LOG(BaseWeaponComponentLog, Error, TEXT("Equip weapon anim notify don't set"));
+        checkNoEntry();
     }
-    const auto StrongMeleeAttackEvent = FindNotifyByClass<UFMBAttackFinishedNotify>(StrongMeleeAttackAnimMontage);
-    if (StrongMeleeAttackEvent)
+    CheckAttackFinishedAnimNotify(FastMeleeAttackAnimMontage);
+    CheckAttackFinishedAnimNotify(StrongMeleeAttackAnimMontage);
+}
+
+void UFMBWeaponComponent::CheckAttackFinishedAnimNotify(UAnimMontage* Animation)
+{
+    const auto AttackEvent = FMBAnimUtils::FindNotifyByClass<UFMBAnimFinishedNotify>(Animation);
+    if (AttackEvent)
     {
-        StrongMeleeAttackEvent->OnAttackFinishedNotify.AddUObject(this, &UFMBWeaponComponent::OnAttackFinished);
+        AttackEvent->OnNotify.AddUObject(this, &UFMBWeaponComponent::OnAttackFinished);
+    }
+    else
+    {
+        UE_LOG(BaseWeaponComponentLog, Error, TEXT("Attack Finished weapon anim notify don't set"));
+        checkNoEntry();
     }
 }
 
@@ -196,9 +218,11 @@ bool UFMBWeaponComponent::CanAttack() const
     const auto Character = GetCharacter();
     if (!Character) return AttackAnimInProgress;
 
-    if (Character->GetVelocity().Z != 0.0f) return AttackAnimInProgress;
-
     if (EquipAnimInProgress) return AttackAnimInProgress;
+
+    const auto MovementComponent = Cast<UFMBCharacterMovementComponent>(GetMovementComponent());
+    if (!MovementComponent) return AttackAnimInProgress;
+    if (!(MovementComponent->CanRolling())) return AttackAnimInProgress;
 
     return !AttackAnimInProgress;
 }

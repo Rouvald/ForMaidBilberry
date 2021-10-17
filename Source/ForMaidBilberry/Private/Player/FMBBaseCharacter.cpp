@@ -9,6 +9,8 @@
 #include "Components/FMBCharacterMovementComponent.h"
 #include "Components/FMBHealthComponent.h"
 #include "Components/FMBWeaponComponent.h"
+#include "Animation/FMBAnimUtils.h"
+#include "Animation/FMBAnimFinishedNotify.h"
 #include "Components/TextRenderComponent.h"
 #include "GameFramework/Controller.h"
 #include "Weapon/FMBBaseWeapon.h"
@@ -26,6 +28,10 @@ AFMBBaseCharacter::AFMBBaseCharacter(const FObjectInitializer& ObjInit)
     bUseControllerRotationRoll = false;
     GetCharacterMovement()->bOrientRotationToMovement = true;
     GetCharacterMovement()->RotationRate = FRotator(0.0f, 540.0f, 0.0f);
+    //
+    GetCharacterMovement()->bOrientRotationToMovement = true;
+    GetCharacterMovement()->bUseControllerDesiredRotation = true;
+    GetCharacterMovement()->bIgnoreBaseRotation = true;
     //
 
     SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>("SpringArmComponent");
@@ -46,6 +52,8 @@ AFMBBaseCharacter::AFMBBaseCharacter(const FObjectInitializer& ObjInit)
     FPPCameraComponent->bUsePawnControlRotation = true;
     */
 
+    GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -86.0f), FRotator(0.0f, -90.0f, 0.0f));
+
     HealthComponent = CreateDefaultSubobject<UFMBHealthComponent>("HealthComponent");
 
     HealthTextComponent = CreateDefaultSubobject<UTextRenderComponent>("HealthTextComponent");
@@ -54,7 +62,7 @@ AFMBBaseCharacter::AFMBBaseCharacter(const FObjectInitializer& ObjInit)
 
     WeaponComponent = CreateDefaultSubobject<UFMBWeaponComponent>("WeaponComponent");
 
-    Backpack=CreateDefaultSubobject<UStaticMeshComponent>("Backpack");
+    Backpack = CreateDefaultSubobject<UStaticMeshComponent>("Backpack");
     Backpack->SetupAttachment(GetMesh(), BackpackSocketName);
     Backpack->SetCollisionResponseToChannels(ECollisionResponse::ECR_Overlap);
 }
@@ -110,8 +118,10 @@ void AFMBBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
     PlayerInputComponent->BindAction("FastMeleeAttack", IE_Pressed, this, &AFMBBaseCharacter::FastMeleeAttack);
     PlayerInputComponent->BindAction("StrongMeleeAttack", IE_Pressed, this, &AFMBBaseCharacter::StrongMeleeAttack);
-    
+
     PlayerInputComponent->BindAction("NextWeapon", IE_Pressed, WeaponComponent, &UFMBWeaponComponent::NextWeapon);
+
+    PlayerInputComponent->BindAction("Rolling", IE_Pressed, this, &AFMBBaseCharacter::Rolling);
 }
 
 /*void AFMBBaseCharacter::LimitViewPitchRotation ()//
@@ -165,19 +175,21 @@ void AFMBBaseCharacter::MoveRight(float Amount)
 
 void AFMBBaseCharacter::Jump()
 {
-    if(!WeaponComponent || WeaponComponent->GetEquipAnimInProgress()) return;
-    
-    if(!SpendStamina(JumpStaminaSpend)) return;
-    
+    const auto MovementComponent = Cast<UFMBCharacterMovementComponent>(GetMovementComponent());
+    if (!MovementComponent || !(MovementComponent->CanRolling())) return;
+
+    if (!WeaponComponent || !(WeaponComponent->CanAttack())) return;
+
+    //if (!SpendStamina(JumpStaminaSpend)) return;
     Super::Jump();
 }
 
 bool AFMBBaseCharacter::SpendStamina(float SpendStaminaVal)
 {
-    if (!(FMath::IsWithin(GetStamina()-SpendStaminaVal, 0.0f, MaxStamina))) return false;
+    if (!(FMath::IsWithin(GetStamina() - SpendStaminaVal, 0.0f, MaxStamina))) return false;
 
     CheckActiveHealStaminaTimer();
-    
+
     SetStamina(GetStamina() - SpendStaminaVal);
 
     SetAutoHealStaminaTimer();
@@ -187,10 +199,15 @@ bool AFMBBaseCharacter::SpendStamina(float SpendStaminaVal)
 
 void AFMBBaseCharacter::OnStartRunning()
 {
+    const auto MovementComponent = Cast<UFMBCharacterMovementComponent>(GetMovementComponent());
+    if (!MovementComponent || !(MovementComponent->CanRolling())) return;
+
+    if (!WeaponComponent || !(WeaponComponent->CanAttack())) return;
+    
     if (GetVelocity().IsNearlyZero()) return;
-    
+
     CheckActiveHealStaminaTimer();
-    
+
     if (FMath::IsNearlyZero(GetStamina())) return;
 
     GetWorld()->GetTimerManager().SetTimer
@@ -201,6 +218,7 @@ void AFMBBaseCharacter::OnStartRunning()
             StaminaUpdateTime,
             true
             );
+
     WantToRun = true;
 }
 
@@ -218,25 +236,23 @@ bool AFMBBaseCharacter::IsRunning() const
 
 void AFMBBaseCharacter::FastMeleeAttack()
 {
-    if (!WeaponComponent || WeaponComponent->GetAttackAnimInProgress() || WeaponComponent->GetEquipAnimInProgress()) return;
+    if(!CheckAllAnimInProgress()) return;
 
-    if(!SpendStamina(FastAttackStaminaSpend)) return;
-    
+    if (!SpendStamina(FastAttackStaminaSpend)) return;
+
     WeaponComponent->FastMeleeAttack();
-
 }
 
 void AFMBBaseCharacter::StrongMeleeAttack()
 {
-    if (!WeaponComponent || WeaponComponent->GetAttackAnimInProgress() || WeaponComponent->GetEquipAnimInProgress()) return;
-    
-    if(!SpendStamina(StrongAttackStaminaSpend)) return;
-    
-    WeaponComponent->StrongMeleeAttack();
+    if(!CheckAllAnimInProgress()) return;
 
+    if (!SpendStamina(StrongAttackStaminaSpend)) return;
+
+    WeaponComponent->StrongMeleeAttack();
 }
 
-/*float AFMBBaseCharacter::GetMovementDirection() const
+float AFMBBaseCharacter::GetMovementDirection() const
 {
     if (GetVelocity().IsZero()) return 0.0f;
     const auto VelosityNormal = GetVelocity().GetSafeNormal();
@@ -244,7 +260,7 @@ void AFMBBaseCharacter::StrongMeleeAttack()
     const auto CrossProduct = FVector::CrossProduct(GetActorForwardVector(), VelosityNormal);
     const auto Degrees = FMath::RadiansToDegrees(AngleBetween);
     return CrossProduct.IsZero() ? Degrees : Degrees * FMath::Sign(CrossProduct.Z);
-}*/
+}
 
 void AFMBBaseCharacter::OnDeath()
 {
@@ -279,6 +295,7 @@ void AFMBBaseCharacter::SetStamina(float NewStamina)
 {
     Stamina = FMath::Clamp(NewStamina, 0.0f, MaxStamina);
     OnStaminaChange.Broadcast(Stamina);
+
     UE_LOG(BaseCharacterLog, Display, TEXT("Stamina change: %0.0f"), GetStamina());
 }
 
@@ -328,4 +345,28 @@ void AFMBBaseCharacter::AutoHealStamina()
     {
         GetWorld()->GetTimerManager().ClearTimer(StaminaAutoHealTimerHandle);
     }
+}
+
+void AFMBBaseCharacter::Rolling()
+{
+    if(!CheckAllAnimInProgress()) return;
+
+    if (GetVelocity().IsZero() || GetVelocity().Z >0.0f) return;
+
+    if (!SpendStamina(RollingStaminaSpend)) return;
+    
+    OnStopRunning();
+
+    const auto MovementComponent = Cast<UFMBCharacterMovementComponent>(GetMovementComponent());
+    if (!MovementComponent) return;
+    MovementComponent->Rolling();
+}
+
+bool AFMBBaseCharacter::CheckAllAnimInProgress() const
+{
+    const auto MovementComponent = FindComponentByClass<UFMBCharacterMovementComponent>();
+    if (!MovementComponent || !(MovementComponent->CanRolling())) return false;
+    
+    if (!WeaponComponent || !(WeaponComponent->CanAttack()) || !(WeaponComponent->CanEquip())) return false;
+    return true;
 }

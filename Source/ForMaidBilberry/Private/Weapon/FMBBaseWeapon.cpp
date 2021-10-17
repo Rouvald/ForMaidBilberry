@@ -30,8 +30,6 @@ void AFMBBaseWeapon::BeginPlay()
 {
     Super::BeginPlay();
     check(WeaponMesh);
-
-    
 }
 
 void AFMBBaseWeapon::FastMeleeAttack()
@@ -132,7 +130,7 @@ void AFMBBaseWeapon::NewDamagedActor(FHitResult& HitResult)
     if (HitResult.bBlockingHit)
     {
         MakeDamage(HitResult);
-        UE_LOG(BaseWeaponLog, Display, TEXT("Hit %s"), *(Cast<ACharacter>(HitResult.GetActor()))->GetName());
+        //UE_LOG(BaseWeaponLog, Display, TEXT("Hit %s"), *(Cast<ACharacter>(HitResult.GetActor()))->GetName());
         DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 10.0f, 32, FColor::Green, false, 5.0f);
     }
 }
@@ -152,7 +150,7 @@ void AFMBBaseWeapon::StartDrawTrace()
 
 void AFMBBaseWeapon::StopDrawTrace()
 {
-    UE_LOG(BaseWeaponLog, Display, TEXT("Num of HitActors: %i"), HitActors.Num());
+    //UE_LOG(BaseWeaponLog, Display, TEXT("Num of HitActors: %i"), HitActors.Num());
     //UE_LOG(BaseWeaponLog, Display, TEXT("Get Owner: %s"), *(GetOwner()->GetName()));
     HitActors.Empty();
 

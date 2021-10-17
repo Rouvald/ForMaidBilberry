@@ -2,8 +2,9 @@
 
 
 #include "Components/FMBHealthComponent.h"
-
 #include "FMBBaseCharacter.h"
+#include "Components/FMBCharacterMovementComponent.h"
+#include "Components/FMBWeaponComponent.h"
 
 DECLARE_LOG_CATEGORY_CLASS(HealthLog, All, All);
 
@@ -32,13 +33,13 @@ void UFMBHealthComponent::OnTakeAnyDamage(AActor* DamagedActor, float Damage, co
 {
     if (Damage <= 0.0f || IsDead() && GetWorld()) return;
 
-    SetHealth(Health - Damage);
-
-    const auto DamagedCharacter = Cast<AFMBBaseCharacter>(DamagedActor);
-    if (DamagedCharacter)
+    if (CheckAllAnimInProgress())
     {
-        DamagedCharacter->PlayAnimMontage(GetHitAnimMontage);
+        const auto Character = Cast<AFMBBaseCharacter>(GetOwner());
+        Character->PlayAnimMontage(GetHitAnimMontage);
     }
+    
+    SetHealth(Health - Damage);
 
     GetWorld()->GetTimerManager().ClearTimer(HealTimeHandle);
 
@@ -68,4 +69,17 @@ void UFMBHealthComponent::SetHealth(float NewHealth)
 {
     Health = FMath::Clamp(NewHealth, 0.0f, MaxHealth);
     OnHealthChange.Broadcast(Health);
+}
+
+bool UFMBHealthComponent::CheckAllAnimInProgress() const
+{
+    const auto Character = Cast<AFMBBaseCharacter>(GetOwner());
+    if (!Character) return false;
+
+    const auto MovementComponent = Character->FindComponentByClass<UFMBCharacterMovementComponent>();
+    if (!MovementComponent || !(MovementComponent->CanRolling())) return false;
+
+    const auto WeaponComponent = Character->FindComponentByClass<UFMBWeaponComponent>();
+    if (!WeaponComponent || !(WeaponComponent->CanAttack()) || !(WeaponComponent->CanEquip())) return false;
+    return true;
 }

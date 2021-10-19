@@ -6,38 +6,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d6e8098d-b6f5-426e-a4b0-82b2b1e1d28b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/DirectionMovement/BS_LocomotionDirectiomRun.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/DirectionMovement/BS_LocomotionDirectionWalk.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Animation/FMBAnimUtils.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/FMBCoreTypes.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ForMaidBilberry/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ForMaidBilberry/.idea/dictionaries/Rouvald.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultInput.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultInput.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Animations/TwoHandSwordStance/JumpEnd_SingleTwohandSwordAnim.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Animations/TwoHandSwordStance/JumpEnd_SingleTwohandSwordAnim.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/UI/BP_FMBGameHUD.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/UI/WBP_PlayerHUD.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/UI/FMBPlayerHUDWidget.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/UI/FMBPlayerHUDWidget.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ForMaidBilberry/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ForMaidBilberry/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/BP_FMBGameModeBase.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP_FMBGameModeBase.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Levels/TestLevel.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/TestLevel.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Player/Animation/ABP_BaseCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Player/Animation/ABP_BaseCharacter.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Player/Animation/AM_Die_SingleTwohandSword.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Player/Animation/AM_EquipmentChange_SingleTwohandSword.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Player/Animation/AM_FastMeleeAttack_SingleTwohandSword.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Player/Animation/AM_GetHit_SingleTwohandSword.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Player/Animation/AM_StrongMeleeAttack_SingleTwohandSword.uasset" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Player/BP_FMBBaseCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Player/BP_FMBBaseCharacter.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ForMaidBilberry.sln.DotSettings.user" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Animation/FMBAttackFinishedNotify.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Animation/FMBChangeEquipWeaponAnimNotify.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Animation/FMBChangeEquipWeaponAnimNotify.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Animation/FMBEquipFinishedAnimNotify.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Weapon/BP_FMBSword_Red.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Weapon/BP_FMBSword_Red.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Weapon/BP_FMBSword_Yellow.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Weapon/BP_FMBSword_Yellow.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ForMaidBilberry.uproject" beforeDir="false" afterPath="$PROJECT_DIR$/ForMaidBilberry.uproject" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Components/FMBCharacterMovementComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Components/FMBCharacterMovementComponent.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Components/FMBHealthComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Components/FMBHealthComponent.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Components/FMBWeaponComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Components/FMBWeaponComponent.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Player/FMBBaseCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Player/FMBBaseCharacter.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/UI/FMBGameHUD.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/UI/FMBGameHUD.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Weapon/FMBBaseWeapon.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Weapon/FMBBaseWeapon.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Animation/FMBAttackFinishedNotify.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Animation/FMBChangeEquipWeaponAnimNotify.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Animation/FMBChangeEquipWeaponAnimNotify.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Animation/FMBEquipFinishedAnimNotify.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Components/FMBCharacterMovementComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Components/FMBCharacterMovementComponent.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Components/FMBHealthComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Components/FMBHealthComponent.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Components/FMBWeaponComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Components/FMBWeaponComponent.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/FMBCoreTypes.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/FMBCoreTypes.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Player/FMBBaseCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Player/FMBBaseCharacter.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/UI/FMBGameHUD.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/UI/FMBGameHUD.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Weapon/FMBBaseWeapon.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Weapon/FMBBaseWeapon.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,6 +55,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.34994584" />
     <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.0" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
@@ -299,6 +291,14 @@
       <workItem from="1634429663937" duration="3634000" />
       <workItem from="1634486732250" duration="2437000" />
       <workItem from="1634498255656" duration="5511000" />
+      <workItem from="1634512566269" duration="1801000" />
+      <workItem from="1634514716344" duration="2166000" />
+      <workItem from="1634573953581" duration="2035000" />
+      <workItem from="1634584043211" duration="4531000" />
+      <workItem from="1634604246598" duration="988000" />
+      <workItem from="1634654283692" duration="250000" />
+      <workItem from="1634657476054" duration="4495000" />
+      <workItem from="1634679510433" duration="2093000" />
     </task>
     <servers />
   </component>
@@ -321,6 +321,18 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/Source/ForMaidBilberry/Private/Components/FMBWeaponComponent.cpp</url>
+          <line>200</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

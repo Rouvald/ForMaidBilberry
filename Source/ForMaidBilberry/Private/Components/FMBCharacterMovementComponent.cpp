@@ -1,6 +1,7 @@
 // For Maid Bilberry Game. All Rights Recerved
 
 #include "Components/FMBCharacterMovementComponent.h"
+#include "Components/FMBHealthComponent.h"
 #include "Animation//FMBAnimUtils.h"
 #include "Animation/FMBAnimFinishedNotify.h"
 #include "Player/FMBBaseCharacter.h"
@@ -13,6 +14,7 @@ void UFMBCharacterMovementComponent::BeginPlay()
 
     InitAnimation();
 }
+
 float UFMBCharacterMovementComponent::GetMaxSpeed() const
 {
     const auto MaxSpeed = Super::GetMaxSpeed();
@@ -54,7 +56,12 @@ void UFMBCharacterMovementComponent::OnRollingFinished(USkeletalMeshComponent* M
 {
     const auto Character = Cast<AFMBBaseCharacter>(GetPawnOwner());
     if (!Character || Character->GetMesh() != MeshComp) return;
-    
+
+    const auto HealthComponent = Character->FindComponentByClass<UFMBHealthComponent>();
+    if (!HealthComponent) return;
+
+    HealthComponent->StartHealStaminaTimer();
+
     RollingAnimInProgress = false;
 }
 

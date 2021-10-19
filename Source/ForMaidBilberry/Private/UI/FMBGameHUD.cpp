@@ -4,6 +4,16 @@
 #include "UI/FMBGameHUD.h"
 #include "Engine/Canvas.h"
 
+void AFMBGameHUD::BeginPlay()
+{
+    Super::BeginPlay();
+
+    auto PlayerHUDWidget = CreateWidget<UUserWidget>(GetWorld(), PLayerHUDWidgetClass);
+    if(PlayerHUDWidget)
+    {
+        PlayerHUDWidget->AddToViewport();
+    }
+}
 void AFMBGameHUD::DrawHUD()
 {
     //DrawTwoLine();

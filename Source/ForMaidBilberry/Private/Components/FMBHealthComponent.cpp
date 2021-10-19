@@ -18,7 +18,11 @@ void UFMBHealthComponent::BeginPlay()
 {
     Super::BeginPlay();
 
+    check(MaxHealth > 0);
+    check(MaxStamina > 0);
+
     SetHealth(MaxHealth);
+    SetStamina(MaxStamina);
 
     const auto Controller = GetOwner();
     if (Controller)
@@ -38,7 +42,7 @@ void UFMBHealthComponent::OnTakeAnyDamage(AActor* DamagedActor, float Damage, co
         const auto Character = Cast<AFMBBaseCharacter>(GetOwner());
         Character->PlayAnimMontage(GetHitAnimMontage);
     }
-    
+
     SetHealth(Health - Damage);
 
     GetWorld()->GetTimerManager().ClearTimer(HealTimeHandle);
@@ -82,4 +86,116 @@ bool UFMBHealthComponent::CheckAllAnimInProgress() const
     const auto WeaponComponent = Character->FindComponentByClass<UFMBWeaponComponent>();
     if (!WeaponComponent || !(WeaponComponent->CanAttack()) || !(WeaponComponent->CanEquip())) return false;
     return true;
+}
+
+bool UFMBHealthComponent::SpendStamina(int32 SpendStaminaValue)
+{
+    const float SpendStaminaVal = ChooseSpendStamina(SpendStaminaValue);
+
+    if (!(FMath::IsWithin(GetStamina() - SpendStaminaVal, 0.0f, MaxStamina))) return false;
+
+    CheckAndStopHealStaminaTimer();
+
+    SetStamina(GetStamina() - SpendStaminaVal);
+
+    return true;
+}
+
+float UFMBHealthComponent::ChooseSpendStamina(int32 SpendStaminaValue) const
+{
+    switch (SpendStaminaValue)
+    {
+    case 0:
+        return FastAttackStaminaSpend;
+    case 1:
+        return StrongAttackStaminaSpend;
+    case 2:
+        return RollingStaminaSpend;
+    default:
+        return 0.0f;
+    }
+}
+
+void UFMBHealthComponent::SetStamina(float NewStamina)
+{
+    Stamina = FMath::Clamp(NewStamina, 0.0f, MaxStamina);
+    OnStaminaChange.Broadcast(Stamina);
+
+    UE_LOG(HealthLog, Display, TEXT("Stamina change: %0.0f"), GetStamina());
+}
+
+void UFMBHealthComponent::DecreaseRunningStamina()
+{
+    const auto Character = Cast<AFMBBaseCharacter>(GetOwner());
+    if (!GetWorld() || !Character) return;
+    const auto MovementComponent = Character->FindComponentByClass<UFMBCharacterMovementComponent>();
+    if(!MovementComponent || MovementComponent->IsFalling()) return;
+
+    if (GetStamina() <= 0.0f)
+    {
+        CheckAndStopStaminaRunningTimer();
+    }
+    SetStamina(Stamina - StaminaModifier);
+}
+
+void UFMBHealthComponent::AutoHealStamina()
+{
+    SetStamina(Stamina + StaminaModifier);
+
+    if (FMath::IsNearlyEqual(Stamina, MaxStamina) && GetWorld())
+    {
+        CheckAndStopHealStaminaTimer();
+    }
+}
+
+void UFMBHealthComponent::StartHealStaminaTimer()
+{
+    if (!GetWorld()) return;
+
+    CheckAndStopHealStaminaTimer();
+
+    if (FMath::IsWithin(GetStamina(), 0.0f, MaxStamina))
+    {
+        GetWorld()->GetTimerManager().SetTimer
+            (
+                StaminaAutoHealTimerHandle,
+                this,
+                &UFMBHealthComponent::AutoHealStamina,
+                StaminaUpdateTime,
+                true,
+                StaminaAutoHealDelay
+                );
+    }
+}
+
+void UFMBHealthComponent::CheckAndStopHealStaminaTimer()
+{
+    if (GetWorld()->GetTimerManager().IsTimerActive(StaminaAutoHealTimerHandle))
+    {
+        GetWorld()->GetTimerManager().ClearTimer(StaminaAutoHealTimerHandle);
+    }
+}
+
+void UFMBHealthComponent::StartStaminaRunningTimer()
+{
+    CheckAndStopHealStaminaTimer();
+
+    if (FMath::IsNearlyZero(GetStamina())) return;
+
+    GetWorld()->GetTimerManager().SetTimer
+        (
+            StaminaRunningTimerHandle,
+            this,
+            &UFMBHealthComponent::DecreaseRunningStamina,
+            StaminaUpdateTime,
+            true
+            );
+}
+
+void UFMBHealthComponent::CheckAndStopStaminaRunningTimer()
+{
+    if (GetWorld()->GetTimerManager().IsTimerActive(StaminaRunningTimerHandle))
+    {
+        GetWorld()->GetTimerManager().ClearTimer(StaminaRunningTimerHandle);
+    }
 }

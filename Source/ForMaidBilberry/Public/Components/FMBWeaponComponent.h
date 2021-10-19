@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "FMBBaseWeapon.h"
 #include "FMBCharacterMovementComponent.h"
 #include "Components/ActorComponent.h"
 #include "FMBWeaponComponent.generated.h"
@@ -24,13 +25,16 @@ public:
 
     void NextWeapon();
 
-    void StopDrawTrace() const;
+    void StopDrawTrace();
 
     //bool GetAttackAnimInProgress() const { return AttackAnimInProgress;}
     //bool GetEquipAnimInProgress() const { return EquipAnimInProgress;}
 
     bool CanAttack() const;
     bool CanEquip() const;
+
+    bool GetCurrentWeaponUIData(FWeaponUIData& WeaponUIData) const;
+    bool GetArmoryWeaponUIData(FWeaponUIData& WeaponUIData) const;
 
 protected:    
     UPROPERTY(EditDefaultsOnly, Category="Weapon")
@@ -62,6 +66,9 @@ protected:
 private:
     UPROPERTY()
     AFMBBaseWeapon* CurrentWeapon = nullptr;
+
+    UPROPERTY()
+    AFMBBaseWeapon* ArmoryWeapon = nullptr;
     
     bool AttackAnimInProgress = false;
 

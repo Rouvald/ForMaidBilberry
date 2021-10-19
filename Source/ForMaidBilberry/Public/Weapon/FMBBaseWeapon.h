@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "FMBCoreTypes.h"
 #include "GameFramework/Actor.h"
 #include "FMBBaseWeapon.generated.h"
 
@@ -22,6 +23,8 @@ public:
     virtual void StrongMeleeAttack();
 
     void StopDrawTrace();
+
+    FWeaponUIData GetWeaponUIData() const { return WeaponUIData; }
 
 protected:
     UPROPERTY()
@@ -47,6 +50,9 @@ protected:
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Weapon")
     float StrongAttackDamage = 30.0f;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="UI")
+    FWeaponUIData WeaponUIData;
 
     FTimerHandle DrawTraceTimerHandle;
     

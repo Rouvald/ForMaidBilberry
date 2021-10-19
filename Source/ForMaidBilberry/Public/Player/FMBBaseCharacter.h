@@ -6,7 +6,6 @@
 #include "FMBBaseWeapon.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/SpringArmComponent.h"
-#include "FMBCoreTypes.h"
 #include "FMBBaseCharacter.generated.h"
 
 class USpringArmComponent;
@@ -21,8 +20,6 @@ class FORMAIDBILBERRY_API AFMBBaseCharacter : public ACharacter
     GENERATED_BODY()
 
 public:
-    FOnStaminaChangeSignature OnStaminaChange;
-
     //FName FPPCameraSocketName = "FPPCameraSocket";
 
     AFMBBaseCharacter(const FObjectInitializer& ObjInit);
@@ -34,10 +31,8 @@ public:
     UFUNCTION(BlueprintCallable, Category="Movement")
     bool IsRunning() const;
 
-    float GetStamina() const { return Stamina; }
-
-    UFUNCTION(BlueprintCallable, Category="Movement")
-    float GetMovementDirection() const;
+    //UFUNCTION(BlueprintCallable, Category="Movement")
+    //float GetMovementDirection() const;
 
 protected:
     UPROPERTY(EditDefaultsOnly, Category="Backpack")
@@ -82,41 +77,17 @@ protected:
     UPROPERTY(EditDefaultsOnly, Category="Damage")
     FVector2D LandedDamage = {10.f, 100.0f};
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Stamina", meta=(ClampMin="0.0", ClampMax="200.0"))
-    float MaxStamina = 100.0f;
-
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Stamina")
-    float StaminaModifier = 3.0f;
-
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Stamina")
-    float StaminaUpdateTime = 0.1f;
-
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Stamina")
-    float StaminaAutoHealDelay = 5.0f;
-
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Spend Stamina")
-    float JumpStaminaSpend = 10.0f;
-
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Spend Stamina")
-    float FastAttackStaminaSpend = 30.0f;
-
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Spend Stamina")
-    float StrongAttackStaminaSpend = 50.0f;
-
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Spend Stamina")
-    float RollingStaminaSpend = 15.0f;
-
     virtual void BeginPlay() override;
 
 private:
     bool WantToRun = false;
     //bool IsMovingForward = false;
 
-    FTimerHandle StaminaRunningTimerHandle;
-    FTimerHandle StaminaAutoHealTimerHandle;
-    float Stamina = 0.0f;
-
     //bool JumpAnimInProgress = false;
+
+    int32 FastAttackStaminaSpend = 0;
+    int32 StrongAttackStaminaSpend = 1;
+    int32 RollingStaminaSpend = 2;
 
     //void SwitchCamera();
 
@@ -142,14 +113,7 @@ private:
     void FastMeleeAttack();
     void StrongMeleeAttack();
 
-    void SetStamina(float NewStamina);
-
-    bool SpendStamina(float SpendStaminaVal);
-
-    void DecreaseRunningStamina();
-    void SetAutoHealStaminaTimer();
-    void CheckActiveHealStaminaTimer();
-    void AutoHealStamina();
+    bool SpendStamina(int32 SpendStaminaValue) const;
 
     void Rolling();
 

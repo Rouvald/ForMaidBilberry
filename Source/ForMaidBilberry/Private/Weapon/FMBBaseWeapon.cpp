@@ -3,7 +3,6 @@
 
 #include "Weapon/FMBBaseWeapon.h"
 #include "DrawDebugHelpers.h"
-#include "Components/SkeletalMeshComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "FMBBaseCharacter.h"

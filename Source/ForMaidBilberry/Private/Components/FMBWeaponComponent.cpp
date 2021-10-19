@@ -9,6 +9,7 @@
 #include "Animation/FMBAnimUtils.h"
 #include "Animation/FMBChangeEquipWeaponAnimNotify.h"
 #include "Components/FMBCharacterMovementComponent.h"
+#include "Components/FMBHealthComponent.h"
 
 DECLARE_LOG_CATEGORY_CLASS(BaseWeaponComponentLog, All, All);
 
@@ -78,7 +79,7 @@ void UFMBWeaponComponent::NextWeapon()
 void UFMBWeaponComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
     CurrentWeapon = nullptr;
-    for (auto Weapon : Weapons)
+    for (const auto Weapon : Weapons)
     {
         Weapon->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
         Weapon->Destroy();
@@ -93,7 +94,9 @@ void UFMBWeaponComponent::FastMeleeAttack()
     if (!CanAttack()) return;
     if (!CurrentWeapon) return;
     const auto Character = GetCharacter();
-    if (!Character || Character->GetVelocity().Z != 0.0f) return;
+    if (!Character) return;
+    const auto MovementComponent = Character->FindComponentByClass<UFMBCharacterMovementComponent>();
+    if (!MovementComponent || MovementComponent->IsFalling()) return;
 
     CurrentWeapon->FastMeleeAttack();
 
@@ -107,7 +110,9 @@ void UFMBWeaponComponent::StrongMeleeAttack()
     if (!CanAttack()) return;
     if (!CurrentWeapon) return;
     const auto Character = GetCharacter();
-    if (!Character || Character->GetVelocity().Z != 0.0f) return;
+    if (!Character) return;
+    const auto MovementComponent = Character->FindComponentByClass<UFMBCharacterMovementComponent>();
+    if (!MovementComponent || MovementComponent->IsFalling()) return;
 
     CurrentWeapon->StrongMeleeAttack();
 
@@ -169,16 +174,20 @@ void UFMBWeaponComponent::OnAttackFinished(USkeletalMeshComponent* MeshComp)
     const auto Character = GetCharacter();
     if (!Character || Character->GetMesh() != MeshComp) return;
 
-    StopDrawTrace();
+    const auto HealthComponent = Character->FindComponentByClass<UFMBHealthComponent>();
+    if (!HealthComponent) return;
 
-    AttackAnimInProgress = false;
-    StartMovement();
+    HealthComponent->StartHealStaminaTimer();
+
+    StopDrawTrace();
     //UE_LOG(BaseWeaponComponentLog, Display, TEXT("Attack Finished"));
 }
 
-void UFMBWeaponComponent::StopDrawTrace() const
+void UFMBWeaponComponent::StopDrawTrace()
 {
     CurrentWeapon->StopDrawTrace();
+    AttackAnimInProgress = false;
+    StartMovement();
 }
 
 void UFMBWeaponComponent::OnEquipFinished(USkeletalMeshComponent* MeshComp)
@@ -206,6 +215,7 @@ void UFMBWeaponComponent::OnChangeEquipWeapon(USkeletalMeshComponent* MeshComp)
         AttachWeaponToSocket(CurrentWeapon, Character->GetMesh(), WeaponArmorySocketName);
     }
     CurrentWeapon = Weapons[CurrentWeaponIndex];
+    ArmoryWeapon = Weapons[(CurrentWeaponIndex+1) % Weapons.Num()];
     if (CurrentWeapon->IsHidden())
     {
         CurrentWeapon->SetActorHiddenInGame(false);
@@ -269,4 +279,25 @@ UCharacterMovementComponent* UFMBWeaponComponent::GetMovementComponent() const
     if (!MovementComponent) return nullptr;
 
     return MovementComponent;
+}
+
+bool UFMBWeaponComponent::GetCurrentWeaponUIData(FWeaponUIData& WeaponUIData) const
+{
+    if (CurrentWeapon)
+    {
+        WeaponUIData = CurrentWeapon->GetWeaponUIData();
+        return true;
+    }
+    return false;
+}
+
+// work if u have only 2 weapons //
+bool UFMBWeaponComponent::GetArmoryWeaponUIData(FWeaponUIData& WeaponUIData) const
+{
+    if (ArmoryWeapon)
+    {
+        WeaponUIData = ArmoryWeapon->GetWeaponUIData();
+        return true;
+    }
+    return false;
 }

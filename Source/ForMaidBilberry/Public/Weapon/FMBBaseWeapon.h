@@ -18,9 +18,9 @@ class FORMAIDBILBERRY_API AFMBBaseWeapon : public AActor
 public:
     AFMBBaseWeapon();
 
-    virtual void FastMeleeAttack();
+    virtual void MeleeAttack();
 
-    virtual void StrongMeleeAttack();
+    //virtual void StrongMeleeAttack();
 
     void StopDrawTrace();
 

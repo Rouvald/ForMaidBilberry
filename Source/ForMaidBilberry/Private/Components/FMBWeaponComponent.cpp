@@ -10,6 +10,7 @@
 #include "Animation/FMBChangeEquipWeaponAnimNotify.h"
 #include "Components/FMBCharacterMovementComponent.h"
 #include "Components/FMBHealthComponent.h"
+#include "FMBUtils.h"
 
 DECLARE_LOG_CATEGORY_CLASS(BaseWeaponComponentLog, All, All);
 
@@ -93,12 +94,14 @@ void UFMBWeaponComponent::FastMeleeAttack()
 {
     if (!CanAttack()) return;
     if (!CurrentWeapon) return;
-    const auto Character = GetCharacter();
-    if (!Character) return;
-    const auto MovementComponent = Character->FindComponentByClass<UFMBCharacterMovementComponent>();
+    
+    const auto MovementComponent = FMBUtils::GetFMBPlayerComponent<UFMBCharacterMovementComponent>(GetOwner());
     if (!MovementComponent || MovementComponent->IsFalling()) return;
 
-    CurrentWeapon->FastMeleeAttack();
+    const auto HealthComponent = FMBUtils::GetFMBPlayerComponent<UFMBHealthComponent>(GetOwner());
+    if (!HealthComponent || !(HealthComponent->SpendStamina(FastAttackStaminaSpend))) return;
+
+    CurrentWeapon->MeleeAttack();
 
     AttackAnimInProgress = true;
     StopMovement();
@@ -109,19 +112,21 @@ void UFMBWeaponComponent::StrongMeleeAttack()
 {
     if (!CanAttack()) return;
     if (!CurrentWeapon) return;
-    const auto Character = GetCharacter();
-    if (!Character) return;
-    const auto MovementComponent = Character->FindComponentByClass<UFMBCharacterMovementComponent>();
+    
+    const auto MovementComponent = FMBUtils::GetFMBPlayerComponent<UFMBCharacterMovementComponent>(GetOwner());
     if (!MovementComponent || MovementComponent->IsFalling()) return;
 
-    CurrentWeapon->StrongMeleeAttack();
+    const auto HealthComponent = FMBUtils::GetFMBPlayerComponent<UFMBHealthComponent>(GetOwner());
+    if (!HealthComponent || !(HealthComponent->SpendStamina(FastAttackStaminaSpend))) return;
+
+    CurrentWeapon->MeleeAttack();
 
     AttackAnimInProgress = true;
     StopMovement();
     PlayAnimMontage(StrongMeleeAttackAnimMontage);
 }
 
-void UFMBWeaponComponent::PlayAnimMontage(UAnimMontage* Animation)
+void UFMBWeaponComponent::PlayAnimMontage(UAnimMontage* Animation) const
 {
     const auto Character = GetCharacter();
     if (!Character) return;
@@ -171,10 +176,7 @@ void UFMBWeaponComponent::CheckAttackFinishedAnimNotify(UAnimMontage* Animation)
 
 void UFMBWeaponComponent::OnAttackFinished(USkeletalMeshComponent* MeshComp)
 {
-    const auto Character = GetCharacter();
-    if (!Character || Character->GetMesh() != MeshComp) return;
-
-    const auto HealthComponent = Character->FindComponentByClass<UFMBHealthComponent>();
+    const auto HealthComponent = FMBUtils::GetFMBPlayerComponent<UFMBHealthComponent>(GetOwner());
     if (!HealthComponent) return;
 
     HealthComponent->StartHealStaminaTimer();
@@ -230,7 +232,7 @@ bool UFMBWeaponComponent::CanAttack() const
 
     if (EquipAnimInProgress) return AttackAnimInProgress;
 
-    const auto MovementComponent = Cast<UFMBCharacterMovementComponent>(GetMovementComponent());
+    const auto MovementComponent = FMBUtils::GetFMBPlayerComponent<UFMBCharacterMovementComponent>(GetOwner());
     if (!MovementComponent) return AttackAnimInProgress;
     if (!(MovementComponent->CanRolling())) return AttackAnimInProgress;
 
@@ -244,7 +246,8 @@ bool UFMBWeaponComponent::CanEquip() const
 
 void UFMBWeaponComponent::StartMovement()
 {
-    const auto MovementComponent = GetMovementComponent();
+    const auto MovementComponent = FMBUtils::GetFMBPlayerComponent<UFMBCharacterMovementComponent>(GetOwner());
+    if(!MovementComponent) return;
 
     if (!AttackAnimInProgress)
     {
@@ -254,7 +257,8 @@ void UFMBWeaponComponent::StartMovement()
 
 void UFMBWeaponComponent::StopMovement()
 {
-    const auto MovementComponent = GetMovementComponent();
+    const auto MovementComponent = FMBUtils::GetFMBPlayerComponent<UFMBCharacterMovementComponent>(GetOwner());
+    if(!MovementComponent) return;
 
     if (AttackAnimInProgress)
     {
@@ -268,17 +272,6 @@ AFMBBaseCharacter* UFMBWeaponComponent::GetCharacter() const
     if (!Character) return nullptr;
 
     return Character;
-}
-
-UCharacterMovementComponent* UFMBWeaponComponent::GetMovementComponent() const
-{
-    const auto Character = GetCharacter();
-    if (!Character) return nullptr;
-
-    const auto MovementComponent = Cast<UCharacterMovementComponent>(Character->GetMovementComponent());
-    if (!MovementComponent) return nullptr;
-
-    return MovementComponent;
 }
 
 bool UFMBWeaponComponent::GetCurrentWeaponUIData(FWeaponUIData& WeaponUIData) const
@@ -301,3 +294,5 @@ bool UFMBWeaponComponent::GetArmoryWeaponUIData(FWeaponUIData& WeaponUIData) con
     }
     return false;
 }
+
+

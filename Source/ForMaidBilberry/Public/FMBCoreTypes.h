@@ -19,5 +19,5 @@ struct FWeaponUIData
     UTexture2D* WeaponIcon;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="UI")
-    FString WeaponName;
+    FText WeaponName;
 };

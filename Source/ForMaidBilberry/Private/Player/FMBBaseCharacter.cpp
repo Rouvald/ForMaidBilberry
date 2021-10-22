@@ -112,8 +112,8 @@ void AFMBBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
     PlayerInputComponent->BindAction("Run", IE_Pressed, this, &AFMBBaseCharacter::OnStartRunning);
     PlayerInputComponent->BindAction("Run", IE_Released, this, &AFMBBaseCharacter::OnStopRunning);
 
-    PlayerInputComponent->BindAction("FastMeleeAttack", IE_Pressed, this, &AFMBBaseCharacter::FastMeleeAttack);
-    PlayerInputComponent->BindAction("StrongMeleeAttack", IE_Pressed, this, &AFMBBaseCharacter::StrongMeleeAttack);
+    PlayerInputComponent->BindAction("FastMeleeAttack", IE_Pressed, WeaponComponent, &UFMBWeaponComponent::FastMeleeAttack);
+    PlayerInputComponent->BindAction("StrongMeleeAttack", IE_Pressed, WeaponComponent, &UFMBWeaponComponent::StrongMeleeAttack);
 
     PlayerInputComponent->BindAction("NextWeapon", IE_Pressed, WeaponComponent, &UFMBWeaponComponent::NextWeapon);
 
@@ -189,7 +189,7 @@ bool AFMBBaseCharacter::SpendStamina(int32 SpendStaminaValue) const
 void AFMBBaseCharacter::OnStartRunning()
 {
     const auto MovementComponent = Cast<UFMBCharacterMovementComponent>(GetMovementComponent());
-    if (!MovementComponent || !(MovementComponent->CanRolling())) return;
+    if (!MovementComponent || !(MovementComponent->CanRolling()) || MovementComponent->IsFalling()) return;
 
     if (!WeaponComponent || !(WeaponComponent->CanAttack())) return;
 
@@ -216,9 +216,11 @@ bool AFMBBaseCharacter::IsRunning() const
     return WantToRun && !(FMath::IsNearlyZero(HealthComponent->GetStamina())) && !GetVelocity().IsZero();
 }
 
+/*
 void AFMBBaseCharacter::FastMeleeAttack()
 {
     if (!CheckAllAnimInProgress()) return;
+    if(GetCharacterMovement()->IsFalling()) return;
 
     if (!SpendStamina(FastAttackStaminaSpend)) return;
 
@@ -228,12 +230,13 @@ void AFMBBaseCharacter::FastMeleeAttack()
 void AFMBBaseCharacter::StrongMeleeAttack()
 {
     if (!CheckAllAnimInProgress()) return;
+    if(GetCharacterMovement()->IsFalling()) return;
 
     if (!SpendStamina(StrongAttackStaminaSpend)) return;
 
     WeaponComponent->StrongMeleeAttack();
 }
-
+*/
 /*
 float AFMBBaseCharacter::GetMovementDirection() const
 {
@@ -303,11 +306,11 @@ void AFMBBaseCharacter::Rolling()
     MovementComponent->Rolling();
 }
 
-bool AFMBBaseCharacter::CheckAllAnimInProgress() const
+/*bool AFMBBaseCharacter::CheckAllAnimInProgress() const
 {
     const auto MovementComponent = FindComponentByClass<UFMBCharacterMovementComponent>();
     if (!MovementComponent || !(MovementComponent->CanRolling())) return false;
 
     if (!WeaponComponent || !(WeaponComponent->CanAttack()) || !(WeaponComponent->CanEquip())) return false;
     return true;
-}
+}*/

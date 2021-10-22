@@ -57,13 +57,16 @@ protected:
 
     virtual void BeginPlay() override;
     
-    void PlayAnimMontage(UAnimMontage* Animation);
+    void PlayAnimMontage(UAnimMontage* Animation) const;
 
     virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
     //int32 GetCurrentWeaponIndex() const {return CurrentWeaponIndex;}
 
 private:
+    int32 FastAttackStaminaSpend = 0;
+    int32 StrongAttackStaminaSpend = 1;
+    
     UPROPERTY()
     AFMBBaseWeapon* CurrentWeapon = nullptr;
 
@@ -94,5 +97,4 @@ private:
     void StopMovement();
 
     AFMBBaseCharacter* GetCharacter() const;
-    UCharacterMovementComponent* GetMovementComponent() const;
 };

@@ -5,6 +5,7 @@
 #include "FMBBaseCharacter.h"
 #include "Components/FMBCharacterMovementComponent.h"
 #include "Components/FMBWeaponComponent.h"
+#include "FMBUtils.h"
 
 DECLARE_LOG_CATEGORY_CLASS(HealthLog, All, All);
 
@@ -77,13 +78,10 @@ void UFMBHealthComponent::SetHealth(float NewHealth)
 
 bool UFMBHealthComponent::CheckAllAnimInProgress() const
 {
-    const auto Character = Cast<AFMBBaseCharacter>(GetOwner());
-    if (!Character) return false;
-
-    const auto MovementComponent = Character->FindComponentByClass<UFMBCharacterMovementComponent>();
+    const auto MovementComponent = FMBUtils::GetFMBPlayerComponent<UFMBCharacterMovementComponent>(GetOwner());
     if (!MovementComponent || !(MovementComponent->CanRolling())) return false;
 
-    const auto WeaponComponent = Character->FindComponentByClass<UFMBWeaponComponent>();
+    const auto WeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBWeaponComponent>(GetOwner());
     if (!WeaponComponent || !(WeaponComponent->CanAttack()) || !(WeaponComponent->CanEquip())) return false;
     return true;
 }
@@ -126,10 +124,12 @@ void UFMBHealthComponent::SetStamina(float NewStamina)
 
 void UFMBHealthComponent::DecreaseRunningStamina()
 {
-    const auto Character = Cast<AFMBBaseCharacter>(GetOwner());
-    if (!GetWorld() || !Character) return;
-    const auto MovementComponent = Character->FindComponentByClass<UFMBCharacterMovementComponent>();
-    if(!MovementComponent || MovementComponent->IsFalling()) return;
+    if (!GetWorld()) return;
+    //const auto MovementComponent = FMBUtils::GetFMBPlayerComponent<UFMBCharacterMovementComponent>(GetOwner());
+    //if(!MovementComponent || MovementComponent->IsFalling()) return;
+
+    const auto WeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBWeaponComponent>(GetOwner());
+    if (!WeaponComponent || !(WeaponComponent->CanAttack())) return;
 
     if (GetStamina() <= 0.0f)
     {
@@ -151,6 +151,10 @@ void UFMBHealthComponent::AutoHealStamina()
 void UFMBHealthComponent::StartHealStaminaTimer()
 {
     if (!GetWorld()) return;
+    if (GetWorld()->GetTimerManager().IsTimerActive(StaminaRunningTimerHandle))
+    {
+        return;
+    }
 
     CheckAndStopHealStaminaTimer();
 

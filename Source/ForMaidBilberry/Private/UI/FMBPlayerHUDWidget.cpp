@@ -4,54 +4,53 @@
 #include "UI/FMBPlayerHUDWidget.h"
 #include "Components/FMBHealthComponent.h"
 #include "Components/FMBWeaponComponent.h"
+#include "FMBUtils.h"
 
 float UFMBPlayerHUDWidget::GetHealthPercent() const
 {
-    const auto HealthComponent = GetHealthComponent();
+    const auto HealthComponent = FMBUtils::GetFMBPlayerComponent<UFMBHealthComponent>(GetOwningPlayerPawn());
+    if(!HealthComponent) return 0.0f;
 
     return HealthComponent->GetHealthPercent();
  }
 
 float UFMBPlayerHUDWidget::GetStaminaPercent() const
 {
-    const auto HealthComponent = GetHealthComponent();
+    const auto HealthComponent = FMBUtils::GetFMBPlayerComponent<UFMBHealthComponent>(GetOwningPlayerPawn());
     if(!HealthComponent) return 0.0f;
 
     return HealthComponent->GetStaminaPercent();
 }
 
-UFMBHealthComponent* UFMBPlayerHUDWidget::GetHealthComponent() const
-{
-    const auto Player = GetOwningPlayerPawn();
-    if(!Player) return nullptr;
-
-    const auto Component = Player->GetComponentByClass(UFMBHealthComponent::StaticClass());
-    const auto HealthComponent = Cast<UFMBHealthComponent>(Component);
-    if (!HealthComponent) return nullptr;
-
-    return HealthComponent;
-}
-
 bool UFMBPlayerHUDWidget::GetCurrentWeaponUIData(FWeaponUIData& WeaponUIData) const
 {
-    const auto Player = GetOwningPlayerPawn();
-    if(!Player) return false;
+    const auto WeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBWeaponComponent>(GetOwningPlayerPawn());
+    if(!WeaponComponent) return false;
 
-    const auto Component = Player->GetComponentByClass(UFMBWeaponComponent::StaticClass());
-    const auto WeaponComponent = Cast<UFMBWeaponComponent>(Component);
-    if (!WeaponComponent) return false;
+    //WeaponUIData.WeaponName = CheckWeaponName(WeaponUIData);
 
     return WeaponComponent->GetCurrentWeaponUIData(WeaponUIData);
 }
 
 bool UFMBPlayerHUDWidget::GetArmoryWeaponUIData(FWeaponUIData& WeaponUIData) const
 {
-    const auto Player = GetOwningPlayerPawn();
-    if(!Player) return false;
+    const auto WeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBWeaponComponent>(GetOwningPlayerPawn());
+    if(!WeaponComponent) return false;
 
-    const auto Component = Player->GetComponentByClass(UFMBWeaponComponent::StaticClass());
-    const auto WeaponComponent = Cast<UFMBWeaponComponent>(Component);
-    if (!WeaponComponent) return false;
+    //WeaponUIData.WeaponName = CheckWeaponName(WeaponUIData);
 
     return WeaponComponent->GetArmoryWeaponUIData(WeaponUIData);
+}
+
+bool UFMBPlayerHUDWidget::IsPlayerAlive() const
+{
+    const auto HealthComponent = FMBUtils::GetFMBPlayerComponent<UFMBHealthComponent>(GetOwningPlayerPawn());
+
+    return HealthComponent && !HealthComponent->IsDead();
+}
+
+bool UFMBPlayerHUDWidget::IsPlayerSpectating() const
+{
+    const auto Controller = GetOwningPlayer();
+    return Controller && Controller->GetStateName() == NAME_Spectating;
 }

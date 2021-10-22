@@ -84,9 +84,7 @@ private:
     //bool IsMovingForward = false;
 
     //bool JumpAnimInProgress = false;
-
-    int32 FastAttackStaminaSpend = 0;
-    int32 StrongAttackStaminaSpend = 1;
+    
     int32 RollingStaminaSpend = 2;
 
     //void SwitchCamera();
@@ -110,12 +108,12 @@ private:
     UFUNCTION()
     void OnGroundLanded(const FHitResult& Hitresult);
 
-    void FastMeleeAttack();
-    void StrongMeleeAttack();
+    //void FastMeleeAttack();
+    //void StrongMeleeAttack();
 
     bool SpendStamina(int32 SpendStaminaValue) const;
 
     void Rolling();
 
-    bool CheckAllAnimInProgress() const;
+    //bool CheckAllAnimInProgress() const;
 };

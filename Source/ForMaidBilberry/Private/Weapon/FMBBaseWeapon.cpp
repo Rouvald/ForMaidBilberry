@@ -31,7 +31,7 @@ void AFMBBaseWeapon::BeginPlay()
     check(WeaponMesh);
 }
 
-void AFMBBaseWeapon::FastMeleeAttack()
+void AFMBBaseWeapon::MeleeAttack()
 {
     //UE_LOG(BaseWeaponLog, Display, TEXT("Fast Melee Attack"));
     if (!GetWorld()) return;
@@ -41,7 +41,7 @@ void AFMBBaseWeapon::FastMeleeAttack()
     StartDrawTrace();
 }
 
-void AFMBBaseWeapon::StrongMeleeAttack()
+/*void AFMBBaseWeapon::StrongMeleeAttack()
 {
     //UE_LOG(BaseWeaponLog, Display, TEXT("Strong Melee Attack"));
     if (!GetWorld()) return;
@@ -49,7 +49,7 @@ void AFMBBaseWeapon::StrongMeleeAttack()
     DamageAmount= StrongAttackDamage;
 
     StartDrawTrace();
-}
+}*/
 
 APlayerController* AFMBBaseWeapon::GetPlayerController() const
 {

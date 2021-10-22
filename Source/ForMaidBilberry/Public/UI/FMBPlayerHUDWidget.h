@@ -6,8 +6,6 @@
 #include "FMBCoreTypes.h"
 #include "Blueprint/UserWidget.h"
 #include "FMBPlayerHUDWidget.generated.h"
-
-class UFMBHealthComponent;
 /**
  * 
  */
@@ -29,6 +27,9 @@ public:
     UFUNCTION(BlueprintCallable, Category="UI")
     bool GetArmoryWeaponUIData(FWeaponUIData& WeaponUIData) const;
 
-protected:
-    UFMBHealthComponent* GetHealthComponent() const;
+    UFUNCTION(BlueprintCallable, Category="UI")
+    bool IsPlayerAlive() const;
+
+    UFUNCTION(BlueprintCallable, Category="UI")
+    bool IsPlayerSpectating() const;
 };

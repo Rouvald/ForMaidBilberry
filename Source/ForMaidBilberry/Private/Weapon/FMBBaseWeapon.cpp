@@ -1,4 +1,5 @@
 // For Maid Bilberry Game. All Rights Recerved
+// For Maid Bilberry Game. All Rights Recerved
 
 
 #include "Weapon/FMBBaseWeapon.h"
@@ -6,7 +7,9 @@
 #include "Components/StaticMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "FMBBaseCharacter.h"
-#include "Components/FMBWeaponComponent.h"
+#include "Weapon/Components/FMBWeaponFXComponent.h"
+#include "NiagaraFunctionLibrary.h"
+#include "NiagaraComponent.h"
 
 DECLARE_LOG_CATEGORY_CLASS(BaseWeaponLog, All, All);
 
@@ -14,26 +17,25 @@ AFMBBaseWeapon::AFMBBaseWeapon()
 {
     PrimaryActorTick.bCanEverTick = false;
 
-    DefaultRootComponent =CreateDefaultSubobject<USceneComponent>("DefaultRootComponent");
+    DefaultRootComponent = CreateDefaultSubobject<USceneComponent>("DefaultRootComponent");
     RootComponent = DefaultRootComponent;
 
-    WeaponMesh= CreateDefaultSubobject<UStaticMeshComponent>("WeaponMesh");
+    WeaponMesh = CreateDefaultSubobject<UStaticMeshComponent>("WeaponMesh");
     WeaponMesh->SetupAttachment(DefaultRootComponent);
-    WeaponMesh->SetCollisionResponseToChannels(ECollisionResponse::ECR_Overlap);
-    
-    //WeaponMesh = CreateDefaultSubobject<USkeletalMeshComponent>("WeaponMesh");
-    //SetRootComponent(WeaponMesh);
+    WeaponMesh->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
+
+    WeaponFXComponent = CreateDefaultSubobject<UFMBWeaponFXComponent>("WeaponFXComponent");
 }
 
 void AFMBBaseWeapon::BeginPlay()
 {
     Super::BeginPlay();
     check(WeaponMesh);
+    check(WeaponFXComponent);
 }
 
-void AFMBBaseWeapon::MeleeAttack()
+void AFMBBaseWeapon::FastMeleeAttack()
 {
-    //UE_LOG(BaseWeaponLog, Display, TEXT("Fast Melee Attack"));
     if (!GetWorld()) return;
 
     DamageAmount = FastAttackDamage;
@@ -41,15 +43,14 @@ void AFMBBaseWeapon::MeleeAttack()
     StartDrawTrace();
 }
 
-/*void AFMBBaseWeapon::StrongMeleeAttack()
+void AFMBBaseWeapon::StrongMeleeAttack()
 {
-    //UE_LOG(BaseWeaponLog, Display, TEXT("Strong Melee Attack"));
     if (!GetWorld()) return;
 
-    DamageAmount= StrongAttackDamage;
+    DamageAmount = StrongAttackDamage;
 
     StartDrawTrace();
-}*/
+}
 
 APlayerController* AFMBBaseWeapon::GetPlayerController() const
 {
@@ -72,7 +73,7 @@ void AFMBBaseWeapon::DrawTrace()
     const FVector TraceEnd = FindBladeSocketLocation(EndBladeTraceSocketName);
     if (TraceStart.IsZero() || TraceEnd.IsZero()) return;
 
-    DrawDebugLine(GetWorld(), TraceStart, TraceEnd, FColor::Red, false, 0.05f, 0, 5.0f);
+    //DrawDebugLine(GetWorld(), TraceStart, TraceEnd, FColor::Red, false, 0.05f, 0, 5.0f);
 
     FHitResult HitResult;
     MakeHit(HitResult, TraceStart, TraceEnd);
@@ -92,8 +93,8 @@ FVector AFMBBaseWeapon::FindBladeSocketLocation(FName BladeTraceSocketName) cons
 
 void AFMBBaseWeapon::MakeHit(FHitResult& HitResult, const FVector& TraceStart, const FVector& TraceEnd)
 {
-    if(!GetWorld()) return;
-    
+    if (!GetWorld()) return;
+
     FCollisionQueryParams CollisionParams;
     CollisionParams.AddIgnoredActor(GetOwner());
 
@@ -105,6 +106,7 @@ void AFMBBaseWeapon::SortEqualCharacter(FHitResult& HitResult)
     if (HitActors.Num() == 0)
     {
         NewDamagedActor(HitResult);
+        WeaponFXComponent->PlayImpactFX(HitResult);
     }
     else
     {
@@ -119,6 +121,7 @@ void AFMBBaseWeapon::SortEqualCharacter(FHitResult& HitResult)
         if (!CheckNewHitActor)
         {
             NewDamagedActor(HitResult);
+            WeaponFXComponent->PlayImpactFX(HitResult);
         }
     }
 }
@@ -130,7 +133,7 @@ void AFMBBaseWeapon::NewDamagedActor(FHitResult& HitResult)
     {
         MakeDamage(HitResult);
         //UE_LOG(BaseWeaponLog, Display, TEXT("Hit %s"), *(Cast<ACharacter>(HitResult.GetActor()))->GetName());
-        DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 10.0f, 32, FColor::Green, false, 5.0f);
+        //DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 10.0f, 32, FColor::Green, false, 5.0f);
     }
 }
 
@@ -144,6 +147,13 @@ void AFMBBaseWeapon::MakeDamage(FHitResult& HitResult)
 
 void AFMBBaseWeapon::StartDrawTrace()
 {
+    InitSwordTrailFX();
+    /*
+     * maybe its a little mistake, in future i will test it ;)
+     * This line need if u wanna use FMBSwordTrailAnimNotifyState
+     * U need comment InitSwordTrailFX(); , and uncomment SwordTrailFXComponent = SpawnSwordTrailFX();
+    */
+    //SwordTrailFXComponent = SpawnSwordTrailFX();
     GetWorld()->GetTimerManager().SetTimer(DrawTraceTimerHandle, this, &AFMBBaseWeapon::TraceLogic, 0.01f, true);
 }
 
@@ -153,8 +163,44 @@ void AFMBBaseWeapon::StopDrawTrace()
     //UE_LOG(BaseWeaponLog, Display, TEXT("Get Owner: %s"), *(GetOwner()->GetName()));
     HitActors.Empty();
 
-    if(GetWorld()->GetTimerManager().IsTimerActive(DrawTraceTimerHandle))
+    if (GetWorld()->GetTimerManager().IsTimerActive(DrawTraceTimerHandle))
     {
         GetWorld()->GetTimerManager().ClearTimer(DrawTraceTimerHandle);
+    }
+    /*
+    * This line need if u wanna use FMBSwordTrailAnimNotifyState
+    * U need comment SetSwordTrailFXVisibility(false);
+    */
+    SetSwordTrailFXVisibility(false);
+}
+
+UNiagaraComponent* AFMBBaseWeapon::SpawnSwordTrailFX() const
+{
+    return UNiagaraFunctionLibrary::SpawnSystemAttached
+        (
+            SwordTrailFX,                  //
+            WeaponMesh,                    //
+            SwordTrailSocketName,          //
+            FVector::ZeroVector,           //
+            FRotator::ZeroRotator,         //
+            EAttachLocation::SnapToTarget, //
+            true);
+}
+
+void AFMBBaseWeapon::InitSwordTrailFX()
+{
+    if (!SwordTrailFXComponent)
+    {
+        SwordTrailFXComponent = SpawnSwordTrailFX();
+    }
+    SetSwordTrailFXVisibility(true);
+}
+
+void AFMBBaseWeapon::SetSwordTrailFXVisibility(bool Visible) const
+{
+    if (SwordTrailFXComponent)
+    {
+        //SwordTrailFXComponent->SetPaused(!Visible);
+        SwordTrailFXComponent->SetVisibility(Visible);
     }
 }

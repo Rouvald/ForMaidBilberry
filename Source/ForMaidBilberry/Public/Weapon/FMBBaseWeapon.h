@@ -7,8 +7,10 @@
 #include "GameFramework/Actor.h"
 #include "FMBBaseWeapon.generated.h"
 
-class USkeletalMeshComponent;
-class UCapsuleComponent;
+class UStaticMeshComponent;
+class UFMBWeaponFXComponent;
+class UNiagaraSystem;
+class UNiagaraComponent;
 
 UCLASS()
 class FORMAIDBILBERRY_API AFMBBaseWeapon : public AActor
@@ -18,7 +20,8 @@ class FORMAIDBILBERRY_API AFMBBaseWeapon : public AActor
 public:
     AFMBBaseWeapon();
 
-    virtual void MeleeAttack();
+    virtual void FastMeleeAttack();
+    virtual void StrongMeleeAttack();
 
     //virtual void StrongMeleeAttack();
 
@@ -26,21 +29,29 @@ public:
 
     FWeaponUIData GetWeaponUIData() const { return WeaponUIData; }
 
+    UNiagaraComponent* GetSwordTrailFXComponent() const { return SwordTrailFXComponent; }
+
 protected:
     UPROPERTY()
     USceneComponent* DefaultRootComponent;
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Components")
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Weapon")
     UStaticMeshComponent* WeaponMesh;
 
-    //UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="Components")
+    //UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="Weapon")
     //USkeletalMeshComponent* WeaponMesh;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Weapon")
+    UFMBWeaponFXComponent* WeaponFXComponent;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
     FName StartBladeTraceSocketName = "StartBladeTraceSocket";
 
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
     FName EndBladeTraceSocketName = "EndBladeTraceSocket";
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+    FName SwordTrailSocketName = "SwordTrailSocket";
 
     UPROPERTY()
     float DamageAmount;
@@ -54,10 +65,16 @@ protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="UI")
     FWeaponUIData WeaponUIData;
 
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="VFX")
+    UNiagaraSystem* SwordTrailFX;
+
     FTimerHandle DrawTraceTimerHandle;
-    
+
     UPROPERTY()
     TArray<ACharacter*> HitActors;
+
+    UPROPERTY()
+    UNiagaraComponent* SwordTrailFXComponent;
 
     virtual void BeginPlay() override;
 
@@ -74,4 +91,9 @@ protected:
     void MakeDamage(FHitResult& HitResult);
 
     void StartDrawTrace();
+
+    UNiagaraComponent* SpawnSwordTrailFX() const;
+
+    void InitSwordTrailFX();
+    void SetSwordTrailFXVisibility(bool Visible) const;
 };

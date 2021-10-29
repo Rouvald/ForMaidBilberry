@@ -13,7 +13,8 @@ public class ForMaidBilberry : ModuleRules
 			"Core",
 			"CoreUObject",
 			"Engine",
-			"InputCore"
+			"InputCore",
+			"Niagara"
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] { });
@@ -24,7 +25,9 @@ public class ForMaidBilberry : ModuleRules
 			"ForMaidBilberry/Public/Components",
 			"ForMaidBilberry/Public/Dev",
 			"ForMaidBilberry/Public/Weapon",
-			"ForMaidBilberry/Public/UI"
+			"ForMaidBilberry/Public/UI",
+			"ForMaidBilberry/Public/PickUps",
+			"ForMaidBilberry/Public/Weapon/Components"
 		});
 
 		// Uncomment if you are using Slate UI

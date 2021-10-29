@@ -8,6 +8,7 @@
 #include "FMBHealthComponent.generated.h"
 
 class UAnimMontage;
+class UCameraShakeBase;
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class FORMAIDBILBERRY_API UFMBHealthComponent : public UActorComponent
@@ -32,6 +33,9 @@ public:
     float GetStaminaPercent() const { return Stamina / MaxStamina; }
 
     float GetHealth() const { return Health; }
+
+    bool TryToAddHealth(float HealthAmount);
+    bool IsHealthFull() const;
 
     float GetStamina() const { return Stamina; }
 
@@ -86,6 +90,9 @@ protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Spend Stamina")
     float RollingStaminaSpend = 15.0f;
 
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="VFX")
+    TSubclassOf<UCameraShakeBase> CameraShake; 
+
     virtual void BeginPlay() override;
 private:
     float Health = 0.0f;
@@ -110,4 +117,6 @@ private:
     void AutoHealStamina();
 
     float ChooseSpendStamina(int32 SpendStaminaValue) const;
+
+    void PlayCameraShake() const;
 };

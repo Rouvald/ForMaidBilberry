@@ -34,10 +34,13 @@ void UFMBCharacterMovementComponent::Rolling()
     const auto Character = Cast<AFMBBaseCharacter>(GetPawnOwner());
     if (!Character) return;
 
-    /*const auto ForwardVector = Character->GetActorLocation();
-    if (ForwardVector.IsZero()) return;
-    const FVector NewLocation = ForwardVector * FVector(0.0f, 10.0f, 0.0f); 
-    Character->SetActorLocation(NewLocation);*/
+    /*const auto PlayerController = Cast<APlayerController>(Character->Controller);
+    if(!PlayerController) return;
+    Character->DisableInput(PlayerController);
+
+    const auto ForwardVector = Character->GetActorForwardVector();
+    const auto LaunchVelocity = ForwardVector * FVector(RollingVelocity, RollingVelocity, 0.0f);
+    Character->LaunchCharacter(LaunchVelocity, true, true);*/
     
     RollingAnimInProgress = true;
     Character->PlayAnimMontage(RollingAnimMontage);
@@ -62,6 +65,10 @@ void UFMBCharacterMovementComponent::OnRollingFinished(USkeletalMeshComponent* M
 {
     const auto Character = Cast<AFMBBaseCharacter>(GetPawnOwner());
     if (!Character || Character->GetMesh() != MeshComp) return;
+
+    /*const auto PlayerController = Cast<APlayerController>(Character->Controller);
+    if(!PlayerController) return;
+    Character->EnableInput(PlayerController);*/
 
     const auto HealthComponent = FMBUtils::GetFMBPlayerComponent<UFMBHealthComponent>(GetPawnOwner());
     if (!HealthComponent) return;

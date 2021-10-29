@@ -58,13 +58,14 @@ void UFMBHealthComponent::OnTakeAnyDamage(AActor* DamagedActor, float Damage, co
     {
         GetWorld()->GetTimerManager().SetTimer(HealTimeHandle, this, &UFMBHealthComponent::AutoHealing, HealUpdateTime, true, HealDelay);
     }
+    PlayCameraShake();
 }
 
 void UFMBHealthComponent::AutoHealing()
 {
     SetHealth(Health + HealModifier);
 
-    if (FMath::IsNearlyEqual(Health, MaxHealth) && GetWorld())
+    if (IsHealthFull() && GetWorld())
     {
         GetWorld()->GetTimerManager().ClearTimer(HealTimeHandle);
     }
@@ -72,8 +73,24 @@ void UFMBHealthComponent::AutoHealing()
 
 void UFMBHealthComponent::SetHealth(float NewHealth)
 {
-    Health = FMath::Clamp(NewHealth, 0.0f, MaxHealth);
-    OnHealthChange.Broadcast(Health);
+    const auto NextHealth = FMath::Clamp(NewHealth, 0.0f, MaxHealth);
+    const auto HealthDelta = NextHealth - Health;
+    
+    Health = NextHealth;
+    OnHealthChange.Broadcast(Health, HealthDelta);
+}
+
+bool UFMBHealthComponent::TryToAddHealth(float HealthAmount)
+{
+    if (IsDead() || IsHealthFull()) return false;
+    
+    SetHealth(Health + HealthAmount);
+    return true;
+}
+
+bool UFMBHealthComponent::IsHealthFull() const
+{
+    return FMath::IsNearlyEqual(Health, MaxHealth);
 }
 
 bool UFMBHealthComponent::CheckAllAnimInProgress() const
@@ -202,4 +219,16 @@ void UFMBHealthComponent::CheckAndStopStaminaRunningTimer()
     {
         GetWorld()->GetTimerManager().ClearTimer(StaminaRunningTimerHandle);
     }
+}
+
+void UFMBHealthComponent::PlayCameraShake() const
+{
+    if(IsDead()) return;
+    const auto Player = Cast<APawn>(GetOwner());
+    if(!Player) return;
+
+    const auto PlayerController = Player->GetController<APlayerController>();
+    if(!PlayerController || !PlayerController->PlayerCameraManager) return;
+
+    PlayerController->PlayerCameraManager->StartCameraShake(CameraShake);
 }

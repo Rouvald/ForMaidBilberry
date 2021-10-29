@@ -36,6 +36,8 @@ public:
     bool GetCurrentWeaponUIData(FWeaponUIData& WeaponUIData) const;
     bool GetArmoryWeaponUIData(FWeaponUIData& WeaponUIData) const;
 
+    AFMBBaseWeapon* GetCurrentWeapon () const{return CurrentWeapon;}
+
 protected:    
     UPROPERTY(EditDefaultsOnly, Category="Weapon")
     TArray<TSubclassOf<AFMBBaseWeapon>> WeaponClasses;

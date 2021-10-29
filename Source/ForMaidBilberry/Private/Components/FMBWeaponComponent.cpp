@@ -48,7 +48,10 @@ void UFMBWeaponComponent::SpawnWeapons()
 
         Weapons.Add(Weapon);
 
-        Weapon->SetActorHiddenInGame(true);
+        if (Weapon->GetRootComponent())
+        {
+            Weapon->GetRootComponent()->SetVisibility(false, true);
+        }
         AttachWeaponToSocket(Weapon, Character->GetMesh(), WeaponArmorySocketName);
     }
 }
@@ -57,7 +60,7 @@ void UFMBWeaponComponent::AttachWeaponToSocket(AFMBBaseWeapon* Weapon, USceneCom
 {
     if (!Weapon || !SceneComponent) return;
 
-    FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, false);
+    const FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, false);
     Weapon->AttachToComponent(SceneComponent, AttachmentRules, WeaponSocket);
 }
 
@@ -94,14 +97,14 @@ void UFMBWeaponComponent::FastMeleeAttack()
 {
     if (!CanAttack()) return;
     if (!CurrentWeapon) return;
-    
+
     const auto MovementComponent = FMBUtils::GetFMBPlayerComponent<UFMBCharacterMovementComponent>(GetOwner());
     if (!MovementComponent || MovementComponent->IsFalling()) return;
 
     const auto HealthComponent = FMBUtils::GetFMBPlayerComponent<UFMBHealthComponent>(GetOwner());
     if (!HealthComponent || !(HealthComponent->SpendStamina(FastAttackStaminaSpend))) return;
 
-    CurrentWeapon->MeleeAttack();
+    CurrentWeapon->FastMeleeAttack();
 
     AttackAnimInProgress = true;
     StopMovement();
@@ -112,14 +115,14 @@ void UFMBWeaponComponent::StrongMeleeAttack()
 {
     if (!CanAttack()) return;
     if (!CurrentWeapon) return;
-    
+
     const auto MovementComponent = FMBUtils::GetFMBPlayerComponent<UFMBCharacterMovementComponent>(GetOwner());
     if (!MovementComponent || MovementComponent->IsFalling()) return;
 
     const auto HealthComponent = FMBUtils::GetFMBPlayerComponent<UFMBHealthComponent>(GetOwner());
     if (!HealthComponent || !(HealthComponent->SpendStamina(FastAttackStaminaSpend))) return;
 
-    CurrentWeapon->MeleeAttack();
+    CurrentWeapon->StrongMeleeAttack();
 
     AttackAnimInProgress = true;
     StopMovement();
@@ -213,14 +216,17 @@ void UFMBWeaponComponent::OnChangeEquipWeapon(USkeletalMeshComponent* MeshComp)
     if (CurrentWeapon)
     {
         StopDrawTrace();
-        CurrentWeapon->SetActorHiddenInGame(true);
+        if (CurrentWeapon->GetRootComponent())
+        {
+            CurrentWeapon->GetRootComponent()->SetVisibility(false, true);
+        }
         AttachWeaponToSocket(CurrentWeapon, Character->GetMesh(), WeaponArmorySocketName);
     }
     CurrentWeapon = Weapons[CurrentWeaponIndex];
-    ArmoryWeapon = Weapons[(CurrentWeaponIndex+1) % Weapons.Num()];
-    if (CurrentWeapon->IsHidden())
+    ArmoryWeapon = Weapons[(CurrentWeaponIndex + 1) % Weapons.Num()];
+    if (CurrentWeapon->GetRootComponent())
     {
-        CurrentWeapon->SetActorHiddenInGame(false);
+        CurrentWeapon->GetRootComponent()->SetVisibility(true, true);
     }
     AttachWeaponToSocket(CurrentWeapon, Character->GetMesh(), WeaponEquipSocketName);
 }
@@ -247,7 +253,7 @@ bool UFMBWeaponComponent::CanEquip() const
 void UFMBWeaponComponent::StartMovement()
 {
     const auto MovementComponent = FMBUtils::GetFMBPlayerComponent<UFMBCharacterMovementComponent>(GetOwner());
-    if(!MovementComponent) return;
+    if (!MovementComponent) return;
 
     if (!AttackAnimInProgress)
     {
@@ -258,7 +264,7 @@ void UFMBWeaponComponent::StartMovement()
 void UFMBWeaponComponent::StopMovement()
 {
     const auto MovementComponent = FMBUtils::GetFMBPlayerComponent<UFMBCharacterMovementComponent>(GetOwner());
-    if(!MovementComponent) return;
+    if (!MovementComponent) return;
 
     if (AttackAnimInProgress)
     {
@@ -294,5 +300,3 @@ bool UFMBWeaponComponent::GetArmoryWeaponUIData(FWeaponUIData& WeaponUIData) con
     }
     return false;
 }
-
-

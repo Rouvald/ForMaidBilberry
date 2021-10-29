@@ -62,25 +62,26 @@ AFMBBaseCharacter::AFMBBaseCharacter(const FObjectInitializer& ObjInit)
 
     Backpack = CreateDefaultSubobject<UStaticMeshComponent>("Backpack");
     Backpack->SetupAttachment(GetMesh(), BackpackSocketName);
-    Backpack->SetCollisionResponseToChannels(ECollisionResponse::ECR_Overlap);
+    Backpack->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 }
 
 void AFMBBaseCharacter::BeginPlay()
 {
     Super::BeginPlay();
 
+    check(GetMesh());
     check(HealthComponent);
     check(HealthTextComponent);
     check(GetCharacterMovement());
 
-    OnHealthChange(HealthComponent->GetHealth());
+    OnHealthChange(HealthComponent->GetHealth(), 0.0f);
     HealthComponent->OnDeath.AddUObject(this, &AFMBBaseCharacter::OnDeath);
     HealthComponent->OnHealthChange.AddUObject(this, &AFMBBaseCharacter::OnHealthChange);
 
     LandedDelegate.AddDynamic(this, &AFMBBaseCharacter::OnGroundLanded);
 }
 
-void AFMBBaseCharacter::OnHealthChange(float Health)
+void AFMBBaseCharacter::OnHealthChange(float Health, float HealthDelta)
 {
     HealthTextComponent->SetText(FText::FromString(FString::Printf(TEXT("%0.0f"), Health)));
 }
@@ -180,12 +181,6 @@ void AFMBBaseCharacter::Jump()
     Super::Jump();
 }
 
-bool AFMBBaseCharacter::SpendStamina(int32 SpendStaminaValue) const
-{
-    if(!(HealthComponent->SpendStamina(SpendStaminaValue))) return false;
-    return true;
-}
-
 void AFMBBaseCharacter::OnStartRunning()
 {
     const auto MovementComponent = Cast<UFMBCharacterMovementComponent>(GetMovementComponent());
@@ -253,7 +248,7 @@ void AFMBBaseCharacter::OnDeath()
 {
     UE_LOG(BaseCharacterLog, Display, TEXT("Player %s is dead"), *GetName());
 
-    PlayAnimMontage(DeathAnimMontage);
+    //PlayAnimMontage(DeathAnimMontage);
 
     GetCharacterMovement()->DisableMovement();
     SetLifeSpan(LifeSpanOnDeath);
@@ -304,6 +299,12 @@ void AFMBBaseCharacter::Rolling()
     WeaponComponent->StopDrawTrace();
     OnStopRunning();
     MovementComponent->Rolling();
+}
+
+bool AFMBBaseCharacter::SpendStamina(int32 SpendStaminaValue) const
+{
+    if(!(HealthComponent->SpendStamina(SpendStaminaValue))) return false;
+    return true;
 }
 
 /*bool AFMBBaseCharacter::CheckAllAnimInProgress() const

@@ -33,6 +33,9 @@ protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Movement", meta = (ClampMin="1.5", ClampMax="5.0"))
     float RunModifier = 2.0f;
 
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Movement")
+    float RollingVelocity = 1000.0f;
+
     //UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Movement", meta = (ClampMin="2.0", ClampMax="7.0"))
     //float RollingModifier = 4.0f;
 

@@ -185,7 +185,6 @@ void UFMBWeaponComponent::OnAttackFinished(USkeletalMeshComponent* MeshComp)
     HealthComponent->StartHealStaminaTimer();
 
     StopDrawTrace();
-    //UE_LOG(BaseWeaponComponentLog, Display, TEXT("Attack Finished"));
 }
 
 void UFMBWeaponComponent::StopDrawTrace()
@@ -250,7 +249,7 @@ bool UFMBWeaponComponent::CanEquip() const
     return !EquipAnimInProgress;
 }
 
-void UFMBWeaponComponent::StartMovement()
+void UFMBWeaponComponent::StartMovement() const
 {
     const auto MovementComponent = FMBUtils::GetFMBPlayerComponent<UFMBCharacterMovementComponent>(GetOwner());
     if (!MovementComponent) return;
@@ -261,7 +260,7 @@ void UFMBWeaponComponent::StartMovement()
     }
 }
 
-void UFMBWeaponComponent::StopMovement()
+void UFMBWeaponComponent::StopMovement() const
 {
     const auto MovementComponent = FMBUtils::GetFMBPlayerComponent<UFMBCharacterMovementComponent>(GetOwner());
     if (!MovementComponent) return;

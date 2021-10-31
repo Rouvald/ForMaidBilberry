@@ -36,9 +36,9 @@ public:
     bool GetCurrentWeaponUIData(FWeaponUIData& WeaponUIData) const;
     bool GetArmoryWeaponUIData(FWeaponUIData& WeaponUIData) const;
 
-    AFMBBaseWeapon* GetCurrentWeapon () const{return CurrentWeapon;}
+    AFMBBaseWeapon* GetCurrentWeapon() const { return CurrentWeapon; }
 
-protected:    
+protected:
     UPROPERTY(EditDefaultsOnly, Category="Weapon")
     TArray<TSubclassOf<AFMBBaseWeapon>> WeaponClasses;
 
@@ -58,7 +58,7 @@ protected:
     UAnimMontage* EquipAnimMontage;
 
     virtual void BeginPlay() override;
-    
+
     void PlayAnimMontage(UAnimMontage* Animation) const;
 
     virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
@@ -68,13 +68,13 @@ protected:
 private:
     int32 FastAttackStaminaSpend = 0;
     int32 StrongAttackStaminaSpend = 1;
-    
+
     UPROPERTY()
     AFMBBaseWeapon* CurrentWeapon = nullptr;
 
     UPROPERTY()
     AFMBBaseWeapon* ArmoryWeapon = nullptr;
-    
+
     bool AttackAnimInProgress = false;
 
     bool EquipAnimInProgress = false;
@@ -87,16 +87,16 @@ private:
     void SpawnWeapons();
     void AttachWeaponToSocket(AFMBBaseWeapon* Weapon, USceneComponent* MeshComp, const FName& WeaponSocket);
     void EquipWeapon(int32 WeaponIndex);
-    
+
     void InitAnimation();
     void CheckAttackFinishedAnimNotify(UAnimMontage* Animation);
-    
+
     void OnAttackFinished(USkeletalMeshComponent* MeshComp);
     void OnEquipFinished(USkeletalMeshComponent* MeshComp);
     void OnChangeEquipWeapon(USkeletalMeshComponent* MeshComp);
-    
-    void StartMovement();
-    void StopMovement();
+
+    void StartMovement() const;
+    void StopMovement() const;
 
     AFMBBaseCharacter* GetCharacter() const;
 };

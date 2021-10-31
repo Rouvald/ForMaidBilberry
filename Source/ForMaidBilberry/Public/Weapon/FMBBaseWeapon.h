@@ -84,7 +84,7 @@ protected:
     void DrawTrace();
 
     FVector FindBladeSocketLocation(FName BladeTraceSocketName) const;
-    void MakeHit(FHitResult& HitResult, const FVector& TraceStart, const FVector& TraceEnd);
+    void MakeHit(FHitResult& HitResult, const FVector& TraceStart, const FVector& TraceEnd) const;
 
     void SortEqualCharacter(FHitResult& HitResult);
     void NewDamagedActor(FHitResult& HitResult);
@@ -93,7 +93,4 @@ protected:
     void StartDrawTrace();
 
     UNiagaraComponent* SpawnSwordTrailFX() const;
-
-    void InitSwordTrailFX();
-    void SetSwordTrailFXVisibility(bool Visible) const;
 };

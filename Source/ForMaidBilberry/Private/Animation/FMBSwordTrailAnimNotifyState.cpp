@@ -13,7 +13,7 @@ void UFMBSwordTrailAnimNotifyState::NotifyBegin(USkeletalMeshComponent* MeshComp
     const auto SwordTrailFXComponent = GetSwordTrailFXComponent(MeshComp);
     if(!SwordTrailFXComponent) return;
 
-    SwordTrailFXComponent->SetVisibility(true);
+    //SwordTrailFXComponent->SetVisibility(true);
     
     Super::NotifyBegin(MeshComp, Animation, TotalDuration);
 }
@@ -22,7 +22,8 @@ void UFMBSwordTrailAnimNotifyState::NotifyEnd(USkeletalMeshComponent* MeshComp, 
     const auto SwordTrailFXComponent = GetSwordTrailFXComponent(MeshComp);
     if(!SwordTrailFXComponent) return;
 
-    SwordTrailFXComponent->SetVisibility(false);
+    //SwordTrailFXComponent->SetVisibility(false);
+    
     Super::NotifyEnd(MeshComp, Animation);
 }
 

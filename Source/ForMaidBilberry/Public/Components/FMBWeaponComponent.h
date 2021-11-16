@@ -6,6 +6,7 @@
 #include "FMBBaseWeapon.h"
 #include "FMBCharacterMovementComponent.h"
 #include "Components/ActorComponent.h"
+#include "FMBCoreTypes.h"
 #include "FMBWeaponComponent.generated.h"
 
 class AFMBBaseCharacter;
@@ -36,26 +37,33 @@ public:
     bool GetCurrentWeaponUIData(FWeaponUIData& WeaponUIData) const;
     bool GetArmoryWeaponUIData(FWeaponUIData& WeaponUIData) const;
 
+    UFUNCTION(BlueprintCallable)
     AFMBBaseWeapon* GetCurrentWeapon() const { return CurrentWeapon; }
+
+    UFUNCTION(BlueprintCallable)
+    FWeaponAnimationsData GetCurrentWeaponAnimationsData() const {return CurrentWeaponAnimationsData;}
+
+    UFUNCTION(BlueprintCallable)
+    int32 GetCurrentWeaponIndex() const { return CurrentWeaponIndex;}
 
 protected:
     UPROPERTY(EditDefaultsOnly, Category="Weapon")
     TArray<TSubclassOf<AFMBBaseWeapon>> WeaponClasses;
 
     UPROPERTY(EditDefaultsOnly, Category="Weapon")
-    FName WeaponEquipSocketName = "WeaponEquipSocket_L"; // LeftWeaponShield
-
-    UPROPERTY(EditDefaultsOnly, Category="Weapon")
     FName WeaponArmorySocketName = "WeaponArmorySocket";
 
-    UPROPERTY(EditDefaultsOnly, Category="Animation")
-    UAnimMontage* FastMeleeAttackAnimMontage;
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Animation")
+    TMap<EWeaponType, FWeaponAnimationsData> WeaponsAnimationsData;
 
-    UPROPERTY(EditDefaultsOnly, Category="Animation")
-    UAnimMontage* StrongMeleeAttackAnimMontage;
+    //UPROPERTY(EditDefaultsOnly, Category="Animation")
+    //UAnimMontage* FastMeleeAttackAnimMontage;
 
-    UPROPERTY(EditDefaultsOnly, Category="Animation")
-    UAnimMontage* EquipAnimMontage;
+    //UPROPERTY(EditDefaultsOnly, Category="Animation")
+    //UAnimMontage* StrongMeleeAttackAnimMontage;
+
+    //UPROPERTY(EditDefaultsOnly, Category="Animation")
+    //UAnimMontage* EquipAnimMontage;
 
     virtual void BeginPlay() override;
 
@@ -66,14 +74,14 @@ protected:
     //int32 GetCurrentWeaponIndex() const {return CurrentWeaponIndex;}
 
 private:
-    int32 FastAttackStaminaSpend = 0;
-    int32 StrongAttackStaminaSpend = 1;
-
     UPROPERTY()
     AFMBBaseWeapon* CurrentWeapon = nullptr;
 
     UPROPERTY()
     AFMBBaseWeapon* ArmoryWeapon = nullptr;
+
+    UPROPERTY()
+    FWeaponAnimationsData CurrentWeaponAnimationsData;
 
     bool AttackAnimInProgress = false;
 
@@ -82,13 +90,15 @@ private:
     UPROPERTY()
     TArray<AFMBBaseWeapon*> Weapons;
 
+    
     int32 CurrentWeaponIndex = 0;
 
     void SpawnWeapons();
-    void AttachWeaponToSocket(AFMBBaseWeapon* Weapon, USceneComponent* MeshComp, const FName& WeaponSocket);
+    void AttachWeaponToSocket(AFMBBaseWeapon* Weapon, USceneComponent* MeshComp, const FName& WeaponSocket) const;
     void EquipWeapon(int32 WeaponIndex);
 
-    void InitAnimation();
+    void CheckWeaponAnimationsData();
+    void InitAnimation(const FWeaponAnimationsData& WeaponAnimationData);
     void CheckAttackFinishedAnimNotify(UAnimMontage* Animation);
 
     void OnAttackFinished(USkeletalMeshComponent* MeshComp);
@@ -98,5 +108,7 @@ private:
     void StartMovement() const;
     void StopMovement() const;
 
+    bool CanDoAttack() const;
+    
     AFMBBaseCharacter* GetCharacter() const;
 };

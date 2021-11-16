@@ -6,6 +6,7 @@
 #include "FMBBaseWeapon.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "FMBCoreTypes.h"
 #include "FMBBaseCharacter.generated.h"
 
 class USpringArmComponent;
@@ -65,8 +66,8 @@ protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="Components")
     UFMBWeaponComponent* WeaponComponent;
 
-    UPROPERTY(EditDefaultsOnly, Category="Animation")
-    UAnimMontage* DeathAnimMontage;
+    //UPROPERTY(EditDefaultsOnly, Category="Animation")
+    //UAnimMontage* DeathAnimMontage;
 
     UPROPERTY(EditDefaultsOnly, Category="Damage")
     float LifeSpanOnDeath = 5.0f;
@@ -84,8 +85,6 @@ private:
     //bool IsMovingForward = false;
 
     //bool JumpAnimInProgress = false;
-    
-    int32 RollingStaminaSpend = 2;
 
     //void SwitchCamera();
 
@@ -110,8 +109,6 @@ private:
 
     //void FastMeleeAttack();
     //void StrongMeleeAttack();
-
-    bool SpendStamina(int32 SpendStaminaValue) const;
 
     void Rolling();
 

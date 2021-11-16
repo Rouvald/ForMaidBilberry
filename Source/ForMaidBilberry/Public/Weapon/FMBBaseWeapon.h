@@ -20,10 +20,12 @@ class FORMAIDBILBERRY_API AFMBBaseWeapon : public AActor
 public:
     AFMBBaseWeapon();
 
-    virtual void FastMeleeAttack();
-    virtual void StrongMeleeAttack();
+    virtual void MeleeAttack(EChooseAttack ChooseAttack);
 
-    //virtual void StrongMeleeAttack();
+    //UFUNCTION(BlueprintCallable)
+    //FWeaponAnimationData GetWeaponAnimationData() const {return WeaponAnimationData;}
+
+    EWeaponType GetWeaponType() const {return WeaponType;}
 
     void StopDrawTrace();
 
@@ -35,15 +37,15 @@ protected:
     UPROPERTY()
     USceneComponent* DefaultRootComponent;
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Weapon")
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Component")
     UStaticMeshComponent* WeaponMesh;
 
-    //UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="Weapon")
-    //USkeletalMeshComponent* WeaponMesh;
-
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Weapon")
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Component")
     UFMBWeaponFXComponent* WeaponFXComponent;
-
+    
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Weapon")
+    EWeaponType WeaponType;
+    
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
     FName StartBladeTraceSocketName = "StartBladeTraceSocket";
 
@@ -54,8 +56,8 @@ protected:
     FName SwordTrailSocketName = "SwordTrailSocket";
 
     UPROPERTY()
-    float DamageAmount;
-
+    float DamageAmount = 0;
+    
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Weapon")
     float FastAttackDamage = 10.0f;
 
@@ -71,16 +73,17 @@ protected:
     FTimerHandle DrawTraceTimerHandle;
 
     UPROPERTY()
-    TArray<ACharacter*> HitActors;
+    TArray<AActor*> HitActors;
 
     UPROPERTY()
     UNiagaraComponent* SwordTrailFXComponent;
+
+    TMap<EChooseAttack, float> ChooseDamageAmount;
 
     virtual void BeginPlay() override;
 
     APlayerController* GetPlayerController() const;
 
-    void TraceLogic();
     void DrawTrace();
 
     FVector FindBladeSocketLocation(FName BladeTraceSocketName) const;

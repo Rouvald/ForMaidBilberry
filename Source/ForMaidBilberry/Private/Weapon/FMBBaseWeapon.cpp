@@ -10,6 +10,7 @@
 #include "Weapon/Components/FMBWeaponFXComponent.h"
 #include "NiagaraFunctionLibrary.h"
 #include "NiagaraComponent.h"
+#include "FMBCoreTypes.h"
 
 DECLARE_LOG_CATEGORY_CLASS(BaseWeaponLog, All, All);
 
@@ -32,22 +33,19 @@ void AFMBBaseWeapon::BeginPlay()
     Super::BeginPlay();
     check(WeaponMesh);
     check(WeaponFXComponent);
+
+    ChooseDamageAmount.Add(EChooseAttack::FastAttack, FastAttackDamage);
+    ChooseDamageAmount.Add(EChooseAttack::StrongAttack, StrongAttackDamage);
 }
 
-void AFMBBaseWeapon::FastMeleeAttack()
+void AFMBBaseWeapon::MeleeAttack(EChooseAttack ChooseAttack)
 {
     if (!GetWorld()) return;
 
-    DamageAmount = FastAttackDamage;
-
-    StartDrawTrace();
-}
-
-void AFMBBaseWeapon::StrongMeleeAttack()
-{
-    if (!GetWorld()) return;
-
-    DamageAmount = StrongAttackDamage;
+    if (ChooseDamageAmount.Contains(ChooseAttack))
+    {
+        DamageAmount = ChooseDamageAmount[ChooseAttack];
+    }
 
     StartDrawTrace();
 }
@@ -60,15 +58,10 @@ APlayerController* AFMBBaseWeapon::GetPlayerController() const
     return Player->GetController<APlayerController>();
 }
 
-void AFMBBaseWeapon::TraceLogic()
+void AFMBBaseWeapon::DrawTrace()
 {
     if (!GetWorld()) return;
 
-    DrawTrace();
-}
-
-void AFMBBaseWeapon::DrawTrace()
-{
     const FVector TraceStart = FindBladeSocketLocation(StartBladeTraceSocketName);
     const FVector TraceEnd = FindBladeSocketLocation(EndBladeTraceSocketName);
     if (TraceStart.IsZero() || TraceEnd.IsZero()) return;
@@ -76,7 +69,9 @@ void AFMBBaseWeapon::DrawTrace()
     FHitResult HitResult;
     MakeHit(HitResult, TraceStart, TraceEnd);
 
-    if (HitResult.bBlockingHit && Cast<ACharacter>(HitResult.GetActor()))
+    DrawDebugLine(GetWorld(), TraceStart, TraceEnd, FColor::Red, false, 0.05f, 0, 5.0f);
+
+    if (HitResult.bBlockingHit && Cast<AActor>(HitResult.GetActor()))
     {
         SortEqualCharacter(HitResult);
     }
@@ -111,7 +106,7 @@ void AFMBBaseWeapon::SortEqualCharacter(FHitResult& HitResult)
         bool CheckNewHitActor = false;
         for (const auto HitActor : HitActors)
         {
-            if (HitActor == Cast<ACharacter>(HitResult.GetActor()))
+            if (HitActor == Cast<AActor>(HitResult.GetActor()))
             {
                 CheckNewHitActor = true;
             }
@@ -126,12 +121,12 @@ void AFMBBaseWeapon::SortEqualCharacter(FHitResult& HitResult)
 
 void AFMBBaseWeapon::NewDamagedActor(FHitResult& HitResult)
 {
-    HitActors.Add(Cast<ACharacter>(HitResult.GetActor()));
+    HitActors.Add(Cast<AActor>(HitResult.GetActor()));
     if (HitResult.bBlockingHit)
     {
         MakeDamage(HitResult);
         //UE_LOG(BaseWeaponLog, Display, TEXT("Hit %s"), *(Cast<ACharacter>(HitResult.GetActor()))->GetName());
-        //DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 10.0f, 32, FColor::Green, false, 5.0f);
+        DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 10.0f, 32, FColor::Green, false, 5.0f);
     }
 }
 
@@ -146,8 +141,11 @@ void AFMBBaseWeapon::MakeDamage(FHitResult& HitResult)
 void AFMBBaseWeapon::StartDrawTrace()
 {
     SwordTrailFXComponent = SpawnSwordTrailFX();
-    //DrawDebugLine(GetWorld(), TraceStart, TraceEnd, FColor::Red, false, 0.05f, 0, 5.0f);
-    GetWorld()->GetTimerManager().SetTimer(DrawTraceTimerHandle, this, &AFMBBaseWeapon::TraceLogic, 0.005f, true);
+
+    // if u wanna use SwordTrails anim notify state -> u need uncomment this down line
+    //SwordTrailFXComponent->SetVisibility(false);
+    
+    GetWorld()->GetTimerManager().SetTimer(DrawTraceTimerHandle, this, &AFMBBaseWeapon::DrawTrace, 0.005f, true);
 }
 
 void AFMBBaseWeapon::StopDrawTrace()

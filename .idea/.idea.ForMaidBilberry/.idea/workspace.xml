@@ -6,14 +6,147 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4f6fc7f4-d1d1-43a3-843d-1dc3f946e1fb" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Content/ExternalContent/A_Surface_Footstep/Environment_Assets/Textures/T_Smoke_D.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/ExternalContent/A_Surface_Footstep/Niagara_FX/Materials/MI_DustyWispy.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/ExternalContent/A_Surface_Footstep/Niagara_FX/Materials/MI_Grass_2x2.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/ExternalContent/A_Surface_Footstep/Niagara_FX/Materials/MI_SpeckSnowDust_Inst.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/ExternalContent/A_Surface_Footstep/Niagara_FX/Materials/MI_ThinDust.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/ExternalContent/A_Surface_Footstep/Niagara_FX/Materials/M_DirectionalDust.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/ExternalContent/A_Surface_Footstep/Niagara_FX/Materials/M_DustySmallS.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/ExternalContent/A_Surface_Footstep/Niagara_FX/Materials/M_General_Debris.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/ExternalContent/A_Surface_Footstep/Niagara_FX/Materials/M_General_Leaf.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/ExternalContent/A_Surface_Footstep/Niagara_FX/Materials/M_SpeckledDust.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/ExternalContent/A_Surface_Footstep/Niagara_FX/Materials/M_ThickSmoke.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/ExternalContent/A_Surface_Footstep/Niagara_FX/ParticleSystems/PEN_General1_Dust.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/ExternalContent/A_Surface_Footstep/Niagara_FX/ParticleSystems/PEN_General1_SmokeThick.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/ExternalContent/A_Surface_Footstep/Niagara_FX/ParticleSystems/PEN_General2_Debris.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/ExternalContent/A_Surface_Footstep/Niagara_FX/ParticleSystems/PEN_General2_Grains.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/ExternalContent/A_Surface_Footstep/Niagara_FX/ParticleSystems/PEN_Grass.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/ExternalContent/A_Surface_Footstep/Niagara_FX/ParticleSystems/PEN_GrassDead.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/ExternalContent/A_Surface_Footstep/Niagara_FX/ParticleSystems/PEN_GrassDust.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/ExternalContent/A_Surface_Footstep/Niagara_FX/ParticleSystems/PEN_GravelBits.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/ExternalContent/A_Surface_Footstep/Niagara_FX/ParticleSystems/PEN_GravelDust.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/ExternalContent/A_Surface_Footstep/Niagara_FX/ParticleSystems/PEN_GravelSplash.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/ExternalContent/A_Surface_Footstep/Niagara_FX/ParticleSystems/PSN_General1_Surface.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/ExternalContent/A_Surface_Footstep/Niagara_FX/ParticleSystems/PSN_General2_Surface.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/ExternalContent/A_Surface_Footstep/Niagara_FX/ParticleSystems/PSN_Grass_Surface.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/ExternalContent/A_Surface_Footstep/Niagara_FX/ParticleSystems/PSN_Gravel_Surface.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/ExternalContent/A_Surface_Footstep/Niagara_FX/Textures/T_Gravel2x2_normal.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/ExternalContent/A_Surface_Footstep/Niagara_FX/Textures/T_Noise_Anisotropic2_height.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/ExternalContent/A_Surface_Footstep/Niagara_FX/Textures/T_Noise_Anisotropic2_height2.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/ExternalContent/A_Surface_Footstep/Niagara_FX/Textures/T_Smoke_D.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/ExternalContent/A_Surface_Footstep/Niagara_FX/Textures/T_Speckled_tile.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/ExternalContent/A_Surface_Footstep/Niagara_FX/Textures/T_Speckled_tile_2.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/ExternalContent/A_Surface_Footstep/Niagara_FX/Textures/T_Squib_one_1024_8x8.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/ExternalContent/A_Surface_Footstep/Niagara_FX/Textures/T_Squib_one_normal.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/ExternalContent/A_Surface_Footstep/Niagara_FX/Textures/T_Stones2x2.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/ExternalContent/A_Surface_Footstep/Niagara_FX/Textures/T_WispySmoke.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/ExternalContent/A_Surface_Footstep/Niagara_FX/Textures/T_WispySmoke_N.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/ExternalContent/A_Surface_Footstep/Niagara_FX/Textures/T_grass.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/ExternalContent/A_Surface_Footstep/Niagara_FX/Textures/T_whisp_One_512_8x8.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/ExternalContent/A_Surface_Footstep/Niagara_FX/Textures/T_whisp_One_512_8x8_Normal.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/ExternalContent/A_Surface_Footstep/Niagara_FX/Textures/T_whisp_redux_2048_12x12.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/ExternalContent/A_Surface_Footstep/Niagara_FX/Textures/T_whisp_redux_2048_normal.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Animations/TwoHandSwordStance/RollBack.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_NoWeapon/AM_Equip_NoWeapon.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_NoWeapon/AM_GetHit_NoWeapon.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_NoWeapon/AM_Roll_NoWeapon.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_NoWeapon/A_Idle_NoWeapon.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_NoWeapon/A_JumpAir_NoWeapon.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_NoWeapon/A_JumpEnd_NoWeapon.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_NoWeapon/A_JumpStart_NoWeapon.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_NoWeapon/A_Run_NoWeapon.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_NoWeapon/A_Sprint_NoWeapon.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_NoWeapon/BS_LocomotionRun_NoWeapon.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_NoWeapon/BS_LocomotionWalk_NoWeapon.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_SwordShield/AM_Equip_SwordShield.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_SwordShield/AM_FastAttack_SwordShield.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_SwordShield/AM_GetHit_SwordShield.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_SwordShield/AM_Roll_SwordShield.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_SwordShield/AM_StrongAttack_SwordShield.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_SwordShield/A_Idle_SwordShield.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_SwordShield/A_JumpAir_SwordShield.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_SwordShield/A_JumpStart_SwordShield.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_SwordShield/A_Jumpend_SwordShield.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_SwordShield/A_Run_SwordShield.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_SwordShield/A_Sprint_SwordShield.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_SwordShield/BS_LocomotionRun_SwordShield.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_SwordShield/BS_LocomotionWalk_SwordShield.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_TwoHandSword/AM_FastMeleeAttack_TwohandSword.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_TwoHandSword/AM_GetHit_TwohandSword.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_TwoHandSword/AM_StrongMeleeAttack_TwohandSword.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_TwoHandSword/A_Idle_TwohandSword.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_TwoHandSword/A_JumpAir_TwohandSword.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_TwoHandSword/A_JumpEnd_TwohandSword.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_TwoHandSword/A_JumpStart_TwohandSword.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_TwoHandSword/A_Run_TwohandSword.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_TwoHandSword/A_Sprint_TwohandSword.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_TwoHandSword/BS_LocomotionRun_TwohandSword.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_TwoHandSword/BS_LocomotionWalk_TwohandSword.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_TwoHandSword/DirectionMovement/BS_LocomotionDirectiomRun_THS.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_TwoHandSword/DirectionMovement/BS_LocomotionDirectionWalk_THS.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ForMaidBilberry/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ForMaidBilberry/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Player/Animation/AM_FastMeleeAttack.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Player/Animation/AM_FastMeleeAttack.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Player/Animation/AM_StrongMeleeAttack.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Player/Animation/AM_StrongMeleeAttack.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/VFX/Niagara/NS_Trail_Red.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/VFX/Niagara/NS_Trail_Red.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Animations/NoWeaponStance/Roll_noWeapon_RMAnim.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Animations/NoWeaponStance/Roll_noWeapon_RMAnim.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Animations/SwordAndShieldStance/JumpEnd_SwordShieldAnim.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Animations/SwordAndShieldStance/JumpEnd_SwordShieldAnim.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Animations/SwordAndShieldStance/Roll_SwordShield_RMAnim.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Animations/SwordAndShieldStance/Roll_SwordShield_RMAnim.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Animations/TwoHandSwordStance/DashBackward_SingleTwohandSwordAnim.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Animations/TwoHandSwordStance/DashBackward_SingleTwohandSwordAnim.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Animations/TwoHandSwordStance/JumpEnd_SingleTwohandSwordAnim.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Animations/TwoHandSwordStance/JumpEnd_SingleTwohandSwordAnim.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Animations/TwoHandSwordStance/RollLeft_SingleTwohandSword.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Animations/TwoHandSwordStance/RollLeft_SingleTwohandSword.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Animations/TwoHandSwordStance/Roll_SingleTwohandSword_RMAnim.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Animations/TwoHandSwordStance/Roll_SingleTwohandSword_RMAnim.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Animations/TwoHandSwordStance/Run_SingleTwohandSwordAnim.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Animations/TwoHandSwordStance/Run_SingleTwohandSwordAnim.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Animations/TwoHandSwordStance/Sprint_SingleTwohandSwordAnim.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Animations/TwoHandSwordStance/Sprint_SingleTwohandSwordAnim.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/OneMeshCharacters/DarkKnightSK.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/OneMeshCharacters/DarkKnightSK.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/OneMeshCharacters/WarriorSK.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/OneMeshCharacters/WarriorSK.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/UE4_Mannequin_Skeleton.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/UE4_Mannequin_Skeleton.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/Weapons/Backpack01SM.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/Weapons/Backpack01SM.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Levels/TestLevel.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/TestLevel.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Player/Animation/ABP_BaseCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Player/Animation/ABP_BaseCharacter.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Player/Animation/AM_Combo/AM_StrongMeleeAttack_oneslash.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Player/Animation/AM_Combo/Combo01_SingleTwohandSwordAnim_Montage.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Player/Animation/AM_Combo/Combo02_SingleTwohandSwordAnim_Montage.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Player/Animation/AM_Combo/Combo03_SingleTwohandSwordAnim_Montage.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Player/Animation/AM_Combo/Combo04_SingleTwohandSwordAnim_Montage.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Player/Animation/AM_Combo/Combo05_SingleTwohandSwordAnim_Montage.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Player/Animation/AM_Die.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Player/Animation/AM_EquipmentChange.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Player/Animation/AM_FastMeleeAttack.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Player/Animation/AM_GetHit.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Player/Animation/AM_Roll.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Player/Animation/AM_StrongMeleeAttack.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Player/Animation/BS_LocomotionRun.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Player/Animation/BS_LocomotionWalk.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Player/Animation/DirectionMovement/BS_LocomotionDirectiomRun.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Player/Animation/DirectionMovement/BS_LocomotionDirectionWalk.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Player/BP_FMBBaseCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Player/BP_FMBBaseCharacter.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Weapon/BP_FMBSword_Red.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Weapon/BP_FMBSword_Red.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Weapon/BP_FMBSword_Yellow.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Weapon/BP_FMBSword_Yellow.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Weapon/SkeletalMeashWeapon/SM_Backpack/BackpackBlue_Backpack02SM.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Weapon/SkeletalMeashWeapon/SM_Backpack/BackpackBlue_Backpack02SM_Anim.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Weapon/SkeletalMeashWeapon/SM_Backpack/BackpackBlue_Backpack02SM_PhysicsAsset.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Weapon/SkeletalMeashWeapon/SM_Backpack/BackpackBlue_Backpack02SM_Skeleton.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Weapon/SkeletalMeashWeapon/SM_Hammer/Hammer01SM.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Weapon/SkeletalMeashWeapon/SM_Hammer/Hammer01SM_Hammer01SM_Anim.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Weapon/SkeletalMeashWeapon/SM_Hammer/Hammer01SM_Hammer01SM_PhysicsAsset.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Weapon/SkeletalMeashWeapon/SM_Hammer/Hammer01SM_Hammer01SM_Skeleton.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Weapon/SkeletalMeashWeapon/SM_RedSword/RedSword_Sword03SM.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Weapon/SkeletalMeashWeapon/SM_RedSword/RedSword_Sword03SM_Anim.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Weapon/SkeletalMeashWeapon/SM_RedSword/RedSword_Sword03SM_PhysicsAsset.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Weapon/SkeletalMeashWeapon/SM_RedSword/RedSword_Sword03SM_Skeleton.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Weapon/SkeletalMeashWeapon/SM_YellowSword_TwoBlades/Sword04SM_Sword04SM.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Weapon/SkeletalMeashWeapon/SM_YellowSword_TwoBlades/Sword04SM_Sword04SM_Anim.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Weapon/SkeletalMeashWeapon/SM_YellowSword_TwoBlades/Sword04SM_Sword04SM_PhysicsAsset.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Weapon/SkeletalMeashWeapon/SM_YellowSword_TwoBlades/Sword04SM_Sword04SM_Skeleton.uasset" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Animation/FMBSwordTrailAnimNotifyState.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Animation/FMBSwordTrailAnimNotifyState.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Components/FMBCharacterMovementComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Components/FMBCharacterMovementComponent.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Components/FMBHealthComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Components/FMBHealthComponent.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Components/FMBWeaponComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Components/FMBWeaponComponent.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Player/FMBBaseCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Player/FMBBaseCharacter.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Weapon/FMBBaseWeapon.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Weapon/FMBBaseWeapon.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Components/FMBCharacterMovementComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Components/FMBCharacterMovementComponent.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Components/FMBHealthComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Components/FMBHealthComponent.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Components/FMBWeaponComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Components/FMBWeaponComponent.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/FMBCoreTypes.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/FMBCoreTypes.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Player/FMBBaseCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Player/FMBBaseCharacter.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Weapon/FMBBaseWeapon.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Weapon/FMBBaseWeapon.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -47,6 +180,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager" selected="C++ Project.ForMaidBilberry">
@@ -283,6 +417,26 @@
       <workItem from="1635502150739" duration="1610000" />
       <workItem from="1635574176168" duration="2729000" />
       <workItem from="1635592577390" duration="2785000" />
+      <workItem from="1635687276897" duration="329000" />
+      <workItem from="1635791830430" duration="1606000" />
+      <workItem from="1636117110609" duration="6142000" />
+      <workItem from="1636127995241" duration="4945000" />
+      <workItem from="1636207819326" duration="1047000" />
+      <workItem from="1636229472285" duration="2246000" />
+      <workItem from="1636808329803" duration="3782000" />
+      <workItem from="1636815629144" duration="2502000" />
+      <workItem from="1636818293965" duration="1988000" />
+      <workItem from="1636825048559" duration="2181000" />
+      <workItem from="1636835857777" duration="3732000" />
+      <workItem from="1636903792760" duration="626000" />
+      <workItem from="1636922595199" duration="268000" />
+      <workItem from="1637069823198" duration="819000" />
+      <workItem from="1637070770857" duration="421000" />
+      <workItem from="1637072067907" duration="2681000" />
+      <workItem from="1637074925425" duration="2363000" />
+      <workItem from="1637081181269" duration="5045000" />
+      <workItem from="1637086359523" duration="370000" />
+      <workItem from="1637086808690" duration="1832000" />
     </task>
     <servers />
   </component>
@@ -307,5 +461,9 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

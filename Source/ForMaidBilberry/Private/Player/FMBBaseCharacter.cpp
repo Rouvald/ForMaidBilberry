@@ -12,6 +12,7 @@
 #include "Components/TextRenderComponent.h"
 #include "GameFramework/Controller.h"
 #include "Weapon/FMBBaseWeapon.h"
+#include "FMBCoreTypes.h"
 
 DECLARE_LOG_CATEGORY_CLASS(BaseCharacterLog, All, All);
 
@@ -25,7 +26,7 @@ AFMBBaseCharacter::AFMBBaseCharacter(const FObjectInitializer& ObjInit)
     bUseControllerRotationYaw = false;
     bUseControllerRotationRoll = false;
     GetCharacterMovement()->bOrientRotationToMovement = true;
-    GetCharacterMovement()->RotationRate = FRotator(0.0f, 540.0f, 0.0f);
+    GetCharacterMovement()->RotationRate = FRotator(0.0f, 700.0f, 0.0f);
     //
     GetCharacterMovement()->bOrientRotationToMovement = true;
     GetCharacterMovement()->bUseControllerDesiredRotation = true;
@@ -190,7 +191,7 @@ void AFMBBaseCharacter::OnStartRunning()
 
     if (GetVelocity().IsNearlyZero()) return;
 
-    if(!HealthComponent) return;
+    if (!HealthComponent) return;
     HealthComponent->StartStaminaRunningTimer();
 
     WantToRun = true;
@@ -198,11 +199,11 @@ void AFMBBaseCharacter::OnStartRunning()
 
 void AFMBBaseCharacter::OnStopRunning()
 {
-    if(!HealthComponent) return;
+    if (!HealthComponent) return;
     HealthComponent->CheckAndStopStaminaRunningTimer();
-    
+
     WantToRun = false;
-    
+
     HealthComponent->StartHealStaminaTimer();
 }
 
@@ -258,12 +259,12 @@ void AFMBBaseCharacter::OnDeath()
         Controller->ChangeState(NAME_Spectating);
     }
     GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
-    
+
     HealthComponent->CheckAndStopHealStaminaTimer();
     HealthComponent->CheckAndStopStaminaRunningTimer();
-    
+
     WeaponComponent->StopDrawTrace();
-    
+
     GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
     GetMesh()->SetSimulatePhysics(true);
 }
@@ -283,35 +284,20 @@ void AFMBBaseCharacter::OnGroundLanded(const FHitResult& Hitresult)
 void AFMBBaseCharacter::Rolling()
 {
     const auto MovementComponent = FindComponentByClass<UFMBCharacterMovementComponent>();
-    if (!MovementComponent || !(MovementComponent->CanRolling())) return;
+    if (!MovementComponent || (MovementComponent->IsFalling()) || !(MovementComponent->CanRolling())) return;
 
-    if (!WeaponComponent || !(WeaponComponent->CanEquip())) return;
-    
-    if (MovementComponent->IsFalling()) return;
+    if (!WeaponComponent || !(WeaponComponent->CanEquip()) || !(WeaponComponent->CanAttack())) return;
 
-    if(WeaponComponent->CanAttack())
+    if (!GetVelocity().IsZero())
     {
-        if (GetVelocity().IsZero()) return;
+        const auto VelosityNormal = GetVelocity().GetSafeNormal();
+        const auto AngleBetween = FMath::Acos(FVector::DotProduct(GetActorForwardVector(), VelosityNormal));
+        if (AngleBetween > 0.5f) return;
     }
 
-    if (!SpendStamina(RollingStaminaSpend)) return;
-    
+    if (!HealthComponent || !(HealthComponent->SpendStamina(EStaminaSpend::Rolling))) return;
+
     WeaponComponent->StopDrawTrace();
     OnStopRunning();
     MovementComponent->Rolling();
 }
-
-bool AFMBBaseCharacter::SpendStamina(int32 SpendStaminaValue) const
-{
-    if(!(HealthComponent->SpendStamina(SpendStaminaValue))) return false;
-    return true;
-}
-
-/*bool AFMBBaseCharacter::CheckAllAnimInProgress() const
-{
-    const auto MovementComponent = FindComponentByClass<UFMBCharacterMovementComponent>();
-    if (!MovementComponent || !(MovementComponent->CanRolling())) return false;
-
-    if (!WeaponComponent || !(WeaponComponent->CanAttack()) || !(WeaponComponent->CanEquip())) return false;
-    return true;
-}*/

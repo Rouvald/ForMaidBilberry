@@ -6,6 +6,7 @@
 #include "Components/FMBCharacterMovementComponent.h"
 #include "Components/FMBWeaponComponent.h"
 #include "FMBUtils.h"
+#include "FMBCoreTypes.h"
 
 DECLARE_LOG_CATEGORY_CLASS(HealthLog, All, All);
 
@@ -30,6 +31,10 @@ void UFMBHealthComponent::BeginPlay()
     {
         Controller->OnTakeAnyDamage.AddDynamic(this, &UFMBHealthComponent::OnTakeAnyDamage);
     }
+
+    StaminaSpends.Add(EStaminaSpend::Rolling, RollingStaminaSpend);
+    StaminaSpends.Add(EStaminaSpend::FastAttack, FastAttackStaminaSpend);
+    StaminaSpends.Add(EStaminaSpend::StrongAttack, StrongAttackStaminaSpend);
 }
 
 void UFMBHealthComponent::OnTakeAnyDamage(AActor* DamagedActor, float Damage, const class UDamageType* DamageType,
@@ -38,11 +43,22 @@ void UFMBHealthComponent::OnTakeAnyDamage(AActor* DamagedActor, float Damage, co
 {
     if (Damage <= 0.0f || IsDead() && GetWorld()) return;
 
+    // Get Hit , if stay in damage sphere anim don't loop // NEED FIX!!
     if (CheckAllAnimInProgress())
     {
-        const auto Character = Cast<AFMBBaseCharacter>(GetOwner());
-        Character->PlayAnimMontage(GetHitAnimMontage);
+        if (const auto Character = Cast<AFMBBaseCharacter>(GetOwner()))
+        {
+            const auto WeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBWeaponComponent>(Character);
+            if (WeaponComponent || WeaponComponent->GetCurrentWeapon())
+            {
+                Character->PlayAnimMontage(WeaponComponent->GetCurrentWeaponAnimationsData().GetHit);
+            }
+            //==================================================
+            //UE_LOG(HealthLog, Display, TEXT("GetHit Animation play"),);
+            //==================================================
+        }
     }
+    //
 
     SetHealth(Health - Damage);
 
@@ -75,7 +91,7 @@ void UFMBHealthComponent::SetHealth(float NewHealth)
 {
     const auto NextHealth = FMath::Clamp(NewHealth, 0.0f, MaxHealth);
     const auto HealthDelta = NextHealth - Health;
-    
+
     Health = NextHealth;
     OnHealthChange.Broadcast(Health, HealthDelta);
 }
@@ -83,7 +99,7 @@ void UFMBHealthComponent::SetHealth(float NewHealth)
 bool UFMBHealthComponent::TryToAddHealth(float HealthAmount)
 {
     if (IsDead() || IsHealthFull()) return false;
-    
+
     SetHealth(Health + HealthAmount);
     return true;
 }
@@ -103,32 +119,17 @@ bool UFMBHealthComponent::CheckAllAnimInProgress() const
     return true;
 }
 
-bool UFMBHealthComponent::SpendStamina(int32 SpendStaminaValue)
+bool UFMBHealthComponent::SpendStamina(EStaminaSpend StaminaSpend)
 {
-    const float SpendStaminaVal = ChooseSpendStamina(SpendStaminaValue);
+    if (!StaminaSpends.Contains(StaminaSpend)) return false;
 
-    if (!(FMath::IsWithin(GetStamina() - SpendStaminaVal, 0.0f, MaxStamina))) return false;
+    if (!(FMath::IsWithin(GetStamina() - StaminaSpends[StaminaSpend], 0.0f, MaxStamina))) return false;
 
     CheckAndStopHealStaminaTimer();
 
-    SetStamina(GetStamina() - SpendStaminaVal);
+    SetStamina(GetStamina() - StaminaSpends[StaminaSpend]);
 
     return true;
-}
-
-float UFMBHealthComponent::ChooseSpendStamina(int32 SpendStaminaValue) const
-{
-    switch (SpendStaminaValue)
-    {
-    case 0:
-        return FastAttackStaminaSpend;
-    case 1:
-        return StrongAttackStaminaSpend;
-    case 2:
-        return RollingStaminaSpend;
-    default:
-        return 0.0f;
-    }
 }
 
 void UFMBHealthComponent::SetStamina(float NewStamina)
@@ -223,12 +224,12 @@ void UFMBHealthComponent::CheckAndStopStaminaRunningTimer()
 
 void UFMBHealthComponent::PlayCameraShake() const
 {
-    if(IsDead()) return;
+    if (IsDead()) return;
     const auto Player = Cast<APawn>(GetOwner());
-    if(!Player) return;
+    if (!Player) return;
 
     const auto PlayerController = Player->GetController<APlayerController>();
-    if(!PlayerController || !PlayerController->PlayerCameraManager) return;
+    if (!PlayerController || !PlayerController->PlayerCameraManager) return;
 
     PlayerController->PlayerCameraManager->StartCameraShake(CameraShake);
 }

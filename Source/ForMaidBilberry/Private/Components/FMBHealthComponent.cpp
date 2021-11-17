@@ -137,7 +137,7 @@ void UFMBHealthComponent::SetStamina(float NewStamina)
     Stamina = FMath::Clamp(NewStamina, 0.0f, MaxStamina);
     OnStaminaChange.Broadcast(Stamina);
 
-    UE_LOG(HealthLog, Display, TEXT("Stamina change: %0.0f"), GetStamina());
+    //UE_LOG(HealthLog, Display, TEXT("Stamina change: %0.0f"), GetStamina());
 }
 
 void UFMBHealthComponent::DecreaseRunningStamina()

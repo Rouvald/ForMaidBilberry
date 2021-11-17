@@ -33,6 +33,19 @@ void UFMBWeaponComponent::BeginPlay()
     EquipWeapon(CurrentWeaponIndex);
 }
 
+void UFMBWeaponComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+    CurrentWeapon = nullptr;
+    for (const auto Weapon : Weapons)
+    {
+        Weapon->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+        Weapon->Destroy();
+    }
+    Weapons.Empty();
+
+    Super::EndPlay(EndPlayReason);
+}
+
 void UFMBWeaponComponent::SpawnWeapons()
 {
     if (!GetWorld()) return;
@@ -55,6 +68,14 @@ void UFMBWeaponComponent::SpawnWeapons()
         }
         AttachWeaponToSocket(Weapon, Character->GetMesh(), WeaponArmorySocketName);
     }
+    
+    /*Shield = CreateDefaultSubobject<UStaticMeshComponent>("Backpack");
+    if (Character)
+    {
+        Shield->SetupAttachment(Character->GetMesh(), WeaponArmorySocketName);
+        Shield->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
+        Shield->SetVisibility(false, true);
+    }*/
 }
 
 void UFMBWeaponComponent::AttachWeaponToSocket(AFMBBaseWeapon* Weapon, USceneComponent* SceneComponent, const FName& WeaponSocket) const
@@ -89,19 +110,6 @@ void UFMBWeaponComponent::NextWeapon()
     if (!CanEquip() || !CanAttack()) return;
     CurrentWeaponIndex = (++CurrentWeaponIndex) % Weapons.Num();
     EquipWeapon(CurrentWeaponIndex);
-}
-
-void UFMBWeaponComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
-{
-    CurrentWeapon = nullptr;
-    for (const auto Weapon : Weapons)
-    {
-        Weapon->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
-        Weapon->Destroy();
-    }
-    Weapons.Empty();
-
-    Super::EndPlay(EndPlayReason);
 }
 
 void UFMBWeaponComponent::FastMeleeAttack()
@@ -264,10 +272,28 @@ void UFMBWeaponComponent::OnChangeEquipWeapon(USkeletalMeshComponent* MeshComp)
     if (WeaponsAnimationsData.Contains(CurrentWeapon->GetWeaponType()))
     {
         CurrentWeaponAnimationsData = WeaponsAnimationsData[CurrentWeapon->GetWeaponType()];
+        //ShieldVisibility(CurrentWeapon->GetWeaponType());
     }
 
     AttachWeaponToSocket(CurrentWeapon, Character->GetMesh(), CurrentWeaponAnimationsData.WeaponEquipSocketName);
 }
+
+/*void UFMBWeaponComponent::ShieldVisibility(EWeaponType CurrentWeaponType) const
+{
+    const auto Character = GetCharacter();
+    if (!Character) return;
+    
+    if(CurrentWeapon->GetWeaponType() == EWeaponType::RedSword)
+    {
+        Shield->SetVisibility(true, true);
+        Shield->SetupAttachment(Character->GetMesh(), CurrentWeaponAnimationsData.WeaponEquipSocketName);
+    }
+    else
+    {
+        Shield->SetVisibility(false, true);
+        Shield->SetupAttachment(Character->GetMesh(), WeaponArmorySocketName);
+    }
+}*/
 
 void UFMBWeaponComponent::StopDrawTrace()
 {

@@ -6,11 +6,20 @@
 
 UFMBWeaponFXComponent::UFMBWeaponFXComponent()
 {
-	PrimaryComponentTick.bCanEverTick = true;
-
+    PrimaryComponentTick.bCanEverTick = true;
 }
 
-void UFMBWeaponFXComponent::PlayImpactFX(FHitResult& Hitresult)
+void UFMBWeaponFXComponent::PlayImpactFX(FHitResult& HitResult)
 {
-    UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), Effect, Hitresult.ImpactPoint, Hitresult.ImpactNormal.Rotation());
+    auto Effect = DefaultEffect;
+
+    if (HitResult.PhysMaterial.IsValid())
+    {
+        const auto PhysMat = HitResult.PhysMaterial.Get();
+        if (EffectsMap.Contains(PhysMat))
+        {
+            Effect = EffectsMap[PhysMat]; 
+        }
+    }
+    UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), Effect, HitResult.ImpactPoint, HitResult.ImpactNormal.Rotation());
 }

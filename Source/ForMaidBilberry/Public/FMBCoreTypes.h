@@ -12,15 +12,6 @@ struct FWeaponAnimationsData
 {
     GENERATED_USTRUCT_BODY()
 
-    /*UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Animation")
-    UAnimSequence* Idle;
-
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Animation")
-    UAnimSequence* Run;
-
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Animation")
-    UAnimSequence* Sprint;*/
-
     UPROPERTY(EditDefaultsOnly, Category="Weapon", meta=(ToolTip="2 sockets: WeaponEquipSocket_R or WeaponEquipSocket_L"))
     FName WeaponEquipSocketName; // WeaponEquipSocket_R or WeaponEquipSocket_L
 

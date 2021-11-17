@@ -9,6 +9,7 @@
 #include "FMBCoreTypes.h"
 #include "FMBWeaponComponent.generated.h"
 
+class UStaticMeshComponent;
 class AFMBBaseCharacter;
 class AFMBBaseWeapon;
 class UAnimMontage;
@@ -47,6 +48,9 @@ public:
     int32 GetCurrentWeaponIndex() const { return CurrentWeaponIndex;}
 
 protected:
+    //UPROPERTY(EditDefaultsOnly, Category="Shield")
+    //UStaticMeshComponent* Shield;
+    
     UPROPERTY(EditDefaultsOnly, Category="Weapon")
     TArray<TSubclassOf<AFMBBaseWeapon>> WeaponClasses;
 
@@ -96,7 +100,7 @@ private:
     void SpawnWeapons();
     void AttachWeaponToSocket(AFMBBaseWeapon* Weapon, USceneComponent* MeshComp, const FName& WeaponSocket) const;
     void EquipWeapon(int32 WeaponIndex);
-
+    
     void CheckWeaponAnimationsData();
     void InitAnimation(const FWeaponAnimationsData& WeaponAnimationData);
     void CheckAttackFinishedAnimNotify(UAnimMontage* Animation);
@@ -104,6 +108,8 @@ private:
     void OnAttackFinished(USkeletalMeshComponent* MeshComp);
     void OnEquipFinished(USkeletalMeshComponent* MeshComp);
     void OnChangeEquipWeapon(USkeletalMeshComponent* MeshComp);
+
+    //void ShieldVisibility(EWeaponType CurrentWeaponType) const;
 
     void StartMovement() const;
     void StopMovement() const;

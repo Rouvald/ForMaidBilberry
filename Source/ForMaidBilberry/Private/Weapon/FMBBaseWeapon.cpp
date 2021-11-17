@@ -69,7 +69,7 @@ void AFMBBaseWeapon::DrawTrace()
     FHitResult HitResult;
     MakeHit(HitResult, TraceStart, TraceEnd);
 
-    DrawDebugLine(GetWorld(), TraceStart, TraceEnd, FColor::Red, false, 0.05f, 0, 5.0f);
+    //DrawDebugLine(GetWorld(), TraceStart, TraceEnd, FColor::Red, false, 0.05f, 0, 5.0f);
 
     if (HitResult.bBlockingHit && Cast<AActor>(HitResult.GetActor()))
     {
@@ -90,6 +90,7 @@ void AFMBBaseWeapon::MakeHit(FHitResult& HitResult, const FVector& TraceStart, c
 
     FCollisionQueryParams CollisionParams;
     CollisionParams.AddIgnoredActor(GetOwner());
+    CollisionParams.bReturnPhysicalMaterial = true;
 
     GetWorld()->LineTraceSingleByChannel(HitResult, TraceStart, TraceEnd, ECollisionChannel::ECC_Visibility, CollisionParams);
 }
@@ -126,7 +127,7 @@ void AFMBBaseWeapon::NewDamagedActor(FHitResult& HitResult)
     {
         MakeDamage(HitResult);
         //UE_LOG(BaseWeaponLog, Display, TEXT("Hit %s"), *(Cast<ACharacter>(HitResult.GetActor()))->GetName());
-        DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 10.0f, 32, FColor::Green, false, 5.0f);
+        //DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 10.0f, 32, FColor::Green, false, 5.0f);
     }
 }
 

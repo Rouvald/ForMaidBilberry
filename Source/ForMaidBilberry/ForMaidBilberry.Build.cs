@@ -15,7 +15,9 @@ public class ForMaidBilberry : ModuleRules
 			"Engine",
 			"InputCore",
 			"Niagara",
-			"PhysicsCore"
+			"PhysicsCore",
+			"GameplayTasks",
+			"NavigationSystem"
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] { });
@@ -28,7 +30,10 @@ public class ForMaidBilberry : ModuleRules
 			"ForMaidBilberry/Public/Weapon",
 			"ForMaidBilberry/Public/UI",
 			"ForMaidBilberry/Public/PickUps",
-			"ForMaidBilberry/Public/Weapon/Components"
+			"ForMaidBilberry/Public/Weapon/Components",
+			"ForMaidBilberry/Public/AI",
+			"ForMaidBilberry/Public/AI/Tasks",
+			"ForMaidBilberry/Public/AI/Services"
 		});
 
 		// Uncomment if you are using Slate UI

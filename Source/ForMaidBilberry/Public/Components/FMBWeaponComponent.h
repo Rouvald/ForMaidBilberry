@@ -57,7 +57,7 @@ protected:
     UPROPERTY(EditDefaultsOnly, Category="Weapon")
     FName WeaponArmorySocketName = "WeaponArmorySocket";
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Animation")
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Animations")
     TMap<EWeaponType, FWeaponAnimationsData> WeaponsAnimationsData;
 
     //UPROPERTY(EditDefaultsOnly, Category="Animation")

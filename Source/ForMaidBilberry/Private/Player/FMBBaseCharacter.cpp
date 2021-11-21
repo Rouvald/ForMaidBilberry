@@ -21,7 +21,7 @@ AFMBBaseCharacter::AFMBBaseCharacter(const FObjectInitializer& ObjInit)
 {
     PrimaryActorTick.bCanEverTick = true;
 
-    // Camara rotate around Character
+    // Camara rotate around Character8
     bUseControllerRotationPitch = false;
     bUseControllerRotationYaw = false;
     bUseControllerRotationRoll = false;

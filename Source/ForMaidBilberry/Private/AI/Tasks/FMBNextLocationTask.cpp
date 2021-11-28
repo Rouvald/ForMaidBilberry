@@ -4,6 +4,7 @@
 #include "AI/Tasks/FMBNextLocationTask.h"
 #include "NavigationSystem.h"
 #include "AIController.h"
+#include "DrawDebugHelpers.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
 UFMBNextLocationTask::UFMBNextLocationTask()
@@ -25,10 +26,10 @@ EBTNodeResult::Type UFMBNextLocationTask::ExecuteTask(UBehaviorTreeComponent& Ow
 
     FNavLocation NavLocation;
     auto Location = Pawn->GetActorLocation();
-    if(!SelfCenter)
+    if (!SelfCenter)
     {
         const auto CenterActor = Cast<AActor>(Blackboard->GetValueAsObject(CenterActorKey.SelectedKeyName));
-        if(!CenterActor) return EBTNodeResult::Failed;
+        if (!CenterActor) return EBTNodeResult::Failed;
         Location = CenterActor->GetActorLocation();
     }
     const auto bFound = NavSys->GetRandomReachablePointInRadius(Location, Radius, NavLocation);

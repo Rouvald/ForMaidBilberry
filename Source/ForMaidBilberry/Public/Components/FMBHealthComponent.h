@@ -47,6 +47,8 @@ public:
     void StartStaminaRunningTimer();
     void CheckAndStopStaminaRunningTimer();
 
+    FStaminaSpendData GetStaminaSpendData () const {return StaminaSpendData;}
+
 protected:
     //UPROPERTY(EditDefaultsOnly, Category="Animation")
     //UAnimMontage* GetHitAnimMontage;
@@ -78,17 +80,8 @@ protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Stamina")
     float StaminaAutoHealDelay = 5.0f;
 
-    //UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Spend Stamina")
-    //float JumpStaminaSpend = 10.0f;
-
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Spend Stamina")
-    float RollingStaminaSpend = 15.0f;
-
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Spend Stamina")
-    float FastAttackStaminaSpend = 30.0f;
-
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Spend Stamina")
-    float StrongAttackStaminaSpend = 50.0f;
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Stamina")
+    FStaminaSpendData StaminaSpendData;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="VFX")
     TSubclassOf<UCameraShakeBase> CameraShake;

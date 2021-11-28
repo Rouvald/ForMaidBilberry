@@ -12,7 +12,6 @@
 #include "Components/TextRenderComponent.h"
 #include "GameFramework/Controller.h"
 #include "Weapon/FMBBaseWeapon.h"
-#include "FMBCoreTypes.h"
 
 DECLARE_LOG_CATEGORY_CLASS(BaseCharacterLog, All, All);
 
@@ -42,6 +41,12 @@ AFMBBaseCharacter::AFMBBaseCharacter(const FObjectInitializer& ObjInit)
     TPPCameraComponent = CreateDefaultSubobject<UCameraComponent>("TPPCameraComponent");
     TPPCameraComponent->SetupAttachment(SpringArmComponent);
     TPPCameraComponent->bUsePawnControlRotation = false;
+
+    /*CameraCollisionComponent = CreateDefaultSubobject<USphereComponent>("CameraCollisionComponent");
+    CameraCollisionComponent->SetupAttachment(TPPCameraComponent);
+    CameraCollisionComponent->SetSphereRadius(10.0f);
+    CameraCollisionComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
+    CameraCollisionComponent->SetCollisionEnabled(ECollisionEnabled::QueryOnly);*/
 
     /*
     FPPCameraComponent = CreateDefaultSubobject<UCameraComponent>("FPPCameraComponent");
@@ -97,6 +102,8 @@ void AFMBBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
     Super::SetupPlayerInputComponent(PlayerInputComponent);
     check(PlayerInputComponent);
     check(WeaponComponent);
+    const auto FMBMovementComponent = Cast<UFMBCharacterMovementComponent>(GetMovementComponent());
+    check(FMBMovementComponent)
 
     PlayerInputComponent->BindAxis("MoveForward", this, &AFMBBaseCharacter::MoveForward);
     PlayerInputComponent->BindAxis("MoveRight", this, &AFMBBaseCharacter::MoveRight);
@@ -119,7 +126,7 @@ void AFMBBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
     PlayerInputComponent->BindAction("NextWeapon", IE_Pressed, WeaponComponent, &UFMBWeaponComponent::NextWeapon);
 
-    PlayerInputComponent->BindAction("Rolling", IE_Pressed, this, &AFMBBaseCharacter::Rolling);
+    PlayerInputComponent->BindAction("Rolling", IE_Pressed, FMBMovementComponent, &UFMBCharacterMovementComponent::Rolling);
 }
 
 /*void AFMBBaseCharacter::LimitViewPitchRotation ()//
@@ -281,23 +288,19 @@ void AFMBBaseCharacter::OnGroundLanded(const FHitResult& Hitresult)
     TakeDamage(FinalDamage, FDamageEvent{}, nullptr, nullptr);
 }
 
-void AFMBBaseCharacter::Rolling()
+/*void AFMBBaseCharacter::CheckCameraOverlap()
 {
-    const auto MovementComponent = FindComponentByClass<UFMBCharacterMovementComponent>();
-    if (!MovementComponent || (MovementComponent->IsFalling()) || !(MovementComponent->CanRolling())) return;
+    const auto HideMesh = CameraCollisionComponent->IsOverlappingComponent(GetCapsuleComponent());
+    GetMesh()->SetOwnerNoSee(HideMesh);
 
-    if (!WeaponComponent || !(WeaponComponent->CanEquip()) || !(WeaponComponent->CanAttack())) return;
+    TArray<USceneComponent*> MeshChildren;
+    GetMesh()->GetChildrenComponents(true, MeshChildren);
 
-    if (!GetVelocity().IsZero())
+    for (auto MeshChild : MeshChildren)
     {
-        const auto VelosityNormal = GetVelocity().GetSafeNormal();
-        const auto AngleBetween = FMath::Acos(FVector::DotProduct(GetActorForwardVector(), VelosityNormal));
-        if (AngleBetween > 0.5f) return;
+        if (const auto MeshChildGeometry = Cast<UPrimitiveComponent>(MeshChild))
+        {
+            MeshChildGeometry->SetOwnerNoSee(HideMesh);
+        }
     }
-
-    if (!HealthComponent || !(HealthComponent->SpendStamina(EStaminaSpend::Rolling))) return;
-
-    WeaponComponent->StopDrawTrace();
-    OnStopRunning();
-    MovementComponent->Rolling();
-}
+}*/

@@ -5,6 +5,7 @@
 #include "Components//FMBWeaponComponent.h"
 #include "Player/FMBBaseCharacter.h"
 #include "FMBUtils.h"
+#include "Components/CapsuleComponent.h"
 
 DECLARE_LOG_CATEGORY_CLASS(MovementComponentLog, All, All);
 
@@ -23,13 +24,33 @@ float UFMBCharacterMovementComponent::GetMaxSpeed() const
 
 void UFMBCharacterMovementComponent::Rolling()
 {
+    if (IsFalling() || !CanRolling()) return;
+
     const auto Character = Cast<AFMBBaseCharacter>(GetPawnOwner());
     if (!Character) return;
+    
+    const auto WeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBWeaponComponent>(Character);
+    if(!WeaponComponent || !(WeaponComponent->CanEquip()) || !(WeaponComponent->CanAttack())) return;
+
+    const auto HealthComponent = FMBUtils::GetFMBPlayerComponent<UFMBHealthComponent>(Character);
+    if (!HealthComponent || !(HealthComponent->SpendStamina(EStaminaSpend::Rolling))) return;
+
+    if (!Velocity.IsZero())
+    {
+        const auto VelocityNormal = Velocity.GetSafeNormal();
+        const auto AngleBetween = FMath::Acos(FVector::DotProduct(Character->GetActorForwardVector(), VelocityNormal));
+        if (!FMath::IsNearlyZero(AngleBetween))
+        {
+            Character->SetActorRotation(VelocityNormal.Rotation());
+        }
+    }
 
     RollingAnimInProgress = true;
-    const auto WeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBWeaponComponent>(Character);
-    if (WeaponComponent || WeaponComponent->GetCurrentWeapon())
+    Character->GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Ignore);
+    
+    if (WeaponComponent->GetCurrentWeapon())
     {
+        WeaponComponent->StopDrawTrace();
         Character->PlayAnimMontage(WeaponComponent->GetCurrentWeaponAnimationsData().Roll);
     }
     //==================================================
@@ -47,6 +68,7 @@ void UFMBCharacterMovementComponent::OnRollingFinished(USkeletalMeshComponent* M
 
     HealthComponent->StartHealStaminaTimer();
 
+    Character->GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Block);
     RollingAnimInProgress = false;
 }
 

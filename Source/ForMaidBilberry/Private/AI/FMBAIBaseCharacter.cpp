@@ -4,6 +4,7 @@
 #include "AI/FMBAIBaseCharacter.h"
 #include "AI/FMBAIController.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "BrainComponent.h"
 
 AFMBAIBaseCharacter::AFMBAIBaseCharacter(const FObjectInitializer& ObjInit)
     : Super(ObjInit)
@@ -16,4 +17,15 @@ AFMBAIBaseCharacter::AFMBAIBaseCharacter(const FObjectInitializer& ObjInit)
          GetCharacterMovement()->bOrientRotationToMovement = false;
     }*/
 
+}
+
+void AFMBAIBaseCharacter::OnDeath()
+{
+    Super::OnDeath();
+
+    const auto FMBController = Cast<AAIController>(Controller);
+    if(FMBController && FMBController->BrainComponent)
+    {
+        FMBController->BrainComponent->Cleanup();
+    }
 }

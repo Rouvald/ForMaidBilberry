@@ -17,18 +17,18 @@ void UFMBAttackService::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 {
     const auto Controller = OwnerComp.GetAIOwner();
     const auto Blackboard = OwnerComp.GetBlackboardComponent();
+
     if (Controller && Blackboard)
     {
-        const auto Pawn = Controller->GetPawn();
         const auto PerceiveComponent = FMBUtils::GetFMBPlayerComponent<UFMBAIPerceptionComponent>(Controller);
-        if (Pawn && PerceiveComponent)
+        if (PerceiveComponent)
         {
-            const auto WeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBWeaponComponent>(Pawn);
+            const auto WeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBWeaponComponent>(Controller->GetPawn());
             const auto PerceiveActor = PerceiveComponent->GetClosestEnemy();
-            if (PerceiveActor)
+            if (WeaponComponent && PerceiveActor)
             {
-                const auto CurrentDistance = (PerceiveActor->GetActorLocation() - Pawn->GetActorLocation()).Size();
-                if (WeaponComponent && CurrentDistance <= AttackDistance)
+                const auto CurrentDistance = (PerceiveActor->GetActorLocation() - Controller->GetPawn()->GetActorLocation()).Size();
+                if (CurrentDistance <= AttackDistance)
                 {
                     FMath::RandBool() ? WeaponComponent->FastMeleeAttack() : WeaponComponent->StrongMeleeAttack();
                 }

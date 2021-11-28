@@ -6,40 +6,36 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4f6fc7f4-d1d1-43a3-843d-1dc3f946e1fb" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Content/AI/BB_FMBAICharacter.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/AI/BP_FMBAIBaseCharacter.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/AI/BP_FMBAIController.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/AI/BT_FMBAICharacter.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/FMBAIBaseCharacter.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/FMBAIController.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/Services/FMBAttackService.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/Services/FMBFindEnemyService.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/Tasks/FMBNextLocationTask.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Components/FMBAIPerceptionComponent.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/AI/FMBAIBaseCharacter.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/AI/FMBAIController.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/AI/Services/FMBAttackService.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/AI/Services/FMBFindEnemyService.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/AI/Tasks/FMBNextLocationTask.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Components/FMBAIPerceptionComponent.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/AI/EQS/EQS_RandomRoam.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/AI/EQS/EQS_TestPawn.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/EQS/FMBEnemyEnvQueryContext.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/Services/FMBChangeWeaponService.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/Services/FMBRestoreStaminaService.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/Tasks/FMBAttackTask.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/AI/EQS/FMBEnemyEnvQueryContext.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/AI/Services/FMBChangeWeaponService.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/AI/Services/FMBRestoreStaminaService.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/AI/Tasks/FMBAttackTask.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ForMaidBilberry/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ForMaidBilberry/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Animations/SwordAndShieldStance/NormalAttack01_SwordShieldAnim.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Animations/SwordAndShieldStance/NormalAttack01_SwordShieldAnim.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Animations/SwordAndShieldStance/NormalAttack02_SwordShieldAnim.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Animations/SwordAndShieldStance/NormalAttack02_SwordShieldAnim.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/OneMeshCharacters/WarriorSK.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/OneMeshCharacters/WarriorSK.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/UE4_Mannequin_Skeleton.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/UE4_Mannequin_Skeleton.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/AI/BB_FMBAICharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AI/BB_FMBAICharacter.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/AI/BP_FMBAIBaseCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AI/BP_FMBAIBaseCharacter.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/AI/BT_FMBAICharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AI/BT_FMBAICharacter.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Levels/TestLevel.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/TestLevel.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Player/Animation/Animation_SwordShield/AM_FastAttack_SwordShield.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_SwordShield/AM_FastAttack_SwordShield.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Player/Animation/Animation_SwordShield/A_Idle_SwordShield.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_SwordShield/A_Idle_SwordShield.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Player/BP_FMBBaseCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Player/BP_FMBBaseCharacter.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/VFX/Trails/Niagara/NE_Trail.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/VFX/Trails/Niagara/NE_Trail.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/VFX/Trails/Niagara/NS_Trail_Red.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/VFX/Trails/Niagara/NS_Trail_Red.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/VFX/Trails/Niagara/NS_Trail_White.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/VFX/Trails/Niagara/NS_Trail_White.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/VFX/Trails/Niagara/NS_Trail_Yellow.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/VFX/Trails/Niagara/NS_Trail_Yellow.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ForMaidBilberry.uproject" beforeDir="false" afterPath="$PROJECT_DIR$/ForMaidBilberry.uproject" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/ForMaidBilberry.Build.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/ForMaidBilberry.Build.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/FMBAIBaseCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/FMBAIBaseCharacter.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/Services/FMBAttackService.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/Services/FMBAttackService.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/Services/FMBFindEnemyService.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/Services/FMBFindEnemyService.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/Tasks/FMBNextLocationTask.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/Tasks/FMBNextLocationTask.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Components/FMBCharacterMovementComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Components/FMBCharacterMovementComponent.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Components/FMBHealthComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Components/FMBHealthComponent.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/PickUps/FMBBasePickUp.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/PickUps/FMBBasePickUp.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Player/FMBBaseCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Player/FMBBaseCharacter.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/AI/FMBAIBaseCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/AI/FMBAIBaseCharacter.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/AI/Services/FMBAttackService.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/AI/Services/FMBAttackService.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/AI/Tasks/FMBNextLocationTask.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/AI/Tasks/FMBNextLocationTask.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Components/FMBHealthComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Components/FMBHealthComponent.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Components/FMBWeaponComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Components/FMBWeaponComponent.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/FMBCoreTypes.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/FMBCoreTypes.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Player/FMBBaseCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Player/FMBBaseCharacter.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +54,15 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Source/ForMaidBilberry/Public/AI/FMBAIBaseCharacter.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/ForMaidBilberry/Private/PickUps/FMBHealthPickUp.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../Program Files/Epic Games/UE_4.26/Engine/Source/Runtime/AIModule/Classes/EnvironmentQuery/Contexts/EnvQueryContext_Querier.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/EQS/FMBEnemyEnvQueryContext.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/ForMaidBilberry/Public/AI/EQS/FMBEnemyEnvQueryContext.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Intermediate/Build/Win64/UE4Editor/Inc/ForMaidBilberry/FMBAnimFinishedNotify.generated.h" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/Services/FMBFindEnemyService.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/FMBAIBaseCharacter.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/ForMaidBilberry/Private/PickUps/FMBBasePickUp.cpp" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="2020xPicDwJpKZzC7jzpRh6iK7Y" />
   <component name="ProjectLevelVcsManager">
@@ -75,6 +79,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.C++" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -342,6 +347,14 @@
       <workItem from="1637441269953" duration="3297000" />
       <workItem from="1637457447496" duration="1996000" />
       <workItem from="1637459659111" duration="317000" />
+      <workItem from="1637511365561" duration="5074000" />
+      <workItem from="1637517117623" duration="1557000" />
+      <workItem from="1637523622558" duration="2417000" />
+      <workItem from="1637604623096" duration="4540000" />
+      <workItem from="1637705153828" duration="39000" />
+      <workItem from="1637802036261" duration="145000" />
+      <workItem from="1637997398407" duration="50000" />
+      <workItem from="1638084832831" duration="8766000" />
     </task>
     <servers />
   </component>

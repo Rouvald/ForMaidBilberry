@@ -52,6 +52,24 @@ enum class EWeaponType: uint8
 // Stamina
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnStaminaChangeSignature, float);
 
+USTRUCT(BlueprintType)
+struct FStaminaSpendData
+{
+    GENERATED_USTRUCT_BODY()
+
+    //UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Spend Stamina")
+    //float JumpStaminaSpend = 10.0f;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Spend Stamina")
+    float RollingStaminaSpend = 15.0f;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Spend Stamina")
+    float FastAttackStaminaSpend = 30.0f;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Spend Stamina")
+    float StrongAttackStaminaSpend = 50.0f;
+};
+
 // Health
 DECLARE_MULTICAST_DELEGATE(FOnDeathSignature);
 DECLARE_MULTICAST_DELEGATE_TwoParams(FOnHealthChangeSignature, float, float);

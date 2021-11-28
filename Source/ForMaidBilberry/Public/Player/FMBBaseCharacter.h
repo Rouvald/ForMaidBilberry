@@ -54,6 +54,9 @@ protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="Components")
     UCameraComponent* TPPCameraComponent;
 
+    /*UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+    USphereComponent* CameraCollisionComponent;*/
+
     //UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="Components")
     //UCameraComponent* FPPCameraComponent;
 
@@ -80,6 +83,8 @@ protected:
 
     virtual void BeginPlay() override;
 
+    virtual void OnDeath();
+
 private:
     bool WantToRun = false;
     //bool IsMovingForward = false;
@@ -100,8 +105,7 @@ private:
 
     void OnStartRunning();
     void OnStopRunning();
-
-    void OnDeath();
+    
     void OnHealthChange(float Health, float HealthDelta);
 
     UFUNCTION()
@@ -110,7 +114,7 @@ private:
     //void FastMeleeAttack();
     //void StrongMeleeAttack();
 
-    void Rolling();
-
     //bool CheckAllAnimInProgress() const;
+
+    //void CheckCameraOverlap();
 };

@@ -2,7 +2,6 @@
 
 
 #include "AI/Services/FMBFindEnemyService.h"
-
 #include "AIController.h"
 #include "FMBUtils.h"
 #include "FMBAIPerceptionComponent.h"
@@ -25,5 +24,6 @@ void UFMBFindEnemyService::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* No
             Blackboard->SetValueAsObject(EnemyActorKey.SelectedKeyName, PerceiveComponent->GetClosestEnemy());
         }
     }
+    
     Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);
 }

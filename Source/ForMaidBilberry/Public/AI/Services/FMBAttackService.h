@@ -6,6 +6,7 @@
 #include "BehaviorTree/BTService.h"
 #include "FMBAttackService.generated.h"
 
+class UFMBWeaponComponent;
 /**
  * 
  */
@@ -21,7 +22,7 @@ protected:
     FBlackboardKeySelector EnemyActorKey;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AI")
-    float AttackDistance = 50.0f;
+    float AttackDistance = 100.0f;
 
     virtual void TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds) override;
 };

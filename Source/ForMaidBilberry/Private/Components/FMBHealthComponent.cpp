@@ -32,9 +32,9 @@ void UFMBHealthComponent::BeginPlay()
         Controller->OnTakeAnyDamage.AddDynamic(this, &UFMBHealthComponent::OnTakeAnyDamage);
     }
 
-    StaminaSpends.Add(EStaminaSpend::Rolling, RollingStaminaSpend);
-    StaminaSpends.Add(EStaminaSpend::FastAttack, FastAttackStaminaSpend);
-    StaminaSpends.Add(EStaminaSpend::StrongAttack, StrongAttackStaminaSpend);
+    StaminaSpends.Add(EStaminaSpend::Rolling, StaminaSpendData.RollingStaminaSpend);
+    StaminaSpends.Add(EStaminaSpend::FastAttack, StaminaSpendData.FastAttackStaminaSpend);
+    StaminaSpends.Add(EStaminaSpend::StrongAttack, StaminaSpendData.StrongAttackStaminaSpend);
 }
 
 void UFMBHealthComponent::OnTakeAnyDamage(AActor* DamagedActor, float Damage, const class UDamageType* DamageType,
@@ -64,7 +64,7 @@ void UFMBHealthComponent::OnTakeAnyDamage(AActor* DamagedActor, float Damage, co
 
     GetWorld()->GetTimerManager().ClearTimer(HealTimeHandle);
 
-    UE_LOG(HealthLog, Display, TEXT("Health: %f"), GetHealth());
+    //UE_LOG(HealthLog, Display, TEXT("Health: %f"), GetHealth());
 
     if (IsDead())
     {

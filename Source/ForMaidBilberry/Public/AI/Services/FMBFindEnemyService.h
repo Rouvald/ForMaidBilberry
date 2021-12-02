@@ -21,5 +21,8 @@ protected:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AI")
     FBlackboardKeySelector EnemyActorKey;
 
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AI")
+    FBlackboardKeySelector DistanceToTargetKey;
+
     virtual void TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds) override;
 };

@@ -2,11 +2,12 @@
 
 
 #include "AI/Services/FMBRestoreStaminaService.h"
-
 #include "AIController.h"
 #include "Components/FMBHealthComponent.h"
 #include "FMBUtils.h"
 #include "BehaviorTree/BlackboardComponent.h"
+
+DEFINE_LOG_CATEGORY_STATIC(LogFMBRestoreStaminaService, All, All)
 
 UFMBRestoreStaminaService::UFMBRestoreStaminaService()
 {
@@ -24,9 +25,8 @@ void UFMBRestoreStaminaService::TickNode(UBehaviorTreeComponent& OwnerComp, uint
         if (HealthComponent)
         {
             Blackboard->SetValueAsFloat(AIStaminaKey.SelectedKeyName, HealthComponent->GetStamina());
-            UE_LOG(LogTemp, Display, TEXT("%f"), HealthComponent->GetStamina());
+            //UE_LOG(LogFMBRestoreStaminaService, Display, TEXT("Stamina: %f"), Blackboard->GetValueAsFloat(AIStaminaKey.SelectedKeyName));
         }
     }
-
     Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);
 }

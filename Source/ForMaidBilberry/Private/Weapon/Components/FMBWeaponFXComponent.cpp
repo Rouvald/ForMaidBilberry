@@ -6,7 +6,7 @@
 
 UFMBWeaponFXComponent::UFMBWeaponFXComponent()
 {
-    PrimaryComponentTick.bCanEverTick = true;
+    PrimaryComponentTick.bCanEverTick = false;
 }
 
 void UFMBWeaponFXComponent::PlayImpactFX(FHitResult& HitResult)

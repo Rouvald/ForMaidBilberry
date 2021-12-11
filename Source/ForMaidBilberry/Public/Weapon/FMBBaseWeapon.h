@@ -25,6 +25,7 @@ public:
     //UFUNCTION(BlueprintCallable)
     //FWeaponAnimationData GetWeaponAnimationData() const {return WeaponAnimationData;}
 
+    UFUNCTION(BlueprintCallable)
     EWeaponType GetWeaponType() const {return WeaponType;}
 
     void StopDrawTrace();

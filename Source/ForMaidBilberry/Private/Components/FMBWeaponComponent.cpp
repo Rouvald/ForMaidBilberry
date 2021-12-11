@@ -2,6 +2,8 @@
 
 
 #include "Components/FMBWeaponComponent.h"
+
+#include "FMBAIBaseCharacter.h"
 #include "FMBBaseCharacter.h"
 #include "Animation/FMBAnimFinishedNotify.h"
 #include "GameFramework/Character.h"
@@ -68,7 +70,7 @@ void UFMBWeaponComponent::SpawnWeapons()
         }
         AttachWeaponToSocket(Weapon, Character->GetMesh(), WeaponArmorySocketName);
     }
-    
+
     /*Shield = CreateDefaultSubobject<UStaticMeshComponent>("Backpack");
     if (Character)
     {
@@ -119,7 +121,7 @@ void UFMBWeaponComponent::FastMeleeAttack()
     CurrentWeapon->MeleeAttack(EChooseAttack::FastAttack);
 
     AttackAnimInProgress = true;
-    StopMovement();
+    //StopMovement();
     PlayAnimMontage(CurrentWeaponAnimationsData.FastAttack);
     //==================================================
     //UE_LOG(BaseWeaponComponentLog, Display, TEXT("Fast Attack make"));
@@ -133,7 +135,7 @@ void UFMBWeaponComponent::StrongMeleeAttack()
     CurrentWeapon->MeleeAttack(EChooseAttack::StrongAttack);
 
     AttackAnimInProgress = true;
-    StopMovement();
+    //StopMovement();
     PlayAnimMontage(CurrentWeaponAnimationsData.StrongAttack);
     //==================================================
     //UE_LOG(BaseWeaponComponentLog, Display, TEXT("Strong Attack make"));
@@ -148,9 +150,11 @@ bool UFMBWeaponComponent::CanDoAttack() const
     const auto MovementComponent = FMBUtils::GetFMBPlayerComponent<UFMBCharacterMovementComponent>(GetOwner());
     if (!MovementComponent || MovementComponent->IsFalling()) return false;
 
-    const auto HealthComponent = FMBUtils::GetFMBPlayerComponent<UFMBHealthComponent>(GetOwner());
-    if (!HealthComponent || !(HealthComponent->SpendStamina(EStaminaSpend::StrongAttack))) return false;
-
+    if (!Cast<AFMBAIBaseCharacter>(GetOwner()))
+    {
+        const auto HealthComponent = FMBUtils::GetFMBPlayerComponent<UFMBHealthComponent>(GetOwner());
+        if (!HealthComponent || !(HealthComponent->SpendStamina(EStaminaSpend::StrongAttack))) return false;
+    }
     return true;
 }
 
@@ -302,7 +306,7 @@ void UFMBWeaponComponent::StopDrawTrace()
         CurrentWeapon->StopDrawTrace();
         AttackAnimInProgress = false;
     }
-    StartMovement();
+    //StartMovement();
 }
 
 bool UFMBWeaponComponent::CanAttack() const
@@ -329,7 +333,7 @@ void UFMBWeaponComponent::StartMovement() const
     const auto MovementComponent = FMBUtils::GetFMBPlayerComponent<UFMBCharacterMovementComponent>(GetOwner());
     if (!MovementComponent) return;
 
-    if (!AttackAnimInProgress)
+    if (!AttackAnimInProgress && MovementComponent->MovementMode != MOVE_Walking)
     {
         MovementComponent->SetMovementMode(EMovementMode::MOVE_Walking);
     }

@@ -10,6 +10,8 @@ AFMBAIController::AFMBAIController()
 {
     FMBAIPerceptionComponent = CreateDefaultSubobject<UFMBAIPerceptionComponent>("PerceptionComponent");
     SetPerceptionComponent(*FMBAIPerceptionComponent);
+
+    bWantsPlayerState = true;
 }
 
 void AFMBAIController::OnPossess(APawn* InPawn)
@@ -20,6 +22,10 @@ void AFMBAIController::OnPossess(APawn* InPawn)
     if (FMBAICharacter)
     {
         RunBehaviorTree(FMBAICharacter->BehaviorTreeAsset);
+        if (GetBlackboardComponent())
+        {
+            GetBlackboardComponent()->SetValueAsVector(StartAILocationKeyName, FMBAICharacter->GetActorLocation());
+        }
     }
 }
 
@@ -33,6 +39,6 @@ void AFMBAIController::Tick(float DeltaSeconds)
 
 AActor* AFMBAIController::GetFocusOnActor() const
 {
-    if(!GetBlackboardComponent()) return nullptr;
+    if (!GetBlackboardComponent()) return nullptr;
     return Cast<AActor>(GetBlackboardComponent()->GetValueAsObject(FocusOnEnemyKeyName));
 }

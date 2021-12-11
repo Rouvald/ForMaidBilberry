@@ -18,15 +18,14 @@ void UFMBFindEnemyService::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* No
     if(Blackboard)
     {
         const auto Controller = OwnerComp.GetAIOwner();
-        const auto PerceiveComponent = FMBUtils::GetFMBPlayerComponent<UFMBAIPerceptionComponent>(Controller);
-        if(PerceiveComponent)
+        const auto PerceptionComponent = FMBUtils::GetFMBPlayerComponent<UFMBAIPerceptionComponent>(Controller);
+        if (PerceptionComponent)
         {
-            Blackboard->SetValueAsObject(EnemyActorKey.SelectedKeyName, PerceiveComponent->GetClosestEnemy());
+            Blackboard->SetValueAsObject(EnemyActorKey.SelectedKeyName, PerceptionComponent->GetClosestEnemy());
 
-            const auto Distance = Controller->GetPawn()->GetDistanceTo(PerceiveComponent->GetClosestEnemy());
+            const auto Distance = Controller->GetPawn()->GetDistanceTo(PerceptionComponent->GetClosestEnemy());
             Blackboard->SetValueAsFloat(DistanceToTargetKey.SelectedKeyName, Distance);
         }
     }
-    
     Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);
 }

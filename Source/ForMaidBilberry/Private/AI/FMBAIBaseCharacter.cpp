@@ -9,7 +9,7 @@
 AFMBAIBaseCharacter::AFMBAIBaseCharacter(const FObjectInitializer& ObjInit)
     : Super(ObjInit)
 {
-    AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
+    AutoPossessAI = EAutoPossessAI::Disabled;
     AIControllerClass = AFMBAIController::StaticClass();
 
     /*if(GetCharacterMovement())

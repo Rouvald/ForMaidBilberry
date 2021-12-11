@@ -2,11 +2,11 @@
 
 
 #include "AI/Tasks/FMBAttackTask.h"
-
 #include "AIController.h"
 #include "FMBUtils.h"
 #include "FMBAIPerceptionComponent.h"
 #include "FMBWeaponComponent.h"
+#include "BehaviorTree/BlackboardComponent.h"
 
 UFMBAttackTask::UFMBAttackTask()
 {
@@ -30,6 +30,7 @@ EBTNodeResult::Type UFMBAttackTask::ExecuteTask(UBehaviorTreeComponent& OwnerCom
     if (!WeaponComponent && !PerceiveActor) return EBTNodeResult::Failed;
     
     FMath::RandBool() ? WeaponComponent->FastMeleeAttack() : WeaponComponent->StrongMeleeAttack();
+    
     return EBTNodeResult::Succeeded;
 }
 

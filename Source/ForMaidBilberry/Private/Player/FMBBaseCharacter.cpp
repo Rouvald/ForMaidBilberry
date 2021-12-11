@@ -218,28 +218,6 @@ bool AFMBBaseCharacter::IsRunning() const
 {
     return WantToRun && !(FMath::IsNearlyZero(HealthComponent->GetStamina())) && !GetVelocity().IsZero();
 }
-
-/*
-void AFMBBaseCharacter::FastMeleeAttack()
-{
-    if (!CheckAllAnimInProgress()) return;
-    if(GetCharacterMovement()->IsFalling()) return;
-
-    if (!SpendStamina(FastAttackStaminaSpend)) return;
-
-    WeaponComponent->FastMeleeAttack();
-}
-
-void AFMBBaseCharacter::StrongMeleeAttack()
-{
-    if (!CheckAllAnimInProgress()) return;
-    if(GetCharacterMovement()->IsFalling()) return;
-
-    if (!SpendStamina(StrongAttackStaminaSpend)) return;
-
-    WeaponComponent->StrongMeleeAttack();
-}
-*/
 /*
 float AFMBBaseCharacter::GetMovementDirection() const
 {
@@ -304,3 +282,9 @@ void AFMBBaseCharacter::OnGroundLanded(const FHitResult& Hitresult)
         }
     }
 }*/
+
+void AFMBBaseCharacter::SetTeamSkeletalMesh(USkeletalMesh* TeamSkeletalMesh) const
+{
+    //UE_LOG(BaseCharacterLog, Display, TEXT("Set Color %s"), *TeamColor.ToString());
+    GetMesh()->SetSkeletalMesh(TeamSkeletalMesh);
+}

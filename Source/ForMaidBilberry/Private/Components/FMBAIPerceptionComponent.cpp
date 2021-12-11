@@ -11,16 +11,16 @@ AActor* UFMBAIPerceptionComponent::GetClosestEnemy() const
 {
     TArray<AActor*> PerceiveActors;
     GetCurrentlyPerceivedActors(UAISense_Sight::StaticClass(), PerceiveActors);
-    if(PerceiveActors.Num() == 0) return nullptr;
-
+    if (PerceiveActors.Num() == 0) return nullptr;
+    
     const auto Controller = Cast<AAIController>(GetOwner());
     if(!Controller) return  nullptr;
 
     const auto Pawn = Controller->GetPawn();
     if(!Pawn) return nullptr;
 
-    float BestDistance = MAX_FLT;
     AActor* BestActor = nullptr;
+    float BestDistance = MAX_FLT;
     for (const auto PerceiveActor : PerceiveActors)
     {
         const auto HealthComponent = FMBUtils::GetFMBPlayerComponent<UFMBHealthComponent>(PerceiveActor);

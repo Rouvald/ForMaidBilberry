@@ -60,15 +60,6 @@ protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Animations")
     TMap<EWeaponType, FWeaponAnimationsData> WeaponsAnimationsData;
 
-    //UPROPERTY(EditDefaultsOnly, Category="Animation")
-    //UAnimMontage* FastMeleeAttackAnimMontage;
-
-    //UPROPERTY(EditDefaultsOnly, Category="Animation")
-    //UAnimMontage* StrongMeleeAttackAnimMontage;
-
-    //UPROPERTY(EditDefaultsOnly, Category="Animation")
-    //UAnimMontage* EquipAnimMontage;
-
     virtual void BeginPlay() override;
 
     void PlayAnimMontage(UAnimMontage* Animation) const;

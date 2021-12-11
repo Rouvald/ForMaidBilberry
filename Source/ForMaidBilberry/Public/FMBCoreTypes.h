@@ -49,6 +49,13 @@ enum class EWeaponType: uint8
     YellowSword
 };
 
+UENUM(BlueprintType)
+enum class EChooseAttack: uint8
+{
+    FastAttack = 0,
+    StrongAttack
+};
+
 // Stamina
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnStaminaChangeSignature, float);
 
@@ -70,6 +77,14 @@ struct FStaminaSpendData
     float StrongAttackStaminaSpend = 50.0f;
 };
 
+UENUM(BlueprintType)
+enum class EStaminaSpend: uint8
+{
+    Rolling = 0,
+    FastAttack,
+    StrongAttack
+};
+
 // Health
 DECLARE_MULTICAST_DELEGATE(FOnDeathSignature);
 DECLARE_MULTICAST_DELEGATE_TwoParams(FOnHealthChangeSignature, float, float);
@@ -87,17 +102,25 @@ struct FWeaponUIData
     FText WeaponName;
 };
 
-UENUM(BlueprintType)
-enum class EChooseAttack: uint8
-{
-    FastAttack = 0,
-    StrongAttack
-};
+// GameMode
 
-UENUM(BlueprintType)
-enum class EStaminaSpend: uint8
+USTRUCT(BlueprintType)
+struct FGameData
 {
-    Rolling = 0,
-    FastAttack,
-    StrongAttack
+    GENERATED_USTRUCT_BODY()
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Game", meta =(ClampMin ="1", ClampMax ="50"))
+    int32 PlayerNum = 2;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Game", meta =(ClampMin ="1", ClampMax ="10"))
+    int32 RoundsNum = 4;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Game", meta =(ClampMin ="1", ClampMax ="400"))
+    int32 RoundsTime = 10; // in second
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Game")
+    USkeletalMesh* DefaultTeamSkeletalMesh;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Game")
+    TArray<USkeletalMesh*> TeamSkeletalMeshes;
 };

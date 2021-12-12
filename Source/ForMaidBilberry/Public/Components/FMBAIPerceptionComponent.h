@@ -15,5 +15,5 @@ class FORMAIDBILBERRY_API UFMBAIPerceptionComponent : public UAIPerceptionCompon
 	GENERATED_BODY()
 
 public:
-    AActor* GetClosestEnemy() const;
+    AActor* GetEnemyPlayer() const;
 };

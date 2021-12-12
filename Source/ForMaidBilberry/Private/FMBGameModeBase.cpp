@@ -6,9 +6,13 @@
 #include "Player/FMBPlayerController.h"
 #include "UI/FMBGameHUD.h"
 #include "AIController.h"
+#include "FMBRespawnComponent.h"
+#include "FMBUtils.h"
 #include "Player/FMBPlayerState.h"
 
-DEFINE_LOG_CATEGORY_STATIC(AFMBGameModeBaseLog, All, All)
+DEFINE_LOG_CATEGORY_STATIC(LogAFMBGameModeBase, All, All)
+
+constexpr static int32 MinRoundTimeForRespawn =10;
 
 AFMBGameModeBase::AFMBGameModeBase()
 {
@@ -23,9 +27,9 @@ void AFMBGameModeBase::StartPlay()
     Super::StartPlay();
 
     SpawnBots();
-    CreateTeamsInfo();
+    //CreateTeamsInfo();
 
-    CurrentRound = 1;
+    //CurrentRound = 1;
     StartRound();
 }
 
@@ -54,19 +58,22 @@ void AFMBGameModeBase::SpawnBots()
 
 void AFMBGameModeBase::StartRound()
 {
-    RoundCountDown = GameData.RoundsTime;
+    if (GameData.InfinityGame) return;
+
+    GameplayTimeCountDown = GameData.GameplayTime;
     GetWorld()->GetTimerManager().SetTimer(RoundTimerHandle, this, &AFMBGameModeBase::GameTimerUpdate, 1.0f, true);
 }
 
 void AFMBGameModeBase::GameTimerUpdate()
 {
-    UE_LOG(AFMBGameModeBaseLog, Display, TEXT("Time: %i-%i, Round: %i-%i"), RoundCountDown, GameData.RoundsTime, CurrentRound,
-        GameData.RoundsNum);
-    if (--RoundCountDown == 0)
+    UE_LOG(LogAFMBGameModeBase, Display, TEXT("Time: %i-%i"), GameplayTimeCountDown, GameData.GameplayTime);
+    if (--GameplayTimeCountDown == 0)
     {
         GetWorld()->GetTimerManager().ClearTimer(RoundTimerHandle);
 
-        if (CurrentRound + 1 <= GameData.RoundsNum)
+        UE_LOG(LogAFMBGameModeBase, Display, TEXT("========GAME OVER========"));
+        LogPlayerInfo();
+        /*if (CurrentRound + 1 <= GameData.RoundsNum)
         {
             ++CurrentRound;
             ResetPlayers();
@@ -74,8 +81,9 @@ void AFMBGameModeBase::GameTimerUpdate()
         }
         else
         {
-            UE_LOG(AFMBGameModeBaseLog, Display, TEXT("========GAME OVER========"));
-        }
+            UE_LOG(LogAFMBGameModeBase, Display, TEXT("========GAME OVER========"));
+            LogPlayerInfo();
+        }*/
     }
 }
 
@@ -96,10 +104,60 @@ void AFMBGameModeBase::ResetOnePlayer(AController* Controller)
         Controller->GetPawn()->Reset();
     }
     RestartPlayer(Controller);
-    SetTeamColor(Controller);
+    //SetTeamSkeletalMesh(Controller);
 }
 
-void AFMBGameModeBase::CreateTeamsInfo()
+void AFMBGameModeBase::Killed(AController* PlayerController, bool IsKill)
+{
+    const auto PlayerState = PlayerController ? Cast<AFMBPlayerState>(PlayerController->PlayerState) : nullptr;
+
+    if (PlayerState)
+    {
+        if (IsKill)
+        {
+            PlayerState->AddKill();
+        }
+        else
+        {
+            PlayerState->AddDeath();
+            StartRespawn(PlayerController);
+        }
+    }
+}
+
+void AFMBGameModeBase::LogPlayerInfo()
+{
+    if (!GetWorld()) return;
+
+    for (auto It = GetWorld()->GetControllerIterator(); It; ++It)
+    {
+        const auto Controller = It->Get();
+        if (!Controller) continue;
+
+        const auto PlayerState = Cast<AFMBPlayerState>(Controller->PlayerState);
+        if (!PlayerState) continue;
+
+        PlayerState->LogInfo();
+    }
+}
+
+void AFMBGameModeBase::StartRespawn(AController* Controller)
+{
+    const auto IsRespawnAvailable = GameplayTimeCountDown > MinRoundTimeForRespawn + GameData.RespawnTime;
+    if(!IsRespawnAvailable) return;
+    
+    const auto RespawnComponent = FMBUtils::GetFMBPlayerComponent<UFMBRespawnComponent>(Controller);
+    if (!RespawnComponent) return;
+
+    RespawnComponent->Respawn(GameData.RespawnTime);
+}
+
+void AFMBGameModeBase::RespawnRequest(AController* Controller)
+{
+    ResetOnePlayer(Controller);
+}
+
+/*void AFMBGameModeBase::CreateTeamsInfo()
 {
     if (!GetWorld()) return;
 
@@ -115,20 +173,20 @@ void AFMBGameModeBase::CreateTeamsInfo()
         if(Cast<AFMBPlayerController>(Controller))
         {
             PlayerState->SetTeamID(TeamID);
-            PlayerState->SetTeamColor(DetermineColorByTeamID(TeamID));
-            SetTeamColor(Controller);
+            //PlayerState->SetTeamSkeletalMesh(DetermineColorByTeamID(TeamID));
+            //SetTeamSkeletalMesh(Controller);
         }
         else
         {
             TeamID = 2;
             PlayerState->SetTeamID(TeamID);
-            PlayerState->SetTeamColor(DetermineColorByTeamID(TeamID));
-            SetTeamColor(Controller);
+            //PlayerState->SetTeamSkeletalMesh(DetermineColorByTeamID(TeamID));
+            //SetTeamColor(Controller);
         }
     }
-}
+}*/
 
-USkeletalMesh* AFMBGameModeBase::DetermineColorByTeamID(int32 TeamID)
+/*USkeletalMesh* AFMBGameModeBase::DetermineSkeletalMeshByTeamID(int32 TeamID)
 {
     if (TeamID - 1 < GameData.TeamSkeletalMeshes.Num())
     {
@@ -149,4 +207,4 @@ void AFMBGameModeBase::SetTeamColor(AController* Controller)
     if(!PlayerState) return;
 
     FMBCharacter->SetTeamSkeletalMesh(PlayerState->GetTeamColor());
-}
+}*/

@@ -6,61 +6,98 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4f6fc7f4-d1d1-43a3-843d-1dc3f946e1fb" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_SwordShield/AM_Attack_03_SwordShield.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_SwordShield/AM_StrongAttack_Root_SwordShield.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_TwoHandSword/AM_Attack_03_TwoHandSword.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_TwoHandSword/AM_StrongAttack_Root_TwoHandSword.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/Tasks/FMBRotationTask.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Player/FMBPlayerState.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/AI/Tasks/FMBRotationTask.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Player/FMBPlayerState.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Levels/MainMap.umap" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/UI/WBP_GameData.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Components/FMBRespawnComponent.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/UI/FMBGameDataWidget.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Components/FMBRespawnComponent.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/UI/FMBGameDataWidget.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ForMaidBilberry/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ForMaidBilberry/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AI/BB_FMBAICharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AI/BB_FMBAICharacter.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/AI/BP_FMBAIBaseCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AI/BP_FMBAIBaseCharacter.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/AI/BP_FMBAIController.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AI/BP_FMBAIController.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/AI/BT_FMBAICharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AI/BT_FMBAICharacter.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/BP_FMBGameModeBase.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP_FMBGameModeBase.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Animations/SwordAndShieldStance/Combo02_SwordShieldAnim.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Animations/SwordAndShieldStance/Combo02_SwordShieldAnim.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Animations/SwordAndShieldStance/Combo02_SwordShield_RMAnim.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Animations/SwordAndShieldStance/Combo02_SwordShield_RMAnim.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Animations/TwoHandSwordStance/Combo02_SingleTwohandSword_RMAnim.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Animations/TwoHandSwordStance/Combo02_SingleTwohandSword_RMAnim.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/CharacterBP/ModularCharacterBP.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/CharacterBP/OneMeshCharacterBP.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Maps/BowStanceAnimMP.umap" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Maps/DoubleSwordStanceAnimMP.umap" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Maps/MagicWandStanceAnimMP.umap" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Maps/MaskTintMaterialMP.umap" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Maps/ModularCharacterPartsMP.umap" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Maps/NoWeaponStanceAnimMP.umap" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Maps/OneMeshCharactersMP.umap" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Maps/SwordAndShieldStanceAnimMP.umap" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Maps/TwoHandSwordStanceAnimMP.umap" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Materials/PolyartMaskTintMat.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Materials/PolyartMaskTintMat.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/OneMeshCharacters/KnightSK.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/OneMeshCharacters/KnightSK.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Materials/StageMat.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Belt01SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Belt02SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Belt03SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Cloth01SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Cloth02SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Cloth03SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Cloth04SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Cloth05SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Cloth06SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Cloth07SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Crown01SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Crown02SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Crown03SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Crown04SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Face01SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Face02SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Face03SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Face04SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Glove01SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Glove02SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Glove03SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Glove04SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Glove05SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Glove06SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Hair01HalfSK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Hair01SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Hair02HalfSK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Hair02SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Hair03HalfSK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Hair03SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Hair04HalfSK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Hair04SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Hair05HalfSK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Hair05SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Hat01SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Hat02SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Hat03SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Helm01SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Helm02SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Helm03SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Helm04SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Helm05SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Helm06SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Helm07SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Shoe01SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Shoe02SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Shoe03SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Shoe04SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Shoe05SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/Shoe06SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/ShoulderPad01SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/ShoulderPad02SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/ShoulderPad03SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/ShoulderPad04SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/ShoulderPad05SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/ModularBodyParts/ShoulderPad06SK.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/StageMesh/StageSM.uasset" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Levels/TestLevel.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/TestLevel.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Player/Animation/ABP_BaseCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Player/Animation/ABP_BaseCharacter.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Player/Animation/Animation_SwordShield/AM_FastAttack_SwordShield.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_SwordShield/AM_FastAttack_SwordShield.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Player/Animation/Animation_SwordShield/AM_StrongAttack_SwordShield.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_SwordShield/AM_StrongAttack_SwordShield.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Player/Animation/Animation_TwoHandSword/AM_FastMeleeAttack_TwohandSword.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_TwoHandSword/AM_FastMeleeAttack_TwohandSword.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Player/Animation/Animation_TwoHandSword/AM_StrongMeleeAttack_TwohandSword.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_TwoHandSword/AM_StrongMeleeAttack_TwohandSword.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Player/Animation/Animation_SwordShield/AM_Equip_SwordShield.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_SwordShield/AM_Equip_SwordShield.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Player/Animation/Animation_SwordShield/A_JumpAir_SwordShield.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_SwordShield/A_JumpAir_SwordShield.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Player/BP_FMBBaseCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Player/BP_FMBBaseCharacter.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UI/WBP_PlayerHUD.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UI/WBP_PlayerHUD.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UI/WBP_SpectatorHUD.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UI/WBP_SpectatorHUD.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Weapon/BP_FMBSword_Red.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Weapon/BP_FMBSword_Red.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Weapon/BP_FMBSword_Yellow.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Weapon/BP_FMBSword_Yellow.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Weapon/StaticMeshWeapons/Backpack.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/FMBAIBaseCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/FMBAIBaseCharacter.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/FMBAIController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/FMBAIController.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/Services/FMBAttackService.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/Services/FMBAttackService.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/Services/FMBFindEnemyService.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/Services/FMBFindEnemyService.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/Tasks/FMBAttackTask.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/Tasks/FMBAttackTask.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Components/FMBAIPerceptionComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Components/FMBAIPerceptionComponent.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Components/FMBWeaponComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Components/FMBWeaponComponent.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Components/FMBHealthComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Components/FMBHealthComponent.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/FMBGameModeBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/FMBGameModeBase.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Player/FMBBaseCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Player/FMBBaseCharacter.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/AI/FMBAIController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/AI/FMBAIController.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Player/FMBPlayerController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Player/FMBPlayerController.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Player/FMBPlayerState.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Player/FMBPlayerState.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Components/FMBAIPerceptionComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Components/FMBAIPerceptionComponent.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Components/FMBHealthComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Components/FMBHealthComponent.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Components/FMBWeaponComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Components/FMBWeaponComponent.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/FMBCoreTypes.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/FMBCoreTypes.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/FMBGameModeBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/FMBGameModeBase.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Player/FMBBaseCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Player/FMBBaseCharacter.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Weapon/FMBBaseWeapon.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Weapon/FMBBaseWeapon.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Player/FMBPlayerController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Player/FMBPlayerController.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Player/FMBPlayerState.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Player/FMBPlayerState.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,15 +116,25 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Source/ForMaidBilberry/Private/FMBGameModeBase.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/ForMaidBilberry/Private/PickUps/FMBBasePickUp.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../../Program Files/Epic Games/UE_4.26/Engine/Source/Runtime/AIModule/Classes/EnvironmentQuery/Contexts/EnvQueryContext_Querier.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/ForMaidBilberry/Private/PickUps/FMBHealthPickUp.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/ForMaidBilberry/Public/AI/FMBAIBaseCharacter.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/ForMaidBilberry/Public/AI/EQS/FMBEnemyEnvQueryContext.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/EQS/FMBEnemyEnvQueryContext.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/FMBAIBaseCharacter.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/ForMaidBilberry/Public/FMBCoreTypes.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Intermediate/Build/Win64/UE4Editor/Inc/ForMaidBilberry/FMBPlayerState.generated.h" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/Services/FMBFindEnemyService.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Intermediate/Build/Win64/UE4Editor/Inc/ForMaidBilberry/FMBAnimFinishedNotify.generated.h" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/ForMaidBilberry/Private/Player/FMBPlayerState.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../Program Files/Epic Games/UE_4.26/Engine/Source/Runtime/AIModule/Classes/EnvironmentQuery/Contexts/EnvQueryContext_Querier.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/ForMaidBilberry/Public/Player/FMBPlayerState.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/ForMaidBilberry/Public/Player/FMBBaseCharacter.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/ForMaidBilberry/Private/Components/FMBWeaponComponent.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/ForMaidBilberry/Public/FMBGameModeBase.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/ForMaidBilberry/Public/Components/FMBWeaponComponent.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/ForMaidBilberry/Private/Player/FMBBaseCharacter.cpp" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="2020xPicDwJpKZzC7jzpRh6iK7Y" />
   <component name="ProjectLevelVcsManager">
@@ -398,7 +445,11 @@
       <workItem from="1639233816891" duration="3321000" />
       <workItem from="1639237504896" duration="6849000" />
       <workItem from="1639253169874" duration="3973000" />
-      <workItem from="1639258962533" duration="356000" />
+      <workItem from="1639258962533" duration="658000" />
+      <workItem from="1639313478121" duration="1751000" />
+      <workItem from="1639321892734" duration="849000" />
+      <workItem from="1639324368729" duration="5142000" />
+      <workItem from="1639329673215" duration="6978000" />
     </task>
     <task id="LOCAL-00001" summary="Forgot about main game :(. Continue update and upgrade AI. Also some refactoring, like remove rolling into movement component.">
       <created>1638111600096</created>
@@ -407,7 +458,14 @@
       <option name="project" value="LOCAL" />
       <updated>1638111600096</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Update for Behavior tree (not last). Develop gamemode.">
+      <created>1639259559896</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1639259559896</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -444,7 +502,8 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="Forgot about main game :(. Continue update and upgrade AI. Also some refactoring, like remove rolling into movement component." />
-    <option name="LAST_COMMIT_MESSAGE" value="Forgot about main game :(. Continue update and upgrade AI. Also some refactoring, like remove rolling into movement component." />
+    <MESSAGE value="Update for Behavior tree (not last). Develop gamemode." />
+    <option name="LAST_COMMIT_MESSAGE" value="Update for Behavior tree (not last). Develop gamemode." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -114,4 +114,6 @@ private:
     float ChooseSpendStamina(int32 SpendStaminaValue) const;
 
     void PlayCameraShake() const;
+
+    void Killed(AController* KillerController);
 };

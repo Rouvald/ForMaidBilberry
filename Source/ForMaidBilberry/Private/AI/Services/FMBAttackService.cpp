@@ -24,7 +24,7 @@ void UFMBAttackService::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
         if (PerceiveComponent)
         {
             const auto WeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBWeaponComponent>(Controller->GetPawn());
-            const auto PerceiveActor = PerceiveComponent->GetClosestEnemy();
+            const auto PerceiveActor = PerceiveComponent->GetEnemyPlayer();
             if (WeaponComponent && PerceiveActor)
             {
                 const auto CurrentDistance = (PerceiveActor->GetActorLocation() - Controller->GetPawn()->GetActorLocation()).Size();

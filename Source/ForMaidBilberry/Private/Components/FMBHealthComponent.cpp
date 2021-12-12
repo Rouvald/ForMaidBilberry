@@ -7,6 +7,7 @@
 #include "Components/FMBWeaponComponent.h"
 #include "FMBUtils.h"
 #include "FMBCoreTypes.h"
+#include "FMBGameModeBase.h"
 
 DECLARE_LOG_CATEGORY_CLASS(HealthLog, All, All);
 
@@ -68,6 +69,7 @@ void UFMBHealthComponent::OnTakeAnyDamage(AActor* DamagedActor, float Damage, co
 
     if (IsDead())
     {
+        Killed(InstigatedBy);
         OnDeath.Broadcast();
     }
     else if (AutoHeal)
@@ -232,4 +234,24 @@ void UFMBHealthComponent::PlayCameraShake() const
     if (!PlayerController || !PlayerController->PlayerCameraManager) return;
 
     PlayerController->PlayerCameraManager->StartCameraShake(CameraShake);
+}
+
+void UFMBHealthComponent::Killed(AController* KillerController)
+{
+    if(!GetWorld()) return;
+
+    const auto GameMode = Cast<AFMBGameModeBase>(GetWorld()->GetAuthGameMode());
+    if(!GameMode) return;
+
+    if(Cast<APlayerController>(KillerController))
+    {
+        GameMode->Killed(KillerController, true);
+    }
+    else
+    {
+        const auto Player = Cast<APawn>(GetOwner());
+        const auto VictimController = Player ? Player->GetController() : nullptr;
+
+        GameMode->Killed(VictimController, false);
+    }
 }

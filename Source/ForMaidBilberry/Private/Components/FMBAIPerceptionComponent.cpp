@@ -7,7 +7,7 @@
 #include "FMBUtils.h"
 #include "Components/FMBHealthComponent.h"
 
-AActor* UFMBAIPerceptionComponent::GetClosestEnemy() const
+AActor* UFMBAIPerceptionComponent::GetEnemyPlayer() const
 {
     TArray<AActor*> PerceiveActors;
     GetCurrentlyPerceivedActors(UAISense_Sight::StaticClass(), PerceiveActors);
@@ -19,20 +19,23 @@ AActor* UFMBAIPerceptionComponent::GetClosestEnemy() const
     const auto Pawn = Controller->GetPawn();
     if(!Pawn) return nullptr;
 
-    AActor* BestActor = nullptr;
-    float BestDistance = MAX_FLT;
+    /*AActor* BestActor = nullptr;
+    float BestDistance = MAX_FLT;*/
     for (const auto PerceiveActor : PerceiveActors)
     {
         const auto HealthComponent = FMBUtils::GetFMBPlayerComponent<UFMBHealthComponent>(PerceiveActor);
-        if(HealthComponent && !HealthComponent->IsDead())
+        const auto PerceivePawn = Cast<APawn>(PerceiveActor);
+        
+        if(HealthComponent && !HealthComponent->IsDead() && PerceivePawn->IsPlayerControlled())
         {
-            const auto CurrentDistance = (PerceiveActor->GetActorLocation() - Pawn->GetActorLocation()).Size();
+            return PerceiveActor;
+            /*const auto CurrentDistance = (PerceiveActor->GetActorLocation() - Pawn->GetActorLocation()).Size();
             if(CurrentDistance < BestDistance)
             {
                 BestDistance = CurrentDistance;
                 BestActor = PerceiveActor;
-            }
+            }*/
         }
     }
-    return BestActor;
+    return nullptr;
 }

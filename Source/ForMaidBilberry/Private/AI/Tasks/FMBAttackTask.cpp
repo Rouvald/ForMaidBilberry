@@ -26,7 +26,7 @@ EBTNodeResult::Type UFMBAttackTask::ExecuteTask(UBehaviorTreeComponent& OwnerCom
     if (!PerceiveComponent) return EBTNodeResult::Failed;
 
     const auto WeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBWeaponComponent>(Pawn);
-    const auto PerceiveActor = PerceiveComponent->GetClosestEnemy();
+    const auto PerceiveActor = PerceiveComponent->GetEnemyPlayer();
     if (!WeaponComponent && !PerceiveActor) return EBTNodeResult::Failed;
     
     FMath::RandBool() ? WeaponComponent->FastMeleeAttack() : WeaponComponent->StrongMeleeAttack();

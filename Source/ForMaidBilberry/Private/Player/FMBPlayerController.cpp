@@ -2,3 +2,9 @@
 
 
 #include "Player/FMBPlayerController.h"
+#include "Components/FMBRespawnComponent.h"
+
+AFMBPlayerController::AFMBPlayerController()
+{
+    RespawnComponent = CreateDefaultSubobject<UFMBRespawnComponent>("RespawnComponent");
+}

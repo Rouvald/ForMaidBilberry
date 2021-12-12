@@ -218,6 +218,7 @@ bool AFMBBaseCharacter::IsRunning() const
 {
     return WantToRun && !(FMath::IsNearlyZero(HealthComponent->GetStamina())) && !GetVelocity().IsZero();
 }
+
 /*
 float AFMBBaseCharacter::GetMovementDirection() const
 {
@@ -283,8 +284,11 @@ void AFMBBaseCharacter::OnGroundLanded(const FHitResult& Hitresult)
     }
 }*/
 
-void AFMBBaseCharacter::SetTeamSkeletalMesh(USkeletalMesh* TeamSkeletalMesh) const
+/*void AFMBBaseCharacter::SetTeamSkeletalMesh(USkeletalMesh* TeamSkeletalMesh) const
 {
     //UE_LOG(BaseCharacterLog, Display, TEXT("Set Color %s"), *TeamColor.ToString());
-    GetMesh()->SetSkeletalMesh(TeamSkeletalMesh);
-}
+    /*if (TeamSkeletalMesh)
+    {
+        GetMesh()->SetSkeletalMesh(TeamSkeletalMesh, true);
+    }#1#
+}*/

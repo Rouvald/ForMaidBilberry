@@ -112,15 +112,22 @@ struct FGameData
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Game", meta =(ClampMin ="1", ClampMax ="50"))
     int32 PlayerNum = 2;
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Game", meta =(ClampMin ="1", ClampMax ="10"))
-    int32 RoundsNum = 4;
-
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Game", meta =(ClampMin ="1", ClampMax ="400"))
-    int32 RoundsTime = 10; // in second
+    /*UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Game", meta =(ClampMin ="1", ClampMax ="10"))
+    int32 RoundsNum = 4;*/
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Game")
+    bool InfinityGame = false;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Game",
+        meta = (EditCondition = "!InfinityGame", ClampMin ="1", ClampMax ="400"))
+    int32 GameplayTime = 10; // in second
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Game", meta =(ClampMin ="3", ClampMax ="30"))
+    int32 RespawnTime = 10; // in second
+
+    /*UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Game")
     USkeletalMesh* DefaultTeamSkeletalMesh;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Game")
-    TArray<USkeletalMesh*> TeamSkeletalMeshes;
+    TArray<USkeletalMesh*> TeamSkeletalMeshes;*/
 };

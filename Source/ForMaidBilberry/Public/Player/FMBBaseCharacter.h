@@ -35,7 +35,7 @@ public:
     //UFUNCTION(BlueprintCallable, Category="Movement")
     //float GetMovementDirection() const;
 
-    void SetTeamSkeletalMesh(USkeletalMesh* TeamSkeletalMesh) const;
+    //void SetTeamSkeletalMesh(USkeletalMesh* TeamSkeletalMesh) const;
 
 protected:
     UPROPERTY(EditDefaultsOnly, Category="Backpack")

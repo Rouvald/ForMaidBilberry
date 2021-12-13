@@ -10,7 +10,7 @@
 
 UFMBRotationTask::UFMBRotationTask()
 {
-    NodeName = "Attack Enemy";
+    NodeName = "Rotation";
 }
 
 EBTNodeResult::Type UFMBRotationTask::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)

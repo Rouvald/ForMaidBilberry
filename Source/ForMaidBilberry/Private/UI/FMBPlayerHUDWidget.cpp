@@ -3,17 +3,27 @@
 
 #include "UI/FMBPlayerHUDWidget.h"
 #include "Components/FMBHealthComponent.h"
+#include "Components/FMBStaminaComponent.h"
 #include "Components/FMBWeaponComponent.h"
 #include "FMBUtils.h"
 
 bool UFMBPlayerHUDWidget::Initialize()
 {
-    const auto HealthComponent = FMBUtils::GetFMBPlayerComponent<UFMBHealthComponent>(GetOwningPlayerPawn());
+    if(GetOwningPlayer())
+    {
+        GetOwningPlayer()->GetOnNewPawnNotifier().AddUObject(this, &UFMBPlayerHUDWidget::OnNewPawn);
+        OnNewPawn(GetOwningPlayerPawn());
+    }
+    return Super::Initialize();
+}
+
+void UFMBPlayerHUDWidget::OnNewPawn(APawn* NewPawn)
+{
+    const auto HealthComponent = FMBUtils::GetFMBPlayerComponent<UFMBHealthComponent>(NewPawn);
     if (HealthComponent)
     {
         HealthComponent->OnHealthChange.AddUObject(this, &UFMBPlayerHUDWidget::OnHealthChange);
     }
-    return Super::Initialize();
 }
 
 void UFMBPlayerHUDWidget::OnHealthChange(float Health, float HealthDelta)
@@ -34,10 +44,10 @@ float UFMBPlayerHUDWidget::GetHealthPercent() const
 
 float UFMBPlayerHUDWidget::GetStaminaPercent() const
 {
-    const auto HealthComponent = FMBUtils::GetFMBPlayerComponent<UFMBHealthComponent>(GetOwningPlayerPawn());
-    if (!HealthComponent) return 0.0f;
+    const auto StaminaComponent = FMBUtils::GetFMBPlayerComponent<UFMBStaminaComponent>(GetOwningPlayerPawn());
+    if (!StaminaComponent) return 0.0f;
 
-    return HealthComponent->GetStaminaPercent();
+    return StaminaComponent->GetStaminaPercent();
 }
 
 bool UFMBPlayerHUDWidget::GetCurrentWeaponUIData(FWeaponUIData& WeaponUIData) const

@@ -7,6 +7,8 @@
 #include "FMBAIPerceptionComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
+DEFINE_LOG_CATEGORY_STATIC(LogFMBFindenemyService, All, All)
+
 UFMBFindEnemyService::UFMBFindEnemyService()
 {
     NodeName = "Find Enemy";
@@ -15,7 +17,7 @@ UFMBFindEnemyService::UFMBFindEnemyService()
 void UFMBFindEnemyService::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
 {
     const auto Blackboard = OwnerComp.GetBlackboardComponent();
-    if(Blackboard)
+    if (Blackboard)
     {
         const auto Controller = OwnerComp.GetAIOwner();
         const auto PerceptionComponent = FMBUtils::GetFMBPlayerComponent<UFMBAIPerceptionComponent>(Controller);
@@ -23,8 +25,14 @@ void UFMBFindEnemyService::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* No
         {
             Blackboard->SetValueAsObject(EnemyActorKey.SelectedKeyName, PerceptionComponent->GetEnemyPlayer());
 
-            const auto Distance = Controller->GetPawn()->GetDistanceTo(PerceptionComponent->GetEnemyPlayer());
-            Blackboard->SetValueAsFloat(DistanceToTargetKey.SelectedKeyName, Distance);
+            if (PerceptionComponent->GetEnemyPlayer())
+            {
+                Blackboard->SetValueAsVector(LastPlayerLocationKey.SelectedKeyName,
+                    PerceptionComponent->GetEnemyPlayer()->GetActorLocation());
+            }
+            
+            /*const auto Distance = Controller->GetPawn()->GetDistanceTo(PerceptionComponent->GetEnemyPlayer());
+            Blackboard->SetValueAsFloat(DistanceToTargetKey.SelectedKeyName, Distance);*/
         }
     }
     Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);

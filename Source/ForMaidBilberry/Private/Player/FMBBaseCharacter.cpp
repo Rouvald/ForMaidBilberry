@@ -2,16 +2,13 @@
 
 
 #include "Player/FMBBaseCharacter.h"
-#include "Camera/CameraComponent.h"
-#include "Components/CapsuleComponent.h"
-#include "Components/InputComponent.h"
 #include "GameFramework/SpringArmComponent.h"
-#include "Components/FMBCharacterMovementComponent.h"
 #include "Components/FMBHealthComponent.h"
 #include "Components/FMBWeaponComponent.h"
 #include "Components/TextRenderComponent.h"
 #include "GameFramework/Controller.h"
 #include "Weapon/FMBBaseWeapon.h"
+#include "Components/CapsuleComponent.h"
 
 DECLARE_LOG_CATEGORY_CLASS(BaseCharacterLog, All, All);
 
@@ -20,10 +17,11 @@ AFMBBaseCharacter::AFMBBaseCharacter(const FObjectInitializer& ObjInit)
 {
     PrimaryActorTick.bCanEverTick = true;
 
-    // Camara rotate around Character8
+    // Camara rotate around Character
     bUseControllerRotationPitch = false;
     bUseControllerRotationYaw = false;
     bUseControllerRotationRoll = false;
+    //
     GetCharacterMovement()->bOrientRotationToMovement = true;
     GetCharacterMovement()->RotationRate = FRotator(0.0f, 700.0f, 0.0f);
     //
@@ -31,39 +29,9 @@ AFMBBaseCharacter::AFMBBaseCharacter(const FObjectInitializer& ObjInit)
     GetCharacterMovement()->bUseControllerDesiredRotation = true;
     GetCharacterMovement()->bIgnoreBaseRotation = true;
     //
-
-    SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>("SpringArmComponent");
-    SpringArmComponent->SetupAttachment(GetRootComponent());
-    SpringArmComponent->SocketOffset = FVector(0.0f, 0.0f, 50.0f);
-    SpringArmComponent->TargetArmLength = 500.0f;
-    SpringArmComponent->bUsePawnControlRotation = true;
-
-    TPPCameraComponent = CreateDefaultSubobject<UCameraComponent>("TPPCameraComponent");
-    TPPCameraComponent->SetupAttachment(SpringArmComponent);
-    TPPCameraComponent->bUsePawnControlRotation = false;
-
-    /*CameraCollisionComponent = CreateDefaultSubobject<USphereComponent>("CameraCollisionComponent");
-    CameraCollisionComponent->SetupAttachment(TPPCameraComponent);
-    CameraCollisionComponent->SetSphereRadius(10.0f);
-    CameraCollisionComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
-    CameraCollisionComponent->SetCollisionEnabled(ECollisionEnabled::QueryOnly);*/
-
-    /*
-    FPPCameraComponent = CreateDefaultSubobject<UCameraComponent>("FPPCameraComponent");
-    FPPCameraComponent->SetupAttachment(GetMesh(), FPPCameraSocketName);
-    FPPCameraComponent->SetRelativeLocation(FVector(-3.0f, 30.0f, 1.0f));
-    FPPCameraComponent->SetRelativeRotation(FRotator(-90.0f, 0.0f, 90.0f));
-    FPPCameraComponent->bUsePawnControlRotation = true;
-    */
-
     GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -86.0f), FRotator(0.0f, -90.0f, 0.0f));
 
     HealthComponent = CreateDefaultSubobject<UFMBHealthComponent>("HealthComponent");
-
-    HealthTextComponent = CreateDefaultSubobject<UTextRenderComponent>("HealthTextComponent");
-    HealthTextComponent->SetupAttachment(GetRootComponent());
-    HealthTextComponent->SetOwnerNoSee(true);
-
     WeaponComponent = CreateDefaultSubobject<UFMBWeaponComponent>("WeaponComponent");
 
     Backpack = CreateDefaultSubobject<UStaticMeshComponent>("Backpack");
@@ -77,7 +45,6 @@ void AFMBBaseCharacter::BeginPlay()
 
     check(GetMesh());
     check(HealthComponent);
-    check(HealthTextComponent);
     check(GetCharacterMovement());
 
     OnHealthChange(HealthComponent->GetHealth(), 0.0f);
@@ -89,7 +56,6 @@ void AFMBBaseCharacter::BeginPlay()
 
 void AFMBBaseCharacter::OnHealthChange(float Health, float HealthDelta)
 {
-    HealthTextComponent->SetText(FText::FromString(FString::Printf(TEXT("%0.0f"), Health)));
 }
 
 void AFMBBaseCharacter::Tick(float DeltaTime)
@@ -97,126 +63,9 @@ void AFMBBaseCharacter::Tick(float DeltaTime)
     Super::Tick(DeltaTime);
 }
 
-void AFMBBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-    Super::SetupPlayerInputComponent(PlayerInputComponent);
-    check(PlayerInputComponent);
-    check(WeaponComponent);
-    const auto FMBMovementComponent = Cast<UFMBCharacterMovementComponent>(GetMovementComponent());
-    check(FMBMovementComponent)
-
-    PlayerInputComponent->BindAxis("MoveForward", this, &AFMBBaseCharacter::MoveForward);
-    PlayerInputComponent->BindAxis("MoveRight", this, &AFMBBaseCharacter::MoveRight);
-
-    PlayerInputComponent->BindAxis("LookUp", this, &AFMBBaseCharacter::AddControllerPitchInput);
-    PlayerInputComponent->BindAxis("TurnAround", this, &AFMBBaseCharacter::AddControllerYawInput);
-
-    //PlayerInputComponent->BindAxis("LookUpRate", this, &AFMBBaseCharacter::LookUpAtRate);
-    //PlayerInputComponent->BindAxis("TurnAroundRate", this, &AFMBBaseCharacter::TurnAroundAtRate);
-
-    PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &AFMBBaseCharacter::Jump);
-
-    //PlayerInputComponent->BindAction("SwitchCamera", EInputEvent::IE_Pressed, this, &AFMBBaseCharacter::SwitchCamera);
-
-    PlayerInputComponent->BindAction("Run", IE_Pressed, this, &AFMBBaseCharacter::OnStartRunning);
-    PlayerInputComponent->BindAction("Run", IE_Released, this, &AFMBBaseCharacter::OnStopRunning);
-
-    PlayerInputComponent->BindAction("FastMeleeAttack", IE_Pressed, WeaponComponent, &UFMBWeaponComponent::FastMeleeAttack);
-    PlayerInputComponent->BindAction("StrongMeleeAttack", IE_Pressed, WeaponComponent, &UFMBWeaponComponent::StrongMeleeAttack);
-
-    PlayerInputComponent->BindAction("NextWeapon", IE_Pressed, WeaponComponent, &UFMBWeaponComponent::NextWeapon);
-
-    PlayerInputComponent->BindAction("Rolling", IE_Pressed, FMBMovementComponent, &UFMBCharacterMovementComponent::Rolling);
-}
-
-/*void AFMBBaseCharacter::LimitViewPitchRotation ()//
-{
-    const auto PlayerController = Cast<APlayerController>(Controller);
-    if (PlayerController && PlayerController->PlayerCameraManager)
-    {
-        PlayerController->PlayerCameraManager->ViewPitchMax = 50.0f;
-        PlayerController->PlayerCameraManager->ViewPitchMin = 50.0f;
-    }
-}
-
-void AFMBBaseCharacter::SwitchCamera()//
-{
-    
-}*/
-/*void AFMBBaseCharacter::TurnAroundAtRate(float Rate)
-{
-    AddControllerYawInput(Rate * BaseTurnAroundRate * GetWorld()->GetDeltaSeconds());
-}
-
-void AFMBBaseCharacter::LookUpAtRate(float Rate)
-{
-    AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
-}*/
-
-void AFMBBaseCharacter::MoveForward(float Amount)
-{
-    //IsMovingForward = Amount > 0.0f;
-    if (Amount == 0.0f) return;
-
-    const FRotator Rotation = Controller->GetControlRotation();
-    const FRotator RotationYaw(0.0f, Rotation.Yaw, 0.0f);
-
-    const FVector Direction = FRotationMatrix(RotationYaw).GetUnitAxis(EAxis::X);
-
-    AddMovementInput(Direction, Amount);
-}
-
-void AFMBBaseCharacter::MoveRight(float Amount)
-{
-    if (Amount == 0.0f) return;
-
-    const FRotator Rotation = Controller->GetControlRotation();
-    const FRotator RotationYaw(0.0f, Rotation.Yaw, 0.0f);
-
-    const FVector Direction = FRotationMatrix(RotationYaw).GetUnitAxis(EAxis::Y);
-
-    AddMovementInput(Direction, Amount);
-}
-
-void AFMBBaseCharacter::Jump()
-{
-    const auto MovementComponent = Cast<UFMBCharacterMovementComponent>(GetMovementComponent());
-    if (!MovementComponent || !(MovementComponent->CanRolling())) return;
-
-    if (!WeaponComponent || !(WeaponComponent->CanAttack())) return;
-
-    //if (!SpendStamina(JumpStaminaSpend)) return;
-    Super::Jump();
-}
-
-void AFMBBaseCharacter::OnStartRunning()
-{
-    const auto MovementComponent = Cast<UFMBCharacterMovementComponent>(GetMovementComponent());
-    if (!MovementComponent || !(MovementComponent->CanRolling()) || MovementComponent->IsFalling()) return;
-
-    if (!WeaponComponent || !(WeaponComponent->CanAttack())) return;
-
-    if (GetVelocity().IsNearlyZero()) return;
-
-    if (!HealthComponent) return;
-    HealthComponent->StartStaminaRunningTimer();
-
-    WantToRun = true;
-}
-
-void AFMBBaseCharacter::OnStopRunning()
-{
-    if (!HealthComponent) return;
-    HealthComponent->CheckAndStopStaminaRunningTimer();
-
-    WantToRun = false;
-
-    HealthComponent->StartHealStaminaTimer();
-}
-
 bool AFMBBaseCharacter::IsRunning() const
 {
-    return WantToRun && !(FMath::IsNearlyZero(HealthComponent->GetStamina())) && !GetVelocity().IsZero();
+    return false;
 }
 
 /*
@@ -239,15 +88,7 @@ void AFMBBaseCharacter::OnDeath()
 
     GetCharacterMovement()->DisableMovement();
     SetLifeSpan(LifeSpanOnDeath);
-
-    if (Controller)
-    {
-        Controller->ChangeState(NAME_Spectating);
-    }
     GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
-
-    HealthComponent->CheckAndStopHealStaminaTimer();
-    HealthComponent->CheckAndStopStaminaRunningTimer();
 
     WeaponComponent->StopDrawTrace();
 
@@ -266,23 +107,6 @@ void AFMBBaseCharacter::OnGroundLanded(const FHitResult& Hitresult)
     UE_LOG(BaseCharacterLog, Display, TEXT("FinalDamage %f"), FinalDamage);
     TakeDamage(FinalDamage, FDamageEvent{}, nullptr, nullptr);
 }
-
-/*void AFMBBaseCharacter::CheckCameraOverlap()
-{
-    const auto HideMesh = CameraCollisionComponent->IsOverlappingComponent(GetCapsuleComponent());
-    GetMesh()->SetOwnerNoSee(HideMesh);
-
-    TArray<USceneComponent*> MeshChildren;
-    GetMesh()->GetChildrenComponents(true, MeshChildren);
-
-    for (auto MeshChild : MeshChildren)
-    {
-        if (const auto MeshChildGeometry = Cast<UPrimitiveComponent>(MeshChild))
-        {
-            MeshChildGeometry->SetOwnerNoSee(HideMesh);
-        }
-    }
-}*/
 
 /*void AFMBBaseCharacter::SetTeamSkeletalMesh(USkeletalMesh* TeamSkeletalMesh) const
 {

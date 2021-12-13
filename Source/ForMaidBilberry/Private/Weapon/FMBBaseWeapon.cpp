@@ -4,6 +4,7 @@
 
 #include "Weapon/FMBBaseWeapon.h"
 #include "DrawDebugHelpers.h"
+#include "FMBAIBaseCharacter.h"
 #include "Components/StaticMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "FMBBaseCharacter.h"
@@ -71,7 +72,7 @@ void AFMBBaseWeapon::DrawTrace()
 
     //DrawDebugLine(GetWorld(), TraceStart, TraceEnd, FColor::Red, false, 0.05f, 0, 5.0f);
 
-    if (HitResult.bBlockingHit && Cast<AActor>(HitResult.GetActor()))
+    if (HitResult.bBlockingHit)
     {
         SortEqualCharacter(HitResult);
     }
@@ -145,7 +146,7 @@ void AFMBBaseWeapon::StartDrawTrace()
 
     // if u wanna use SwordTrails anim notify state -> u need uncomment this down line
     //SwordTrailFXComponent->SetVisibility(false);
-    
+
     GetWorld()->GetTimerManager().SetTimer(DrawTraceTimerHandle, this, &AFMBBaseWeapon::DrawTrace, 0.005f, true);
 }
 
@@ -153,10 +154,8 @@ void AFMBBaseWeapon::StopDrawTrace()
 {
     HitActors.Empty();
 
-    if (GetWorld()->GetTimerManager().IsTimerActive(DrawTraceTimerHandle))
-    {
-        GetWorld()->GetTimerManager().ClearTimer(DrawTraceTimerHandle);
-    }
+    GetWorld()->GetTimerManager().ClearTimer(DrawTraceTimerHandle);
+
     if (SwordTrailFXComponent)
     {
         SwordTrailFXComponent->DestroyComponent();

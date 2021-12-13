@@ -30,3 +30,8 @@ void UFMBRespawnComponent::RespawnUpdateTimer()
         GameMode->RespawnRequest(Cast<AController>(GetOwner()));
     }
 }
+
+bool UFMBRespawnComponent::IsRespawnStarted() const
+{
+    return GetWorld()->GetTimerManager().IsTimerActive(RespawnTimerHandle);
+}

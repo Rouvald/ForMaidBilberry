@@ -2,10 +2,11 @@
 
 
 #include "FMBGameModeBase.h"
-#include "Player/FMBBaseCharacter.h"
+#include "Player/FMBPlayerCharacter.h"
 #include "Player/FMBPlayerController.h"
 #include "UI/FMBGameHUD.h"
 #include "AIController.h"
+#include "EngineUtils.h"
 #include "FMBRespawnComponent.h"
 #include "FMBUtils.h"
 #include "Player/FMBPlayerState.h"
@@ -16,7 +17,7 @@ constexpr static int32 MinRoundTimeForRespawn =10;
 
 AFMBGameModeBase::AFMBGameModeBase()
 {
-    DefaultPawnClass = AFMBBaseCharacter::StaticClass();
+    DefaultPawnClass = AFMBPlayerCharacter::StaticClass();
     PlayerControllerClass = AFMBPlayerController::StaticClass();
     HUDClass = AFMBGameHUD::StaticClass();
     PlayerStateClass = AFMBPlayerState::StaticClass();
@@ -71,8 +72,7 @@ void AFMBGameModeBase::GameTimerUpdate()
     {
         GetWorld()->GetTimerManager().ClearTimer(RoundTimerHandle);
 
-        UE_LOG(LogAFMBGameModeBase, Display, TEXT("========GAME OVER========"));
-        LogPlayerInfo();
+        GameOver();
         /*if (CurrentRound + 1 <= GameData.RoundsNum)
         {
             ++CurrentRound;
@@ -143,7 +143,7 @@ void AFMBGameModeBase::LogPlayerInfo()
 
 void AFMBGameModeBase::StartRespawn(AController* Controller)
 {
-    const auto IsRespawnAvailable = GameplayTimeCountDown > MinRoundTimeForRespawn + GameData.RespawnTime;
+    const auto IsRespawnAvailable = GameData.InfinityGame || GameplayTimeCountDown > MinRoundTimeForRespawn + GameData.RespawnTime;
     if(!IsRespawnAvailable) return;
     
     const auto RespawnComponent = FMBUtils::GetFMBPlayerComponent<UFMBRespawnComponent>(Controller);
@@ -156,6 +156,22 @@ void AFMBGameModeBase::RespawnRequest(AController* Controller)
 {
     ResetOnePlayer(Controller);
 }
+
+void AFMBGameModeBase::GameOver()
+{
+    UE_LOG(LogAFMBGameModeBase, Display, TEXT("========GAME OVER========"));
+    LogPlayerInfo();
+
+    for (const auto Pawn : TActorRange<APawn>(GetWorld()))
+    {
+        if(Pawn)
+        {
+            Pawn->TurnOff();
+            Pawn->DisableInput(nullptr);
+        }
+    }
+}
+
 
 /*void AFMBGameModeBase::CreateTeamsInfo()
 {

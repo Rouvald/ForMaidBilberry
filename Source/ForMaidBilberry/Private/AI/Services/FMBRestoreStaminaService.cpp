@@ -3,7 +3,7 @@
 
 #include "AI/Services/FMBRestoreStaminaService.h"
 #include "AIController.h"
-#include "Components/FMBHealthComponent.h"
+#include "Components/FMBStaminaComponent.h"
 #include "FMBUtils.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
@@ -21,10 +21,10 @@ void UFMBRestoreStaminaService::TickNode(UBehaviorTreeComponent& OwnerComp, uint
 
     if (Controller && Blackboard)
     {
-        const auto HealthComponent = FMBUtils::GetFMBPlayerComponent<UFMBHealthComponent>(Controller->GetPawn());
-        if (HealthComponent)
+        const auto StaminaComponent = FMBUtils::GetFMBPlayerComponent<UFMBStaminaComponent>(Controller->GetPawn());
+        if (StaminaComponent)
         {
-            Blackboard->SetValueAsFloat(AIStaminaKey.SelectedKeyName, HealthComponent->GetStamina());
+            Blackboard->SetValueAsFloat(AIStaminaKey.SelectedKeyName, StaminaComponent->GetStamina());
             //UE_LOG(LogFMBRestoreStaminaService, Display, TEXT("Stamina: %f"), Blackboard->GetValueAsFloat(AIStaminaKey.SelectedKeyName));
         }
     }

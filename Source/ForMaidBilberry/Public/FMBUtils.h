@@ -11,4 +11,6 @@ public:
         const auto Component = PlayerPawn->GetComponentByClass(T::StaticClass());
         return Cast<T>(Component);
     }
+
+    
 };

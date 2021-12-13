@@ -11,6 +11,16 @@ int32 UFMBGameDataWidget::GetKillsNum() const
     return PlayerState ? PlayerState->GetKillsNum() : 0;
 }
 
+int32 UFMBGameDataWidget::GetEnemiesNum(int32& AllEnemiesNum) const
+{
+    const auto GameMode = GetGameModeBase();
+    const auto PlayerState = GetPlayerState();
+
+    AllEnemiesNum = GameMode ? GameMode->GetGameData().PlayerNum - 1 : 0;
+
+    return GameMode && PlayerState ? GameMode->GetGameData().PlayerNum - 1 - PlayerState->GetKillsNum() : 0;
+}
+
 int32 UFMBGameDataWidget::GetGameplayTimeRemaining() const
 {
     const auto GameMode = GetGameModeBase();

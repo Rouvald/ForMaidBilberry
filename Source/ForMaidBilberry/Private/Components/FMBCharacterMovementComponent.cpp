@@ -1,7 +1,7 @@
 // For Maid Bilberry Game. All Rights Recerved
 
 #include "Components/FMBCharacterMovementComponent.h"
-#include "Components/FMBHealthComponent.h"
+#include "Components/FMBStaminaComponent.h"
 #include "Components//FMBWeaponComponent.h"
 #include "Player/FMBBaseCharacter.h"
 #include "FMBUtils.h"
@@ -32,8 +32,8 @@ void UFMBCharacterMovementComponent::Rolling()
     const auto WeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBWeaponComponent>(Character);
     if(!WeaponComponent || !(WeaponComponent->CanEquip()) || !(WeaponComponent->CanAttack())) return;
 
-    const auto HealthComponent = FMBUtils::GetFMBPlayerComponent<UFMBHealthComponent>(Character);
-    if (!HealthComponent || !(HealthComponent->SpendStamina(EStaminaSpend::Rolling))) return;
+    const auto StaminaComponent = FMBUtils::GetFMBPlayerComponent<UFMBStaminaComponent>(Character);
+    if (!StaminaComponent || !(StaminaComponent->SpendStamina(EStaminaSpend::Rolling))) return;
 
     if (!Velocity.IsZero())
     {
@@ -63,10 +63,10 @@ void UFMBCharacterMovementComponent::OnRollingFinished(USkeletalMeshComponent* M
     const auto Character = Cast<AFMBBaseCharacter>(GetPawnOwner());
     if (!Character || Character->GetMesh() != MeshComp) return;
 
-    const auto HealthComponent = FMBUtils::GetFMBPlayerComponent<UFMBHealthComponent>(GetPawnOwner());
-    if (!HealthComponent) return;
+    const auto StaminaComponent = FMBUtils::GetFMBPlayerComponent<UFMBStaminaComponent>(GetPawnOwner());
+    if (!StaminaComponent) return;
 
-    HealthComponent->StartHealStaminaTimer();
+    StaminaComponent->StartHealStaminaTimer();
 
     Character->GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Block);
     RollingAnimInProgress = false;

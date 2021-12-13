@@ -33,8 +33,8 @@ void AFMBAIController::Tick(float DeltaSeconds)
 {
     Super::Tick(DeltaSeconds);
 
-    const auto AimActor = GetFocusOnActor();
-    SetFocus(AimActor);
+    const auto EnemyActor = GetFocusOnActor();
+    SetFocus(EnemyActor);
 }
 
 AActor* AFMBAIController::GetFocusOnActor() const

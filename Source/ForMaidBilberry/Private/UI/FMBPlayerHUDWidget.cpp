@@ -7,14 +7,13 @@
 #include "Components/FMBWeaponComponent.h"
 #include "FMBUtils.h"
 
-bool UFMBPlayerHUDWidget::Initialize()
+void UFMBPlayerHUDWidget::NativeOnInitialized()
 {
     if(GetOwningPlayer())
     {
         GetOwningPlayer()->GetOnNewPawnNotifier().AddUObject(this, &UFMBPlayerHUDWidget::OnNewPawn);
         OnNewPawn(GetOwningPlayerPawn());
     }
-    return Super::Initialize();
 }
 
 void UFMBPlayerHUDWidget::OnNewPawn(APawn* NewPawn)

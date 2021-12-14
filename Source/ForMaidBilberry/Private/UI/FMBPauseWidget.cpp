@@ -5,15 +5,12 @@
 #include "Components/Button.h"
 #include "GameFramework/GameModeBase.h"
 
-bool UFMBPauseWidget::Initialize()
+void UFMBPauseWidget::NativeOnInitialized()
 {
-    const auto InitStatus = Super::Initialize();
-
     if(ClearPauseButton)
     {
         ClearPauseButton->OnClicked.AddDynamic(this, &UFMBPauseWidget::OnPauseClear);
     }
-    return InitStatus;
 }
 
 void UFMBPauseWidget::OnPauseClear()

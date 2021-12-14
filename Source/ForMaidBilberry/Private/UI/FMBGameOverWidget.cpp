@@ -6,12 +6,12 @@
 #include "FMBPlayerStatRowWidget.h"
 #include "Player/FMBPlayerState.h"
 #include "FMBUtils.h"
+#include "Components/Button.h"
 #include "Components/VerticalBox.h"
+#include "Kismet/GameplayStatics.h"
 
-bool UFMBGameOverWidget::Initialize()
+void UFMBGameOverWidget::NativeOnInitialized()
 {
-    const auto InitStatus = Super::Initialize();
-    
     if (GetWorld())
     {
         const auto GameMode = Cast<AFMBGameModeBase>(GetWorld()->GetAuthGameMode());
@@ -20,7 +20,11 @@ bool UFMBGameOverWidget::Initialize()
             GameMode->OnMatchStateChange.AddUObject(this, &UFMBGameOverWidget::OnMatchStateChange);
         }
     }
-    return InitStatus;
+    if(ResetLevelButton)
+    {
+        ResetLevelButton->OnClicked.AddDynamic(this, &UFMBGameOverWidget::OnResetLevel);
+    }
+    
 }
 
 void UFMBGameOverWidget::OnMatchStateChange(EFMBMatchState State)
@@ -55,4 +59,10 @@ void UFMBGameOverWidget::UpdatePlayerStat()
 
         PlayerStatBox->AddChild(PlayerStatRow);
     }
+}
+
+void UFMBGameOverWidget::OnResetLevel()
+{
+    const auto ResetLevelName = UGameplayStatics::GetCurrentLevelName(this);
+    UGameplayStatics::OpenLevel(this, FName(ResetLevelName));
 }

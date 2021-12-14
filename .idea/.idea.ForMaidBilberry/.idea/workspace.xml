@@ -6,20 +6,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4f6fc7f4-d1d1-43a3-843d-1dc3f946e1fb" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Content/UI/WBP_GameOver.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/UI/WBP_PlayerStatRow.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/UI/FMBGameOverWidget.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/UI/FMBPlayerStatRowWidget.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/UI/FMBGameOverWidget.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/UI/FMBPlayerStatRowWidget.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ForMaidBilberry/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ForMaidBilberry/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/BP_FMBGameModeBase.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP_FMBGameModeBase.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/Images/1.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/Images/T_Frame_Sword_Steel.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/Images/T_Frame_Sword_Wooden.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/Images/T_Health_Bar_Empty.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/Images/T_Health_Bar_Full.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/Images/T_Helmet_Icon.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/Images/T_RedSwordHUD.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/Images/T_RedSwordHUDwithBG.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/Images/T_YellowSwordHUD.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/Images/T_YellowSwordHUDwithBG.uasset" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Levels/TestLevel.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/TestLevel.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/UI/BP_FMBGameHUD.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UI/BP_FMBGameHUD.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/UI/FMBGameHUD.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/UI/FMBGameHUD.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/FMBUtils.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/FMBUtils.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Player/FMBPlayerState.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Player/FMBPlayerState.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/UI/FMBGameHUD.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/UI/FMBGameHUD.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UI/WBP_Player.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UI/WBP_Player.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Weapon/BP_FMBSword_Red.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Weapon/BP_FMBSword_Red.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Weapon/BP_FMBSword_Yellow.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Weapon/BP_FMBSword_Yellow.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/UI/FMBGameOverWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/UI/FMBGameOverWidget.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/UI/FMBPauseWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/UI/FMBPauseWidget.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/UI/FMBPlayerHUDWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/UI/FMBPlayerHUDWidget.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/UI/FMBGameOverWidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/UI/FMBGameOverWidget.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/UI/FMBPauseWidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/UI/FMBPauseWidget.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/UI/FMBPlayerHUDWidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/UI/FMBPlayerHUDWidget.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -376,7 +384,8 @@
       <workItem from="1639414602125" duration="8601000" />
       <workItem from="1639491172024" duration="5176000" />
       <workItem from="1639503148180" duration="6824000" />
-      <workItem from="1639515447467" duration="4300000" />
+      <workItem from="1639515447467" duration="4518000" />
+      <workItem from="1639523319120" duration="532000" />
     </task>
     <task id="LOCAL-00001" summary="Forgot about main game :(. Continue update and upgrade AI. Also some refactoring, like remove rolling into movement component.">
       <created>1638111600096</created>
@@ -413,7 +422,14 @@
       <option name="project" value="LOCAL" />
       <updated>1639510413941</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Add GameOverWidget.">
+      <created>1639520190879</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1639520190879</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -454,7 +470,8 @@
     <MESSAGE value="Update AI, now all bots versus Player. Add timer and player respawn GameMode. PlayerState have player kills and dead." />
     <MESSAGE value="Player can respawn. Make PlayerCharacter and remove player logic from BaseCharacter. Update Ai Behavior tree." />
     <MESSAGE value="Working on MatchState. Add new widget Pause. Refactoring and bugs correction" />
-    <option name="LAST_COMMIT_MESSAGE" value="Working on MatchState. Add new widget Pause. Refactoring and bugs correction" />
+    <MESSAGE value="Add GameOverWidget." />
+    <option name="LAST_COMMIT_MESSAGE" value="Add GameOverWidget." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

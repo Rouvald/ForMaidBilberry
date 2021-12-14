@@ -40,20 +40,10 @@ void UFMBHealthComponent::OnTakeAnyDamage(AActor* DamagedActor, float Damage, co
 
     //if(Cast<AFMBAIBaseCharacter>(GetOwner()) && Cast<AAIController>(InstigatedBy)) return;
 
-    // TODO Get Hit , if stay in damage sphere anim don't loop // NEED FIX!!
+    // TODO: Hit anim don't loop, when periodical damage  // NEED FIX or not XD
     if (CheckAllAnimInProgress())
     {
-        if (const auto Character = Cast<AFMBBaseCharacter>(GetOwner()))
-        {
-            const auto WeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBWeaponComponent>(Character);
-            if (WeaponComponent || WeaponComponent->GetCurrentWeapon())
-            {
-                Character->PlayAnimMontage(WeaponComponent->GetCurrentWeaponAnimationsData().GetHit);
-            }
-            //==================================================
-            //UE_LOG(HealthLog, Display, TEXT("GetHit Animation play"),);
-            //==================================================
-        }
+        PlayHitAnimation();
     }
 
     SetHealth(Health - Damage);
@@ -116,6 +106,21 @@ bool UFMBHealthComponent::CheckAllAnimInProgress() const
     return true;
 }
 
+void UFMBHealthComponent::PlayHitAnimation() const
+{
+    if (const auto Character = Cast<AFMBBaseCharacter>(GetOwner()))
+    {
+        const auto WeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBWeaponComponent>(Character);
+        if (WeaponComponent || WeaponComponent->GetCurrentWeapon())
+        {
+            Character->PlayAnimMontage(WeaponComponent->GetCurrentWeaponAnimationsData().GetHit);
+        }
+        //==================================================
+        //UE_LOG(HealthLog, Display, TEXT("GetHit Animation play"),);
+        //==================================================
+    }
+}
+
 void UFMBHealthComponent::PlayCameraShake() const
 {
     if (IsDead()) return;
@@ -130,12 +135,12 @@ void UFMBHealthComponent::PlayCameraShake() const
 
 void UFMBHealthComponent::Killed(AController* KillerController)
 {
-    if(!GetWorld()) return;
+    if (!GetWorld()) return;
 
     const auto GameMode = Cast<AFMBGameModeBase>(GetWorld()->GetAuthGameMode());
-    if(!GameMode) return;
+    if (!GameMode) return;
 
-    if(Cast<APlayerController>(KillerController))
+    if (Cast<APlayerController>(KillerController))
     {
         GameMode->Killed(KillerController, true);
     }

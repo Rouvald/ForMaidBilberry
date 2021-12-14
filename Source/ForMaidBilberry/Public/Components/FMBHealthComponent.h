@@ -67,6 +67,7 @@ private:
     bool CheckAllAnimInProgress() const;
 
     void PlayCameraShake() const;
+    void PlayHitAnimation() const;
 
     void Killed(AController* KillerController);
 };

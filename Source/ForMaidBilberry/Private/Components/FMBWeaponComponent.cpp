@@ -231,12 +231,12 @@ void UFMBWeaponComponent::CheckAttackFinishedAnimNotify(UAnimMontage* Animation)
 
 void UFMBWeaponComponent::OnAttackFinished(USkeletalMeshComponent* MeshComp)
 {
-    StopDrawTrace();
-    
     const auto StaminaComponent = FMBUtils::GetFMBPlayerComponent<UFMBStaminaComponent>(GetOwner());
-    if (!StaminaComponent) return;
-
-    StaminaComponent->StartHealStaminaTimer();
+    if (StaminaComponent)
+    {
+        StaminaComponent->StartHealStaminaTimer();
+    }
+    StopDrawTrace();
 }
 
 void UFMBWeaponComponent::OnEquipFinished(USkeletalMeshComponent* MeshComp)
@@ -312,6 +312,8 @@ bool UFMBWeaponComponent::CanAttack() const
 {
     const auto Character = GetCharacter();
     if (!Character) return false;
+
+    if (AttackAnimInProgress) return false;
     
     if (EquipAnimInProgress) return false;
 

@@ -6,64 +6,33 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4f6fc7f4-d1d1-43a3-843d-1dc3f946e1fb" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Content/Player/BP_FMBPlayerCharacter.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/UI/WBP_Player.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/UI/WBP_Spectator.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Weapon/StaticMeshWeapons/SM_BackpackBlue.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Weapon/StaticMeshWeapons/SM_BackpackGreen.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Weapon/StaticMeshWeapons/SM_Hammer.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Weapon/StaticMeshWeapons/SM_RedShield.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Weapon/StaticMeshWeapons/SM_RedSword.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/Tasks/FMBClearLocationTask.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Components/FMBStaminaComponent.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Player/FMBPlayerCharacter.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/UI/FMBSpectatingWidget.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/AI/Tasks/FMBClearLocationTask.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Components/FMBStaminaComponent.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Player/FMBPlayerCharacter.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/UI/FMBSpectatingWidget.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/UI/WBP_PauseGame.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/UI/FMBPauseWidget.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/UI/FMBPauseWidget.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ForMaidBilberry/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ForMaidBilberry/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultInput.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultInput.ini" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/AI/BB_FMBAICharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AI/BB_FMBAICharacter.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/AI/BP_FMBAIBaseCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AI/BP_FMBAIBaseCharacter.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/AI/BP_FMBAIController.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AI/BP_FMBAIController.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/AI/BT_FMBAICharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AI/BT_FMBAICharacter.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/BP_FMBGameModeBase.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BP_FMBGameModeBase.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/UE4_Mannequin_Skeleton.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ExternalContent/ModularRPGHeroesPolyart/Meshes/UE4_Mannequin_Skeleton.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Levels/TestLevel.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/TestLevel.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Player/Animation/Animation_SwordShield/AM_GetHit_SwordShield.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_SwordShield/AM_GetHit_SwordShield.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Player/Animation/Animation_TwoHandSword/AM_GetHit_TwohandSword.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Player/Animation/Animation_TwoHandSword/AM_GetHit_TwohandSword.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Player/BP_FMBBaseCharacter.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Player/BP_FMBPlayerCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Player/BP_FMBPlayerCharacter.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/UI/BP_FMBGameHUD.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UI/BP_FMBGameHUD.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/UI/WBP_GameData.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UI/WBP_GameData.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/UI/WBP_PlayerHUD.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/UI/WBP_SpectatorHUD.uasset" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Weapon/BP_FMBSword_Red.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Weapon/BP_FMBSword_Red.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Weapon/BP_FMBSword_Yellow.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Weapon/BP_FMBSword_Yellow.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Weapon/StaticMeshWeapons/Hammer.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Weapon/StaticMeshWeapons/RedShield.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Weapon/StaticMeshWeapons/RedSword.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Weapon/StaticMeshWeapons/YellowSword.uasset" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/FMBAIController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/FMBAIController.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/Services/FMBFindEnemyService.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/Services/FMBFindEnemyService.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/Services/FMBRestoreStaminaService.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/Services/FMBRestoreStaminaService.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/Tasks/FMBRotationTask.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/AI/Tasks/FMBRotationTask.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Components/FMBCharacterMovementComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Components/FMBCharacterMovementComponent.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Components/FMBHealthComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Components/FMBHealthComponent.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Components/FMBRespawnComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Components/FMBRespawnComponent.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Components/FMBWeaponComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Components/FMBWeaponComponent.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/FMBGameModeBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/FMBGameModeBase.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Player/FMBBaseCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Player/FMBBaseCharacter.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/UI/FMBGameDataWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/UI/FMBGameDataWidget.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/UI/FMBPlayerHUDWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/UI/FMBPlayerHUDWidget.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Weapon/FMBBaseWeapon.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Weapon/FMBBaseWeapon.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/AI/Services/FMBFindEnemyService.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/AI/Services/FMBFindEnemyService.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Player/FMBPlayerController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/Player/FMBPlayerController.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/UI/FMBGameHUD.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Private/UI/FMBGameHUD.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/AI/FMBAIController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/AI/FMBAIController.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Components/FMBHealthComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Components/FMBHealthComponent.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Components/FMBRespawnComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Components/FMBRespawnComponent.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/FMBCoreTypes.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/FMBCoreTypes.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/FMBGameModeBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/FMBGameModeBase.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/FMBUtils.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/FMBUtils.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Player/FMBBaseCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Player/FMBBaseCharacter.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/UI/FMBGameDataWidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/UI/FMBGameDataWidget.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/UI/FMBPlayerHUDWidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/UI/FMBPlayerHUDWidget.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Player/FMBPlayerController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/Player/FMBPlayerController.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/UI/FMBGameHUD.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ForMaidBilberry/Public/UI/FMBGameHUD.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -417,7 +386,9 @@
       <workItem from="1639324368729" duration="5142000" />
       <workItem from="1639329673215" duration="7436000" />
       <workItem from="1639395648424" duration="7602000" />
-      <workItem from="1639414602125" duration="8273000" />
+      <workItem from="1639414602125" duration="8601000" />
+      <workItem from="1639491172024" duration="5176000" />
+      <workItem from="1639503148180" duration="6654000" />
     </task>
     <task id="LOCAL-00001" summary="Forgot about main game :(. Continue update and upgrade AI. Also some refactoring, like remove rolling into movement component.">
       <created>1638111600096</created>
@@ -440,7 +411,14 @@
       <option name="project" value="LOCAL" />
       <updated>1639337515911</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Player can respawn. Make PlayerCharacter and remove player logic from BaseCharacter. Update Ai Behavior tree.">
+      <created>1639423156948</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1639423156948</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -479,7 +457,8 @@
     <MESSAGE value="Forgot about main game :(. Continue update and upgrade AI. Also some refactoring, like remove rolling into movement component." />
     <MESSAGE value="Update for Behavior tree (not last). Develop gamemode." />
     <MESSAGE value="Update AI, now all bots versus Player. Add timer and player respawn GameMode. PlayerState have player kills and dead." />
-    <option name="LAST_COMMIT_MESSAGE" value="Update AI, now all bots versus Player. Add timer and player respawn GameMode. PlayerState have player kills and dead." />
+    <MESSAGE value="Player can respawn. Make PlayerCharacter and remove player logic from BaseCharacter. Update Ai Behavior tree." />
+    <option name="LAST_COMMIT_MESSAGE" value="Player can respawn. Make PlayerCharacter and remove player logic from BaseCharacter. Update Ai Behavior tree." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

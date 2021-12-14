@@ -131,3 +131,14 @@ struct FGameData
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Game")
     TArray<USkeletalMesh*> TeamSkeletalMeshes;*/
 };
+
+UENUM(BlueprintType)
+enum class EFMBMatchState: uint8
+{
+    WaitingToStart =0,
+    InProgress,
+    Pause,
+    GameOver
+};
+
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnMatchStateChangeSignature, EFMBMatchState);

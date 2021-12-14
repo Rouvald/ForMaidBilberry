@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "FMBCoreTypes.h"
 #include "GameFramework/PlayerController.h"
 #include "FMBPlayerController.generated.h"
 
@@ -19,7 +20,16 @@ class FORMAIDBILBERRY_API AFMBPlayerController : public APlayerController
 public:
     AFMBPlayerController();
 
+    virtual void BeginPlay() override;
+
+    virtual void SetupInputComponent() override;
+
 protected:
     UPROPERTY(EditDefaultsOnly, Category="Component")
     UFMBRespawnComponent* RespawnComponent;
+
+private:
+    void OnGamePause();
+
+    void OnMatchStateChange(EFMBMatchState State);
 };

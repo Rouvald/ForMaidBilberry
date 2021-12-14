@@ -9,11 +9,12 @@
 #include "EngineUtils.h"
 #include "FMBRespawnComponent.h"
 #include "FMBUtils.h"
+#include "GameFramework/GameMode.h"
 #include "Player/FMBPlayerState.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogAFMBGameModeBase, All, All)
 
-constexpr static int32 MinRoundTimeForRespawn =10;
+constexpr static int32 MinRoundTimeForRespawn = 10;
 
 AFMBGameModeBase::AFMBGameModeBase()
 {
@@ -32,6 +33,8 @@ void AFMBGameModeBase::StartPlay()
 
     //CurrentRound = 1;
     StartRound();
+
+    SetMatchState(EFMBMatchState::InProgress);
 }
 
 UClass* AFMBGameModeBase::GetDefaultPawnClassForController_Implementation(AController* InController)
@@ -116,12 +119,30 @@ void AFMBGameModeBase::Killed(AController* PlayerController, bool IsKill)
         if (IsKill)
         {
             PlayerState->AddKill();
+            InfinityGameOverCondition();
         }
         else
         {
             PlayerState->AddDeath();
             StartRespawn(PlayerController);
         }
+    }
+}
+
+void AFMBGameModeBase::InfinityGameOverCondition()
+{
+    if (!GetWorld()) return;
+    if (!GameData.InfinityGame) return;
+
+    const auto PlayerController = Cast<AFMBPlayerController>(GetWorld()->GetFirstPlayerController());
+    if (!PlayerController) return;
+
+    const auto PlayerState = Cast<AFMBPlayerState>(PlayerController->PlayerState);
+    if (!PlayerState) return;
+
+    if (GameData.PlayerNum > 1 && GameData.PlayerNum - 1 - PlayerState->GetKillsNum() == 0)
+    {
+        GetWorld()->GetTimerManager().SetTimer(GameOverTimerHandle, this, &AFMBGameModeBase::GameOver, 5.0f, false);
     }
 }
 
@@ -144,8 +165,8 @@ void AFMBGameModeBase::LogPlayerInfo()
 void AFMBGameModeBase::StartRespawn(AController* Controller)
 {
     const auto IsRespawnAvailable = GameData.InfinityGame || GameplayTimeCountDown > MinRoundTimeForRespawn + GameData.RespawnTime;
-    if(!IsRespawnAvailable) return;
-    
+    if (!IsRespawnAvailable) return;
+
     const auto RespawnComponent = FMBUtils::GetFMBPlayerComponent<UFMBRespawnComponent>(Controller);
     if (!RespawnComponent) return;
 
@@ -164,14 +185,42 @@ void AFMBGameModeBase::GameOver()
 
     for (const auto Pawn : TActorRange<APawn>(GetWorld()))
     {
-        if(Pawn)
+        if (Pawn)
         {
             Pawn->TurnOff();
             Pawn->DisableInput(nullptr);
         }
     }
+    SetMatchState(EFMBMatchState::GameOver);
 }
 
+void AFMBGameModeBase::SetMatchState( EFMBMatchState State)
+{
+    if (MatchState == State) return;
+
+    MatchState = State;
+    OnMatchStateChange.Broadcast(MatchState);
+}
+
+bool AFMBGameModeBase::SetPause(APlayerController* PC, FCanUnpause CanUnpauseDelegate)
+{
+    const auto IsPauseSet= Super::SetPause(PC, CanUnpauseDelegate);
+    if(IsPauseSet)
+    {
+        SetMatchState(EFMBMatchState::Pause);
+    }
+    return IsPauseSet;
+}
+
+bool AFMBGameModeBase::ClearPause()
+{
+    const auto IsPauseClear = Super::ClearPause();
+    if(IsPauseClear)
+    {
+        SetMatchState(EFMBMatchState::InProgress);
+    }
+    return IsPauseClear;
+}
 
 /*void AFMBGameModeBase::CreateTeamsInfo()
 {

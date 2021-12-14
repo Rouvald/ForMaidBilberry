@@ -11,7 +11,7 @@ AFMBAIController::AFMBAIController()
     FMBAIPerceptionComponent = CreateDefaultSubobject<UFMBAIPerceptionComponent>("PerceptionComponent");
     SetPerceptionComponent(*FMBAIPerceptionComponent);
 
-    bWantsPlayerState = true;
+    //bWantsPlayerState = true;
 }
 
 void AFMBAIController::OnPossess(APawn* InPawn)

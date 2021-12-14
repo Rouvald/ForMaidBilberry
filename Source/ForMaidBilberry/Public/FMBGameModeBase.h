@@ -17,9 +17,14 @@ class FORMAIDBILBERRY_API AFMBGameModeBase : public AGameModeBase
 public:
     AFMBGameModeBase();
 
+    FOnMatchStateChangeSignature OnMatchStateChange;
+
     virtual void StartPlay() override;
 
     UClass* GetDefaultPawnClassForController_Implementation(AController* InController) override;
+
+    virtual bool SetPause(APlayerController* PC, FCanUnpause CanUnpauseDelegate = FCanUnpause()) override;
+    virtual bool ClearPause() override;
 
     void Killed(AController* PlayerController, bool IsKill);
 
@@ -42,11 +47,15 @@ private:
     //int32 CurrentRound = 1;
     int32 GameplayTimeCountDown = 0;
     FTimerHandle RoundTimerHandle;
+    FTimerHandle GameOverTimerHandle;
+
+    EFMBMatchState MatchState = EFMBMatchState::WaitingToStart;
 
     void SpawnBots();
 
     void StartRound();
     void GameTimerUpdate();
+    void InfinityGameOverCondition();
 
     void ResetPlayers();
     void ResetOnePlayer(AController* Controller);
@@ -60,4 +69,6 @@ private:
     void StartRespawn(AController* Controller);
 
     void GameOver();
+
+    void SetMatchState( EFMBMatchState State);
 };

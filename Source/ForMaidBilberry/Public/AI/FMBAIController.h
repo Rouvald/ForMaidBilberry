@@ -26,7 +26,7 @@ protected:
     FName FocusOnEnemyKeyName = "EnemyActor";
 
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="AI")
-    FName StartAILocationKeyName = "StartLocation";
+    FName StartAILocationKeyName = "StartBotLocation";
 
     virtual void OnPossess(APawn* InPawn) override;
     virtual void Tick(float DeltaSeconds) override;

@@ -17,10 +17,14 @@ EBTNodeResult::Type UFMBRotationTask::ExecuteTask(UBehaviorTreeComponent& OwnerC
 {
     const auto Controller = OwnerComp.GetAIOwner();
     const auto Blackboard = OwnerComp.GetBlackboardComponent();
-    if (!Controller || !Blackboard) return EBTNodeResult::Failed;
+
+    if(!Controller) return EBTNodeResult::Failed;
+    const auto Pawn = Controller->GetPawn();
+    
+    if (!Pawn || !Blackboard) return EBTNodeResult::Failed;
 
     const auto StartAILocation = Blackboard->GetValueAsVector(LocationActorKey.SelectedKeyName);
-    Controller->SetControlRotation(StartAILocation.Rotation());
+    Pawn->SetActorRotation(FRotator(0.0f, StartAILocation.Rotation().Yaw, 0.0f));
     
     return EBTNodeResult::Succeeded;
 }

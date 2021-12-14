@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "FMBPlayerHUDWidget.h"
 #include "GameFramework/HUD.h"
+#include "FMBCoreTypes.h"
 #include "FMBGameHUD.generated.h"
 
 /**
@@ -13,17 +14,28 @@
 UCLASS()
 class FORMAIDBILBERRY_API AFMBGameHUD : public AHUD
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
-    public:
+public:
     virtual void DrawHUD() override;
 
-    protected:
+protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="UI")
     TSubclassOf<UUserWidget> PLayerHUDWidgetClass;
 
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="UI")
+    TSubclassOf<UUserWidget> GamePauseWidgetClass;
+
     virtual void BeginPlay() override;
 
-    private:
+private:
+    UPROPERTY()
+    TMap<EFMBMatchState, UUserWidget*> GameWidgets;
+
+    UPROPERTY()
+    UUserWidget* CurrentWidget = nullptr;
+    
     void DrawTwoLine();
+
+    void OnMatchStateChange(EFMBMatchState State);
 };

@@ -3,17 +3,53 @@
 
 #include "UI/FMBGameHUD.h"
 #include "Engine/Canvas.h"
+#include "FMBGameModeBase.h"
+
+DEFINE_LOG_CATEGORY_STATIC(LogFMBGameHUD, All, All)
 
 void AFMBGameHUD::BeginPlay()
 {
     Super::BeginPlay();
+    
+    GameWidgets.Add(EFMBMatchState::InProgress, CreateWidget<UUserWidget>(GetWorld(), PLayerHUDWidgetClass));
+    GameWidgets.Add(EFMBMatchState::Pause, CreateWidget<UUserWidget>(GetWorld(), GamePauseWidgetClass));
 
-    auto PlayerHUDWidget = CreateWidget<UUserWidget>(GetWorld(), PLayerHUDWidgetClass);
-    if(PlayerHUDWidget)
+    for (const auto GameWidgetPair : GameWidgets)
     {
-        PlayerHUDWidget->AddToViewport();
+        const auto GameWidget = GameWidgetPair.Value;
+        if (!GameWidget) continue;
+
+        GameWidget->AddToViewport();
+        GameWidget->SetVisibility(ESlateVisibility::Hidden);
+    }
+
+    if (GetWorld())
+    {
+        const auto GameMode = Cast<AFMBGameModeBase>(GetWorld()->GetAuthGameMode());
+        if (GameMode)
+        {
+            GameMode->OnMatchStateChange.AddUObject(this, &AFMBGameHUD::OnMatchStateChange);
+        }
     }
 }
+
+void AFMBGameHUD::OnMatchStateChange(EFMBMatchState State)
+{
+    if(CurrentWidget)
+    {
+        CurrentWidget->SetVisibility(ESlateVisibility::Hidden);
+    }
+    if(GameWidgets.Contains(State))
+    {
+        CurrentWidget = GameWidgets[State];
+    }
+    if(CurrentWidget)
+    {
+        CurrentWidget->SetVisibility(ESlateVisibility::Visible);
+    }
+    UE_LOG(LogFMBGameHUD, Display, TEXT("Match State: %s"), *UEnum::GetValueAsString(State));
+}
+
 void AFMBGameHUD::DrawHUD()
 {
     //DrawTwoLine();

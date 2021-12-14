@@ -13,6 +13,7 @@ void AFMBGameHUD::BeginPlay()
     
     GameWidgets.Add(EFMBMatchState::InProgress, CreateWidget<UUserWidget>(GetWorld(), PLayerHUDWidgetClass));
     GameWidgets.Add(EFMBMatchState::Pause, CreateWidget<UUserWidget>(GetWorld(), GamePauseWidgetClass));
+    GameWidgets.Add(EFMBMatchState::GameOver, CreateWidget<UUserWidget>(GetWorld(), GameOverWidgetClass));
 
     for (const auto GameWidgetPair : GameWidgets)
     {

@@ -33,7 +33,9 @@ public class ForMaidBilberry : ModuleRules
 			"ForMaidBilberry/Public/Weapon/Components",
 			"ForMaidBilberry/Public/AI",
 			"ForMaidBilberry/Public/AI/Tasks",
-			"ForMaidBilberry/Public/AI/Services"
+			"ForMaidBilberry/Public/AI/Services",
+			"ForMaidBilberry/Public/Menu",
+			"ForMaidBilberry/Public/Menu/UI"
 		});
 
 		// Uncomment if you are using Slate UI

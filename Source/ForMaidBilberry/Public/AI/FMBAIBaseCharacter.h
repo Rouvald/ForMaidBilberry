@@ -7,6 +7,7 @@
 #include "FMBAIBaseCharacter.generated.h"
 
 class UBehaviorTree;
+class UWidgetComponent;
 /**
  * 
  */
@@ -22,5 +23,18 @@ public:
     UBehaviorTree* BehaviorTreeAsset;
 
 protected:
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="Component")
+    UWidgetComponent* HealthBarWidgetComponent;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="UI")
+    float HealthVisibleDistance = 1000.0f;
+
+    virtual void BeginPlay() override;
     virtual void OnDeath() override;;
+    virtual void OnHealthChange(float Health, float HealthDelta) override;
+
+private:
+    FTimerHandle HealthBarVisibleTimerHandle;
+
+    void UpdateHealthBarWidgetVisible();
 };

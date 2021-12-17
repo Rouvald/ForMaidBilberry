@@ -157,10 +157,41 @@ struct FLevelData
     FName LevelName = NAME_None;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Game")
-    FName LevelDisplayName = NAME_None;
+    FName LevelDescriptionName = NAME_None;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Game")
     UTexture2D* LevelImage;
 };
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnLevelSelectedSignature, const FLevelData&);
+
+// Menu
+
+UENUM(BlueprintType)
+enum class EFMBMenuState: uint8
+{
+    WaitingToStart = 0,
+    MainMenu,
+    SelectLevel,
+    ChangeSkin
+};
+
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnMenuStateChangeSignature, EFMBMenuState);
+
+// change character
+USTRUCT(BlueprintType)
+struct FCharacterData
+{
+    GENERATED_USTRUCT_BODY()
+
+    int32 CharacterID = 0;
+    
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Game")
+    FName CharacterName = NAME_None;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Game")
+    USkeletalMesh* CharacterMesh;
+};
+
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnCharacterMeshSelectedSignature, const FCharacterData&);
+//

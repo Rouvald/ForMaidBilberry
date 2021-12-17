@@ -19,7 +19,12 @@ public:
     void SetStartLevel(const FLevelData& Data) { StartLevel = Data; }
 
     const TArray<FLevelData>& GetLevelsData() const { return LevelsData; }
-    
+
+    FCharacterData GetStartCharacter() const { return StartCharacter; }
+    void SetStartCharacter(const FCharacterData& Data) { StartCharacter = Data; }
+
+    const TArray<FCharacterData>& GetCharactersData() const { return CharactersData; }
+
     FName GetMenuLevelName() const { return MenuLevelName; }
 
 protected:
@@ -29,6 +34,11 @@ protected:
     UPROPERTY(EditDefaultsOnly, Category="Game")
     FName MenuLevelName = NAME_None;
 
+    UPROPERTY(EditDefaultsOnly, Category="Game")
+    TArray<FCharacterData> CharactersData;
+
 private:
     FLevelData StartLevel;
+
+    FCharacterData StartCharacter;
 };

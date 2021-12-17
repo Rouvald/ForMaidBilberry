@@ -2,10 +2,9 @@
 
 
 #include "Menu/UI/FMBMenuWidget.h"
-#include "FMBGameInstance.h"
+#include "Menu/FMBMenuGameModeBase.h"
 #include "FMBLevelItemWidget.h"
 #include "Components/Button.h"
-#include "Components/HorizontalBox.h"
 #include "Kismet/GameplayStatics.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogFMBMenuWidget, All, All)
@@ -14,77 +13,30 @@ void UFMBMenuWidget::NativeOnInitialized()
 {
     Super::NativeOnInitialized();
 
-    if (StartGameButton)
+    if (SelectLevelButton)
     {
-        StartGameButton->OnClicked.AddDynamic(this, &UFMBMenuWidget::OnStartGame);
+        SelectLevelButton->OnClicked.AddDynamic(this, &UFMBMenuWidget::OnSelectLevelGame);
     }
-
     if (QuitGameButton)
     {
         QuitGameButton->OnClicked.AddDynamic(this, &UFMBMenuWidget::OnQuitGame);
     }
-    InitLevelItem();
+    /*if(SelectCharacterButton)
+    {
+        SelectCharacterButton->OnClicked.AddDynamic(this, &UFMBMenuWidget::OnSelectCharacterClicked);
+    }*/
 }
 
-void UFMBMenuWidget::InitLevelItem()
+void UFMBMenuWidget::OnSelectLevelGame()
 {
-    const auto GameInstance = GetGameInstance();
-    if (!GameInstance) return;
-
-    checkf(GameInstance->GetLevelsData().Num() != 0, TEXT("Levels data is EMPTY"));
-
-    if (!LevelItemsBox) return;
-    LevelItemsBox->ClearChildren();
-
-    int32 LevelId = 0;
-    for (auto LevelData : GameInstance->GetLevelsData())
+    if (GetWorld())
     {
-        const auto LevelItemWidget = CreateWidget<UFMBLevelItemWidget>(this, LevelItemWidgetClass);
-        if (!LevelItemWidget) continue;
-
-        LevelData.LevelID = LevelId;
-        LevelItemWidget->SetLevelData(LevelData);
-        LevelItemWidget->OnLevelSelected.AddUObject(this, &UFMBMenuWidget::OnLevelSelected);
-
-        LevelItemsBox->AddChild(LevelItemWidget);
-        LevelItemWidgets.Add(LevelItemWidget);
-
-        ++LevelId;
-    }
-
-    if (GameInstance->GetStartLevel().LevelName.IsNone())
-    {
-        OnLevelSelected(GameInstance->GetLevelsData()[0]);
-    }
-    else
-    {
-        OnLevelSelected(GameInstance->GetStartLevel());
-    }
-}
-
-void UFMBMenuWidget::OnLevelSelected(const FLevelData& Data)
-{
-    const auto GameInstance = GetGameInstance();
-    if (!GameInstance) return;
-
-    GameInstance->SetStartLevel(Data);
-
-    for (const auto LevelItemWidget : LevelItemWidgets)
-    {
-        if (LevelItemWidget)
+        const auto GameMode = Cast<AFMBMenuGameModeBase>(GetWorld()->GetAuthGameMode());
+        if (GameMode)
         {
-            const auto IsSelected = Data.LevelID == LevelItemWidget->GetLevelData().LevelID;
-            LevelItemWidget->IsLevelSelected(IsSelected);
+            GameMode->SetMenuState(EFMBMenuState::SelectLevel);
         }
     }
-}
-
-void UFMBMenuWidget::OnStartGame()
-{
-    const auto GameInstance = GetGameInstance();
-    if (!GameInstance) return;
-
-    UGameplayStatics::OpenLevel(this, GameInstance->GetStartLevel().LevelName);
 }
 
 void UFMBMenuWidget::OnQuitGame()
@@ -92,8 +44,14 @@ void UFMBMenuWidget::OnQuitGame()
     UKismetSystemLibrary::QuitGame(this, GetOwningPlayer(), EQuitPreference::Quit, true);
 }
 
-UFMBGameInstance* UFMBMenuWidget::GetGameInstance() const
+/*void UFMBMenuWidget::OnSelectCharacterClicked()
 {
-    if (!GetWorld()) return nullptr;
-    return GetWorld()->GetGameInstance<UFMBGameInstance>();
-}
+    if (GetWorld())
+    {
+        const auto GameMode = Cast<AFMBMenuGameModeBase>(GetWorld()->GetAuthGameMode());
+        if (GameMode)
+        {
+            GameMode->SetMenuState(EFMBMenuState::ChangeSkin);
+        }
+    }
+}*/

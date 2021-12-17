@@ -108,11 +108,10 @@ void AFMBBaseCharacter::OnGroundLanded(const FHitResult& Hitresult)
     TakeDamage(FinalDamage, FDamageEvent{}, nullptr, nullptr);
 }
 
-/*void AFMBBaseCharacter::SetTeamSkeletalMesh(USkeletalMesh* TeamSkeletalMesh) const
+void AFMBBaseCharacter::SetTeamSkeletalMesh(USkeletalMesh* TeamSkeletalMesh) const
 {
-    //UE_LOG(BaseCharacterLog, Display, TEXT("Set Color %s"), *TeamColor.ToString());
-    /*if (TeamSkeletalMesh)
+    if (TeamSkeletalMesh)
     {
         GetMesh()->SetSkeletalMesh(TeamSkeletalMesh, true);
-    }#1#
-}*/
+    }
+}

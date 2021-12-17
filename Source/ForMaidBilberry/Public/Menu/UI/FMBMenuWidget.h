@@ -4,13 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include "FMBCoreTypes.h"
 #include "FMBMenuWidget.generated.h"
 
 class UButton;
-class UHorizontalBox;
-class UFMBGameInstance;
-class UFMBLevelItemWidget;
+class UFMBSelectLevelWidget;
 /**
  * 
  */
@@ -18,33 +15,25 @@ UCLASS()
 class FORMAIDBILBERRY_API UFMBMenuWidget : public UUserWidget
 {
     GENERATED_BODY()
-
 protected:
     UPROPERTY(meta=(BindWidget))
-    UButton* StartGameButton;
+    UButton* SelectLevelButton;
 
     UPROPERTY(meta=(BindWidget))
     UButton* QuitGameButton;
 
-    UPROPERTY(meta=(BindWidget))
-    UHorizontalBox* LevelItemsBox;
-
-    UPROPERTY(EditDefaultsOnly, Category="UI")
-    TSubclassOf<UUserWidget> LevelItemWidgetClass;
+    /*UPROPERTY(meta=(BindWidget))
+    UButton* SelectCharacterButton;*/
 
     virtual void NativeOnInitialized() override;
 
 private:
-    UPROPERTY()
-    TArray<UFMBLevelItemWidget*> LevelItemWidgets;
-    
     UFUNCTION()
-    void OnStartGame();
+    void OnSelectLevelGame();
 
     UFUNCTION()
     void OnQuitGame();
 
-    void InitLevelItem();
-    void OnLevelSelected(const FLevelData& Data);
-    UFMBGameInstance* GetGameInstance() const;
+    /*UFUNCTION()
+    void OnSelectCharacterClicked();*/
 };

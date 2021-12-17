@@ -2,9 +2,10 @@
 
 
 #include "Menu/UI/FMBLevelItemWidget.h"
-
+#include "FMBGameInstance.h"
 #include "Components/Button.h"
 #include "Components/Image.h"
+#include "Components/SizeBox.h"
 #include "Components/TextBlock.h"
 
 
@@ -12,9 +13,18 @@ void UFMBLevelItemWidget::NativeOnInitialized()
 {
     Super::NativeOnInitialized();
 
-    if(SelectLevelButton)
+    if (SelectLevelButton)
     {
         SelectLevelButton->OnClicked.AddDynamic(this, &UFMBLevelItemWidget::OnLevelItemClicked);
+    }
+    if (LevelIconSizeBox)
+    {
+        LevelIconSizeBox->WidthOverride = NormalSizeBox;
+        LevelIconSizeBox->HeightOverride = NormalSizeBox;
+    }
+    if(LevelDescriptionTextBlock)
+    {
+        LevelDescriptionTextBlock->SetVisibility(ESlateVisibility::Hidden);
     }
 }
 
@@ -27,20 +37,29 @@ void UFMBLevelItemWidget::SetLevelData(const FLevelData& Data)
 {
     LevelData = Data;
 
-    if(LevelNameTextBlock)
+    if (LevelDescriptionTextBlock)
     {
-        LevelNameTextBlock->SetText(FText::FromName(LevelData.LevelDisplayName));
+        LevelDescriptionTextBlock->SetText(FText::FromName(LevelData.LevelDescriptionName));
     }
-    if(LevelImage)
+    if (LevelImage)
     {
         LevelImage->SetBrushFromTexture(LevelData.LevelImage);
     }
 }
 
-void UFMBLevelItemWidget::IsLevelSelected( bool IsSelected)
+void UFMBLevelItemWidget::IsLevelSelected(bool IsSelected)
 {
-    if(LevelFrameImage)
+    /*if (LevelFrameImage)
     {
         LevelFrameImage->SetVisibility(IsSelected ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
+    }*/
+    if (LevelIconSizeBox)
+    {
+        LevelIconSizeBox->SetWidthOverride(IsSelected ? SelectedSizeBox : NormalSizeBox);
+        LevelIconSizeBox->SetHeightOverride(IsSelected ? SelectedSizeBox : NormalSizeBox);
+    }
+    if(LevelDescriptionTextBlock)
+    {
+        LevelDescriptionTextBlock->SetVisibility(IsSelected ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
     }
 }

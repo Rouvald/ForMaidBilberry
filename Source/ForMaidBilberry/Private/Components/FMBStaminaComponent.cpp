@@ -74,7 +74,7 @@ void UFMBStaminaComponent::StartHealStaminaTimer()
     if (!GetWorld()) return;
     if (GetWorld()->GetTimerManager().IsTimerActive(StaminaRunningTimerHandle)) return;
 
-    if (!IsStaminaFull() && !IsStaminaZero())
+    if (!IsStaminaFull())
     {
         GetWorld()->GetTimerManager().SetTimer
             (

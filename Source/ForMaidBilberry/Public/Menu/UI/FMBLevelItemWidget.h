@@ -10,6 +10,7 @@
 class UButton;
 class UTextBlock;
 class UImage;
+class USizeBox;
 /**
  * 
  */
@@ -25,23 +26,35 @@ public:
 
     void IsLevelSelected( bool IsSelected);
 
+    float GetNormalSizeBox () const {return NormalSizeBox;}
+    float GetSelectedSizeBox () const {return SelectedSizeBox;}
+
 protected:
     UPROPERTY(meta = (BindWidget))
-    UTextBlock* LevelNameTextBlock;
+    USizeBox* LevelIconSizeBox;
+    
+    /*UPROPERTY(meta = (BindWidget))
+    UTextBlock* LevelNameTextBlock;*/
 
     UPROPERTY(meta = (BindWidget))
     UImage* LevelImage = nullptr;
 
-    UPROPERTY(meta = (BindWidget))
-    UImage* LevelFrameImage;
+    /*UPROPERTY(meta = (BindWidget))
+    UImage* LevelFrameImage;*/
 
     UPROPERTY(meta = (BindWidget))
     UButton* SelectLevelButton;
+
+    UPROPERTY(meta = (BindWidget))
+    UTextBlock* LevelDescriptionTextBlock;
 
     virtual void NativeOnInitialized() override;
 
 private:
     FLevelData LevelData;
+
+    float NormalSizeBox = 150.0f;
+    float SelectedSizeBox = 300.0f;
 
     UFUNCTION()
     void OnLevelItemClicked();

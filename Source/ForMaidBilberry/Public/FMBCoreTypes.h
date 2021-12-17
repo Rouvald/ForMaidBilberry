@@ -99,8 +99,10 @@ struct FWeaponUIData
     UTexture2D* WeaponIcon;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="UI")
-    FText WeaponName;
+    FName WeaponName = NAME_None;
 };
+
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnWeaponSelectedSignature, const FWeaponUIData&);
 
 // GameMode
 
@@ -185,7 +187,7 @@ struct FCharacterData
     GENERATED_USTRUCT_BODY()
 
     int32 CharacterID = 0;
-    
+
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Game")
     FName CharacterName = NAME_None;
 

@@ -38,6 +38,8 @@ public:
     bool GetCurrentWeaponUIData(FWeaponUIData& WeaponUIData) const;
     bool GetArmoryWeaponUIData(FWeaponUIData& WeaponUIData) const;
 
+    //const TArray<AFMBBaseWeapon*>& GetWeapons() const {return Weapons;}
+
     UFUNCTION(BlueprintCallable)
     AFMBBaseWeapon* GetCurrentWeapon() const { return CurrentWeapon; }
 

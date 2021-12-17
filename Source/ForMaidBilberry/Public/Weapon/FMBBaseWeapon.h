@@ -26,11 +26,11 @@ public:
     //FWeaponAnimationData GetWeaponAnimationData() const {return WeaponAnimationData;}
 
     UFUNCTION(BlueprintCallable)
-    EWeaponType GetWeaponType() const {return WeaponType;}
+    const EWeaponType& GetWeaponType() const {return WeaponType;}
 
     void StopDrawTrace();
 
-    FWeaponUIData GetWeaponUIData() const { return WeaponUIData; }
+    const FWeaponUIData& GetWeaponUIData() const { return WeaponUIData; }
 
     UNiagaraComponent* GetSwordTrailFXComponent() const { return SwordTrailFXComponent; }
 

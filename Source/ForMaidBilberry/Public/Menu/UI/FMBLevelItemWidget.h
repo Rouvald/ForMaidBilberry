@@ -26,8 +26,8 @@ public:
 
     void IsLevelSelected( bool IsSelected);
 
-    float GetNormalSizeBox () const {return NormalSizeBox;}
-    float GetSelectedSizeBox () const {return SelectedSizeBox;}
+    /*float GetNormalSizeBox () const {return NormalSizeBox;}
+    float GetSelectedSizeBox () const {return SelectedSizeBox;}*/
 
 protected:
     UPROPERTY(meta = (BindWidget))

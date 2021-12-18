@@ -7,6 +7,7 @@
 #include "FMBCoreTypes.h"
 #include "FMBMenuHUD.generated.h"
 
+class UFMBBaseWidget;
 /**
  * 
  */
@@ -30,10 +31,10 @@ protected:
 
 private:
     UPROPERTY()
-    TMap<EFMBMenuState, UUserWidget*> MenuWidgets;
+    TMap<EFMBMenuState, UFMBBaseWidget*> MenuWidgets;
 
     UPROPERTY()
-    UUserWidget* CurrentWidget = nullptr;
+    UFMBBaseWidget* CurrentWidget = nullptr;
     
     void OnMenuStateChanged(EFMBMenuState State);
 

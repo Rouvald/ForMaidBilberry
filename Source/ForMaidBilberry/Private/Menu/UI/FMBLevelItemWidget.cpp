@@ -16,13 +16,19 @@ void UFMBLevelItemWidget::NativeOnInitialized()
     if (SelectLevelButton)
     {
         SelectLevelButton->OnClicked.AddDynamic(this, &UFMBLevelItemWidget::OnLevelItemClicked);
+        /*SelectLevelButton->OnHovered.AddDynamic(this, &UFMBLevelItemWidget::OnLevelItemHovered);
+        SelectLevelButton->OnUnhovered.AddDynamic(this, &UFMBLevelItemWidget::OnLevelItemUnHovered);*/
     }
     if (LevelIconSizeBox)
     {
         LevelIconSizeBox->WidthOverride = NormalSizeBox;
         LevelIconSizeBox->HeightOverride = NormalSizeBox;
     }
-    if(LevelDescriptionTextBlock)
+    if (LevelNameTextBlock)
+    {
+        LevelNameTextBlock->SetVisibility(ESlateVisibility::Hidden);
+    }
+    if (LevelDescriptionTextBlock)
     {
         LevelDescriptionTextBlock->SetVisibility(ESlateVisibility::Hidden);
     }
@@ -37,6 +43,10 @@ void UFMBLevelItemWidget::SetLevelData(const FLevelData& Data)
 {
     LevelData = Data;
 
+    if (LevelNameTextBlock)
+    {
+        LevelNameTextBlock->SetText(FText::FromName(LevelData.LevelDisplayName));
+    }
     if (LevelDescriptionTextBlock)
     {
         LevelDescriptionTextBlock->SetText(FText::FromName(LevelData.LevelDescriptionName));
@@ -49,17 +59,41 @@ void UFMBLevelItemWidget::SetLevelData(const FLevelData& Data)
 
 void UFMBLevelItemWidget::IsLevelSelected(bool IsSelected)
 {
-    /*if (LevelFrameImage)
-    {
-        LevelFrameImage->SetVisibility(IsSelected ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
-    }*/
     if (LevelIconSizeBox)
     {
         LevelIconSizeBox->SetWidthOverride(IsSelected ? SelectedSizeBox : NormalSizeBox);
         LevelIconSizeBox->SetHeightOverride(IsSelected ? SelectedSizeBox : NormalSizeBox);
     }
-    if(LevelDescriptionTextBlock)
+    if (LevelNameTextBlock)
+    {
+        LevelNameTextBlock->SetVisibility(IsSelected ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
+    }
+    if (LevelDescriptionTextBlock)
     {
         LevelDescriptionTextBlock->SetVisibility(IsSelected ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
     }
 }
+
+/*void UFMBLevelItemWidget::OnLevelItemHovered()
+{
+    if (LevelNameTextBlock)
+    {
+        LevelNameTextBlock->SetVisibility(ESlateVisibility::Visible);
+    }
+    if (LevelDescriptionTextBlock)
+    {
+        LevelDescriptionTextBlock->SetVisibility(ESlateVisibility::Visible);
+    }
+}
+
+void UFMBLevelItemWidget::OnLevelItemUnHovered()
+{
+    if (LevelNameTextBlock)
+    {
+        LevelNameTextBlock->SetVisibility(ESlateVisibility::Hidden);
+    }
+    if (LevelDescriptionTextBlock)
+    {
+        LevelDescriptionTextBlock->SetVisibility(ESlateVisibility::Hidden);
+    }
+}*/

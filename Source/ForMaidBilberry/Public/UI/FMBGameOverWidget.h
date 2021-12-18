@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "FMBCoreTypes.h"
+#include "UI/FMBBaseWidget.h"
 #include "FMBGameOverWidget.generated.h"
 
 class UVerticalBox;
@@ -14,7 +15,7 @@ class UFMBPlayerStatRowWidget;
  * 
  */
 UCLASS()
-class FORMAIDBILBERRY_API UFMBGameOverWidget : public UUserWidget
+class FORMAIDBILBERRY_API UFMBGameOverWidget : public UFMBBaseWidget
 {
 	GENERATED_BODY()
 protected:

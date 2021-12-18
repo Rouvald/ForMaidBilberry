@@ -24,7 +24,7 @@ public:
     void SetLevelData(const FLevelData& Data);
     FLevelData GetLevelData() const { return LevelData; }
 
-    void IsLevelSelected( bool IsSelected);
+    void IsLevelSelected(bool IsSelected);
 
     /*float GetNormalSizeBox () const {return NormalSizeBox;}
     float GetSelectedSizeBox () const {return SelectedSizeBox;}*/
@@ -32,15 +32,12 @@ public:
 protected:
     UPROPERTY(meta = (BindWidget))
     USizeBox* LevelIconSizeBox;
-    
-    /*UPROPERTY(meta = (BindWidget))
-    UTextBlock* LevelNameTextBlock;*/
+
+    UPROPERTY(meta = (BindWidget))
+    UTextBlock* LevelNameTextBlock;
 
     UPROPERTY(meta = (BindWidget))
     UImage* LevelImage = nullptr;
-
-    /*UPROPERTY(meta = (BindWidget))
-    UImage* LevelFrameImage;*/
 
     UPROPERTY(meta = (BindWidget))
     UButton* SelectLevelButton;
@@ -58,4 +55,10 @@ private:
 
     UFUNCTION()
     void OnLevelItemClicked();
+
+    /*UFUNCTION()
+    void OnLevelItemHovered();
+
+    UFUNCTION()
+    void OnLevelItemUnHovered();*/
 };

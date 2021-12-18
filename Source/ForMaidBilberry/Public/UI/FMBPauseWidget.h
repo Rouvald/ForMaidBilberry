@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Blueprint/UserWidget.h"
+#include "UI/FMBBaseWidget.h"
 #include "FMBPauseWidget.generated.h"
 
 class UButton;
@@ -11,7 +11,7 @@ class UButton;
  * 
  */
 UCLASS()
-class FORMAIDBILBERRY_API UFMBPauseWidget : public UUserWidget
+class FORMAIDBILBERRY_API UFMBPauseWidget : public UFMBBaseWidget
 {
     GENERATED_BODY()
 protected:

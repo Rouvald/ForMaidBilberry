@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "FMBCoreTypes.h"
 #include "Blueprint/UserWidget.h"
+#include "UI/FMBBaseWidget.h"
 #include "FMBPlayerHUDWidget.generated.h"
 
 class UFMBWeaponComponent;
@@ -15,7 +16,7 @@ class UFMBWeaponDataWidget;*/
  * 
  */
 UCLASS()
-class FORMAIDBILBERRY_API UFMBPlayerHUDWidget : public UUserWidget
+class FORMAIDBILBERRY_API UFMBPlayerHUDWidget : public UFMBBaseWidget
 {
     GENERATED_BODY()
 
@@ -47,6 +48,9 @@ protected:
 
     UPROPERTY(EditDefaultsOnly, Category="UI")
     TSubclassOf<UUserWidget> WeaponUIDataWidgetClass;*/
+
+    UPROPERTY(meta = (BindWidgetAnim), Transient)
+    UWidgetAnimation* BloodyScreenAnim;
     
     virtual void NativeOnInitialized() override;
 

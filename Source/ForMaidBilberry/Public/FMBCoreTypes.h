@@ -159,6 +159,9 @@ struct FLevelData
     FName LevelName = NAME_None;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Game")
+    FName LevelDisplayName = NAME_None;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Game")
     FName LevelDescriptionName = NAME_None;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Game")

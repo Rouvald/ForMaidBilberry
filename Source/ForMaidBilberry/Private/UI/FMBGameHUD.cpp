@@ -4,6 +4,7 @@
 #include "UI/FMBGameHUD.h"
 #include "Engine/Canvas.h"
 #include "FMBGameModeBase.h"
+#include "UI/FMBBaseWidget.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogFMBGameHUD, All, All)
 
@@ -11,9 +12,9 @@ void AFMBGameHUD::BeginPlay()
 {
     Super::BeginPlay();
     
-    GameWidgets.Add(EFMBMatchState::InProgress, CreateWidget<UUserWidget>(GetWorld(), PLayerHUDWidgetClass));
-    GameWidgets.Add(EFMBMatchState::Pause, CreateWidget<UUserWidget>(GetWorld(), GamePauseWidgetClass));
-    GameWidgets.Add(EFMBMatchState::GameOver, CreateWidget<UUserWidget>(GetWorld(), GameOverWidgetClass));
+    GameWidgets.Add(EFMBMatchState::InProgress, CreateWidget<UFMBBaseWidget>(GetWorld(), PLayerHUDWidgetClass));
+    GameWidgets.Add(EFMBMatchState::Pause, CreateWidget<UFMBBaseWidget>(GetWorld(), GamePauseWidgetClass));
+    GameWidgets.Add(EFMBMatchState::GameOver, CreateWidget<UFMBBaseWidget>(GetWorld(), GameOverWidgetClass));
 
     for (const auto GameWidgetPair : GameWidgets)
     {
@@ -47,6 +48,7 @@ void AFMBGameHUD::OnMatchStateChange(EFMBMatchState State)
     if(CurrentWidget)
     {
         CurrentWidget->SetVisibility(ESlateVisibility::Visible);
+        CurrentWidget->Show();
     }
     UE_LOG(LogFMBGameHUD, Display, TEXT("Match State: %s"), *UEnum::GetValueAsString(State));
 }

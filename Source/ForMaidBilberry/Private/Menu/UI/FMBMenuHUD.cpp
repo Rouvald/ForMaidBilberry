@@ -4,6 +4,7 @@
 #include "Menu/UI/FMBMenuHUD.h"
 #include "Blueprint/UserWidget.h"
 #include "Menu/FMBMenuGameModeBase.h"
+#include "UI/FMBBaseWidget.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogFMBMenuHUD, All, All)
 
@@ -11,8 +12,8 @@ void AFMBMenuHUD::BeginPlay()
 {
     Super::BeginPlay();
 
-    MenuWidgets.Add(EFMBMenuState::MainMenu, CreateWidget<UUserWidget>(GetWorld(), MenuWidgetClass));
-    MenuWidgets.Add(EFMBMenuState::SelectLevel, CreateWidget<UUserWidget>(GetWorld(), SelectLevelWidgetClass));
+    MenuWidgets.Add(EFMBMenuState::MainMenu, CreateWidget<UFMBBaseWidget>(GetWorld(), MenuWidgetClass));
+    MenuWidgets.Add(EFMBMenuState::SelectLevel, CreateWidget<UFMBBaseWidget>(GetWorld(), SelectLevelWidgetClass));
     //MenuWidgets.Add(EFMBMenuState::ChangeSkin, CreateWidget<UUserWidget>(GetWorld(), SelectCharacterWidgetClass));
     for (const auto MenuWidgetPair : MenuWidgets)
     {
@@ -21,10 +22,6 @@ void AFMBMenuHUD::BeginPlay()
 
         MenuWidget->AddToViewport();
         MenuWidget->SetVisibility(ESlateVisibility::Hidden);
-    }
-    if(!CurrentWidget)
-    {
-        CurrentWidget = MenuWidgets[EFMBMenuState::MainMenu];
     }
     
     if (GetWorld())
@@ -50,6 +47,7 @@ void AFMBMenuHUD::OnMenuStateChanged(EFMBMenuState State)
     if(CurrentWidget)
     {
         CurrentWidget->SetVisibility(ESlateVisibility::Visible);
+        CurrentWidget->Show();
     }
     UE_LOG(LogFMBMenuHUD, Display, TEXT("Menu State: %s"), *UEnum::GetValueAsString(State));
 }

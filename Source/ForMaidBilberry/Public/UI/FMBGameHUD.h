@@ -8,6 +8,7 @@
 #include "FMBCoreTypes.h"
 #include "FMBGameHUD.generated.h"
 
+class UFMBBaseWidget;
 /**
  * 
  */
@@ -33,10 +34,10 @@ protected:
 
 private:
     UPROPERTY()
-    TMap<EFMBMatchState, UUserWidget*> GameWidgets;
+    TMap<EFMBMatchState, UFMBBaseWidget*> GameWidgets;
 
     UPROPERTY()
-    UUserWidget* CurrentWidget = nullptr;
+    UFMBBaseWidget* CurrentWidget = nullptr;
     
     void DrawTwoLine();
 

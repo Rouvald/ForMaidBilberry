@@ -70,4 +70,6 @@ private:
     void PlayHitAnimation() const;
 
     void Killed(AController* KillerController);
+
+    bool AreBothBots(AController* Controller1, AController* Controller2) const;
 };

@@ -73,6 +73,13 @@ void UFMBSelectLevelWidget::OnLevelSelected(const FLevelData& Data)
 
 void UFMBSelectLevelWidget::OnStartGame()
 {
+    PlayAnimation(LoadingLevelAnim);
+}
+
+void UFMBSelectLevelWidget::OnAnimationFinished_Implementation(const UWidgetAnimation* Animation)
+{
+    if(Animation != LoadingLevelAnim) return;
+    
     const auto GameInstance = GetFMBGameInstance();
     if (!GameInstance) return;
 

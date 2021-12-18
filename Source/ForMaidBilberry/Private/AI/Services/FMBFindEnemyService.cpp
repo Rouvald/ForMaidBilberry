@@ -3,9 +3,9 @@
 
 #include "AI/Services/FMBFindEnemyService.h"
 #include "AIController.h"
-#include "FMBUtils.h"
 #include "FMBAIPerceptionComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "FMBUtils.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogFMBFindenemyService, All, All)
 

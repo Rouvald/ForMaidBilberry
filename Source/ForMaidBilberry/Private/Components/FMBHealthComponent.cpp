@@ -38,13 +38,25 @@ void UFMBHealthComponent::OnTakeAnyDamage(AActor* DamagedActor, float Damage, co
 {
     if (Damage <= 0.0f || IsDead() || !GetWorld()) return;
 
-    //if(Cast<AFMBAIBaseCharacter>(GetOwner()) && Cast<AAIController>(InstigatedBy)) return;
+    /*if(InstigatedBy)
+    {
+        UE_LOG(HealthLog, Error, TEXT("Have InstigatinBy"));
+        const auto DamagedPawn = Cast<APawn>(GetOwner());
+        if(!DamagedPawn) return;
+        
+        if (AreBothBots(DamagedPawn->GetController(), InstigatedBy))
+        {
+            UE_LOG(HealthLog, Error, TEXT("AI damage AI"));
+            return;
+        }
+    }*/
+
 
     // TODO: Hit anim don't loop, when periodical damage  // NEED FIX or not XD
-    if (CheckAllAnimInProgress())
+    /*if (CheckAllAnimInProgress())
     {
         PlayHitAnimation();
-    }
+    }*/
 
     SetHealth(Health - Damage);
 
@@ -151,4 +163,10 @@ void UFMBHealthComponent::Killed(AController* KillerController)
 
         GameMode->Killed(VictimController, false);
     }
+}
+
+bool UFMBHealthComponent::AreBothBots(AController* Controller1, AController* Controller2) const
+{
+    if(!Controller1 || !Controller2 || Controller1 == Controller2) return false;
+    return Cast<AAIController>(Controller1) && Cast<AAIController>(Controller2);
 }

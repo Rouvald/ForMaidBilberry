@@ -12,7 +12,7 @@ DEFINE_LOG_CATEGORY_STATIC(LogFMBPlayerHUDWidget, All, All)
 
 void UFMBPlayerHUDWidget::NativeOnInitialized()
 {
-    if(GetOwningPlayer())
+    if (GetOwningPlayer())
     {
         GetOwningPlayer()->GetOnNewPawnNotifier().AddUObject(this, &UFMBPlayerHUDWidget::OnNewPawn);
         OnNewPawn(GetOwningPlayerPawn());
@@ -78,6 +78,11 @@ void UFMBPlayerHUDWidget::OnHealthChange(float Health, float HealthDelta)
     if (HealthDelta < 0.0f)
     {
         OnTakeDamage();
+        
+        if (!IsAnimationPlaying(BloodyScreenAnim))
+        {
+            PlayAnimation(BloodyScreenAnim);
+        }
     }
 }
 

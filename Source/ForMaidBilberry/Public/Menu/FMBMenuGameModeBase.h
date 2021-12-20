@@ -8,24 +8,24 @@
 #include "FMBMenuGameModeBase.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class FORMAIDBILBERRY_API AFMBMenuGameModeBase : public AGameModeBase
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
     FOnMenuStateChangeSignature OnMenuStateChange;
-    
+
     AFMBMenuGameModeBase();
 
     virtual void StartPlay() override;
 
     void SetMenuState(EFMBMenuState State);
 
-    //void SetCharacterSkeletalMesh(USkeletalMesh* NewSkeletalMesh);
-    
+    // void SetCharacterSkeletalMesh(USkeletalMesh* NewSkeletalMesh);
+
 private:
     EFMBMenuState MenuState = EFMBMenuState::WaitingToStart;
 };

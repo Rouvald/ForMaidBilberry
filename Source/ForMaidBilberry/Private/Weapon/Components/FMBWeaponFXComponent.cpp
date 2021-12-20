@@ -1,6 +1,5 @@
 // For Maid Bilberry Game. All Rights Recerved
 
-
 #include "Weapon/Components/FMBWeaponFXComponent.h"
 #include "NiagaraFunctionLibrary.h"
 
@@ -18,7 +17,7 @@ void UFMBWeaponFXComponent::PlayImpactFX(FHitResult& HitResult)
         const auto PhysMat = HitResult.PhysMaterial.Get();
         if (EffectsMap.Contains(PhysMat))
         {
-            Effect = EffectsMap[PhysMat]; 
+            Effect = EffectsMap[PhysMat];
         }
     }
     UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), Effect, HitResult.ImpactPoint, HitResult.ImpactNormal.Rotation());

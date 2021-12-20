@@ -7,12 +7,12 @@
 #include "FMBBaseWidget.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class FORMAIDBILBERRY_API UFMBBaseWidget : public UUserWidget
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 public:
     void Show();
 

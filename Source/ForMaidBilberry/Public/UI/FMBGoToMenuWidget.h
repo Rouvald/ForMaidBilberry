@@ -8,7 +8,7 @@
 
 class UButton;
 /**
- * 
+ *
  */
 UCLASS()
 class FORMAIDBILBERRY_API UFMBGoToMenuWidget : public UUserWidget
@@ -16,7 +16,7 @@ class FORMAIDBILBERRY_API UFMBGoToMenuWidget : public UUserWidget
     GENERATED_BODY()
 
 protected:
-    UPROPERTY(meta =(BindWidget))
+    UPROPERTY(meta = (BindWidget))
     UButton* GoToMainMenuButton;
 
     virtual void NativeOnInitialized() override;

@@ -14,7 +14,7 @@ class AFMBBaseCharacter;
 class AFMBBaseWeapon;
 class UAnimMontage;
 
-UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class FORMAIDBILBERRY_API UFMBWeaponComponent : public UActorComponent
 {
     GENERATED_BODY()
@@ -29,8 +29,8 @@ public:
 
     void StopDrawTrace();
 
-    //bool GetAttackAnimInProgress() const { return AttackAnimInProgress;}
-    //bool GetEquipAnimInProgress() const { return EquipAnimInProgress;}
+    // bool GetAttackAnimInProgress() const { return AttackAnimInProgress;}
+    // bool GetEquipAnimInProgress() const { return EquipAnimInProgress;}
 
     bool CanAttack() const;
     bool CanEquip() const;
@@ -38,28 +38,28 @@ public:
     bool GetCurrentWeaponUIData(FWeaponUIData& WeaponUIData) const;
     bool GetArmoryWeaponUIData(FWeaponUIData& WeaponUIData) const;
 
-    //const TArray<AFMBBaseWeapon*>& GetWeapons() const {return Weapons;}
+    // const TArray<AFMBBaseWeapon*>& GetWeapons() const {return Weapons;}
 
     UFUNCTION(BlueprintCallable)
     AFMBBaseWeapon* GetCurrentWeapon() const { return CurrentWeapon; }
 
     UFUNCTION(BlueprintCallable)
-    FWeaponAnimationsData GetCurrentWeaponAnimationsData() const {return CurrentWeaponAnimationsData;}
+    FWeaponAnimationsData GetCurrentWeaponAnimationsData() const { return CurrentWeaponAnimationsData; }
 
     UFUNCTION(BlueprintCallable)
-    int32 GetCurrentWeaponIndex() const { return CurrentWeaponIndex;}
+    int32 GetCurrentWeaponIndex() const { return CurrentWeaponIndex; }
 
 protected:
-    //UPROPERTY(EditDefaultsOnly, Category="Shield")
-    //UStaticMeshComponent* Shield;
-    
-    UPROPERTY(EditDefaultsOnly, Category="Weapon")
+    // UPROPERTY(EditDefaultsOnly, Category="Shield")
+    // UStaticMeshComponent* Shield;
+
+    UPROPERTY(EditDefaultsOnly, Category = "Weapon")
     TArray<TSubclassOf<AFMBBaseWeapon>> WeaponClasses;
 
-    UPROPERTY(EditDefaultsOnly, Category="Weapon")
+    UPROPERTY(EditDefaultsOnly, Category = "Weapon")
     FName WeaponArmorySocketName = "WeaponArmorySocket";
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Animations")
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Animations")
     TMap<EWeaponType, FWeaponAnimationsData> WeaponsAnimationsData;
 
     virtual void BeginPlay() override;
@@ -68,7 +68,7 @@ protected:
 
     virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
-    //int32 GetCurrentWeaponIndex() const {return CurrentWeaponIndex;}
+    // int32 GetCurrentWeaponIndex() const {return CurrentWeaponIndex;}
 
 private:
     UPROPERTY()
@@ -87,13 +87,12 @@ private:
     UPROPERTY()
     TArray<AFMBBaseWeapon*> Weapons;
 
-    
     int32 CurrentWeaponIndex = 0;
 
     void SpawnWeapons();
     void AttachWeaponToSocket(AFMBBaseWeapon* Weapon, USceneComponent* MeshComp, const FName& WeaponSocket) const;
     void EquipWeapon(int32 WeaponIndex);
-    
+
     void CheckWeaponAnimationsData();
     void InitAnimation(const FWeaponAnimationsData& WeaponAnimationData);
     void CheckAttackFinishedAnimNotify(UAnimMontage* Animation);
@@ -102,12 +101,12 @@ private:
     void OnEquipFinished(USkeletalMeshComponent* MeshComp);
     void OnChangeEquipWeapon(USkeletalMeshComponent* MeshComp);
 
-    //void ShieldVisibility(EWeaponType CurrentWeaponType) const;
+    // void ShieldVisibility(EWeaponType CurrentWeaponType) const;
 
     void StartMovement() const;
     void StopMovement() const;
 
     bool CanDoAttack() const;
-    
+
     AFMBBaseCharacter* GetCharacter() const;
 };

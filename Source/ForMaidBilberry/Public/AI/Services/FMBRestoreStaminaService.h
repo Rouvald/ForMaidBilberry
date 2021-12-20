@@ -7,19 +7,19 @@
 #include "FMBRestoreStaminaService.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class FORMAIDBILBERRY_API UFMBRestoreStaminaService : public UBTService
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
     UFMBRestoreStaminaService();
 
 protected:
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AI")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
     FBlackboardKeySelector AIStaminaKey;
-    
+
     virtual void TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds) override;
 };

@@ -1,6 +1,5 @@
 // For Maid Bilberry Game. All Rights Recerved
 
-
 #include "Animation/FMBSwordTrailAnimNotifyState.h"
 #include "FMBUtils.h"
 #include "FMBWeaponComponent.h"
@@ -11,19 +10,19 @@
 void UFMBSwordTrailAnimNotifyState::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float TotalDuration)
 {
     const auto SwordTrailFXComponent = GetSwordTrailFXComponent(MeshComp);
-    if(!SwordTrailFXComponent) return;
+    if (!SwordTrailFXComponent) return;
 
     SwordTrailFXComponent->SetVisibility(true);
-    
+
     Super::NotifyBegin(MeshComp, Animation, TotalDuration);
 }
 void UFMBSwordTrailAnimNotifyState::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation)
 {
     const auto SwordTrailFXComponent = GetSwordTrailFXComponent(MeshComp);
-    if(!SwordTrailFXComponent) return;
+    if (!SwordTrailFXComponent) return;
 
     SwordTrailFXComponent->SetVisibility(false);
-    
+
     Super::NotifyEnd(MeshComp, Animation);
 }
 
@@ -36,10 +35,10 @@ UNiagaraComponent* UFMBSwordTrailAnimNotifyState::GetSwordTrailFXComponent(USkel
     if (!WeaponComponent) return nullptr;
 
     const auto CurrentWeapon = WeaponComponent->GetCurrentWeapon();
-    if(!CurrentWeapon) return nullptr;
+    if (!CurrentWeapon) return nullptr;
 
     const auto SwordTrailFXComponent = CurrentWeapon->GetSwordTrailFXComponent();
-    if(!SwordTrailFXComponent) return nullptr;
+    if (!SwordTrailFXComponent) return nullptr;
 
     return SwordTrailFXComponent;
 }

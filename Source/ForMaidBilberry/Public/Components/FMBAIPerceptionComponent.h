@@ -7,12 +7,12 @@
 #include "FMBAIPerceptionComponent.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class FORMAIDBILBERRY_API UFMBAIPerceptionComponent : public UAIPerceptionComponent
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
     AActor* GetEnemyPlayer() const;

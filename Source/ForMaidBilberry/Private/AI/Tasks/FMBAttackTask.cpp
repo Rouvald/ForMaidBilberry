@@ -1,6 +1,5 @@
 // For Maid Bilberry Game. All Rights Recerved
 
-
 #include "AI/Tasks/FMBAttackTask.h"
 #include "AIController.h"
 #include "FMBUtils.h"
@@ -28,9 +27,8 @@ EBTNodeResult::Type UFMBAttackTask::ExecuteTask(UBehaviorTreeComponent& OwnerCom
     const auto WeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBWeaponComponent>(Pawn);
     const auto PerceiveActor = PerceiveComponent->GetEnemyPlayer();
     if (!WeaponComponent && !PerceiveActor) return EBTNodeResult::Failed;
-    
+
     FMath::RandBool() ? WeaponComponent->FastMeleeAttack() : WeaponComponent->StrongMeleeAttack();
-    
+
     return EBTNodeResult::Succeeded;
 }
-

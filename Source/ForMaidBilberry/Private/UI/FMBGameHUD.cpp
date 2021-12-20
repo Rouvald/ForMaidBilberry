@@ -1,6 +1,5 @@
 // For Maid Bilberry Game. All Rights Recerved
 
-
 #include "UI/FMBGameHUD.h"
 #include "Engine/Canvas.h"
 #include "FMBGameModeBase.h"
@@ -11,7 +10,7 @@ DEFINE_LOG_CATEGORY_STATIC(LogFMBGameHUD, All, All)
 void AFMBGameHUD::BeginPlay()
 {
     Super::BeginPlay();
-    
+
     GameWidgets.Add(EFMBMatchState::InProgress, CreateWidget<UFMBBaseWidget>(GetWorld(), PLayerHUDWidgetClass));
     GameWidgets.Add(EFMBMatchState::Pause, CreateWidget<UFMBBaseWidget>(GetWorld(), GamePauseWidgetClass));
     GameWidgets.Add(EFMBMatchState::GameOver, CreateWidget<UFMBBaseWidget>(GetWorld(), GameOverWidgetClass));
@@ -37,15 +36,15 @@ void AFMBGameHUD::BeginPlay()
 
 void AFMBGameHUD::OnMatchStateChange(EFMBMatchState State)
 {
-    if(CurrentWidget)
+    if (CurrentWidget)
     {
         CurrentWidget->SetVisibility(ESlateVisibility::Hidden);
     }
-    if(GameWidgets.Contains(State))
+    if (GameWidgets.Contains(State))
     {
         CurrentWidget = GameWidgets[State];
     }
-    if(CurrentWidget)
+    if (CurrentWidget)
     {
         CurrentWidget->SetVisibility(ESlateVisibility::Visible);
         CurrentWidget->Show();
@@ -55,7 +54,7 @@ void AFMBGameHUD::OnMatchStateChange(EFMBMatchState State)
 
 void AFMBGameHUD::DrawHUD()
 {
-    //DrawTwoLine();
+    // DrawTwoLine();
 }
 
 void AFMBGameHUD::DrawTwoLine()

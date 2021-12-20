@@ -1,6 +1,5 @@
 // For Maid Bilberry Game. All Rights Recerved
 
-
 #include "UI/FMBGameOverWidget.h"
 #include "FMBGameModeBase.h"
 #include "FMBPlayerStatRowWidget.h"
@@ -20,16 +19,15 @@ void UFMBGameOverWidget::NativeOnInitialized()
             GameMode->OnMatchStateChange.AddUObject(this, &UFMBGameOverWidget::OnMatchStateChange);
         }
     }
-    if(ResetLevelButton)
+    if (ResetLevelButton)
     {
         ResetLevelButton->OnClicked.AddDynamic(this, &UFMBGameOverWidget::OnResetLevel);
     }
-    
 }
 
 void UFMBGameOverWidget::OnMatchStateChange(EFMBMatchState State)
 {
-    if(State == EFMBMatchState::GameOver)
+    if (State == EFMBMatchState::GameOver)
     {
         UpdatePlayerStat();
     }
@@ -37,10 +35,10 @@ void UFMBGameOverWidget::OnMatchStateChange(EFMBMatchState State)
 
 void UFMBGameOverWidget::UpdatePlayerStat()
 {
-    if(!GetWorld() || !PlayerStatBox) return;
+    if (!GetWorld() || !PlayerStatBox) return;
 
     PlayerStatBox->ClearChildren();
-    
+
     for (auto It = GetWorld()->GetControllerIterator(); It; ++It)
     {
         const auto Controller = It->Get();
@@ -50,7 +48,7 @@ void UFMBGameOverWidget::UpdatePlayerStat()
         if (!PlayerState) continue;
 
         const auto PlayerStatRow = CreateWidget<UFMBPlayerStatRowWidget>(GetWorld(), PlayerStatRowWidgetClass);
-        if(!PlayerStatRow) continue;
+        if (!PlayerStatRow) continue;
 
         PlayerStatRow->SetPlayerName(FText::FromString(PlayerState->GetPlayerName()));
         PlayerStatRow->SetKillsNum(FMBUtils::TextFromInt(PlayerState->GetKillsNum()));

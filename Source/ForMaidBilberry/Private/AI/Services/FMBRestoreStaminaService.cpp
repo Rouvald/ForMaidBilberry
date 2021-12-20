@@ -1,6 +1,5 @@
 // For Maid Bilberry Game. All Rights Recerved
 
-
 #include "AI/Services/FMBRestoreStaminaService.h"
 #include "AIController.h"
 #include "Components/FMBStaminaComponent.h"
@@ -25,7 +24,7 @@ void UFMBRestoreStaminaService::TickNode(UBehaviorTreeComponent& OwnerComp, uint
         if (StaminaComponent)
         {
             Blackboard->SetValueAsFloat(AIStaminaKey.SelectedKeyName, StaminaComponent->GetStamina());
-            //UE_LOG(LogFMBRestoreStaminaService, Display, TEXT("Stamina: %f"), Blackboard->GetValueAsFloat(AIStaminaKey.SelectedKeyName));
+            // UE_LOG(LogFMBRestoreStaminaService, Display, TEXT("Stamina: %f"), Blackboard->GetValueAsFloat(AIStaminaKey.SelectedKeyName));
         }
     }
     Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);

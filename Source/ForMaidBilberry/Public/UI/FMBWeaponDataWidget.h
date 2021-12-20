@@ -10,7 +10,7 @@
 class UImage;
 class USizeBox;
 /**
- * 
+ *
  */
 UCLASS()
 class FORMAIDBILBERRY_API UFMBWeaponDataWidget : public UUserWidget

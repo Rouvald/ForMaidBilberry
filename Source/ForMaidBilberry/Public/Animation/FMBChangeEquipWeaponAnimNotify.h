@@ -6,9 +6,8 @@
 #include "FMBAnimNotify.h"
 #include "FMBChangeEquipWeaponAnimNotify.generated.h"
 
-
 UCLASS()
 class FORMAIDBILBERRY_API UFMBChangeEquipWeaponAnimNotify : public UFMBAnimNotify
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 };

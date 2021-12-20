@@ -4,46 +4,22 @@ using UnrealBuildTool;
 
 public class ForMaidBilberry : ModuleRules
 {
-	public ForMaidBilberry(ReadOnlyTargetRules Target) : base(Target)
-	{
-		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
+    public ForMaidBilberry(ReadOnlyTargetRules Target) : base(Target)
+    {
+        PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
+        PublicDependencyModuleNames.AddRange(
+            new string[] { "Core", "CoreUObject", "Engine", "InputCore", "Niagara", "PhysicsCore", "GameplayTasks", "NavigationSystem" });
+        PrivateDependencyModuleNames.AddRange(new string[] {});
+        PublicIncludePaths.AddRange(new string[] { "ForMaidBilberry/Public/Player", "ForMaidBilberry/Public/Components",
+            "ForMaidBilberry/Public/Dev", "ForMaidBilberry/Public/Weapon", "ForMaidBilberry/Public/UI", "ForMaidBilberry/Public/PickUps",
+            "ForMaidBilberry/Public/Weapon/Components", "ForMaidBilberry/Public/AI", "ForMaidBilberry/Public/AI/Tasks",
+            "ForMaidBilberry/Public/AI/Services", "ForMaidBilberry/Public/Menu", "ForMaidBilberry/Public/Menu/UI" });
+        // Uncomment if you are using Slate UI
+        // PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
 
-		PublicDependencyModuleNames.AddRange(new string[]
-		{
-			"Core",
-			"CoreUObject",
-			"Engine",
-			"InputCore",
-			"Niagara",
-			"PhysicsCore",
-			"GameplayTasks",
-			"NavigationSystem"
-		});
+        // Uncomment if you are using online features
+        // PrivateDependencyModuleNames.Add("OnlineSubsystem");
 
-		PrivateDependencyModuleNames.AddRange(new string[] { });
-
-		PublicIncludePaths.AddRange(new string[]
-		{
-			"ForMaidBilberry/Public/Player",
-			"ForMaidBilberry/Public/Components",
-			"ForMaidBilberry/Public/Dev",
-			"ForMaidBilberry/Public/Weapon",
-			"ForMaidBilberry/Public/UI",
-			"ForMaidBilberry/Public/PickUps",
-			"ForMaidBilberry/Public/Weapon/Components",
-			"ForMaidBilberry/Public/AI",
-			"ForMaidBilberry/Public/AI/Tasks",
-			"ForMaidBilberry/Public/AI/Services",
-			"ForMaidBilberry/Public/Menu",
-			"ForMaidBilberry/Public/Menu/UI"
-		});
-
-		// Uncomment if you are using Slate UI
-		// PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
-
-		// Uncomment if you are using online features
-		// PrivateDependencyModuleNames.Add("OnlineSubsystem");
-
-		// To include OnlineSubsystemSteam, add it to the plugins section in your uproject file with the Enabled attribute set to true
-	}
+        // To include OnlineSubsystemSteam, add it to the plugins section in your uproject file with the Enabled attribute set to true
+    }
 }

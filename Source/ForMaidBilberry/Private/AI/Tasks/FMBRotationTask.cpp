@@ -1,6 +1,5 @@
 // For Maid Bilberry Game. All Rights Recerved
 
-
 #include "AI/Tasks/FMBRotationTask.h"
 #include "AIController.h"
 #include "FMBUtils.h"
@@ -18,13 +17,13 @@ EBTNodeResult::Type UFMBRotationTask::ExecuteTask(UBehaviorTreeComponent& OwnerC
     const auto Controller = OwnerComp.GetAIOwner();
     const auto Blackboard = OwnerComp.GetBlackboardComponent();
 
-    if(!Controller) return EBTNodeResult::Failed;
+    if (!Controller) return EBTNodeResult::Failed;
     const auto Pawn = Controller->GetPawn();
-    
+
     if (!Pawn || !Blackboard) return EBTNodeResult::Failed;
 
     const auto StartAILocation = Blackboard->GetValueAsVector(LocationActorKey.SelectedKeyName);
     Pawn->SetActorRotation(FRotator(0.0f, StartAILocation.Rotation().Yaw, 0.0f));
-    
+
     return EBTNodeResult::Succeeded;
 }

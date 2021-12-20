@@ -8,14 +8,14 @@
 
 class UButton;
 /**
- * 
+ *
  */
 UCLASS()
 class FORMAIDBILBERRY_API UFMBPauseWidget : public UFMBBaseWidget
 {
     GENERATED_BODY()
 protected:
-    UPROPERTY(meta =(BindWidget))
+    UPROPERTY(meta = (BindWidget))
     UButton* ClearPauseButton;
 
     virtual void NativeOnInitialized() override;

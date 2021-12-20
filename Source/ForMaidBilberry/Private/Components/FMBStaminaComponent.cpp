@@ -1,6 +1,5 @@
 // For Maid Bilberry Game. All Rights Recerved
 
-
 #include "Components/FMBStaminaComponent.h"
 #include "Components/FMBWeaponComponent.h"
 #include "FMBUtils.h"
@@ -10,7 +9,6 @@ UFMBStaminaComponent::UFMBStaminaComponent()
 {
     PrimaryComponentTick.bCanEverTick = false;
 }
-
 
 void UFMBStaminaComponent::BeginPlay()
 {
@@ -42,7 +40,7 @@ void UFMBStaminaComponent::SetStamina(float NewStamina)
     Stamina = FMath::Clamp(NewStamina, 0.0f, MaxStamina);
     OnStaminaChange.Broadcast(Stamina);
 
-    //UE_LOG(HealthLog, Display, TEXT("Stamina change: %0.0f"), GetStamina());
+    // UE_LOG(HealthLog, Display, TEXT("Stamina change: %0.0f"), GetStamina());
 }
 
 void UFMBStaminaComponent::DecreaseRunningStamina()
@@ -60,7 +58,7 @@ void UFMBStaminaComponent::DecreaseRunningStamina()
 void UFMBStaminaComponent::AutoHealStamina()
 {
     if (!GetWorld()) return;
-    
+
     SetStamina(Stamina + StaminaModifier * StaminaHealModifier);
 
     if (IsStaminaFull() && GetWorld())
@@ -76,15 +74,8 @@ void UFMBStaminaComponent::StartHealStaminaTimer()
 
     if (!IsStaminaFull())
     {
-        GetWorld()->GetTimerManager().SetTimer
-            (
-                StaminaAutoHealTimerHandle,
-                this,
-                &UFMBStaminaComponent::AutoHealStamina,
-                StaminaUpdateTime,
-                true,
-                StaminaAutoHealDelay
-                );
+        GetWorld()->GetTimerManager().SetTimer(
+            StaminaAutoHealTimerHandle, this, &UFMBStaminaComponent::AutoHealStamina, StaminaUpdateTime, true, StaminaAutoHealDelay);
     }
 }
 
@@ -99,14 +90,8 @@ void UFMBStaminaComponent::StartStaminaRunningTimer()
 
     if (IsStaminaZero()) return;
 
-    GetWorld()->GetTimerManager().SetTimer
-        (
-            StaminaRunningTimerHandle,
-            this,
-            &UFMBStaminaComponent::DecreaseRunningStamina,
-            StaminaUpdateTime,
-            true
-            );
+    GetWorld()->GetTimerManager().SetTimer(
+        StaminaRunningTimerHandle, this, &UFMBStaminaComponent::DecreaseRunningStamina, StaminaUpdateTime, true);
 }
 
 void UFMBStaminaComponent::StopStaminaRunningTimer()

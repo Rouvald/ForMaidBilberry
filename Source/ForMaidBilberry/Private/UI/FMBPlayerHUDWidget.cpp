@@ -1,6 +1,5 @@
 // For Maid Bilberry Game. All Rights Recerved
 
-
 #include "UI/FMBPlayerHUDWidget.h"
 #include "Components/FMBHealthComponent.h"
 #include "Components/FMBStaminaComponent.h"
@@ -17,19 +16,19 @@ void UFMBPlayerHUDWidget::NativeOnInitialized()
         GetOwningPlayer()->GetOnNewPawnNotifier().AddUObject(this, &UFMBPlayerHUDWidget::OnNewPawn);
         OnNewPawn(GetOwningPlayerPawn());
     }
-    //InitWeaponItem();
+    // InitWeaponItem();
 }
 
 /*void UFMBPlayerHUDWidget::InitWeaponItem()
 {
     const auto WeaponComponent = GetWeaponComponent();
     if (!WeaponComponent) return;
-    
+
     if (!WeaponUIItemsBox) return;
     WeaponUIItemsBox->ClearChildren();
 
     UE_LOG(LogFMBPlayerHUDWidget, Error, TEXT("Find weapon: %i"), WeaponComponent->GetWeapons().Num());
-    
+
     for (const auto Weapon : WeaponComponent->GetWeapons())
     {
         UE_LOG(LogFMBPlayerHUDWidget, Error, TEXT("Find weapon"));
@@ -78,7 +77,7 @@ void UFMBPlayerHUDWidget::OnHealthChange(float Health, float HealthDelta)
     if (HealthDelta < 0.0f)
     {
         OnTakeDamage();
-        
+
         if (!IsAnimationPlaying(BloodyScreenAnim))
         {
             PlayAnimation(BloodyScreenAnim);
@@ -107,7 +106,7 @@ bool UFMBPlayerHUDWidget::GetCurrentWeaponUIData(FWeaponUIData& WeaponUIData) co
     const auto WeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBWeaponComponent>(GetOwningPlayerPawn());
     if (!WeaponComponent) return false;
 
-    //WeaponUIData.WeaponName = CheckWeaponName(WeaponUIData);
+    // WeaponUIData.WeaponName = CheckWeaponName(WeaponUIData);
 
     return WeaponComponent->GetCurrentWeaponUIData(WeaponUIData);
 }
@@ -117,7 +116,7 @@ bool UFMBPlayerHUDWidget::GetArmoryWeaponUIData(FWeaponUIData& WeaponUIData) con
     const auto WeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBWeaponComponent>(GetOwningPlayerPawn());
     if (!WeaponComponent) return false;
 
-    //WeaponUIData.WeaponName = CheckWeaponName(WeaponUIData);
+    // WeaponUIData.WeaponName = CheckWeaponName(WeaponUIData);
 
     return WeaponComponent->GetArmoryWeaponUIData(WeaponUIData);
 }

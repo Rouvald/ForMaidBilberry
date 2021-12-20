@@ -7,12 +7,12 @@
 #include "FMBAttackTask.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class FORMAIDBILBERRY_API UFMBAttackTask : public UBTTaskNode
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
     UFMBAttackTask();
@@ -20,6 +20,6 @@ public:
     virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 
 protected:
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AI")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
     FBlackboardKeySelector EnemyActorKey;
 };

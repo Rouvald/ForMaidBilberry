@@ -1,6 +1,5 @@
 // For Maid Bilberry Game. All Rights Recerved
 
-
 #include "Player/FMBBaseCharacter.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Components/FMBHealthComponent.h"
@@ -54,9 +53,7 @@ void AFMBBaseCharacter::BeginPlay()
     LandedDelegate.AddDynamic(this, &AFMBBaseCharacter::OnGroundLanded);
 }
 
-void AFMBBaseCharacter::OnHealthChange(float Health, float HealthDelta)
-{
-}
+void AFMBBaseCharacter::OnHealthChange(float Health, float HealthDelta) {}
 
 void AFMBBaseCharacter::Tick(float DeltaTime)
 {
@@ -84,7 +81,7 @@ void AFMBBaseCharacter::OnDeath()
 {
     UE_LOG(BaseCharacterLog, Display, TEXT("Player %s is dead"), *GetName());
 
-    //PlayAnimMontage(DeathAnimMontage);
+    // PlayAnimMontage(DeathAnimMontage);
 
     GetCharacterMovement()->DisableMovement();
     SetLifeSpan(LifeSpanOnDeath);
@@ -99,7 +96,7 @@ void AFMBBaseCharacter::OnDeath()
 void AFMBBaseCharacter::OnGroundLanded(const FHitResult& Hitresult)
 {
     const auto VelocityZ = GetVelocity().Z * (-1);
-    //UE_LOG(BaseCharacterLog, Display, TEXT("VelocityZ %f"), VelocityZ);
+    // UE_LOG(BaseCharacterLog, Display, TEXT("VelocityZ %f"), VelocityZ);
 
     if (VelocityZ < LandedVelocityZ.X) return;
 

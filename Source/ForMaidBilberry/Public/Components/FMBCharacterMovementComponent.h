@@ -6,9 +6,8 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "FMBCharacterMovementComponent.generated.h"
 
-
 /**
- * 
+ *
  */
 UCLASS()
 class FORMAIDBILBERRY_API UFMBCharacterMovementComponent : public UCharacterMovementComponent
@@ -22,17 +21,17 @@ public:
 
     void Rolling();
 
-    //bool GetRollingAnimInProgress() const { return RollingAnimInProgress; }
+    // bool GetRollingAnimInProgress() const { return RollingAnimInProgress; }
 
     bool CanRolling() const;
 
     void OnRollingFinished(USkeletalMeshComponent* MeshComp);
 
 protected:
-    //UPROPERTY(EditDefaultsOnly, Category="Animation")
-    //UAnimMontage* RollingAnimMontage;
+    // UPROPERTY(EditDefaultsOnly, Category="Animation")
+    // UAnimMontage* RollingAnimMontage;
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Movement", meta = (ClampMin="1.5", ClampMax="5.0"))
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Movement", meta = (ClampMin = "1.5", ClampMax = "5.0"))
     float RunModifier = 2.0f;
 
     bool RollingAnimInProgress = false;

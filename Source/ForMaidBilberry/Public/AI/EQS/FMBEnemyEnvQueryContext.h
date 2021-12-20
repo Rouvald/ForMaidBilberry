@@ -7,17 +7,17 @@
 #include "FMBEnemyEnvQueryContext.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class FORMAIDBILBERRY_API UFMBEnemyEnvQueryContext : public UEnvQueryContext
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
     virtual void ProvideContext(FEnvQueryInstance& QueryInstance, FEnvQueryContextData& ContextData) const override;
 
 protected:
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="AI")
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "AI")
     FName EnemyActorKeyName = "EnemyActor";
 };

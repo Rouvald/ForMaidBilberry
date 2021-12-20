@@ -13,7 +13,7 @@ class UVerticalBox;
 class UFMBGameInstance;
 class UFMBLevelItemWidget;
 /**
- * 
+ *
  */
 UCLASS()
 class FORMAIDBILBERRY_API UFMBSelectLevelWidget : public UFMBBaseWidget
@@ -21,16 +21,16 @@ class FORMAIDBILBERRY_API UFMBSelectLevelWidget : public UFMBBaseWidget
     GENERATED_BODY()
 
 protected:
-    UPROPERTY(meta=(BindWidget))
+    UPROPERTY(meta = (BindWidget))
     UVerticalBox* LevelItemsBox;
 
-    UPROPERTY(meta=(BindWidget))
+    UPROPERTY(meta = (BindWidget))
     UButton* StartGameButton;
 
     UPROPERTY(meta = (BindWidgetAnim), Transient)
     UWidgetAnimation* LoadingLevelAnim;
-    
-    UPROPERTY(EditDefaultsOnly, Category="UI")
+
+    UPROPERTY(EditDefaultsOnly, Category = "UI")
     TSubclassOf<UUserWidget> LevelItemWidgetClass;
 
     virtual void NativeOnInitialized() override;

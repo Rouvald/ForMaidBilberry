@@ -1,6 +1,5 @@
 // For Maid Bilberry Game. All Rights Recerved
 
-
 #include "Menu/UI/FMBMenuHUD.h"
 #include "Blueprint/UserWidget.h"
 #include "Menu/FMBMenuGameModeBase.h"
@@ -14,7 +13,7 @@ void AFMBMenuHUD::BeginPlay()
 
     MenuWidgets.Add(EFMBMenuState::MainMenu, CreateWidget<UFMBBaseWidget>(GetWorld(), MenuWidgetClass));
     MenuWidgets.Add(EFMBMenuState::SelectLevel, CreateWidget<UFMBBaseWidget>(GetWorld(), SelectLevelWidgetClass));
-    //MenuWidgets.Add(EFMBMenuState::ChangeSkin, CreateWidget<UUserWidget>(GetWorld(), SelectCharacterWidgetClass));
+    // MenuWidgets.Add(EFMBMenuState::ChangeSkin, CreateWidget<UUserWidget>(GetWorld(), SelectCharacterWidgetClass));
     for (const auto MenuWidgetPair : MenuWidgets)
     {
         const auto MenuWidget = MenuWidgetPair.Value;
@@ -23,7 +22,7 @@ void AFMBMenuHUD::BeginPlay()
         MenuWidget->AddToViewport();
         MenuWidget->SetVisibility(ESlateVisibility::Hidden);
     }
-    
+
     if (GetWorld())
     {
         const auto GameMode = Cast<AFMBMenuGameModeBase>(GetWorld()->GetAuthGameMode());
@@ -36,15 +35,15 @@ void AFMBMenuHUD::BeginPlay()
 
 void AFMBMenuHUD::OnMenuStateChanged(EFMBMenuState State)
 {
-    if(CurrentWidget)
+    if (CurrentWidget)
     {
         CurrentWidget->SetVisibility(ESlateVisibility::Hidden);
     }
-    if(MenuWidgets.Contains(State))
+    if (MenuWidgets.Contains(State))
     {
         CurrentWidget = MenuWidgets[State];
     }
-    if(CurrentWidget)
+    if (CurrentWidget)
     {
         CurrentWidget->SetVisibility(ESlateVisibility::Visible);
         CurrentWidget->Show();

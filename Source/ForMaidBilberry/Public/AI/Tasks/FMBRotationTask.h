@@ -7,18 +7,18 @@
 #include "FMBRotationTask.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class FORMAIDBILBERRY_API UFMBRotationTask : public UBTTaskNode
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 public:
     UFMBRotationTask();
 
     virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 
 protected:
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AI")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
     FBlackboardKeySelector LocationActorKey;
 };

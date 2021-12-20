@@ -1,6 +1,5 @@
 // For Maid Bilberry Game. All Rights Recerved
 
-
 #include "AI/FMBAIController.h"
 #include "AI/FMBAIBaseCharacter.h"
 #include "BehaviorTree/BlackboardComponent.h"
@@ -11,7 +10,7 @@ AFMBAIController::AFMBAIController()
     FMBAIPerceptionComponent = CreateDefaultSubobject<UFMBAIPerceptionComponent>("PerceptionComponent");
     SetPerceptionComponent(*FMBAIPerceptionComponent);
 
-    //bWantsPlayerState = true;
+    // bWantsPlayerState = true;
 }
 
 void AFMBAIController::OnPossess(APawn* InPawn)

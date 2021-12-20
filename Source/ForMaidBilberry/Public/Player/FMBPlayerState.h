@@ -7,7 +7,7 @@
 #include "FMBPlayerState.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class FORMAIDBILBERRY_API AFMBPlayerState : public APlayerState
@@ -20,10 +20,10 @@ public:
     void SetTeamSkeletalMesh(USkeletalMesh* NewTeamSkeletalMesh) { TeamSkeletalMesh = NewTeamSkeletalMesh;}
     USkeletalMesh* GetTeamSkeletalMesh() const {return TeamSkeletalMesh;}*/
 
-    int32 GetKillsNum() const { return KillsNum;}
+    int32 GetKillsNum() const { return KillsNum; }
     void AddKill() { ++KillsNum; }
 
-    int32 GetDeathsNum() const { return DeathsNum;}
+    int32 GetDeathsNum() const { return DeathsNum; }
     void AddDeath() { ++DeathsNum; }
 
     void LogInfo();

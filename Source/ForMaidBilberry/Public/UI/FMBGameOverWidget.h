@@ -12,20 +12,20 @@ class UVerticalBox;
 class UButton;
 class UFMBPlayerStatRowWidget;
 /**
- * 
+ *
  */
 UCLASS()
 class FORMAIDBILBERRY_API UFMBGameOverWidget : public UFMBBaseWidget
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 protected:
-    UPROPERTY(meta =(BindWidget))
+    UPROPERTY(meta = (BindWidget))
     UVerticalBox* PlayerStatBox;
 
-    UPROPERTY(meta =(BindWidget))
+    UPROPERTY(meta = (BindWidget))
     UButton* ResetLevelButton;
 
-    UPROPERTY(EditDefaultsOnly, Category="UI")
+    UPROPERTY(EditDefaultsOnly, Category = "UI")
     TSubclassOf<UUserWidget> PlayerStatRowWidgetClass;
 
     virtual void NativeOnInitialized() override;

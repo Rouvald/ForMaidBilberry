@@ -1,6 +1,5 @@
 // For Maid Bilberry Game. All Rights Recerved
 
-
 #include "PickUps/FMBHealthPickUp.h"
 
 #include "FMBHealthComponent.h"
@@ -10,8 +9,8 @@ DEFINE_LOG_CATEGORY_STATIC(HealthPickUpLog, All, All)
 
 bool AFMBHealthPickUp::GivePickUpTo(APawn* Pawn)
 {
-    const auto HealthComponent=  FMBUtils::GetFMBPlayerComponent<UFMBHealthComponent>(Pawn);
-    if(!HealthComponent) return false;
+    const auto HealthComponent = FMBUtils::GetFMBPlayerComponent<UFMBHealthComponent>(Pawn);
+    if (!HealthComponent) return false;
 
     return HealthComponent->TryToAddHealth(HealthAmount);
 }

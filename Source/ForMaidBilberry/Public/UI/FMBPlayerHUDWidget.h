@@ -13,7 +13,7 @@ class UFMBWeaponComponent;
 class UFMBGameInstance;
 class UFMBWeaponDataWidget;*/
 /**
- * 
+ *
  */
 UCLASS()
 class FORMAIDBILBERRY_API UFMBPlayerHUDWidget : public UFMBBaseWidget
@@ -21,25 +21,25 @@ class FORMAIDBILBERRY_API UFMBPlayerHUDWidget : public UFMBBaseWidget
     GENERATED_BODY()
 
 public:
-    UFUNCTION(BlueprintCallable, Category="UI")
+    UFUNCTION(BlueprintCallable, Category = "UI")
     float GetHealthPercent() const;
 
-    UFUNCTION(BlueprintCallable, Category="UI")
+    UFUNCTION(BlueprintCallable, Category = "UI")
     float GetStaminaPercent() const;
 
-    UFUNCTION(BlueprintCallable, Category="UI")
+    UFUNCTION(BlueprintCallable, Category = "UI")
     bool GetCurrentWeaponUIData(FWeaponUIData& WeaponUIData) const;
 
-    UFUNCTION(BlueprintCallable, Category="UI")
+    UFUNCTION(BlueprintCallable, Category = "UI")
     bool GetArmoryWeaponUIData(FWeaponUIData& WeaponUIData) const;
 
-    UFUNCTION(BlueprintCallable, Category="UI")
+    UFUNCTION(BlueprintCallable, Category = "UI")
     bool IsPlayerAlive() const;
 
-    UFUNCTION(BlueprintCallable, Category="UI")
+    UFUNCTION(BlueprintCallable, Category = "UI")
     bool IsPlayerSpectating() const;
 
-    UFUNCTION(BlueprintImplementableEvent, Category="UI")
+    UFUNCTION(BlueprintImplementableEvent, Category = "UI")
     void OnTakeDamage();
 
 protected:
@@ -51,13 +51,13 @@ protected:
 
     UPROPERTY(meta = (BindWidgetAnim), Transient)
     UWidgetAnimation* BloodyScreenAnim;
-    
+
     virtual void NativeOnInitialized() override;
 
 private:
     /*UPROPERTY()
     TArray<UFMBWeaponDataWidget*> WeaponUIDataWidgets;*/
-    
+
     void OnHealthChange(float Health, float HealthDelta);
     void OnNewPawn(APawn* NewPawn);
 

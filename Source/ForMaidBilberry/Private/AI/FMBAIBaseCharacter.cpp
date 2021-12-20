@@ -1,6 +1,5 @@
 // For Maid Bilberry Game. All Rights Recerved
 
-
 #include "AI/FMBAIBaseCharacter.h"
 #include "AI/FMBAIController.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -9,8 +8,7 @@
 #include "FMBHealthComponent.h"
 #include "Components/WidgetComponent.h"
 
-AFMBAIBaseCharacter::AFMBAIBaseCharacter(const FObjectInitializer& ObjInit)
-    : Super(ObjInit)
+AFMBAIBaseCharacter::AFMBAIBaseCharacter(const FObjectInitializer& ObjInit) : Super(ObjInit)
 {
     AutoPossessAI = EAutoPossessAI::Disabled;
     AIControllerClass = AFMBAIController::StaticClass();
@@ -30,8 +28,8 @@ void AFMBAIBaseCharacter::BeginPlay()
 
     if (GetWorld())
     {
-        GetWorld()->GetTimerManager().SetTimer(HealthBarVisibleTimerHandle, this, &AFMBAIBaseCharacter::UpdateHealthBarWidgetVisible, 0.5f,
-            true);
+        GetWorld()->GetTimerManager().SetTimer(
+            HealthBarVisibleTimerHandle, this, &AFMBAIBaseCharacter::UpdateHealthBarWidgetVisible, 0.5f, true);
     }
 }
 

@@ -3,10 +3,9 @@
 class FMBAnimUtils
 {
 public:
-    template<typename T>
-static T* FindNotifyByClass(UAnimSequenceBase *Animation)
+    template <typename T> static T* FindNotifyByClass(UAnimSequenceBase* Animation)
     {
-        if(!Animation) return nullptr;
+        if (!Animation) return nullptr;
 
         const auto NotifyEvents = Animation->Notifies;
         for (const auto NotifyEvent : NotifyEvents)
@@ -19,5 +18,4 @@ static T* FindNotifyByClass(UAnimSequenceBase *Animation)
         }
         return nullptr;
     }
-    
 };

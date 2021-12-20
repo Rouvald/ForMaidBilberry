@@ -1,6 +1,5 @@
 // For Maid Bilberry Game. All Rights Recerved
 
-
 #include "Menu/UI/FMBSelectLevelWidget.h"
 #include "FMBGameInstance.h"
 #include "FMBLevelItemWidget.h"
@@ -78,8 +77,8 @@ void UFMBSelectLevelWidget::OnStartGame()
 
 void UFMBSelectLevelWidget::OnAnimationFinished_Implementation(const UWidgetAnimation* Animation)
 {
-    if(Animation != LoadingLevelAnim) return;
-    
+    if (Animation != LoadingLevelAnim) return;
+
     const auto GameInstance = GetFMBGameInstance();
     if (!GameInstance) return;
 

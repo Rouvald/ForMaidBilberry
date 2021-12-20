@@ -11,18 +11,18 @@
 class UVerticalBox;
 class UFMBGameInstance;
 /**
- * 
+ *
  */
 UCLASS()
 class FORMAIDBILBERRY_API UFMBSelectCharacterWidget : public UUserWidget
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 protected:
-    UPROPERTY(meta =(BindWidget))
+    UPROPERTY(meta = (BindWidget))
     UVerticalBox* CharacterNamesBox;
 
-    UPROPERTY(EditDefaultsOnly, Category="UI")
+    UPROPERTY(EditDefaultsOnly, Category = "UI")
     TSubclassOf<UUserWidget> SelectCharacterButtonWidgetClass;
 
     virtual void NativeOnInitialized() override;
@@ -30,7 +30,7 @@ protected:
 private:
     UPROPERTY()
     TArray<UFMBSelectCharacterButtonWidget*> SelectCharacterButtonWidgets;
-    
+
     void InitCharacterMesh();
     void OnCharacterMeshSelected(const FCharacterData& Data);
     UFMBGameInstance* GetFMBGameInstance() const;

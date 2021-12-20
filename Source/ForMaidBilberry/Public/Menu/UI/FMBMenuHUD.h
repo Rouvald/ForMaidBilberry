@@ -9,21 +9,21 @@
 
 class UFMBBaseWidget;
 /**
- * 
+ *
  */
 UCLASS()
 class FORMAIDBILBERRY_API AFMBMenuHUD : public AHUD
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
-public:    
+public:
     virtual void BeginPlay() override;
 
 protected:
-    UPROPERTY(EditDefaultsOnly, Category="UI")
+    UPROPERTY(EditDefaultsOnly, Category = "UI")
     TSubclassOf<UUserWidget> MenuWidgetClass;
 
-    UPROPERTY(EditDefaultsOnly, Category="UI")
+    UPROPERTY(EditDefaultsOnly, Category = "UI")
     TSubclassOf<UUserWidget> SelectLevelWidgetClass;
 
     /*UPROPERTY(EditDefaultsOnly, Category="UI")
@@ -35,8 +35,8 @@ private:
 
     UPROPERTY()
     UFMBBaseWidget* CurrentWidget = nullptr;
-    
+
     void OnMenuStateChanged(EFMBMenuState State);
 
-    //void SetCurrentWidgetVisibility(bool IsVisibility) const;
+    // void SetCurrentWidgetVisibility(bool IsVisibility) const;
 };

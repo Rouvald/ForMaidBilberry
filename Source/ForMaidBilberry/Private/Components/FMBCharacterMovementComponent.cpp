@@ -28,9 +28,9 @@ void UFMBCharacterMovementComponent::Rolling()
 
     const auto Character = Cast<AFMBBaseCharacter>(GetPawnOwner());
     if (!Character) return;
-    
+
     const auto WeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBWeaponComponent>(Character);
-    if(!WeaponComponent || !(WeaponComponent->CanEquip()) || !(WeaponComponent->CanAttack())) return;
+    if (!WeaponComponent || !(WeaponComponent->CanEquip()) || !(WeaponComponent->CanAttack())) return;
 
     const auto StaminaComponent = FMBUtils::GetFMBPlayerComponent<UFMBStaminaComponent>(Character);
     if (!StaminaComponent || !(StaminaComponent->SpendStamina(EStaminaSpend::Rolling))) return;
@@ -47,14 +47,14 @@ void UFMBCharacterMovementComponent::Rolling()
 
     RollingAnimInProgress = true;
     Character->GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Ignore);
-    
+
     if (WeaponComponent->GetCurrentWeapon())
     {
         WeaponComponent->StopDrawTrace();
         Character->PlayAnimMontage(WeaponComponent->GetCurrentWeaponAnimationsData().Roll);
     }
     //==================================================
-    //UE_LOG(MovementComponentLog, Display, TEXT("Rolling animation play"));
+    // UE_LOG(MovementComponentLog, Display, TEXT("Rolling animation play"));
     //==================================================
 }
 

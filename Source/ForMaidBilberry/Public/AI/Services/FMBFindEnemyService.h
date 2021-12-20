@@ -7,7 +7,7 @@
 #include "FMBFindEnemyService.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class FORMAIDBILBERRY_API UFMBFindEnemyService : public UBTService
@@ -18,10 +18,10 @@ public:
     UFMBFindEnemyService();
 
 protected:
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AI")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
     FBlackboardKeySelector EnemyActorKey;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AI")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
     FBlackboardKeySelector LastPlayerLocationKey;
 
     virtual void TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds) override;

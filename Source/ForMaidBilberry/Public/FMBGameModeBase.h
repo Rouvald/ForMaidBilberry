@@ -23,28 +23,33 @@ public:
 
     virtual UClass* GetDefaultPawnClassForController_Implementation(AController* InController) override;
 
+    virtual AActor* FindPlayerStart_Implementation(AController* Player, const FString& IncomingName) override;
+
     virtual bool SetPause(APlayerController* PC, FCanUnpause CanUnpauseDelegate = FCanUnpause()) override;
     virtual bool ClearPause() override;
 
     void Killed(AController* PlayerController, bool IsKill);
 
-    FGameData GetGameData() const {return GameData;}
-    int32 GetRoundCountDown() const {return GameplayTimeCountDown;}
+    FGameData GetGameData() const { return GameData; }
+    int32 GetRoundCountDown() const { return GameplayTimeCountDown; }
 
     void RespawnRequest(AController* Controller);
 
 protected:
-    UPROPERTY(EditDefaultsOnly, Category="Game")
+    UPROPERTY(EditDefaultsOnly, Category = "Game")
     TSubclassOf<AAIController> AIControllerClass;
 
-    UPROPERTY(EditDefaultsOnly, Category="Game")
+    UPROPERTY(EditDefaultsOnly, Category = "Game")
     TSubclassOf<APawn> AIPawnClass;
 
-    UPROPERTY(EditDefaultsOnly, Category="Game")
+    UPROPERTY(EditDefaultsOnly, Category = "Game")
     FGameData GameData;
 
+    UPROPERTY(VisibleAnywhere, Category = "Game", meta = (ToolTip = "This tag must have at least 1 PlayerStart in the Level."))
+    FName PlayerStartTagName = "Player";
+
 private:
-    //int32 CurrentRound = 1;
+    // int32 CurrentRound = 1;
     int32 GameplayTimeCountDown = 0;
     FTimerHandle RoundTimerHandle;
     FTimerHandle GameOverTimerHandle;
@@ -55,14 +60,14 @@ private:
 
     void StartRound();
     void GameTimerUpdate();
-    void InfinityGameOverCondition();
+    void GameOverCondition();
 
     void ResetPlayers();
     void ResetOnePlayer(AController* Controller);
 
-    //void CreateTeamsInfo();
-    //USkeletalMesh* DetermineSkeletalMeshByTeamID(int32 TeamID);
-    //void SetTeamSkeletalMesh(AController* Controller);
+    // void CreateTeamsInfo();
+    // USkeletalMesh* DetermineSkeletalMeshByTeamID(int32 TeamID);
+    // void SetTeamSkeletalMesh(AController* Controller);
 
     void LogPlayerInfo();
 
@@ -70,5 +75,5 @@ private:
 
     void GameOver();
 
-    void SetMatchState( EFMBMatchState State);
+    void SetMatchState(EFMBMatchState State);
 };

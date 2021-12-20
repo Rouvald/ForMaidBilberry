@@ -1,6 +1,5 @@
 // For Maid Bilberry Game. All Rights Recerved
 
-
 #include "UI/FMBSpectatingWidget.h"
 #include "FMBGameModeBase.h"
 #include "FMBRespawnComponent.h"
@@ -9,7 +8,7 @@
 bool UFMBSpectatingWidget::GetRespawnTime(int32& RespawnCountDownTime) const
 {
     const auto RespawnComponent = FMBUtils::GetFMBPlayerComponent<UFMBRespawnComponent>(GetOwningPlayer());
-    if(!RespawnComponent || !RespawnComponent->IsRespawnStarted()) return false;
+    if (!RespawnComponent || !RespawnComponent->IsRespawnStarted()) return false;
 
     RespawnCountDownTime = RespawnComponent->GetRespawnCountDown();
     return true;
@@ -18,7 +17,7 @@ bool UFMBSpectatingWidget::GetRespawnTime(int32& RespawnCountDownTime) const
 bool UFMBSpectatingWidget::GetGameplayTimeRemaining(int32& GameplayTimeRemaining) const
 {
     const auto GameMode = GetGameModeBase();
-    if(!GameMode || GameMode->GetGameData().InfinityGame) return false;
+    if (!GameMode || GameMode->GetGameData().InfinityGame) return false;
 
     GameplayTimeRemaining = GameMode->GetRoundCountDown();
     return true;

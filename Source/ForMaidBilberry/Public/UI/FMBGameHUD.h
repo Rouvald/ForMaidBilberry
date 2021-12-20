@@ -10,7 +10,7 @@
 
 class UFMBBaseWidget;
 /**
- * 
+ *
  */
 UCLASS()
 class FORMAIDBILBERRY_API AFMBGameHUD : public AHUD
@@ -21,13 +21,13 @@ public:
     virtual void DrawHUD() override;
 
 protected:
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="UI")
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
     TSubclassOf<UUserWidget> PLayerHUDWidgetClass;
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="UI")
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
     TSubclassOf<UUserWidget> GamePauseWidgetClass;
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="UI")
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
     TSubclassOf<UUserWidget> GameOverWidgetClass;
 
     virtual void BeginPlay() override;
@@ -38,7 +38,7 @@ private:
 
     UPROPERTY()
     UFMBBaseWidget* CurrentWidget = nullptr;
-    
+
     void DrawTwoLine();
 
     void OnMatchStateChange(EFMBMatchState State);

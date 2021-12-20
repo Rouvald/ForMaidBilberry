@@ -8,20 +8,20 @@
 
 class UFMBWeaponComponent;
 /**
- * 
+ *
  */
 UCLASS()
 class FORMAIDBILBERRY_API UFMBAttackService : public UBTService
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 public:
     UFMBAttackService();
 
 protected:
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AI")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
     FBlackboardKeySelector EnemyActorKey;
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AI")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
     float AttackDistance = 100.0f;
 
     virtual void TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds) override;

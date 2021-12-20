@@ -1,6 +1,5 @@
 // For Maid Bilberry Game. All Rights Recerved
 
-
 #include "AI/Services/FMBFindEnemyService.h"
 #include "AIController.h"
 #include "FMBAIPerceptionComponent.h"
@@ -27,10 +26,10 @@ void UFMBFindEnemyService::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* No
 
             if (PerceptionComponent->GetEnemyPlayer())
             {
-                Blackboard->SetValueAsVector(LastPlayerLocationKey.SelectedKeyName,
-                    PerceptionComponent->GetEnemyPlayer()->GetActorLocation());
+                Blackboard->SetValueAsVector(
+                    LastPlayerLocationKey.SelectedKeyName, PerceptionComponent->GetEnemyPlayer()->GetActorLocation());
             }
-            
+
             /*const auto Distance = Controller->GetPawn()->GetDistanceTo(PerceptionComponent->GetEnemyPlayer());
             Blackboard->SetValueAsFloat(DistanceToTargetKey.SelectedKeyName, Distance);*/
         }

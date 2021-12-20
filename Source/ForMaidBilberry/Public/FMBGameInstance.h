@@ -8,7 +8,7 @@
 #include "FMBGameInstance.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class FORMAIDBILBERRY_API UFMBGameInstance : public UGameInstance
@@ -28,13 +28,13 @@ public:
     FName GetMenuLevelName() const { return MenuLevelName; }
 
 protected:
-    UPROPERTY(EditDefaultsOnly, Category="Game")
+    UPROPERTY(EditDefaultsOnly, Category = "Game")
     TArray<FLevelData> LevelsData;
 
-    UPROPERTY(EditDefaultsOnly, Category="Game")
+    UPROPERTY(EditDefaultsOnly, Category = "Game")
     FName MenuLevelName = NAME_None;
 
-    UPROPERTY(EditDefaultsOnly, Category="Game")
+    UPROPERTY(EditDefaultsOnly, Category = "Game")
     TArray<FCharacterData> CharactersData;
 
 private:

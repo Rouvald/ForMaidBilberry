@@ -10,7 +10,7 @@ class UTextBlock;
 class UImage;
 
 /**
- * 
+ *
  */
 UCLASS()
 class FORMAIDBILBERRY_API UFMBPlayerStatRowWidget : public UUserWidget
@@ -24,15 +24,15 @@ public:
     void SetBackGroundImageVisibility(bool IsVisible);
 
 protected:
-    UPROPERTY(meta=(BindWidget))
+    UPROPERTY(meta = (BindWidget))
     UTextBlock* PlayerNameText;
 
-    UPROPERTY(meta=(BindWidget))
+    UPROPERTY(meta = (BindWidget))
     UTextBlock* KillsNumText;
 
-    UPROPERTY(meta=(BindWidget))
+    UPROPERTY(meta = (BindWidget))
     UTextBlock* DeathsNumText;
 
-    UPROPERTY(meta=(BindWidget))
+    UPROPERTY(meta = (BindWidget))
     UImage* BackgroundImage;
 };

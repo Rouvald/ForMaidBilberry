@@ -3,4 +3,4 @@
 #include "ForMaidBilberry.h"
 #include "Modules/ModuleManager.h"
 
-IMPLEMENT_PRIMARY_GAME_MODULE( FDefaultGameModuleImpl, ForMaidBilberry, "ForMaidBilberry" );
+IMPLEMENT_PRIMARY_GAME_MODULE(FDefaultGameModuleImpl, ForMaidBilberry, "ForMaidBilberry");

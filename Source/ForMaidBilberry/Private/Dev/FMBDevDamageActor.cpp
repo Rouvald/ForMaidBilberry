@@ -1,6 +1,5 @@
 // For Maid Bilberry Game. All Rights Recerved
 
-
 #include "Dev/FMBDevDamageActor.h"
 #include "DrawDebugHelpers.h"
 #include "Kismet/GameplayStatics.h"
@@ -23,6 +22,6 @@ void AFMBDevDamageActor::Tick(float DeltaTime)
     Super::Tick(DeltaTime);
 
     DrawDebugSphere(GetWorld(), GetActorLocation(), Radius, 32, SphereColor);
-    UGameplayStatics::ApplyRadialDamage(GetWorld(), Damage, GetActorLocation(), Radius,//
+    UGameplayStatics::ApplyRadialDamage(GetWorld(), Damage, GetActorLocation(), Radius, //
         nullptr, {}, this, nullptr, DoFullDamage);
 }

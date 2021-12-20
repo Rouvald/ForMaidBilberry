@@ -9,7 +9,7 @@
 class UNiagaraSystem;
 class UPhysicalMaterial;
 
-UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class FORMAIDBILBERRY_API UFMBWeaponFXComponent : public UActorComponent
 {
     GENERATED_BODY()
@@ -20,9 +20,9 @@ public:
     void PlayImpactFX(FHitResult& HitResult);
 
 protected:
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="VFX")
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
     UNiagaraSystem* DefaultEffect;
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="VFX")
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
     TMap<UPhysicalMaterial*, UNiagaraSystem*> EffectsMap;
 };

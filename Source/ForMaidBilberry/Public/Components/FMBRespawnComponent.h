@@ -6,8 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "FMBRespawnComponent.generated.h"
 
-
-UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class FORMAIDBILBERRY_API UFMBRespawnComponent : public UActorComponent
 {
     GENERATED_BODY()
@@ -17,7 +16,7 @@ public:
 
     void Respawn(int32 RespawnTime);
 
-    int32 GetRespawnCountDown() const {return RespawnCountDown;}
+    int32 GetRespawnCountDown() const { return RespawnCountDown; }
     bool IsRespawnStarted() const;
 
 private:

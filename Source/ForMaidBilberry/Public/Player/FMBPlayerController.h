@@ -7,15 +7,14 @@
 #include "GameFramework/PlayerController.h"
 #include "FMBPlayerController.generated.h"
 
-
 class UFMBRespawnComponent;
 /**
- * 
+ *
  */
 UCLASS()
 class FORMAIDBILBERRY_API AFMBPlayerController : public APlayerController
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
     AFMBPlayerController();
@@ -25,7 +24,7 @@ public:
     virtual void SetupInputComponent() override;
 
 protected:
-    UPROPERTY(EditDefaultsOnly, Category="Component")
+    UPROPERTY(EditDefaultsOnly, Category = "Component")
     UFMBRespawnComponent* RespawnComponent;
 
 private:

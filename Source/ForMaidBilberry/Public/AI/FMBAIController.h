@@ -8,7 +8,7 @@
 
 class UFMBAIPerceptionComponent;
 /**
- * 
+ *
  */
 UCLASS()
 class FORMAIDBILBERRY_API AFMBAIController : public AAIController
@@ -19,13 +19,13 @@ public:
     AFMBAIController();
 
 protected:
-    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="Components")
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
     UFMBAIPerceptionComponent* FMBAIPerceptionComponent;
 
-    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="AI")
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "AI")
     FName FocusOnEnemyKeyName = "EnemyActor";
 
-    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="AI")
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "AI")
     FName StartAILocationKeyName = "StartBotLocation";
 
     virtual void OnPossess(APawn* InPawn) override;

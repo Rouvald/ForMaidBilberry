@@ -6,10 +6,9 @@
 #include "Animation/AnimNotifies/AnimNotifyState.h"
 #include "FMBSwordTrailAnimNotifyState.generated.h"
 
-
 class UNiagaraComponent;
 /**
- * 
+ *
  */
 UCLASS()
 class FORMAIDBILBERRY_API UFMBSwordTrailAnimNotifyState : public UAnimNotifyState
@@ -20,6 +19,6 @@ public:
     virtual void NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float TotalDuration) override;
     virtual void NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation) override;
 
-    protected:
+protected:
     UNiagaraComponent* GetSwordTrailFXComponent(USkeletalMeshComponent* MeshComp) const;
 };

@@ -7,12 +7,12 @@
 #include "FMBMenuPlayerController.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class FORMAIDBILBERRY_API AFMBMenuPlayerController : public APlayerController
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
     virtual void BeginPlay() override;

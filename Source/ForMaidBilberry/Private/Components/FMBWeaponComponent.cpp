@@ -1,6 +1,5 @@
 // For Maid Bilberry Game. All Rights Recerved
 
-
 #include "Components/FMBWeaponComponent.h"
 
 #include "Player/FMBPlayerCharacter.h"
@@ -26,7 +25,7 @@ void UFMBWeaponComponent::BeginPlay()
 {
     Super::BeginPlay();
 
-    checkf(Weapons.Num() <=0, TEXT("Character don't have weapon"));
+    checkf(Weapons.Num() <= 0, TEXT("Character don't have weapon"));
     CurrentWeaponIndex = 0;
 
     CheckWeaponAnimationsData();
@@ -103,7 +102,7 @@ void UFMBWeaponComponent::EquipWeapon(int32 WeaponIndex)
         PlayAnimMontage(WeaponsAnimationsData[EWeaponType::RedSword].Equip);
     }
     //==================================================
-    //UE_LOG(BaseWeaponComponentLog, Display, TEXT("Equip"));
+    // UE_LOG(BaseWeaponComponentLog, Display, TEXT("Equip"));
     //==================================================
 }
 
@@ -121,10 +120,10 @@ void UFMBWeaponComponent::FastMeleeAttack()
     CurrentWeapon->MeleeAttack(EChooseAttack::FastAttack);
 
     AttackAnimInProgress = true;
-    //StopMovement();
+    // StopMovement();
     PlayAnimMontage(CurrentWeaponAnimationsData.FastAttack);
     //==================================================
-    //UE_LOG(BaseWeaponComponentLog, Display, TEXT("Fast Attack make"));
+    // UE_LOG(BaseWeaponComponentLog, Display, TEXT("Fast Attack make"));
     //==================================================
 }
 
@@ -135,10 +134,10 @@ void UFMBWeaponComponent::StrongMeleeAttack()
     CurrentWeapon->MeleeAttack(EChooseAttack::StrongAttack);
 
     AttackAnimInProgress = true;
-    //StopMovement();
+    // StopMovement();
     PlayAnimMontage(CurrentWeaponAnimationsData.StrongAttack);
     //==================================================
-    //UE_LOG(BaseWeaponComponentLog, Display, TEXT("Strong Attack make"));
+    // UE_LOG(BaseWeaponComponentLog, Display, TEXT("Strong Attack make"));
     //==================================================
 }
 
@@ -276,7 +275,7 @@ void UFMBWeaponComponent::OnChangeEquipWeapon(USkeletalMeshComponent* MeshComp)
     if (WeaponsAnimationsData.Contains(CurrentWeapon->GetWeaponType()))
     {
         CurrentWeaponAnimationsData = WeaponsAnimationsData[CurrentWeapon->GetWeaponType()];
-        //ShieldVisibility(CurrentWeapon->GetWeaponType());
+        // ShieldVisibility(CurrentWeapon->GetWeaponType());
     }
     AttachWeaponToSocket(CurrentWeapon, Character->GetMesh(), CurrentWeaponAnimationsData.WeaponEquipSocketName);
 }
@@ -285,7 +284,7 @@ void UFMBWeaponComponent::OnChangeEquipWeapon(USkeletalMeshComponent* MeshComp)
 {
     const auto Character = GetCharacter();
     if (!Character) return;
-    
+
     if(CurrentWeapon->GetWeaponType() == EWeaponType::RedSword)
     {
         Shield->SetVisibility(true, true);
@@ -305,7 +304,7 @@ void UFMBWeaponComponent::StopDrawTrace()
         CurrentWeapon->StopDrawTrace();
         AttackAnimInProgress = false;
     }
-    //StartMovement();
+    // StartMovement();
 }
 
 bool UFMBWeaponComponent::CanAttack() const
@@ -314,7 +313,7 @@ bool UFMBWeaponComponent::CanAttack() const
     if (!Character) return false;
 
     if (AttackAnimInProgress) return false;
-    
+
     if (EquipAnimInProgress) return false;
 
     const auto MovementComponent = FMBUtils::GetFMBPlayerComponent<UFMBCharacterMovementComponent>(GetOwner());

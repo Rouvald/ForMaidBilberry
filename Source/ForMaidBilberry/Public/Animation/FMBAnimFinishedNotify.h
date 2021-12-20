@@ -7,11 +7,10 @@
 #include "FMBAnimFinishedNotify.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class FORMAIDBILBERRY_API UFMBAnimFinishedNotify : public UFMBAnimNotify
 {
-	GENERATED_BODY()
-	
+    GENERATED_BODY()
 };

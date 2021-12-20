@@ -1,6 +1,5 @@
 // For Maid Bilberry Game. All Rights Recerved
 
-
 #include "Player/FMBPlayerCharacter.h"
 #include "Camera/CameraComponent.h"
 #include "Components/InputComponent.h"
@@ -12,8 +11,7 @@
 
 DEFINE_LOG_CATEGORY_STATIC(LogFMBPlayerCharacter, All, All)
 
-AFMBPlayerCharacter::AFMBPlayerCharacter(const FObjectInitializer& ObjInit)
-    : Super(ObjInit)
+AFMBPlayerCharacter::AFMBPlayerCharacter(const FObjectInitializer& ObjInit) : Super(ObjInit)
 {
     PrimaryActorTick.bCanEverTick = true;
 
@@ -56,15 +54,13 @@ void AFMBPlayerCharacter::BeginPlay()
 }
 
 void AFMBPlayerCharacter::OnCameraCollisionBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-    UPrimitiveComponent* OtherComp,
-    int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+    UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
     CheckCameraOverlap();
 }
 
-void AFMBPlayerCharacter::OnCameraCollisionEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-    UPrimitiveComponent* OtherComp,
-    int32 OtherBodyIndex)
+void AFMBPlayerCharacter::OnCameraCollisionEndOverlap(
+    UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
     CheckCameraOverlap();
 }
@@ -98,12 +94,12 @@ void AFMBPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
     PlayerInputComponent->BindAxis("LookUp", this, &AFMBPlayerCharacter::AddControllerPitchInput);
     PlayerInputComponent->BindAxis("TurnAround", this, &AFMBPlayerCharacter::AddControllerYawInput);
 
-    //PlayerInputComponent->BindAxis("LookUpRate", this, &AFMBBaseCharacter::LookUpAtRate);
-    //PlayerInputComponent->BindAxis("TurnAroundRate", this, &AFMBBaseCharacter::TurnAroundAtRate);
+    // PlayerInputComponent->BindAxis("LookUpRate", this, &AFMBBaseCharacter::LookUpAtRate);
+    // PlayerInputComponent->BindAxis("TurnAroundRate", this, &AFMBBaseCharacter::TurnAroundAtRate);
 
     PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &AFMBPlayerCharacter::Jump);
 
-    //PlayerInputComponent->BindAction("SwitchCamera", EInputEvent::IE_Pressed, this, &AFMBBaseCharacter::SwitchCamera);
+    // PlayerInputComponent->BindAction("SwitchCamera", EInputEvent::IE_Pressed, this, &AFMBBaseCharacter::SwitchCamera);
 
     PlayerInputComponent->BindAction("Run", IE_Pressed, this, &AFMBPlayerCharacter::OnStartRunning);
     PlayerInputComponent->BindAction("Run", IE_Released, this, &AFMBPlayerCharacter::OnStopRunning);
@@ -132,12 +128,12 @@ void AFMBPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 
 void AFMBBaseCharacter::SwitchCamera()//
 {
-    
+
 }*/
 
 void AFMBPlayerCharacter::MoveForward(float Amount)
 {
-    //IsMovingForward = Amount > 0.0f;
+    // IsMovingForward = Amount > 0.0f;
     if (Amount == 0.0f) return;
 
     const FRotator Rotation = Controller->GetControlRotation();

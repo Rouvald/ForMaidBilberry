@@ -1,6 +1,5 @@
 // For Maid Bilberry Game. All Rights Recerved
 
-
 #include "UI/FMBGoToMenuWidget.h"
 #include "FMBGameInstance.h"
 #include "Components/Button.h"
@@ -12,7 +11,7 @@ void UFMBGoToMenuWidget::NativeOnInitialized()
 {
     Super::NativeOnInitialized();
 
-    if(GoToMainMenuButton)
+    if (GoToMainMenuButton)
     {
         GoToMainMenuButton->OnClicked.AddDynamic(this, &UFMBGoToMenuWidget::OnGoToMenuButtonClicked);
     }
@@ -20,12 +19,12 @@ void UFMBGoToMenuWidget::NativeOnInitialized()
 
 void UFMBGoToMenuWidget::OnGoToMenuButtonClicked()
 {
-    if(!GetWorld()) return;
+    if (!GetWorld()) return;
 
     const auto FMBGameInstance = GetWorld()->GetGameInstance<UFMBGameInstance>();
-    if(!FMBGameInstance) return;
+    if (!FMBGameInstance) return;
 
-    if(FMBGameInstance->GetMenuLevelName().IsNone())
+    if (FMBGameInstance->GetMenuLevelName().IsNone())
     {
         UE_LOG(LogFMBGoToMenuWidget, Error, TEXT("Menu level name is NONE"));
         return;

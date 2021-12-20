@@ -11,13 +11,12 @@ class USceneComponent;
 UCLASS()
 class FORMAIDBILBERRY_API AFMBDevDamageActor : public AActor
 {
-	GENERATED_BODY()
-	
-public:	
-	AFMBDevDamageActor();
+    GENERATED_BODY()
+
+public:
+    AFMBDevDamageActor();
 
 protected:
-
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
     USceneComponent* SceneComponent;
 
@@ -32,10 +31,9 @@ protected:
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
     bool DoFullDamage = false;
-    
-	virtual void BeginPlay() override;
 
-public:	
-	virtual void Tick(float DeltaTime) override;
+    virtual void BeginPlay() override;
 
+public:
+    virtual void Tick(float DeltaTime) override;
 };

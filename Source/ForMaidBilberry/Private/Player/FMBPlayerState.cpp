@@ -1,6 +1,5 @@
 // For Maid Bilberry Game. All Rights Recerved
 
-
 #include "Player/FMBPlayerState.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogAFMBPlayerState, All, All)

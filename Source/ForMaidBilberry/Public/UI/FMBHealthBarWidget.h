@@ -8,12 +8,12 @@
 
 class UProgressBar;
 /**
- * 
+ *
  */
 UCLASS()
 class FORMAIDBILBERRY_API UFMBHealthBarWidget : public UUserWidget
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 public:
     void SetHealthPercent(float HealthPercent);
 
@@ -21,6 +21,6 @@ protected:
     UPROPERTY(meta = (BindWidget))
     UProgressBar* HealthProgressBar;
 
-    UPROPERTY(EditDefaultsOnly, Category="UI")
+    UPROPERTY(EditDefaultsOnly, Category = "UI")
     float HealthBarVisibleThreshold = 0.8f;
 };

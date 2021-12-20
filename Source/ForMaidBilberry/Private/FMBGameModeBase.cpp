@@ -1,6 +1,5 @@
 // For Maid Bilberry Game. All Rights Recerved
 
-
 #include "FMBGameModeBase.h"
 #include "Player/FMBPlayerCharacter.h"
 #include "Player/FMBPlayerController.h"
@@ -10,6 +9,7 @@
 #include "FMBRespawnComponent.h"
 #include "FMBUtils.h"
 #include "GameFramework/GameMode.h"
+#include "GameFramework/PlayerStart.h"
 #include "Player/FMBPlayerState.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogAFMBGameModeBase, All, All)
@@ -29,9 +29,9 @@ void AFMBGameModeBase::StartPlay()
     Super::StartPlay();
 
     SpawnBots();
-    //CreateTeamsInfo();
+    // CreateTeamsInfo();
 
-    //CurrentRound = 1;
+    // CurrentRound = 1;
     StartRound();
 
     SetMatchState(EFMBMatchState::InProgress);
@@ -107,7 +107,16 @@ void AFMBGameModeBase::ResetOnePlayer(AController* Controller)
         Controller->GetPawn()->Reset();
     }
     RestartPlayer(Controller);
-    //SetTeamSkeletalMesh(Controller);
+    // SetTeamSkeletalMesh(Controller);
+}
+
+AActor* AFMBGameModeBase::FindPlayerStart_Implementation(AController* Player, const FString& IncomingName)
+{
+    if (Player->IsPlayerController())
+    {
+        return Super::FindPlayerStart_Implementation(Player, PlayerStartTagName.ToString());
+    }
+    return Super::FindPlayerStart_Implementation(Player, IncomingName);
 }
 
 void AFMBGameModeBase::Killed(AController* PlayerController, bool IsKill)
@@ -119,7 +128,7 @@ void AFMBGameModeBase::Killed(AController* PlayerController, bool IsKill)
         if (IsKill)
         {
             PlayerState->AddKill();
-            InfinityGameOverCondition();
+            GameOverCondition();
         }
         else
         {
@@ -129,10 +138,9 @@ void AFMBGameModeBase::Killed(AController* PlayerController, bool IsKill)
     }
 }
 
-void AFMBGameModeBase::InfinityGameOverCondition()
+void AFMBGameModeBase::GameOverCondition()
 {
     if (!GetWorld()) return;
-    if (!GameData.InfinityGame) return;
 
     const auto PlayerController = Cast<AFMBPlayerController>(GetWorld()->GetFirstPlayerController());
     if (!PlayerController) return;
@@ -142,7 +150,7 @@ void AFMBGameModeBase::InfinityGameOverCondition()
 
     if (GameData.PlayerNum > 1 && GameData.PlayerNum - 1 - PlayerState->GetKillsNum() == 0)
     {
-        GetWorld()->GetTimerManager().SetTimer(GameOverTimerHandle, this, &AFMBGameModeBase::GameOver, 5.0f, false);
+        GetWorld()->GetTimerManager().SetTimer(GameOverTimerHandle, this, &AFMBGameModeBase::GameOver, GameData.GameOverDelayTime, false);
     }
 }
 
@@ -194,7 +202,7 @@ void AFMBGameModeBase::GameOver()
     SetMatchState(EFMBMatchState::GameOver);
 }
 
-void AFMBGameModeBase::SetMatchState( EFMBMatchState State)
+void AFMBGameModeBase::SetMatchState(EFMBMatchState State)
 {
     if (MatchState == State) return;
 
@@ -204,8 +212,8 @@ void AFMBGameModeBase::SetMatchState( EFMBMatchState State)
 
 bool AFMBGameModeBase::SetPause(APlayerController* PC, FCanUnpause CanUnpauseDelegate)
 {
-    const auto IsPauseSet= Super::SetPause(PC, CanUnpauseDelegate);
-    if(IsPauseSet)
+    const auto IsPauseSet = Super::SetPause(PC, CanUnpauseDelegate);
+    if (IsPauseSet)
     {
         SetMatchState(EFMBMatchState::Pause);
     }
@@ -215,7 +223,7 @@ bool AFMBGameModeBase::SetPause(APlayerController* PC, FCanUnpause CanUnpauseDel
 bool AFMBGameModeBase::ClearPause()
 {
     const auto IsPauseClear = Super::ClearPause();
-    if(IsPauseClear)
+    if (IsPauseClear)
     {
         SetMatchState(EFMBMatchState::InProgress);
     }

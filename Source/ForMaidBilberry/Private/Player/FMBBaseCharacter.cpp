@@ -15,15 +15,10 @@ AFMBBaseCharacter::AFMBBaseCharacter(const FObjectInitializer& ObjInit)
     : Super(ObjInit.SetDefaultSubobjectClass<UFMBCharacterMovementComponent>(ACharacter::CharacterMovementComponentName))
 {
     PrimaryActorTick.bCanEverTick = true;
-
-    // Camara rotate around Character
-    bUseControllerRotationPitch = false;
-    bUseControllerRotationYaw = false;
-    bUseControllerRotationRoll = false;
     //
-    GetCharacterMovement()->bOrientRotationToMovement = true;
+    GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
+    //
     GetCharacterMovement()->RotationRate = FRotator(0.0f, 700.0f, 0.0f);
-    //
     GetCharacterMovement()->bOrientRotationToMovement = true;
     GetCharacterMovement()->bUseControllerDesiredRotation = true;
     GetCharacterMovement()->bIgnoreBaseRotation = true;

@@ -165,5 +165,5 @@ UNiagaraComponent* AFMBBaseWeapon::SpawnSwordTrailFX() const
         FVector::ZeroVector,                                          //
         FRotator::ZeroRotator,                                        //
         EAttachLocation::SnapToTarget,                                //
-        true);
+        false);
 }

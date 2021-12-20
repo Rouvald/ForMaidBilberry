@@ -15,6 +15,11 @@ AFMBPlayerCharacter::AFMBPlayerCharacter(const FObjectInitializer& ObjInit) : Su
 {
     PrimaryActorTick.bCanEverTick = true;
 
+    // Camara rotate around Character
+    bUseControllerRotationPitch = false;
+    bUseControllerRotationYaw = false;
+    bUseControllerRotationRoll = false;
+    //
     SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>("SpringArmComponent");
     SpringArmComponent->SetupAttachment(GetRootComponent());
     SpringArmComponent->SocketOffset = FVector(0.0f, 0.0f, 50.0f);
@@ -49,11 +54,11 @@ void AFMBPlayerCharacter::BeginPlay()
     check(StaminaComponent);
     check(CameraCollisionComponent);
 
-    CameraCollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AFMBPlayerCharacter::OnCameraCollisionBeginOverlap);
-    CameraCollisionComponent->OnComponentEndOverlap.AddDynamic(this, &AFMBPlayerCharacter::OnCameraCollisionEndOverlap);
+    //CameraCollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AFMBPlayerCharacter::OnCameraCollisionBeginOverlap);
+    //CameraCollisionComponent->OnComponentEndOverlap.AddDynamic(this, &AFMBPlayerCharacter::OnCameraCollisionEndOverlap);
 }
 
-void AFMBPlayerCharacter::OnCameraCollisionBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+/*void AFMBPlayerCharacter::OnCameraCollisionBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
     UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
     CheckCameraOverlap();
@@ -67,20 +72,20 @@ void AFMBPlayerCharacter::OnCameraCollisionEndOverlap(
 
 void AFMBPlayerCharacter::CheckCameraOverlap()
 {
-    const auto HideMesh = CameraCollisionComponent->IsOverlappingComponent(GetCapsuleComponent());
+    const bool HideMesh = CameraCollisionComponent->IsOverlappingComponent(GetCapsuleComponent());
     GetMesh()->SetOwnerNoSee(HideMesh);
 
     TArray<USceneComponent*> MeshChildren;
     GetMesh()->GetChildrenComponents(true, MeshChildren);
-
-    for (const auto MeshChild : MeshChildren)
+    for(const auto MeshChild: MeshChildren)
     {
-        if (const auto MeshChildGeometry = Cast<UPrimitiveComponent>(MeshChild))
+        const auto MeshChildPrimitive = Cast<UPrimitiveComponent>(MeshChild);
+        if(MeshChildPrimitive)
         {
-            MeshChildGeometry->SetOwnerNoSee(HideMesh);
+            MeshChildPrimitive->SetOwnerNoSee(HideMesh);
         }
     }
-}
+}*/
 
 void AFMBPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {

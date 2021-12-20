@@ -150,9 +150,7 @@ void AFMBBaseWeapon::StartDrawTrace()
 void AFMBBaseWeapon::StopDrawTrace()
 {
     HitActors.Empty();
-
     GetWorld()->GetTimerManager().ClearTimer(DrawTraceTimerHandle);
-
     if (SwordTrailFXComponent)
     {
         SwordTrailFXComponent->DestroyComponent();

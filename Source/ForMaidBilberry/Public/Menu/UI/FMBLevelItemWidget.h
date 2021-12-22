@@ -34,10 +34,19 @@ protected:
     USizeBox* LevelIconSizeBox;
 
     UPROPERTY(meta = (BindWidget))
+    USizeBox* LevelFrameSizeBox;
+
+    UPROPERTY(meta = (BindWidget))
     UTextBlock* LevelNameTextBlock;
 
     UPROPERTY(meta = (BindWidget))
+    UTextBlock* LevelDescriptionTextBlock;
+
+    UPROPERTY(meta = (BindWidget))
     UImage* LevelImage = nullptr;
+
+    UPROPERTY(meta = (BindWidget))
+    UImage* LevelHoveredImage = nullptr;
 
     UPROPERTY(meta = (BindWidget))
     UButton* SelectLevelButton;
@@ -50,15 +59,20 @@ protected:
 private:
     FLevelData LevelData;
 
-    float NormalSizeBox = 150.0f;
-    float SelectedSizeBox = 300.0f;
+    float NormalIconSizeBox = 125.0f;
+    float SelectedIconSizeBox = 250.0f;
+
+    float NormalFrameSizeBox = 150.0f;
+    float SelectedFrameSizeBox = 300.0f;
+
+    float LevelItemHoveredRenderOpacity = 0.3f;
 
     UFUNCTION()
     void OnLevelItemClicked();
 
-    /*UFUNCTION()
+    UFUNCTION()
     void OnLevelItemHovered();
 
     UFUNCTION()
-    void OnLevelItemUnHovered();*/
+    void OnLevelItemUnHovered();
 };

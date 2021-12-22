@@ -14,22 +14,31 @@ void UFMBLevelItemWidget::NativeOnInitialized()
     if (SelectLevelButton)
     {
         SelectLevelButton->OnClicked.AddDynamic(this, &UFMBLevelItemWidget::OnLevelItemClicked);
-        /*SelectLevelButton->OnHovered.AddDynamic(this, &UFMBLevelItemWidget::OnLevelItemHovered);
-        SelectLevelButton->OnUnhovered.AddDynamic(this, &UFMBLevelItemWidget::OnLevelItemUnHovered);*/
+        SelectLevelButton->OnHovered.AddDynamic(this, &UFMBLevelItemWidget::OnLevelItemHovered);
+        SelectLevelButton->OnUnhovered.AddDynamic(this, &UFMBLevelItemWidget::OnLevelItemUnHovered);
     }
     if (LevelIconSizeBox)
     {
-        LevelIconSizeBox->WidthOverride = NormalSizeBox;
-        LevelIconSizeBox->HeightOverride = NormalSizeBox;
+        LevelIconSizeBox->SetWidthOverride(NormalIconSizeBox);
+        LevelIconSizeBox->SetHeightOverride(NormalIconSizeBox);
+    }
+    if (LevelFrameSizeBox)
+    {
+        LevelFrameSizeBox->SetWidthOverride(NormalFrameSizeBox);
+        LevelFrameSizeBox->SetHeightOverride(NormalFrameSizeBox);
     }
     if (LevelNameTextBlock)
     {
         LevelNameTextBlock->SetVisibility(ESlateVisibility::Hidden);
     }
-    /*if (LevelDescriptionTextBlock)
+    if (LevelDescriptionTextBlock)
     {
         LevelDescriptionTextBlock->SetVisibility(ESlateVisibility::Hidden);
-    }*/
+    }
+    if (LevelHoveredImage)
+    {
+        LevelHoveredImage->SetRenderOpacity(0.0f);
+    }
 }
 
 void UFMBLevelItemWidget::OnLevelItemClicked()
@@ -45,10 +54,10 @@ void UFMBLevelItemWidget::SetLevelData(const FLevelData& Data)
     {
         LevelNameTextBlock->SetText(FText::FromName(LevelData.LevelDisplayName));
     }
-    /*if (LevelDescriptionTextBlock)
+    if (LevelDescriptionTextBlock)
     {
-        LevelDescriptionTextBlock->SetText(FText::Format(FTextFormat{}, LevelData.LevelDescriptionText));
-    }*/
+        LevelDescriptionTextBlock->SetText(FText::FromName(LevelData.LevelDescriptionName));
+    }
     if (LevelImage)
     {
         LevelImage->SetBrushFromTexture(LevelData.LevelImage);
@@ -59,39 +68,36 @@ void UFMBLevelItemWidget::IsLevelSelected(bool IsSelected)
 {
     if (LevelIconSizeBox)
     {
-        LevelIconSizeBox->SetWidthOverride(IsSelected ? SelectedSizeBox : NormalSizeBox);
-        LevelIconSizeBox->SetHeightOverride(IsSelected ? SelectedSizeBox : NormalSizeBox);
+        LevelIconSizeBox->SetWidthOverride(IsSelected ? SelectedIconSizeBox : NormalIconSizeBox);
+        LevelIconSizeBox->SetHeightOverride(IsSelected ? SelectedIconSizeBox : NormalIconSizeBox);
+    }
+    if (LevelFrameSizeBox)
+    {
+        LevelFrameSizeBox->SetWidthOverride(IsSelected ? SelectedFrameSizeBox : NormalFrameSizeBox);
+        LevelFrameSizeBox->SetHeightOverride(IsSelected ? SelectedFrameSizeBox : NormalFrameSizeBox);
     }
     if (LevelNameTextBlock)
     {
         LevelNameTextBlock->SetVisibility(IsSelected ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
     }
-    /*if (LevelDescriptionTextBlock)
-    {
-        LevelDescriptionTextBlock->SetVisibility(IsSelected ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
-    }*/
-}
-
-/*void UFMBLevelItemWidget::OnLevelItemHovered()
-{
-    if (LevelNameTextBlock)
-    {
-        LevelNameTextBlock->SetVisibility(ESlateVisibility::Visible);
-    }
     if (LevelDescriptionTextBlock)
     {
-        LevelDescriptionTextBlock->SetVisibility(ESlateVisibility::Visible);
+        LevelDescriptionTextBlock->SetVisibility(IsSelected ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
+    }
+}
+
+void UFMBLevelItemWidget::OnLevelItemHovered()
+{
+    if (LevelHoveredImage)
+    {
+        LevelHoveredImage->SetRenderOpacity(LevelItemHoveredRenderOpacity);
     }
 }
 
 void UFMBLevelItemWidget::OnLevelItemUnHovered()
 {
-    if (LevelNameTextBlock)
+    if (LevelHoveredImage)
     {
-        LevelNameTextBlock->SetVisibility(ESlateVisibility::Hidden);
+        LevelHoveredImage->SetRenderOpacity(0.0f);
     }
-    if (LevelDescriptionTextBlock)
-    {
-        LevelDescriptionTextBlock->SetVisibility(ESlateVisibility::Hidden);
-    }
-}*/
+}

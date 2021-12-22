@@ -3,6 +3,7 @@
 #include "AI/Services/FMBFindEnemyService.h"
 #include "AIController.h"
 #include "FMBAIPerceptionComponent.h"
+#include "FMBHealthComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "FMBUtils.h"
 
@@ -16,7 +17,7 @@ UFMBFindEnemyService::UFMBFindEnemyService()
 void UFMBFindEnemyService::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
 {
     const auto Blackboard = OwnerComp.GetBlackboardComponent();
-    if (Blackboard)
+    if (GetWorld() && Blackboard)
     {
         const auto Controller = OwnerComp.GetAIOwner();
         const auto PerceptionComponent = FMBUtils::GetFMBPlayerComponent<UFMBAIPerceptionComponent>(Controller);
@@ -29,7 +30,6 @@ void UFMBFindEnemyService::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* No
                 Blackboard->SetValueAsVector(
                     LastPlayerLocationKey.SelectedKeyName, PerceptionComponent->GetEnemyPlayer()->GetActorLocation());
             }
-
             /*const auto Distance = Controller->GetPawn()->GetDistanceTo(PerceptionComponent->GetEnemyPlayer());
             Blackboard->SetValueAsFloat(DistanceToTargetKey.SelectedKeyName, Distance);*/
         }

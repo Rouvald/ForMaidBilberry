@@ -18,8 +18,8 @@ AActor* UFMBAIPerceptionComponent::GetEnemyPlayer() const
     const auto Pawn = Controller->GetPawn();
     if (!Pawn) return nullptr;
 
-    /*AActor* BestActor = nullptr;
-    float BestDistance = MAX_FLT;*/
+    AActor* Player = nullptr;
+    /*float BestDistance = MAX_FLT;*/
     for (const auto PerceiveActor : PerceiveActors)
     {
         const auto HealthComponent = FMBUtils::GetFMBPlayerComponent<UFMBHealthComponent>(PerceiveActor);
@@ -27,7 +27,7 @@ AActor* UFMBAIPerceptionComponent::GetEnemyPlayer() const
 
         if (HealthComponent && !HealthComponent->IsDead() && PerceivePawn->IsPlayerControlled())
         {
-            return PerceiveActor;
+            Player = PerceiveActor;
             /*const auto CurrentDistance = (PerceiveActor->GetActorLocation() - Pawn->GetActorLocation()).Size();
             if(CurrentDistance < BestDistance)
             {
@@ -36,5 +36,5 @@ AActor* UFMBAIPerceptionComponent::GetEnemyPlayer() const
             }*/
         }
     }
-    return nullptr;
+    return Player;
 }

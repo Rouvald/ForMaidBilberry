@@ -120,12 +120,9 @@ struct FGameData
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game")
     bool InfinityGame = false;
 
-<<<<<<< HEAD
-=======
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game")
     int32 GameOverDelayTime = 5;
 
->>>>>>> 63640ef (Rework gamepver condition. Clear some buggs.)
     UPROPERTY(
         EditDefaultsOnly, BlueprintReadWrite, Category = "Game", meta = (EditCondition = "!InfinityGame", ClampMin = "1", ClampMax = "400"))
     int32 GameplayTime = 10; // in second
@@ -165,6 +162,9 @@ struct FLevelData
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game")
     FName LevelDisplayName = NAME_None;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game")
+    FName LevelDescriptionName = NAME_None;
 
     /*UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Game")
     FText LevelDescriptionText;*/

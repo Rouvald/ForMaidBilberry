@@ -1,0 +1,215 @@
+[33mcommit e7a8774261eee2c18820cf0478fed3e3d5498122[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: Viktor <viktor.a2202@gmail.com>
+Date:   Tue Dec 21 02:46:38 2021 +0300
+
+    Rework spring arm, now spring arm don't react to bots and don't move closer to player
+
+[33mcommit e7221596e3079a5b58b060e0b3431e28572a927a[m
+Author: Viktor <viktor.a2202@gmail.com>
+Date:   Tue Dec 21 01:31:57 2021 +0300
+
+    pre commit hooks (test)
+
+[33mcommit 63640ef0487b2c978bae6acbf6ce8295a61a6b21[m
+Author: Viktor <viktor.a2202@gmail.com>
+Date:   Tue Dec 21 01:15:47 2021 +0300
+
+    Rework gamepver condition. Clear some buggs.
+
+[33mcommit ec902e2c3218f0c15a926fb7a29757c9c44172ab[m
+Author: Viktor <viktor.a2202@gmail.com>
+Date:   Mon Dec 20 21:17:26 2021 +0300
+
+    ...
+
+[33mcommit d10147d92b9056c3c174035b41f264ce4f62e934[m
+Author: Viktor <viktor.a2202@gmail.com>
+Date:   Mon Dec 20 20:17:14 2021 +0300
+
+    ...
+
+[33mcommit 584ca02bc036c900590582be403f57e88fb77a97[m
+Author: Viktor <viktor.a2202@gmail.com>
+Date:   Mon Dec 20 20:02:47 2021 +0300
+
+    lfs changing
+
+[33mcommit 358843607f6bc663d3310e0ddffc649db60b141e[m
+Author: Viktor <viktor.a2202@gmail.com>
+Date:   Mon Dec 20 19:24:46 2021 +0300
+
+    cleaning
+
+[33mcommit 956be83f9cb4a95f57cab99feaf88cc96ae825e4[m
+Author: Viktor <viktor.a2202@gmail.com>
+Date:   Mon Dec 20 02:28:47 2021 +0300
+
+    ...
+
+[33mcommit 7098fbc82153c495b3d97a1e5c74e9d0a775644d[m
+Author: Viktor <viktor.a2202@gmail.com>
+Date:   Mon Dec 20 00:31:09 2021 +0300
+
+    Solve problem: Now Ai can't kill each other. End make MenuLevel.
+
+[33mcommit 86e3358ae9264f9ff07721b2b766968ea8d95d51[m[33m ([m[1;31morigin/master[m[33m)[m
+Author: Viktor <viktor.a2202@gmail.com>
+Date:   Sun Dec 19 01:38:40 2021 +0300
+
+    Continue updating UI
+
+[33mcommit 7bc637c9ad48fa9b50c9dca9f892a358292749e9[m
+Author: Viktor <viktor.a2202@gmail.com>
+Date:   Sat Dec 18 01:17:05 2021 +0300
+
+    End Player UI. (for now)
+
+[33mcommit 92bf1c8fca049d75a6e3929ad77621b3ee4862cc[m
+Author: Viktor <viktor.a2202@gmail.com>
+Date:   Fri Dec 17 21:15:50 2021 +0300
+
+    Update UI. Add level selector. Skeletal mesh selector have issues, now don't use.
+
+[33mcommit 4763e8243a83f9769e91da8a6c755dfb8c7cab1e[m
+Author: Viktor <viktor.a2202@gmail.com>
+Date:   Wed Dec 15 22:10:59 2021 +0300
+
+    Add choose level in menu, quit game and bots health bar. Continue update UI.
+
+[33mcommit f60fc88e6213b7e546a53848a714484c534d095d[m
+Author: Viktor <viktor.a2202@gmail.com>
+Date:   Wed Dec 15 02:23:48 2021 +0300
+
+    Add reset level logic. Begin update HUD.
+
+[33mcommit 02916fe86d31263a60338659bde6903028aa5a4a[m
+Author: Viktor <viktor.a2202@gmail.com>
+Date:   Wed Dec 15 01:16:30 2021 +0300
+
+    Add GameOverWidget.
+
+[33mcommit 1a2bedfea10e7087598b2618b151eb37e4460413[m
+Author: Viktor <viktor.a2202@gmail.com>
+Date:   Tue Dec 14 22:33:33 2021 +0300
+
+    Working on MatchState. Add new widget Pause. Refactoring and bugs correction
+
+[33mcommit 6ba047ab7fc8a1bc64548139cd7b7fea03b9af59[m
+Author: Viktor <viktor.a2202@gmail.com>
+Date:   Mon Dec 13 22:19:15 2021 +0300
+
+    Player can respawn. Make PlayerCharacter and remove player logic from BaseCharacter. Update Ai Behavior tree.
+
+[33mcommit 6cb551b4706d98d70755e9616b41aec0bdcbfb62[m
+Author: Viktor <viktor.a2202@gmail.com>
+Date:   Sun Dec 12 22:31:55 2021 +0300
+
+    Update AI, now all bots versus Player. Add timer and player respawn GameMode. PlayerState have player kills and dead.
+
+[33mcommit 1fb87cb0964af92acb5dc0aa849bcacdcebf6fa2[m
+Author: Viktor <viktor.a2202@gmail.com>
+Date:   Sun Dec 12 00:52:39 2021 +0300
+
+    Update for Behavior tree (not last). Develop gamemode.
+
+[33mcommit 89160e370c52c88578798a37ca919c51d653d848[m
+Author: Viktor <viktor.a2202@gmail.com>
+Date:   Thu Dec 2 12:06:09 2021 +0300
+
+    I think simple behavior tree is done. Add Runaway logic , when ai stamina is less then attack.
+
+[33mcommit 7f12cf19388d9235da72f86da6c0c6074bc3e8ef[m
+Author: Viktor <viktor.a2202@gmail.com>
+Date:   Sun Nov 28 17:59:58 2021 +0300
+
+    Forgot about main game :(. Continue update and upgrade AI. Also some refactoring, like remove rolling into movement component.
+
+[33mcommit a8ff594c6bfd17978278ea76daca64b756ce061a[m
+Author: Rouvald <viktor.a2202@gmail.com>
+Date:   Sun Nov 21 05:02:13 2021 +0300
+
+    Now u can die! That's great! Add AI: random roam, find enemy and attack.
+
+[33mcommit e5bde1d1eaf99e667bc06e5e17746fb95fa51565[m
+Author: Rouvald <viktor.a2202@gmail.com>
+Date:   Wed Nov 17 19:47:35 2021 +0300
+
+    Impacts relatively physical material. Some improve changing weapon animations.
+
+[33mcommit 1a65560588003f709044d95acc9382ab5627bcb4[m
+Author: Rouvald <viktor.a2202@gmail.com>
+Date:   Tue Nov 16 21:58:35 2021 +0300
+
+    Add different animation for defferent weapon type ( now only 2 ). This commit for safe working state. In future this "changing animations" will upgrate for better readability.
+
+[33mcommit b8636dca57c8a7da8d61bf16ee45e2e3547ef8c3[m
+Author: Rouvald <viktor.a2202@gmail.com>
+Date:   Sun Oct 31 04:43:56 2021 +0300
+
+    Micro fix. For now NiagaraComponent spawn everytime pressed attack button, and destroy niagara component when attack animation is end. ( Custom anim notify state don't work :( ).
+
+[33mcommit 30d90cb7f86daf34ea75d69d3ed441ad5976b5e9[m
+Author: Rouvald <viktor.a2202@gmail.com>
+Date:   Fri Oct 29 08:00:18 2021 +0300
+
+    I forgott commit all thing :( . Add simple Health Pickup, improve UI, make some VFX: sword trails, bloof impact, white-black spectator screen. Maybe something else, but i forgot.
+
+[33mcommit 15215fd9b3b01728de80d0eef5ff804071ab3e54[m
+Author: Rouvald <viktor.a2202@gmail.com>
+Date:   Fri Oct 22 20:45:26 2021 +0300
+
+    Some changes in UI.  Add 2 vecrtical box (images+text) for weapon. Debug
+
+[33mcommit 051549abbc0875d3639783e0544e852dd3a3d417[m
+Author: Rouvald <viktor.a2202@gmail.com>
+Date:   Wed Oct 20 01:20:22 2021 +0300
+
+    For now: Drag stamina logic into Healthcomponent. Make simple HUDWidget for Health, Stamina and Weapons (Also 2 images that change if u change weapon)
+
+[33mcommit 2705d9ab523d364c3e9aaa27587ae6ff710f1e59[m
+Author: Rouvald <viktor.a2202@gmail.com>
+Date:   Sun Oct 17 23:54:45 2021 +0300
+
+    Add Rolling logic and micro changes. Hit anim montage don't play when plaing another animmontage. For now i have more refactoring problems and idk how fix it.
+
+[33mcommit aa44257a76b4f35f2ccbc46e17d31d3f3afd8c10[m
+Author: Rouvald <viktor.a2202@gmail.com>
+Date:   Sat Oct 16 01:34:48 2021 +0300
+
+    Remake Baseweapon class, now Its is StaticMesh ( Overlap colision ) with DefaultRootComponent. Add Change weapon logic. Character have BackPack ( StaticMesh , Overlap collision ).
+
+[33mcommit ef64a03d4e72f98e5d87b4c60aee8d74c5676c62[m
+Author: Rouvald <viktor.a2202@gmail.com>
+Date:   Mon Oct 11 22:39:16 2021 +0300
+
+    Fast , Strong attacks and Jump now have SpendStamina logic.
+
+[33mcommit cda1953d45d3ef5b892cc977cbdb79c515d00607[m
+Author: Rouvald <viktor.a2202@gmail.com>
+Date:   Mon Oct 11 02:46:59 2021 +0300
+
+    Add simple Stamina logic. ( only for running ).. Maybe i will move stamina from BaseCharacter class.
+
+[33mcommit 82f2e2742e3eea0223692f5de6acc4d2340e98da[m
+Author: DESKTOP-NR6HBSB\vikto <viktor.a2202@gmail.com>
+Date:   Fri Oct 8 22:31:10 2021 +0300
+
+    Add BaseWeapon class, fast melee attack and strong melee attack logic.
+
+[33mcommit b3246f984a88372a5708682781775c065cc35be1[m
+Author: DESKTOP-NR6HBSB\vikto <viktor.a2202@gmail.com>
+Date:   Mon Oct 4 01:21:21 2021 +0300
+
+    Add "normal" RPG Character and Third Person Camera movement. Also tried adding First Person Camera.
+
+[33mcommit 2f18c7acba4049b5476091d1db4bf8b3ced5afa2[m
+Author: DESKTOP-NR6HBSB\vikto <viktor.a2202@gmail.com>
+Date:   Sat Oct 2 14:20:33 2021 +0300
+
+    Health component ( health and damage logic, death animation, class ASpectatorPawn, auto heal, landed damage). 41
+
+[33mcommit f3cca667821ecfd85f432280956b0fc2eea272d0[m
+Author: DESKTOP-NR6HBSB\vikto <viktor.a2202@gmail.com>
+Date:   Wed Sep 29 23:26:26 2021 +0300
+
+    Base settings. Character Movement and Animation. 31

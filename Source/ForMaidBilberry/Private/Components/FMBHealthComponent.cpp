@@ -1,6 +1,5 @@
 // For Maid Bilberry Game. All Rights Recerved
 
-
 #include "Components/FMBHealthComponent.h"
 #include "FMBBaseCharacter.h"
 #include "Components/FMBCharacterMovementComponent.h"
@@ -17,7 +16,6 @@ UFMBHealthComponent::UFMBHealthComponent()
     PrimaryComponentTick.bCanEverTick = false;
 }
 
-
 void UFMBHealthComponent::BeginPlay()
 {
     Super::BeginPlay();
@@ -32,25 +30,18 @@ void UFMBHealthComponent::BeginPlay()
     }
 }
 
-void UFMBHealthComponent::OnTakeAnyDamage(AActor* DamagedActor, float Damage, const class UDamageType* DamageType,
-    class AController* InstigatedBy,
-    AActor* DamageCauser)
+void UFMBHealthComponent::OnTakeAnyDamage(
+    AActor* DamagedActor, float Damage, const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser)
 {
     if (Damage <= 0.0f || IsDead() || !GetWorld()) return;
 
-    /*if(InstigatedBy)
+    if (InstigatedBy)
     {
-        UE_LOG(HealthLog, Error, TEXT("Have InstigatinBy"));
         const auto DamagedPawn = Cast<APawn>(GetOwner());
-        if(!DamagedPawn) return;
-        
-        if (AreBothBots(DamagedPawn->GetController(), InstigatedBy))
-        {
-            UE_LOG(HealthLog, Error, TEXT("AI damage AI"));
-            return;
-        }
-    }*/
+        if (!DamagedPawn) return;
 
+        if (AreBothBots(DamagedPawn->GetController(), InstigatedBy)) return;
+    }
 
     // TODO: Hit anim don't loop, when periodical damage  // NEED FIX or not XD
     /*if (CheckAllAnimInProgress())
@@ -59,10 +50,9 @@ void UFMBHealthComponent::OnTakeAnyDamage(AActor* DamagedActor, float Damage, co
     }*/
 
     SetHealth(Health - Damage);
-
     GetWorld()->GetTimerManager().ClearTimer(HealTimeHandle);
 
-    //UE_LOG(HealthLog, Display, TEXT("Health: %f"), GetHealth());
+    // UE_LOG(HealthLog, Display, TEXT("Health: %f"), GetHealth());
 
     if (IsDead())
     {
@@ -128,7 +118,7 @@ void UFMBHealthComponent::PlayHitAnimation() const
             Character->PlayAnimMontage(WeaponComponent->GetCurrentWeaponAnimationsData().GetHit);
         }
         //==================================================
-        //UE_LOG(HealthLog, Display, TEXT("GetHit Animation play"),);
+        // UE_LOG(HealthLog, Display, TEXT("GetHit Animation play"),);
         //==================================================
     }
 }
@@ -167,6 +157,6 @@ void UFMBHealthComponent::Killed(AController* KillerController)
 
 bool UFMBHealthComponent::AreBothBots(AController* Controller1, AController* Controller2) const
 {
-    if(!Controller1 || !Controller2 || Controller1 == Controller2) return false;
-    return Cast<AAIController>(Controller1) && Cast<AAIController>(Controller2);
+    if (!Controller1 || !Controller2 || Controller1 == Controller2) return false;
+    return !Controller1->IsPlayerController() && !Controller2->IsPlayerController();
 }

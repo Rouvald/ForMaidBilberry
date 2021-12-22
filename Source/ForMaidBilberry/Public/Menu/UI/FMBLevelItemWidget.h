@@ -12,7 +12,7 @@ class UTextBlock;
 class UImage;
 class USizeBox;
 /**
- * 
+ *
  */
 UCLASS()
 class FORMAIDBILBERRY_API UFMBLevelItemWidget : public UUserWidget
@@ -42,8 +42,8 @@ protected:
     UPROPERTY(meta = (BindWidget))
     UButton* SelectLevelButton;
 
-    UPROPERTY(meta = (BindWidget))
-    UTextBlock* LevelDescriptionTextBlock;
+    /*UPROPERTY(meta = (BindWidget))
+    UTextBlock* LevelDescriptionTextBlock;*/
 
     virtual void NativeOnInitialized() override;
 

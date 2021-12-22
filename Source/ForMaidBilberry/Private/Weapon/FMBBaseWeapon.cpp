@@ -1,7 +1,6 @@
 // For Maid Bilberry Game. All Rights Recerved
 // For Maid Bilberry Game. All Rights Recerved
 
-
 #include "Weapon/FMBBaseWeapon.h"
 #include "DrawDebugHelpers.h"
 #include "FMBAIBaseCharacter.h"
@@ -51,12 +50,10 @@ void AFMBBaseWeapon::MeleeAttack(EChooseAttack ChooseAttack)
     StartDrawTrace();
 }
 
-APlayerController* AFMBBaseWeapon::GetPlayerController() const
+AController* AFMBBaseWeapon::GetController() const
 {
-    const auto Player = Cast<ACharacter>(GetOwner());
-    if (!Player) return nullptr;
-
-    return Player->GetController<APlayerController>();
+    const auto Pawn = Cast<APawn>(GetOwner());
+    return Pawn ? Pawn->GetController() : nullptr;
 }
 
 void AFMBBaseWeapon::DrawTrace()
@@ -70,7 +67,7 @@ void AFMBBaseWeapon::DrawTrace()
     FHitResult HitResult;
     MakeHit(HitResult, TraceStart, TraceEnd);
 
-    //DrawDebugLine(GetWorld(), TraceStart, TraceEnd, FColor::Red, false, 0.05f, 0, 5.0f);
+    // DrawDebugLine(GetWorld(), TraceStart, TraceEnd, FColor::Red, false, 0.05f, 0, 5.0f);
 
     if (HitResult.bBlockingHit)
     {
@@ -127,8 +124,8 @@ void AFMBBaseWeapon::NewDamagedActor(FHitResult& HitResult)
     if (HitResult.bBlockingHit)
     {
         MakeDamage(HitResult);
-        //UE_LOG(BaseWeaponLog, Display, TEXT("Hit %s"), *(Cast<ACharacter>(HitResult.GetActor()))->GetName());
-        //DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 10.0f, 32, FColor::Green, false, 5.0f);
+        // UE_LOG(BaseWeaponLog, Display, TEXT("Hit %s"), *(Cast<ACharacter>(HitResult.GetActor()))->GetName());
+        // DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 10.0f, 32, FColor::Green, false, 5.0f);
     }
 }
 
@@ -137,7 +134,7 @@ void AFMBBaseWeapon::MakeDamage(FHitResult& HitResult)
     const auto DamagedActor = HitResult.GetActor();
     if (!DamagedActor) return;
 
-    DamagedActor->TakeDamage(DamageAmount, FDamageEvent(), GetPlayerController(), this);
+    DamagedActor->TakeDamage(DamageAmount, FDamageEvent(), GetController(), this);
 }
 
 void AFMBBaseWeapon::StartDrawTrace()
@@ -145,7 +142,7 @@ void AFMBBaseWeapon::StartDrawTrace()
     SwordTrailFXComponent = SpawnSwordTrailFX();
 
     // if u wanna use SwordTrails anim notify state -> u need uncomment this down line
-    //SwordTrailFXComponent->SetVisibility(false);
+    // SwordTrailFXComponent->SetVisibility(false);
 
     GetWorld()->GetTimerManager().SetTimer(DrawTraceTimerHandle, this, &AFMBBaseWeapon::DrawTrace, 0.005f, true);
 }
@@ -164,13 +161,11 @@ void AFMBBaseWeapon::StopDrawTrace()
 
 UNiagaraComponent* AFMBBaseWeapon::SpawnSwordTrailFX() const
 {
-    return UNiagaraFunctionLibrary::SpawnSystemAttached
-        (
-            SwordTrailFX,                  //
-            WeaponMesh,                    //
-            SwordTrailSocketName,          //
-            FVector::ZeroVector,           //
-            FRotator::ZeroRotator,         //
-            EAttachLocation::SnapToTarget, //
-            true);
+    return UNiagaraFunctionLibrary::SpawnSystemAttached(SwordTrailFX, //
+        WeaponMesh,                                                   //
+        SwordTrailSocketName,                                         //
+        FVector::ZeroVector,                                          //
+        FRotator::ZeroRotator,                                        //
+        EAttachLocation::SnapToTarget,                                //
+        true);
 }

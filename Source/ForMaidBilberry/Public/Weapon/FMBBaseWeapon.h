@@ -22,11 +22,11 @@ public:
 
     virtual void MeleeAttack(EChooseAttack ChooseAttack);
 
-    //UFUNCTION(BlueprintCallable)
-    //FWeaponAnimationData GetWeaponAnimationData() const {return WeaponAnimationData;}
+    // UFUNCTION(BlueprintCallable)
+    // FWeaponAnimationData GetWeaponAnimationData() const {return WeaponAnimationData;}
 
     UFUNCTION(BlueprintCallable)
-    const EWeaponType& GetWeaponType() const {return WeaponType;}
+    const EWeaponType& GetWeaponType() const { return WeaponType; }
 
     void StopDrawTrace();
 
@@ -38,15 +38,15 @@ protected:
     UPROPERTY()
     USceneComponent* DefaultRootComponent;
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Component")
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Component")
     UStaticMeshComponent* WeaponMesh;
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Component")
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Component")
     UFMBWeaponFXComponent* WeaponFXComponent;
-    
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Weapon")
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
     EWeaponType WeaponType;
-    
+
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
     FName StartBladeTraceSocketName = "StartBladeTraceSocket";
 
@@ -58,17 +58,17 @@ protected:
 
     UPROPERTY()
     float DamageAmount = 0;
-    
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Weapon")
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
     float FastAttackDamage = 10.0f;
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Weapon")
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
     float StrongAttackDamage = 30.0f;
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="UI")
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
     FWeaponUIData WeaponUIData;
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="VFX")
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
     UNiagaraSystem* SwordTrailFX;
 
     FTimerHandle DrawTraceTimerHandle;
@@ -83,7 +83,7 @@ protected:
 
     virtual void BeginPlay() override;
 
-    APlayerController* GetPlayerController() const;
+    AController* GetController() const;
 
     void DrawTrace();
 

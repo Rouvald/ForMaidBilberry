@@ -1,13 +1,11 @@
 // For Maid Bilberry Game. All Rights Recerved
 
-
 #include "Menu/UI/FMBLevelItemWidget.h"
 #include "FMBGameInstance.h"
 #include "Components/Button.h"
 #include "Components/Image.h"
 #include "Components/SizeBox.h"
 #include "Components/TextBlock.h"
-
 
 void UFMBLevelItemWidget::NativeOnInitialized()
 {
@@ -28,10 +26,10 @@ void UFMBLevelItemWidget::NativeOnInitialized()
     {
         LevelNameTextBlock->SetVisibility(ESlateVisibility::Hidden);
     }
-    if (LevelDescriptionTextBlock)
+    /*if (LevelDescriptionTextBlock)
     {
         LevelDescriptionTextBlock->SetVisibility(ESlateVisibility::Hidden);
-    }
+    }*/
 }
 
 void UFMBLevelItemWidget::OnLevelItemClicked()
@@ -47,10 +45,10 @@ void UFMBLevelItemWidget::SetLevelData(const FLevelData& Data)
     {
         LevelNameTextBlock->SetText(FText::FromName(LevelData.LevelDisplayName));
     }
-    if (LevelDescriptionTextBlock)
+    /*if (LevelDescriptionTextBlock)
     {
-        LevelDescriptionTextBlock->SetText(FText::FromName(LevelData.LevelDescriptionName));
-    }
+        LevelDescriptionTextBlock->SetText(FText::Format(FTextFormat{}, LevelData.LevelDescriptionText));
+    }*/
     if (LevelImage)
     {
         LevelImage->SetBrushFromTexture(LevelData.LevelImage);
@@ -68,10 +66,10 @@ void UFMBLevelItemWidget::IsLevelSelected(bool IsSelected)
     {
         LevelNameTextBlock->SetVisibility(IsSelected ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
     }
-    if (LevelDescriptionTextBlock)
+    /*if (LevelDescriptionTextBlock)
     {
         LevelDescriptionTextBlock->SetVisibility(IsSelected ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
-    }
+    }*/
 }
 
 /*void UFMBLevelItemWidget::OnLevelItemHovered()

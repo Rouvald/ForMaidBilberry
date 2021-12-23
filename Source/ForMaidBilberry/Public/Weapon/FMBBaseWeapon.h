@@ -11,6 +11,7 @@ class UStaticMeshComponent;
 class UFMBWeaponFXComponent;
 class UNiagaraSystem;
 class UNiagaraComponent;
+class USoundCue;
 
 UCLASS()
 class FORMAIDBILBERRY_API AFMBBaseWeapon : public AActor
@@ -71,6 +72,9 @@ protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
     UNiagaraSystem* SwordTrailFX;
 
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sound")
+    USoundCue* SwordSlashSound;
+
     FTimerHandle DrawTraceTimerHandle;
 
     UPROPERTY()
@@ -97,4 +101,6 @@ protected:
     void StartDrawTrace();
 
     UNiagaraComponent* SpawnSwordTrailFX() const;
+
+    void SpawnSwordSlashSound() const;
 };

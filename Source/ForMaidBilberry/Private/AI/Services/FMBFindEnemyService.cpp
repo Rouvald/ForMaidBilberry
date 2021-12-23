@@ -30,8 +30,8 @@ void UFMBFindEnemyService::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* No
                 Blackboard->SetValueAsVector(
                     LastPlayerLocationKey.SelectedKeyName, PerceptionComponent->GetEnemyPlayer()->GetActorLocation());
             }
-            /*const auto Distance = Controller->GetPawn()->GetDistanceTo(PerceptionComponent->GetEnemyPlayer());
-            Blackboard->SetValueAsFloat(DistanceToTargetKey.SelectedKeyName, Distance);*/
+            const auto Distance = Controller->GetPawn()->GetDistanceTo(PerceptionComponent->GetEnemyPlayer());
+            Blackboard->SetValueAsFloat(DistanceToTargetKey.SelectedKeyName, Distance);
         }
     }
     Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);

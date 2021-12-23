@@ -2,6 +2,8 @@
 
 #include "PickUps/FMBBasePickUp.h"
 #include "Components/SphereComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "Sound/SoundCue.h"
 
 DEFINE_LOG_CATEGORY_STATIC(PickUpLog, All, All)
 
@@ -54,6 +56,7 @@ void AFMBBasePickUp::PickUpWasTaken()
     FTimerHandle RespawnPickUpTimerHandle;
 
     GetWorldTimerManager().SetTimer(RespawnPickUpTimerHandle, this, &AFMBBasePickUp::Respawn, RespawnTime);
+    UGameplayStatics::PlaySoundAtLocation(GetWorld(), TakenPickUpSound, GetActorLocation());
 }
 
 void AFMBBasePickUp::Respawn()

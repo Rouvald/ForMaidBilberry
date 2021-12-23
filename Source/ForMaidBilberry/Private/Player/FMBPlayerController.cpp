@@ -3,6 +3,7 @@
 #include "Player/FMBPlayerController.h"
 #include "Components/FMBRespawnComponent.h"
 #include "FMBGameModeBase.h"
+#include "FMBGameInstance.h"
 
 AFMBPlayerController::AFMBPlayerController()
 {
@@ -43,6 +44,7 @@ void AFMBPlayerController::SetupInputComponent()
     if (!InputComponent) return;
 
     InputComponent->BindAction("PauseGame", IE_Pressed, this, &AFMBPlayerController::OnGamePause);
+    InputComponent->BindAction("Mute", IE_Pressed, this, &AFMBPlayerController::OnVolumeMute);
 }
 
 void AFMBPlayerController::OnGamePause()
@@ -50,4 +52,14 @@ void AFMBPlayerController::OnGamePause()
     if (!GetWorld() || !GetWorld()->GetAuthGameMode()) return;
 
     GetWorld()->GetAuthGameMode()->SetPause(this);
+}
+
+void AFMBPlayerController::OnVolumeMute()
+{
+    if (!GetWorld()) return;
+
+    const auto FMBGameInstance = Cast<UFMBGameInstance>(GetWorld()->GetGameInstance());
+    if (!FMBGameInstance) return;
+
+    FMBGameInstance->ToggleVolume();
 }

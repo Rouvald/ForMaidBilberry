@@ -3,7 +3,6 @@
 
 #include "Weapon/FMBBaseWeapon.h"
 #include "DrawDebugHelpers.h"
-#include "FMBAIBaseCharacter.h"
 #include "Components/StaticMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "FMBBaseCharacter.h"
@@ -11,6 +10,8 @@
 #include "NiagaraFunctionLibrary.h"
 #include "NiagaraComponent.h"
 #include "FMBCoreTypes.h"
+#include "Kismet/GameplayStatics.h"
+#include "Sound/SoundCue.h"
 
 DECLARE_LOG_CATEGORY_CLASS(BaseWeaponLog, All, All);
 
@@ -140,6 +141,7 @@ void AFMBBaseWeapon::MakeDamage(FHitResult& HitResult)
 void AFMBBaseWeapon::StartDrawTrace()
 {
     SwordTrailFXComponent = SpawnSwordTrailFX();
+    SpawnSwordSlashSound();
 
     // if u wanna use SwordTrails anim notify state -> u need uncomment this down line
     // SwordTrailFXComponent->SetVisibility(false);
@@ -165,5 +167,16 @@ UNiagaraComponent* AFMBBaseWeapon::SpawnSwordTrailFX() const
         FVector::ZeroVector,                                          //
         FRotator::ZeroRotator,                                        //
         EAttachLocation::SnapToTarget,                                //
+        false);
+}
+
+void AFMBBaseWeapon::SpawnSwordSlashSound() const
+{
+    UGameplayStatics::SpawnSoundAttached(SwordSlashSound, //
+        WeaponMesh,                                       //
+        SwordTrailSocketName,                             //
+        FVector::ZeroVector,                              //
+        FRotator::ZeroRotator,                            //
+        EAttachLocation::SnapToTarget,                    //
         false);
 }

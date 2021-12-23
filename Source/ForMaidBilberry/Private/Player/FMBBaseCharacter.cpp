@@ -6,8 +6,9 @@
 #include "Components/FMBWeaponComponent.h"
 #include "Components/TextRenderComponent.h"
 #include "GameFramework/Controller.h"
-#include "Weapon/FMBBaseWeapon.h"
 #include "Components/CapsuleComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "Sound/SoundCue.h"
 
 DECLARE_LOG_CATEGORY_CLASS(BaseCharacterLog, All, All);
 
@@ -88,6 +89,8 @@ void AFMBBaseCharacter::OnDeath()
 
     GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
     GetMesh()->SetSimulatePhysics(true);
+
+    UGameplayStatics::PlaySoundAtLocation(GetWorld(), CharacterDeathSound, GetActorLocation());
 }
 
 void AFMBBaseCharacter::OnGroundLanded(const FHitResult& Hitresult)

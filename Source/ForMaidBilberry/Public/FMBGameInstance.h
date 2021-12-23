@@ -7,6 +7,7 @@
 #include "FMBCoreTypes.h"
 #include "FMBGameInstance.generated.h"
 
+class USoundClass;
 /**
  *
  */
@@ -27,6 +28,8 @@ public:
 
     FName GetMenuLevelName() const { return MenuLevelName; }
 
+    void ToggleVolume() const;
+
 protected:
     UPROPERTY(EditDefaultsOnly, Category = "Game")
     TArray<FLevelData> LevelsData;
@@ -36,6 +39,9 @@ protected:
 
     UPROPERTY(EditDefaultsOnly, Category = "Game")
     TArray<FCharacterData> CharactersData;
+
+    UPROPERTY(EditDefaultsOnly, Category = "Sound")
+    USoundClass* MasterSoundClass;
 
 private:
     FLevelData StartLevel;

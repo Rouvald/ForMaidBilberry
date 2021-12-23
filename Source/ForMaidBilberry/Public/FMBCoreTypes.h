@@ -42,6 +42,21 @@ struct FWeaponAnimationsData
 
 // Weapon
 
+class UNiagaraSystem;
+class USoundCue;
+
+USTRUCT(BlueprintType)
+struct FImpactData
+{
+    GENERATED_USTRUCT_BODY()
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
+    UNiagaraSystem* NiagaraEffect;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sound")
+    USoundCue* ImpactSound;
+};
+
 UENUM(BlueprintType)
 enum class EWeaponType : uint8
 {

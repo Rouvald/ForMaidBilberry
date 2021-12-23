@@ -25,7 +25,7 @@ protected:
     FBlackboardKeySelector LastPlayerLocationKey;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
-    FBlackboardKeySelector DistanceToPlayerKey;
+    FBlackboardKeySelector DistanceToTargetKey;
 
     virtual void TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds) override;
 };

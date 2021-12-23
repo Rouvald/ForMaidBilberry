@@ -6,6 +6,7 @@
 #include "Blueprint/UserWidget.h"
 #include "FMBBaseWidget.generated.h"
 
+class USoundCue;
 /**
  *
  */
@@ -19,4 +20,7 @@ public:
 protected:
     UPROPERTY(meta = (BindWidgetAnim), Transient)
     UWidgetAnimation* ShowAnim;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sound")
+    USoundCue* OpenWidgetSound;
 };

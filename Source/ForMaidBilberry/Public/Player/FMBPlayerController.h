@@ -31,4 +31,6 @@ private:
     void OnGamePause();
 
     void OnMatchStateChange(EFMBMatchState State);
+
+    void OnVolumeMute();
 };

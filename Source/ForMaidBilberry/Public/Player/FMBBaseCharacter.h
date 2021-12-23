@@ -11,6 +11,7 @@
 
 class UFMBHealthComponent;
 class UFMBWeaponComponent;
+class USoundCue;
 
 UCLASS()
 class FORMAIDBILBERRY_API AFMBBaseCharacter : public ACharacter
@@ -51,6 +52,9 @@ protected:
 
     UPROPERTY(EditDefaultsOnly, Category = "Damage")
     FVector2D LandedDamage = {10.f, 100.0f};
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sound")
+    USoundCue* CharacterDeathSound;
 
     virtual void BeginPlay() override;
 

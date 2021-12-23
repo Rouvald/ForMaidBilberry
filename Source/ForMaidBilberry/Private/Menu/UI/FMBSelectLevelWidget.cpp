@@ -6,6 +6,7 @@
 #include "Components/Button.h"
 #include "Components/VerticalBox.h"
 #include "Kismet/GameplayStatics.h"
+#include "Sound/SoundCue.h"
 
 void UFMBSelectLevelWidget::NativeOnInitialized()
 {
@@ -73,6 +74,7 @@ void UFMBSelectLevelWidget::OnLevelSelected(const FLevelData& Data)
 void UFMBSelectLevelWidget::OnStartGame()
 {
     PlayAnimation(LoadingLevelAnim);
+    UGameplayStatics::PlaySound2D(GetWorld(), StartGameSound);
 }
 
 void UFMBSelectLevelWidget::OnAnimationFinished_Implementation(const UWidgetAnimation* Animation)

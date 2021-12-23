@@ -2,6 +2,8 @@
 
 #include "Weapon/Components/FMBWeaponFXComponent.h"
 #include "NiagaraFunctionLibrary.h"
+#include "Kismet/GameplayStatics.h"
+#include "Sound/SoundCue.h"
 
 UFMBWeaponFXComponent::UFMBWeaponFXComponent()
 {
@@ -10,15 +12,20 @@ UFMBWeaponFXComponent::UFMBWeaponFXComponent()
 
 void UFMBWeaponFXComponent::PlayImpactFX(FHitResult& HitResult)
 {
-    auto Effect = DefaultEffect;
+    auto ImpactData = DefaultImpactData;
 
     if (HitResult.PhysMaterial.IsValid())
     {
         const auto PhysMat = HitResult.PhysMaterial.Get();
-        if (EffectsMap.Contains(PhysMat))
+        if (ImpactDataMap.Contains(PhysMat))
         {
-            Effect = EffectsMap[PhysMat];
+            ImpactData = ImpactDataMap[PhysMat];
         }
     }
-    UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), Effect, HitResult.ImpactPoint, HitResult.ImpactNormal.Rotation());
+    // Niagara
+    UNiagaraFunctionLibrary::SpawnSystemAtLocation(
+        GetWorld(), ImpactData.NiagaraEffect, HitResult.ImpactPoint, HitResult.ImpactNormal.Rotation());
+
+    // Sound
+    UGameplayStatics::PlaySoundAtLocation(GetWorld(), ImpactData.ImpactSound, HitResult.ImpactPoint);
 }

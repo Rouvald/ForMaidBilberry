@@ -12,6 +12,7 @@ class UButton;
 class UVerticalBox;
 class UFMBGameInstance;
 class UFMBLevelItemWidget;
+class USoundCue;
 /**
  *
  */
@@ -32,6 +33,9 @@ protected:
 
     UPROPERTY(EditDefaultsOnly, Category = "UI")
     TSubclassOf<UUserWidget> LevelItemWidgetClass;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sound")
+    USoundCue* StartGameSound;
 
     virtual void NativeOnInitialized() override;
     virtual void OnAnimationFinished_Implementation(const UWidgetAnimation* Animation) override;

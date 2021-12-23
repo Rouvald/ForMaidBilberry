@@ -1,7 +1,6 @@
 // For Maid Bilberry Game. All Rights Recerved
 
 #include "Components/FMBWeaponComponent.h"
-
 #include "Player/FMBPlayerCharacter.h"
 #include "FMBBaseCharacter.h"
 #include "Animation/FMBAnimFinishedNotify.h"
@@ -250,7 +249,7 @@ void UFMBWeaponComponent::OnChangeEquipWeapon(USkeletalMeshComponent* MeshComp)
 {
     if (CurrentWeaponIndex < 0 || CurrentWeaponIndex > Weapons.Num())
     {
-        UE_LOG(BaseWeaponComponentLog, Display, TEXT("Incorrect Weaon Index"));
+        UE_LOG(BaseWeaponComponentLog, Display, TEXT("Incorrect Weapon Index"));
         return;
     }
     const auto Character = GetCharacter();

@@ -7,6 +7,7 @@
 #include "FMBBasePickUp.generated.h"
 
 class USphereComponent;
+class USoundCue;
 
 UCLASS()
 class FORMAIDBILBERRY_API AFMBBasePickUp : public AActor
@@ -24,6 +25,9 @@ protected:
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "PickUp")
     float RespawnTime = 3.0f;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sound")
+    USoundCue* TakenPickUpSound;
 
     virtual void BeginPlay() override;
 

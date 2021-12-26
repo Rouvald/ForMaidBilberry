@@ -3,6 +3,8 @@
 #include "Components/FMBRespawnComponent.h"
 #include "FMBGameModeBase.h"
 
+DEFINE_LOG_CATEGORY_STATIC(LogFMBRespawnComponent, All, All)
+
 UFMBRespawnComponent::UFMBRespawnComponent()
 {
     PrimaryComponentTick.bCanEverTick = false;
@@ -17,6 +19,7 @@ void UFMBRespawnComponent::Respawn(int32 RespawnTime)
 
 void UFMBRespawnComponent::RespawnUpdateTimer()
 {
+    UE_LOG(LogFMBRespawnComponent, Display, TEXT("3. Respawn bot"));
     if (--RespawnCountDown == 0)
     {
         if (!GetWorld()) return;

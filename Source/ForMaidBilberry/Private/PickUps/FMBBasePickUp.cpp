@@ -4,6 +4,7 @@
 #include "Components/SphereComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Sound/SoundCue.h"
+#include "NiagaraComponent.h"
 
 DEFINE_LOG_CATEGORY_STATIC(PickUpLog, All, All)
 
@@ -16,6 +17,10 @@ AFMBBasePickUp::AFMBBasePickUp()
     CollisionComponent->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
     CollisionComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
     SetRootComponent(CollisionComponent);
+
+    HealthPickupNiagaraComponent = CreateDefaultSubobject<UNiagaraComponent>("HealthPickupNiagaraComponent");
+    HealthPickupNiagaraComponent->SetupAttachment(GetRootComponent());
+    HealthPickupNiagaraComponent->SetRelativeLocation(FVector(0.0f, 0.0f, 10.0f));
 }
 
 void AFMBBasePickUp::BeginPlay()
@@ -53,9 +58,14 @@ void AFMBBasePickUp::PickUpWasTaken()
     {
         GetRootComponent()->SetVisibility(false, true);
     }
-    FTimerHandle RespawnPickUpTimerHandle;
 
-    GetWorldTimerManager().SetTimer(RespawnPickUpTimerHandle, this, &AFMBBasePickUp::Respawn, RespawnTime);
+    if (WantsToRespawn)
+    {
+        FTimerHandle RespawnPickUpTimerHandle;
+
+        GetWorldTimerManager().SetTimer(RespawnPickUpTimerHandle, this, &AFMBBasePickUp::Respawn, RespawnTime);
+    }
+
     UGameplayStatics::PlaySoundAtLocation(GetWorld(), TakenPickUpSound, GetActorLocation());
 }
 

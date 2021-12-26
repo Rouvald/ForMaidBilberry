@@ -37,5 +37,5 @@ protected:
 private:
     FTimerHandle HealthBarVisibleTimerHandle;
 
-    void UpdateHealthBarWidgetVisible();
+    void UpdateHealthBarWidgetVisible() const;
 };

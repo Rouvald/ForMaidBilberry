@@ -30,7 +30,7 @@ void AFMBGameModeBase::StartPlay()
 
     SpawnBots();
     // CreateTeamsInfo();
-
+    SetDefaultPlayerName();
     // CurrentRound = 1;
     StartRound();
 
@@ -62,7 +62,7 @@ void AFMBGameModeBase::SpawnBots()
 
 void AFMBGameModeBase::StartRound()
 {
-    if (GameData.InfinityGame) return;
+    if (GameData.IsInfinityGame) return;
 
     GameplayTimeCountDown = GameData.GameplayTime;
     GetWorld()->GetTimerManager().SetTimer(RoundTimerHandle, this, &AFMBGameModeBase::GameTimerUpdate, 1.0f, true);
@@ -106,6 +106,7 @@ void AFMBGameModeBase::ResetOnePlayer(AController* Controller)
     {
         Controller->GetPawn()->Reset();
     }
+    UE_LOG(LogAFMBGameModeBase, Display, TEXT("4. Spawn bots"));
     RestartPlayer(Controller);
     // SetTeamSkeletalMesh(Controller);
 }
@@ -119,22 +120,29 @@ AActor* AFMBGameModeBase::FindPlayerStart_Implementation(AController* Player, co
     return Super::FindPlayerStart_Implementation(Player, IncomingName);
 }
 
-void AFMBGameModeBase::Killed(AController* PlayerController, bool IsKill)
+void AFMBGameModeBase::PlayerKiller(AController* KillerController, AController* VictimController)
 {
-    const auto PlayerState = PlayerController ? Cast<AFMBPlayerState>(PlayerController->PlayerState) : nullptr;
+    const auto KillerPlayerState = KillerController ? Cast<AFMBPlayerState>(KillerController->PlayerState) : nullptr;
 
-    if (PlayerState)
+    if (KillerPlayerState)
     {
-        if (IsKill)
-        {
-            PlayerState->AddKill();
-            GameOverCondition();
-        }
-        else
-        {
-            PlayerState->AddDeath();
-            StartRespawn(PlayerController);
-        }
+        KillerPlayerState->AddKill();
+        GameOverCondition();
+    }
+    if (VictimController && GameData.CanBotsRespawn)
+    {
+        StartRespawn(VictimController);
+    }
+}
+
+void AFMBGameModeBase::BotKiller(AController* VictimController)
+{
+    const auto VictimPlayerState = VictimController ? Cast<AFMBPlayerState>(VictimController->PlayerState) : nullptr;
+
+    if (VictimPlayerState)
+    {
+        VictimPlayerState->AddDeath();
+        StartRespawn(VictimController);
     }
 }
 
@@ -172,12 +180,13 @@ void AFMBGameModeBase::LogPlayerInfo()
 
 void AFMBGameModeBase::StartRespawn(AController* Controller)
 {
-    const auto IsRespawnAvailable = GameData.InfinityGame || GameplayTimeCountDown > MinRoundTimeForRespawn + GameData.RespawnTime;
+    const auto IsRespawnAvailable = GameData.IsInfinityGame || GameplayTimeCountDown > MinRoundTimeForRespawn + GameData.RespawnTime;
     if (!IsRespawnAvailable) return;
 
     const auto RespawnComponent = FMBUtils::GetFMBPlayerComponent<UFMBRespawnComponent>(Controller);
     if (!RespawnComponent) return;
 
+    UE_LOG(LogAFMBGameModeBase, Display, TEXT("2. Spawn bots"));
     RespawnComponent->Respawn(GameData.RespawnTime);
 }
 
@@ -228,6 +237,19 @@ bool AFMBGameModeBase::ClearPause()
         SetMatchState(EFMBMatchState::InProgress);
     }
     return IsPauseClear;
+}
+
+void AFMBGameModeBase::SetDefaultPlayerName() const
+{
+    if (!GetWorld()) return;
+
+    const auto PlayerController = GetWorld()->GetFirstPlayerController();
+    if (!PlayerController) return;
+
+    const auto PlayerState = Cast<AFMBPlayerState>(PlayerController->PlayerState);
+    if (!PlayerState) return;
+
+    PlayerState->SetPlayerName(FMBDefaultPlayerName.ToString());
 }
 
 /*void AFMBGameModeBase::CreateTeamsInfo()

@@ -42,7 +42,7 @@ void UFMBGameOverWidget::UpdatePlayerStat()
     for (auto It = GetWorld()->GetControllerIterator(); It; ++It)
     {
         const auto Controller = It->Get();
-        if (!Controller) continue;
+        if (!Controller || !Controller->IsPlayerController()) continue;
 
         const auto PlayerState = Cast<AFMBPlayerState>(Controller->PlayerState);
         if (!PlayerState) continue;

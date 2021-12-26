@@ -45,6 +45,9 @@ protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Component")
     UFMBWeaponFXComponent* WeaponFXComponent;
 
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Component")
+    UNiagaraComponent* SwordTrailFXComponent;
+
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
     EWeaponType WeaponType;
 
@@ -80,9 +83,6 @@ protected:
     UPROPERTY()
     TArray<AActor*> HitActors;
 
-    UPROPERTY()
-    UNiagaraComponent* SwordTrailFXComponent;
-
     TMap<EChooseAttack, float> ChooseDamageAmount;
 
     virtual void BeginPlay() override;
@@ -99,8 +99,6 @@ protected:
     void MakeDamage(FHitResult& HitResult);
 
     void StartDrawTrace();
-
-    UNiagaraComponent* SpawnSwordTrailFX() const;
 
     void SpawnSwordSlashSound() const;
 };

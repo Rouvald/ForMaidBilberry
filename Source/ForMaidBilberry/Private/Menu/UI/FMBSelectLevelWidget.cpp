@@ -32,7 +32,7 @@ void UFMBSelectLevelWidget::InitLevelItem()
     int32 LevelID = 0;
     for (auto LevelData : GameInstance->GetLevelsData())
     {
-        const auto LevelItemWidget = CreateWidget<UFMBLevelItemWidget>(this, LevelItemWidgetClass);
+        const auto LevelItemWidget = CreateWidget<UFMBLevelItemWidget>(GetWorld(), LevelItemWidgetClass);
         if (!LevelItemWidget) continue;
 
         LevelData.LevelID = LevelID;

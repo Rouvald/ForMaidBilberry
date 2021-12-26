@@ -7,6 +7,7 @@
 #include "FMBAIController.generated.h"
 
 class UFMBAIPerceptionComponent;
+class UFMBRespawnComponent;
 /**
  *
  */
@@ -21,6 +22,9 @@ public:
 protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
     UFMBAIPerceptionComponent* FMBAIPerceptionComponent;
+
+    UPROPERTY(EditDefaultsOnly, Category = "Component")
+    UFMBRespawnComponent* RespawnComponent;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "AI")
     FName FocusOnEnemyKeyName = "EnemyActor";

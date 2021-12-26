@@ -4,12 +4,15 @@
 #include "AI/FMBAIBaseCharacter.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Components/FMBAIPerceptionComponent.h"
+#include "Components/FMBRespawnComponent.h"
 
 AFMBAIController::AFMBAIController()
 {
     FMBAIPerceptionComponent = CreateDefaultSubobject<UFMBAIPerceptionComponent>("PerceptionComponent");
     SetPerceptionComponent(*FMBAIPerceptionComponent);
 
+    RespawnComponent = CreateDefaultSubobject<UFMBRespawnComponent>("RespawnComponent");
+    // uncomment for respawns bots
     // bWantsPlayerState = true;
 }
 

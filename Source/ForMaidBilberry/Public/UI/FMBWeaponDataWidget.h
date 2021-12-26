@@ -8,7 +8,6 @@
 #include "FMBWeaponDataWidget.generated.h"
 
 class UImage;
-class USizeBox;
 /**
  *
  */
@@ -26,17 +25,16 @@ public:
 
 protected:
     UPROPERTY(meta = (BindWidget))
-    USizeBox* WeaponUIDataSizeBox;
+    UImage* WeaponImage;
 
     UPROPERTY(meta = (BindWidget))
-    UImage* WeaponUIImage;
+    UImage* ShadowImage;
 
-    /*UPROPERTY(meta = (BindWidget))
-    UImage* FrameImage;*/
+    virtual void NativeOnInitialized() override;
 
 private:
     FWeaponUIData WeaponUIData;
 
-    float NormalSizeBox = 150.0f;
-    float SelectedSizeBox = 300.0f;
+    float NormalShadowOpacity = 0.5f;
+    float SelectedShadowOpacity = 0.0f;
 };

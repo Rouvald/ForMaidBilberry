@@ -14,7 +14,7 @@ class FORMAIDBILBERRY_API AFMBHealthPickUp : public AFMBBasePickUp
 {
     GENERATED_BODY()
 protected:
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PickUps", meta = (ClampMin = "10.0", ClampMax = "100.0"))
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PickUp", meta = (ClampMin = "10.0", ClampMax = "100.0"))
     float HealthAmount = 50.0f;
 
 private:

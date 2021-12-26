@@ -2,31 +2,36 @@
 
 #include "UI/FMBWeaponDataWidget.h"
 #include "Components/Image.h"
-#include "Components/SizeBox.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogFMBWeaponDataWidget, All, All)
+
+void UFMBWeaponDataWidget::NativeOnInitialized()
+{
+    Super::NativeOnInitialized();
+
+    if (ShadowImage)
+    {
+        UE_LOG(LogFMBWeaponDataWidget, Error, TEXT("ShadowImage have"));
+        ShadowImage->SetRenderOpacity(NormalShadowOpacity);
+    }
+}
 
 void UFMBWeaponDataWidget::SetWeaponUIData(const FWeaponUIData& Data)
 {
     WeaponUIData = Data;
 
-    if (WeaponUIImage)
+    if (WeaponImage)
     {
-        WeaponUIImage->SetBrushFromTexture(WeaponUIData.WeaponIcon);
-    }
-    if (WeaponUIDataSizeBox)
-    {
-        WeaponUIDataSizeBox->SetWidthOverride(NormalSizeBox);
-        WeaponUIDataSizeBox->SetHeightOverride(NormalSizeBox);
+        UE_LOG(LogFMBWeaponDataWidget, Error, TEXT("WeaponImage have"));
+        WeaponImage->SetBrushFromTexture(Data.WeaponIcon);
     }
 }
 
 void UFMBWeaponDataWidget::WeaponIsSelected(bool IsSelected)
 {
     UE_LOG(LogFMBWeaponDataWidget, Error, TEXT("weapon is selected"));
-    if (WeaponUIDataSizeBox)
+    if (ShadowImage)
     {
-        WeaponUIDataSizeBox->SetWidthOverride(IsSelected ? SelectedSizeBox : NormalSizeBox);
-        WeaponUIDataSizeBox->SetHeightOverride(IsSelected ? SelectedSizeBox : NormalSizeBox);
+        ShadowImage->SetRenderOpacity(SelectedShadowOpacity);
     }
 }

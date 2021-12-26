@@ -28,12 +28,16 @@ public:
     virtual bool SetPause(APlayerController* PC, FCanUnpause CanUnpauseDelegate = FCanUnpause()) override;
     virtual bool ClearPause() override;
 
-    void Killed(AController* PlayerController, bool IsKill);
+    void PlayerKiller(AController* KillerController, AController* VictimController);
+    void BotKiller(AController* VictimController);
 
     FGameData GetGameData() const { return GameData; }
     int32 GetRoundCountDown() const { return GameplayTimeCountDown; }
 
     void RespawnRequest(AController* Controller);
+
+    float GetDefaultTurnRatePitchSky() const { return DefaultTurnRatePitchSky; }
+    float GetTurnRatePitch() const { return TurnRatePitch; }
 
 protected:
     UPROPERTY(EditDefaultsOnly, Category = "Game")
@@ -45,8 +49,17 @@ protected:
     UPROPERTY(EditDefaultsOnly, Category = "Game")
     FGameData GameData;
 
+    UPROPERTY(EditDefaultsOnly, Category = "Game")
+    FName FMBDefaultPlayerName = "Player";
+
     UPROPERTY(VisibleAnywhere, Category = "Game", meta = (ToolTip = "This tag must have at least 1 PlayerStart in the Level."))
     FName PlayerStartTagName = "Player";
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sky")
+    float DefaultTurnRatePitchSky = -90.0f;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sky")
+    float TurnRatePitch = 0.5f;
 
 private:
     // int32 CurrentRound = 1;
@@ -76,4 +89,6 @@ private:
     void GameOver();
 
     void SetMatchState(EFMBMatchState State);
+
+    void SetDefaultPlayerName() const;
 };

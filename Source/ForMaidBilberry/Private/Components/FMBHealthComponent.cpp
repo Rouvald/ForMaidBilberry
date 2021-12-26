@@ -142,17 +142,11 @@ void UFMBHealthComponent::Killed(AController* KillerController)
     const auto GameMode = Cast<AFMBGameModeBase>(GetWorld()->GetAuthGameMode());
     if (!GameMode) return;
 
-    if (Cast<APlayerController>(KillerController))
-    {
-        GameMode->Killed(KillerController, true);
-    }
-    else
-    {
-        const auto Player = Cast<APawn>(GetOwner());
-        const auto VictimController = Player ? Player->GetController() : nullptr;
+    const auto Player = Cast<APawn>(GetOwner());
+    const auto VictimController = Player ? Player->GetController() : nullptr;
 
-        GameMode->Killed(VictimController, false);
-    }
+    KillerController->IsPlayerController() ? GameMode->PlayerKiller(KillerController, VictimController)
+                                           : GameMode->BotKiller(VictimController);
 }
 
 bool UFMBHealthComponent::AreBothBots(AController* Controller1, AController* Controller2) const

@@ -54,7 +54,7 @@ void AFMBAIBaseCharacter::OnDeath()
     }
 }
 
-void AFMBAIBaseCharacter::UpdateHealthBarWidgetVisible()
+void AFMBAIBaseCharacter::UpdateHealthBarWidgetVisible() const
 {
     if (!GetWorld() ||                                                 //
         !GetWorld()->GetFirstPlayerController() ||                     //

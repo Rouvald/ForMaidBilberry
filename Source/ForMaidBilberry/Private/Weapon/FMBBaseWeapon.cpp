@@ -1,5 +1,4 @@
 // For Maid Bilberry Game. All Rights Recerved
-// For Maid Bilberry Game. All Rights Recerved
 
 #include "Weapon/FMBBaseWeapon.h"
 #include "DrawDebugHelpers.h"
@@ -10,7 +9,6 @@
 #include "NiagaraFunctionLibrary.h"
 #include "NiagaraComponent.h"
 #include "FMBCoreTypes.h"
-#include "Kismet/GameplayStatics.h"
 #include "Sound/SoundCue.h"
 
 DECLARE_LOG_CATEGORY_CLASS(BaseWeaponLog, All, All);
@@ -27,6 +25,9 @@ AFMBBaseWeapon::AFMBBaseWeapon()
     WeaponMesh->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 
     WeaponFXComponent = CreateDefaultSubobject<UFMBWeaponFXComponent>("WeaponFXComponent");
+
+    SwordTrailFXComponent = CreateDefaultSubobject<UNiagaraComponent>("SwordTrailFXComponent");
+    SwordTrailFXComponent->SetupAttachment(WeaponMesh, SwordTrailSocketName);
 }
 
 void AFMBBaseWeapon::BeginPlay()
@@ -37,6 +38,8 @@ void AFMBBaseWeapon::BeginPlay()
 
     ChooseDamageAmount.Add(EChooseAttack::FastAttack, FastAttackDamage);
     ChooseDamageAmount.Add(EChooseAttack::StrongAttack, StrongAttackDamage);
+
+    SwordTrailFXComponent->Deactivate();
 }
 
 void AFMBBaseWeapon::MeleeAttack(EChooseAttack ChooseAttack)
@@ -140,7 +143,7 @@ void AFMBBaseWeapon::MakeDamage(FHitResult& HitResult)
 
 void AFMBBaseWeapon::StartDrawTrace()
 {
-    SwordTrailFXComponent = SpawnSwordTrailFX();
+    SwordTrailFXComponent->Activate();
     SpawnSwordSlashSound();
 
     // if u wanna use SwordTrails anim notify state -> u need uncomment this down line
@@ -153,21 +156,7 @@ void AFMBBaseWeapon::StopDrawTrace()
 {
     HitActors.Empty();
     GetWorld()->GetTimerManager().ClearTimer(DrawTraceTimerHandle);
-    if (SwordTrailFXComponent)
-    {
-        SwordTrailFXComponent->DestroyComponent();
-    }
-}
-
-UNiagaraComponent* AFMBBaseWeapon::SpawnSwordTrailFX() const
-{
-    return UNiagaraFunctionLibrary::SpawnSystemAttached(SwordTrailFX, //
-        WeaponMesh,                                                   //
-        SwordTrailSocketName,                                         //
-        FVector::ZeroVector,                                          //
-        FRotator::ZeroRotator,                                        //
-        EAttachLocation::SnapToTarget,                                //
-        false);
+    SwordTrailFXComponent->Deactivate();
 }
 
 void AFMBBaseWeapon::SpawnSwordSlashSound() const
@@ -178,5 +167,5 @@ void AFMBBaseWeapon::SpawnSwordSlashSound() const
         FVector::ZeroVector,                              //
         FRotator::ZeroRotator,                            //
         EAttachLocation::SnapToTarget,                    //
-        false);
+        true);
 }

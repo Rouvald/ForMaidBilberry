@@ -8,6 +8,7 @@
 
 class USphereComponent;
 class USoundCue;
+class UNiagaraComponent;
 
 UCLASS()
 class FORMAIDBILBERRY_API AFMBBasePickUp : public AActor
@@ -20,10 +21,17 @@ public:
     virtual void Tick(float DeltaTick) override;
 
 protected:
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+    UNiagaraComponent* HealthPickupNiagaraComponent;
+
     UPROPERTY(VisibleAnywhere, Category = "PickUp")
     USphereComponent* CollisionComponent;
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "PickUp")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PickUp")
+    bool WantsToRespawn = false;
+    ;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PickUp")
     float RespawnTime = 3.0f;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sound")

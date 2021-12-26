@@ -133,14 +133,18 @@ struct FGameData
     int32 RoundsNum = 4;*/
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game")
-    bool InfinityGame = false;
+    bool IsInfinityGame = true;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game",
+        meta = (EditCondition = "!IsInfinityGame", ClampMin = "1", ClampMax = "400"))
+    int32 GameplayTime = 10; // in second
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game")
-    int32 GameOverDelayTime = 5;
+    int32 GameOverDelayTime = 5; // in second
 
-    UPROPERTY(
-        EditDefaultsOnly, BlueprintReadWrite, Category = "Game", meta = (EditCondition = "!InfinityGame", ClampMin = "1", ClampMax = "400"))
-    int32 GameplayTime = 10; // in second
+    // For true, need check bWantsPlayerState = true in FMBAIController
+    UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Game")
+    bool CanBotsRespawn = false;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game", meta = (ClampMin = "3", ClampMax = "30"))
     int32 RespawnTime = 10; // in second

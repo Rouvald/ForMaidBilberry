@@ -10,6 +10,7 @@ class USpringArmComponent;
 class UCameraComponent;
 class UFMBStaminaComponent;
 class USphereComponent;
+
 /**
  *
  */
@@ -73,5 +74,5 @@ private:
     void OnCameraCollisionEndOverlap(
         UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);*/
 
-    void CheckCameraOverlap();
+    // void CheckCameraOverlap();
 };

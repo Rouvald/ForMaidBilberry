@@ -8,10 +8,6 @@
 #include "UI/FMBBaseWidget.h"
 #include "FMBPlayerHUDWidget.generated.h"
 
-class UFMBWeaponComponent;
-/*class UHorizontalBox;
-class UFMBGameInstance;
-class UFMBWeaponDataWidget;*/
 /**
  *
  */
@@ -43,25 +39,12 @@ public:
     void OnTakeDamage();
 
 protected:
-    /*UPROPERTY(meta = (BindWidget))
-    UHorizontalBox* WeaponUIItemsBox;
-
-    UPROPERTY(EditDefaultsOnly, Category="UI")
-    TSubclassOf<UUserWidget> WeaponUIDataWidgetClass;*/
-
     UPROPERTY(meta = (BindWidgetAnim), Transient)
     UWidgetAnimation* BloodyScreenAnim;
 
     virtual void NativeOnInitialized() override;
 
 private:
-    /*UPROPERTY()
-    TArray<UFMBWeaponDataWidget*> WeaponUIDataWidgets;*/
-
     void OnHealthChange(float Health, float HealthDelta);
     void OnNewPawn(APawn* NewPawn);
-
-    /*void InitWeaponItem();
-    void OnWeaponSelected(const FWeaponUIData& Data);*/
-    UFMBWeaponComponent* GetWeaponComponent() const;
 };

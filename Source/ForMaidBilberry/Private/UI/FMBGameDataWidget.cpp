@@ -29,7 +29,7 @@ int32 UFMBGameDataWidget::GetGameplayTimeRemaining() const
 bool UFMBGameDataWidget::GetIsInfinityGame() const
 {
     const auto GameMode = GetGameModeBase();
-    return GameMode ? GameMode->GetGameData().InfinityGame : false;
+    return GameMode ? GameMode->GetGameData().IsInfinityGame : false;
 }
 
 AFMBGameModeBase* UFMBGameDataWidget::GetGameModeBase() const

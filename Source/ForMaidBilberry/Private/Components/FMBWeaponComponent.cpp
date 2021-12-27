@@ -146,7 +146,7 @@ bool UFMBWeaponComponent::CanDoAttack() const
     if (!CurrentWeapon) return false;
 
     const auto MovementComponent = FMBUtils::GetFMBPlayerComponent<UFMBCharacterMovementComponent>(GetOwner());
-    if (!MovementComponent || MovementComponent->IsFalling()) return false;
+    if (!MovementComponent || MovementComponent->IsFalling() || !MovementComponent->CanRolling()) return false;
 
     if (Cast<AFMBPlayerCharacter>(GetOwner()))
     {

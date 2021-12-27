@@ -14,7 +14,7 @@
 
 DEFINE_LOG_CATEGORY_STATIC(LogAFMBGameModeBase, All, All)
 
-constexpr static int32 MinRoundTimeForRespawn = 10;
+// constexpr static int32 MinRoundTimeForRespawn = 10;
 
 AFMBGameModeBase::AFMBGameModeBase()
 {
@@ -32,7 +32,7 @@ void AFMBGameModeBase::StartPlay()
     // CreateTeamsInfo();
     SetDefaultPlayerName();
     // CurrentRound = 1;
-    StartRound();
+    StartGameTimer();
 
     SetMatchState(EFMBMatchState::InProgress);
 }
@@ -60,34 +60,29 @@ void AFMBGameModeBase::SpawnBots()
     }
 }
 
-void AFMBGameModeBase::StartRound()
+void AFMBGameModeBase::StartGameTimer()
 {
-    if (GameData.IsInfinityGame) return;
-
-    GameplayTimeCountDown = GameData.GameplayTime;
+    // if (GameData.IsInfinityGame) return;
     GetWorld()->GetTimerManager().SetTimer(RoundTimerHandle, this, &AFMBGameModeBase::GameTimerUpdate, 1.0f, true);
 }
 
 void AFMBGameModeBase::GameTimerUpdate()
 {
-    UE_LOG(LogAFMBGameModeBase, Display, TEXT("Time: %i-%i"), GameplayTimeCountDown, GameData.GameplayTime);
-    if (--GameplayTimeCountDown == 0)
-    {
-        GetWorld()->GetTimerManager().ClearTimer(RoundTimerHandle);
+    ++GameplayTimer;
+    /*GetWorld()->GetTimerManager().ClearTimer(RoundTimerHandle);
 
-        GameOver();
-        /*if (CurrentRound + 1 <= GameData.RoundsNum)
-        {
-            ++CurrentRound;
-            ResetPlayers();
-            StartRound();
-        }
-        else
-        {
-            UE_LOG(LogAFMBGameModeBase, Display, TEXT("========GAME OVER========"));
-            LogPlayerInfo();
-        }*/
+    GameOver();*/
+    /*if (CurrentRound + 1 <= GameData.RoundsNum)
+    {
+        ++CurrentRound;
+        ResetPlayers();
+        StartGameTimer();
     }
+    else
+    {
+        UE_LOG(LogAFMBGameModeBase, Display, TEXT("========GAME OVER========"));
+        LogPlayerInfo();
+    }*/
 }
 
 void AFMBGameModeBase::ResetPlayers()
@@ -106,7 +101,6 @@ void AFMBGameModeBase::ResetOnePlayer(AController* Controller)
     {
         Controller->GetPawn()->Reset();
     }
-    UE_LOG(LogAFMBGameModeBase, Display, TEXT("4. Spawn bots"));
     RestartPlayer(Controller);
     // SetTeamSkeletalMesh(Controller);
 }
@@ -180,13 +174,12 @@ void AFMBGameModeBase::LogPlayerInfo()
 
 void AFMBGameModeBase::StartRespawn(AController* Controller)
 {
-    const auto IsRespawnAvailable = GameData.IsInfinityGame || GameplayTimeCountDown > MinRoundTimeForRespawn + GameData.RespawnTime;
-    if (!IsRespawnAvailable) return;
+    /*const auto IsRespawnAvailable = GameData.IsInfinityGame || GameplayTimer > MinRoundTimeForRespawn + GameData.RespawnTime;
+    if (!IsRespawnAvailable) return;*/
 
     const auto RespawnComponent = FMBUtils::GetFMBPlayerComponent<UFMBRespawnComponent>(Controller);
     if (!RespawnComponent) return;
 
-    UE_LOG(LogAFMBGameModeBase, Display, TEXT("2. Spawn bots"));
     RespawnComponent->Respawn(GameData.RespawnTime);
 }
 
@@ -250,6 +243,11 @@ void AFMBGameModeBase::SetDefaultPlayerName() const
     if (!PlayerState) return;
 
     PlayerState->SetPlayerName(FMBDefaultPlayerName.ToString());
+}
+
+void AFMBGameModeBase::CheckDayTime(bool IsNowNight)
+{
+    DayTime = IsNowNight;
 }
 
 /*void AFMBGameModeBase::CreateTeamsInfo()

@@ -23,14 +23,14 @@ int32 UFMBGameDataWidget::GetEnemiesNum(int32& AllEnemiesNum) const
 int32 UFMBGameDataWidget::GetGameplayTimeRemaining() const
 {
     const auto GameMode = GetGameModeBase();
-    return GameMode ? GameMode->GetRoundCountDown() : 0;
+    return GameMode ? GameMode->GetGameTimer() : 0;
 }
 
-bool UFMBGameDataWidget::GetIsInfinityGame() const
+/*bool UFMBGameDataWidget::GetIsInfinityGame() const
 {
     const auto GameMode = GetGameModeBase();
     return GameMode ? GameMode->GetGameData().IsInfinityGame : false;
-}
+}*/
 
 AFMBGameModeBase* UFMBGameDataWidget::GetGameModeBase() const
 {

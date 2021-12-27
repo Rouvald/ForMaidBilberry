@@ -25,8 +25,8 @@ public:
     UFUNCTION(BlueprintCallable, Category = "UI")
     int32 GetGameplayTimeRemaining() const;
 
-    UFUNCTION(BlueprintCallable, Category = "UI")
-    bool GetIsInfinityGame() const;
+    /*UFUNCTION(BlueprintCallable, Category = "UI")
+    bool GetIsInfinityGame() const;*/
 
 private:
     AFMBGameModeBase* GetGameModeBase() const;

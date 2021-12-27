@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "FMBCoreTypes.h"
 #include "FMBDayNightCycle.generated.h"
 
 class AFMBGameModeBase;
@@ -31,7 +32,7 @@ protected:
 private:
     FTimerHandle DayNightCycleTimerHandle;
 
-    void SetSkyDefaultRotation() const;
+    void SetSkyDefaultRotation();
 
-    AFMBGameModeBase* GetGameMode() const;
+    AFMBGameModeBase* GetGameMode();
 };

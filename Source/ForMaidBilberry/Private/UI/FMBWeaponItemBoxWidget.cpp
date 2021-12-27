@@ -7,9 +7,12 @@
 #include "Components/HorizontalBox.h"
 #include "UI/FMBWeaponDataWidget.h"
 
+/*DEFINE_LOG_CATEGORY_STATIC(LogFMBWeaponItemBoxWidget, All, All)
+
 void UFMBWeaponItemBoxWidget::NativeOnInitialized()
 {
     Super::NativeOnInitialized();
+
     InitWeaponItem();
 }
 
@@ -25,14 +28,15 @@ void UFMBWeaponItemBoxWidget::InitWeaponItem()
     {
         const auto Weapon = Cast<AFMBBaseWeapon>(WeaponClass->GetDefaultObject());
         const auto WeaponUIDataWidget = CreateWidget<UFMBWeaponDataWidget>(GetWorld(), WeaponUIDataWidgetClass);
-        if (!WeaponUIDataWidget && !Weapon) continue;
+        if (!WeaponUIDataWidget || !Weapon) continue;
 
-        WeaponUIDataWidget->SetWeaponUIData(Weapon->GetWeaponUIData());
-        WeaponUIDataWidget->OnWeaponSelected.AddUObject(this, &UFMBWeaponItemBoxWidget::OnWeaponSelected);
+        //WeaponUIDataWidget->SetWeaponUIData(Weapon->GetWeaponUIData());
+        //WeaponUIDataWidget->OnWeaponSelected.AddUObject(this, &UFMBWeaponItemBoxWidget::OnWeaponSelected);
 
         WeaponUIItemsBox->AddChild(WeaponUIDataWidget);
-        WeaponUIDataWidgets.Add(WeaponUIDataWidget);
+        //WeaponUIDataWidgets.Add(WeaponUIDataWidget);
     }
+    //UE_LOG(LogFMBWeaponItemBoxWidget, Error, TEXT("%i"), WeaponUIItemsBox->HasAnyChildren()) ;
 }
 
 void UFMBWeaponItemBoxWidget::OnWeaponSelected(const FWeaponUIData& Data)
@@ -51,4 +55,4 @@ UFMBWeaponComponent* UFMBWeaponItemBoxWidget::GetWeaponComponent() const
 {
     const auto WeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBWeaponComponent>(GetOwningPlayerPawn());
     return WeaponComponent;
-}
+}*/

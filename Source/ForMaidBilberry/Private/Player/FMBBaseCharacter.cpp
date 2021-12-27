@@ -26,7 +26,7 @@ AFMBBaseCharacter::AFMBBaseCharacter(const FObjectInitializer& ObjInit)
     GetCharacterMovement()->bUseControllerDesiredRotation = true;
     GetCharacterMovement()->bIgnoreBaseRotation = true;
     //
-    GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -86.0f), FRotator(0.0f, -90.0f, 0.0f));
+    GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -90.0f), FRotator(0.0f, -90.0f, 0.0f));
 
     HealthComponent = CreateDefaultSubobject<UFMBHealthComponent>("HealthComponent");
     WeaponComponent = CreateDefaultSubobject<UFMBWeaponComponent>("WeaponComponent");

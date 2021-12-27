@@ -17,9 +17,9 @@ bool UFMBSpectatingWidget::GetRespawnTime(int32& RespawnCountDownTime) const
 bool UFMBSpectatingWidget::GetGameplayTimeRemaining(int32& GameplayTimeRemaining) const
 {
     const auto GameMode = GetGameModeBase();
-    if (!GameMode || GameMode->GetGameData().IsInfinityGame) return false;
+    if (!GameMode) return false;
 
-    GameplayTimeRemaining = GameMode->GetRoundCountDown();
+    GameplayTimeRemaining = GameMode->GetGameTimer();
     return true;
 }
 

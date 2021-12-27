@@ -46,6 +46,8 @@ protected:
     virtual void OnDeath() override;
 
 private:
+    FTimerHandle ReportNoiseTimerHandle;
+
     bool WantToRun = false;
     // bool IsMovingForward = false;
 
@@ -75,4 +77,6 @@ private:
         UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);*/
 
     // void CheckCameraOverlap();
+
+    void MakeReportNoise();
 };

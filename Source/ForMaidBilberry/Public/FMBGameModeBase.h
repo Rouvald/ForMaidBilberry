@@ -32,12 +32,16 @@ public:
     void BotKiller(AController* VictimController);
 
     FGameData GetGameData() const { return GameData; }
-    int32 GetRoundCountDown() const { return GameplayTimeCountDown; }
+    int32 GetGameTimer() const { return GameplayTimer; }
 
     void RespawnRequest(AController* Controller);
 
     float GetDefaultTurnRatePitchSky() const { return DefaultTurnRatePitchSky; }
     float GetTurnRatePitch() const { return TurnRatePitch; }
+
+    void CheckDayTime(bool IsNowNight);
+
+    bool GetDayTime() const { return DayTime; }
 
 protected:
     UPROPERTY(EditDefaultsOnly, Category = "Game")
@@ -58,20 +62,22 @@ protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sky")
     float DefaultTurnRatePitchSky = -90.0f;
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sky")
-    float TurnRatePitch = 0.5f;
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sky", meta = (ToolTip = "Value = 0.23 is minimum for DayNightCycle"))
+    float TurnRatePitch = 0.3f;
 
 private:
     // int32 CurrentRound = 1;
-    int32 GameplayTimeCountDown = 0;
+    int32 GameplayTimer = 0;
     FTimerHandle RoundTimerHandle;
     FTimerHandle GameOverTimerHandle;
 
     EFMBMatchState MatchState = EFMBMatchState::WaitingToStart;
 
+    bool DayTime = false;
+
     void SpawnBots();
 
-    void StartRound();
+    void StartGameTimer();
     void GameTimerUpdate();
     void GameOverCondition();
 

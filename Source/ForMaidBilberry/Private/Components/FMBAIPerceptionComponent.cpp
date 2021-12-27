@@ -5,12 +5,17 @@
 #include "Perception/AISense_Sight.h"
 #include "FMBUtils.h"
 #include "Components/FMBHealthComponent.h"
+#include "Perception/AISense_Hearing.h"
 
 AActor* UFMBAIPerceptionComponent::GetEnemyPlayer() const
 {
     TArray<AActor*> PerceiveActors;
     GetCurrentlyPerceivedActors(UAISense_Sight::StaticClass(), PerceiveActors);
-    if (PerceiveActors.Num() == 0) return nullptr;
+    if (PerceiveActors.Num() == 0)
+    {
+        GetCurrentlyPerceivedActors(UAISense_Hearing::StaticClass(), PerceiveActors);
+        if (PerceiveActors.Num() == 0) return nullptr;
+    }
 
     const auto Controller = Cast<AAIController>(GetOwner());
     if (!Controller) return nullptr;

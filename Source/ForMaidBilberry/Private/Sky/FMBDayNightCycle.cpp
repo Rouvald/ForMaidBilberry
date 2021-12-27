@@ -29,6 +29,7 @@ void AFMBDayNightCycle::Tick(float DeltaTime)
         if (LightSource)
         {
             LightSource->AddActorLocalRotation(FRotator(DeltaTime * FMBGameMode->GetTurnRatePitch(), 0.0f, 0.0f));
+            FMBGameMode->CheckDayTime(LightSource->GetActorRotation().Pitch > 0.0f);
         }
         if (SkySphere)
         {
@@ -38,7 +39,7 @@ void AFMBDayNightCycle::Tick(float DeltaTime)
     }
 }
 
-void AFMBDayNightCycle::SetSkyDefaultRotation() const
+void AFMBDayNightCycle::SetSkyDefaultRotation()
 {
     const auto FMBGameMode = GetGameMode();
     if (!FMBGameMode) return;
@@ -46,10 +47,11 @@ void AFMBDayNightCycle::SetSkyDefaultRotation() const
     if (LightSource)
     {
         LightSource->SetActorRotation(FRotator(FMBGameMode->GetDefaultTurnRatePitchSky(), 0.0f, 0.0f));
+        FMBGameMode->CheckDayTime(LightSource->GetActorRotation().Pitch > 0.0f);
     }
 }
 
-AFMBGameModeBase* AFMBDayNightCycle::GetGameMode() const
+AFMBGameModeBase* AFMBDayNightCycle::GetGameMode()
 {
     if (!GetWorld()) return nullptr;
     return Cast<AFMBGameModeBase>(GetWorld()->GetAuthGameMode());

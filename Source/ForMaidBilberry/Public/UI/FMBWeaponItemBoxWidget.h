@@ -18,21 +18,21 @@ class FORMAIDBILBERRY_API UFMBWeaponItemBoxWidget : public UUserWidget
 {
     GENERATED_BODY()
 
-protected:
-    UPROPERTY(meta = (BindWidget))
-    UHorizontalBox* WeaponUIItemsBox;
+    /*protected:
+        UPROPERTY(meta = (BindWidget))
+        UHorizontalBox* WeaponUIItemsBox;
 
-    UPROPERTY(EditDefaultsOnly, Category = "UI")
-    TSubclassOf<UUserWidget> WeaponUIDataWidgetClass;
+        UPROPERTY(EditDefaultsOnly, Category = "UI")
+        TSubclassOf<UUserWidget> WeaponUIDataWidgetClass;
 
-    virtual void NativeOnInitialized() override;
+        virtual void NativeOnInitialized() override;
 
-private:
-    UPROPERTY()
-    TArray<UFMBWeaponDataWidget*> WeaponUIDataWidgets;
+    private:
+        UPROPERTY()
+        TArray<UFMBWeaponDataWidget*> WeaponUIDataWidgets;
 
-    void InitWeaponItem();
-    void OnWeaponSelected(const FWeaponUIData& Data);
+        void InitWeaponItem();
+        void OnWeaponSelected(const FWeaponUIData& Data);
 
-    UFMBWeaponComponent* GetWeaponComponent() const;
+        UFMBWeaponComponent* GetWeaponComponent() const;*/
 };

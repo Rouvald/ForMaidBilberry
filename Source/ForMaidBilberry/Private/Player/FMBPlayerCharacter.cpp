@@ -8,6 +8,7 @@
 #include "Components/FMBStaminaComponent.h"
 #include "Components/SphereComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Perception/AISense_Hearing.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogFMBPlayerCharacter, All, All)
 
@@ -53,6 +54,7 @@ void AFMBPlayerCharacter::BeginPlay()
 
     check(StaminaComponent);
     check(CameraCollisionComponent);
+    GetWorldTimerManager().SetTimer(ReportNoiseTimerHandle, this, &AFMBPlayerCharacter::MakeReportNoise, 0.1f, true);
 
     // CameraCollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AFMBPlayerCharacter::OnCameraCollisionBeginOverlap);
     // CameraCollisionComponent->OnComponentEndOverlap.AddDynamic(this, &AFMBPlayerCharacter::OnCameraCollisionEndOverlap);
@@ -209,4 +211,9 @@ void AFMBPlayerCharacter::OnDeath()
 
     StaminaComponent->StopHealStaminaTimer();
     StaminaComponent->StopStaminaRunningTimer();
+}
+
+void AFMBPlayerCharacter::MakeReportNoise()
+{
+    UAISense_Hearing::ReportNoiseEvent(GetWorld(), GetActorLocation(), 1.0f, this, 1000.0f);
 }

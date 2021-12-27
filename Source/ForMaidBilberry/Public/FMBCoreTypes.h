@@ -132,12 +132,12 @@ struct FGameData
     /*UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Game", meta =(ClampMin ="1", ClampMax ="10"))
     int32 RoundsNum = 4;*/
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game")
-    bool IsInfinityGame = true;
+    /*UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game")
+    bool IsInfinityGame = true;*/
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game",
+    /*UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game",
         meta = (EditCondition = "!IsInfinityGame", ClampMin = "1", ClampMax = "400"))
-    int32 GameplayTime = 10; // in second
+    int32 GameplayTime = 10;*/ // in second
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game")
     int32 GameOverDelayTime = 5; // in second

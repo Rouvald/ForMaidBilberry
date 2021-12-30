@@ -26,8 +26,14 @@ protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Component")
     UWidgetComponent* HealthBarWidgetComponent;
 
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+    UWidgetComponent* EnemySignWidgetComponent;
+
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
     float HealthVisibleDistance = 1000.0f;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
+    float EnemySignVisibleDistance = 4000.0f;
 
     virtual void BeginPlay() override;
     virtual void OnDeath() override;
@@ -35,7 +41,7 @@ protected:
     virtual void OnHealthChange(float Health, float HealthDelta) override;
 
 private:
-    FTimerHandle HealthBarVisibleTimerHandle;
+    FTimerHandle WidgetsVisibilityTimerHandle;
 
-    void UpdateHealthBarWidgetVisible() const;
+    void UpdateWidgetsVisibility() const;
 };

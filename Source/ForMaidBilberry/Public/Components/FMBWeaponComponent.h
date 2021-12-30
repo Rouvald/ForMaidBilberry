@@ -109,7 +109,7 @@ private:
     void StartMovement() const;
     void StopMovement() const;
 
-    bool CanDoAttack() const;
+    bool CanDoAttack(EStaminaSpend AttackStaminaSpend) const;
 
     AFMBBaseCharacter* GetCharacter() const;
 };

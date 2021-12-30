@@ -23,14 +23,21 @@ public:
 
     virtual void SetupInputComponent() override;
 
+    UFUNCTION(BlueprintCallable)
+    bool GetIsKeyboardInfoVisible() const { return IsKeyboardInfoVisible; }
+
 protected:
     UPROPERTY(EditDefaultsOnly, Category = "Component")
     UFMBRespawnComponent* RespawnComponent;
 
 private:
+    bool IsKeyboardInfoVisible = true;
+
     void OnGamePause();
 
     void OnMatchStateChange(EFMBMatchState State);
 
     void OnVolumeMute();
+
+    void OnKeyboardInfoVisible();
 };

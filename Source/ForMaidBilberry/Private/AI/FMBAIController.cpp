@@ -35,8 +35,15 @@ void AFMBAIController::Tick(float DeltaSeconds)
 {
     Super::Tick(DeltaSeconds);
 
+    SetFocusOnEnemy();
+}
+
+void AFMBAIController::SetFocusOnEnemy()
+{
     const auto EnemyActor = GetFocusOnActor();
-    SetFocus(EnemyActor);
+
+    const auto Distance = GetPawn()->GetDistanceTo(EnemyActor);
+    Distance <= FocusDistance ? SetFocus(EnemyActor, EAIFocusPriority::Gameplay) : ClearFocus(EAIFocusPriority::Gameplay);
 }
 
 AActor* AFMBAIController::GetFocusOnActor() const

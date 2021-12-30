@@ -4,6 +4,7 @@
 #include "Components/FMBRespawnComponent.h"
 #include "FMBGameModeBase.h"
 #include "FMBGameInstance.h"
+#include "UI/FMBKeyboardInfoWidget.h"
 
 AFMBPlayerController::AFMBPlayerController()
 {
@@ -45,6 +46,7 @@ void AFMBPlayerController::SetupInputComponent()
 
     InputComponent->BindAction("PauseGame", IE_Pressed, this, &AFMBPlayerController::OnGamePause);
     InputComponent->BindAction("Mute", IE_Pressed, this, &AFMBPlayerController::OnVolumeMute);
+    InputComponent->BindAction("Keyboard", IE_Pressed, this, &AFMBPlayerController::OnKeyboardInfoVisible);
 }
 
 void AFMBPlayerController::OnGamePause()
@@ -62,4 +64,9 @@ void AFMBPlayerController::OnVolumeMute()
     if (!FMBGameInstance) return;
 
     FMBGameInstance->ToggleVolume();
+}
+
+void AFMBPlayerController::OnKeyboardInfoVisible()
+{
+    IsKeyboardInfoVisible = IsKeyboardInfoVisible ? false : true;
 }

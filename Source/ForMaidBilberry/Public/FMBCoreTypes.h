@@ -13,7 +13,7 @@ struct FWeaponAnimationsData
     GENERATED_USTRUCT_BODY()
 
     UPROPERTY(EditDefaultsOnly, Category = "Weapon", meta = (ToolTip = "2 sockets: WeaponEquipSocket_R or WeaponEquipSocket_L"))
-    FName WeaponEquipSocketName; // WeaponEquipSocket_R or WeaponEquipSocket_L
+    FName WeaponEquipSocketName = "WeaponEquipSocket_R"; // WeaponEquipSocket_R or WeaponEquipSocket_L
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Animation")
     UAnimSequence* Jump_Start;

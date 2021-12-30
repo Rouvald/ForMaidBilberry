@@ -32,9 +32,14 @@ protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "AI")
     FName StartAILocationKeyName = "StartBotLocation";
 
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "AI")
+    float FocusDistance = 300.0f;
+
     virtual void OnPossess(APawn* InPawn) override;
     virtual void Tick(float DeltaSeconds) override;
 
 private:
+    void SetFocusOnEnemy();
+
     AActor* GetFocusOnActor() const;
 };

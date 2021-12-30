@@ -114,7 +114,7 @@ void UFMBWeaponComponent::NextWeapon()
 
 void UFMBWeaponComponent::FastMeleeAttack()
 {
-    if (!CanDoAttack()) return;
+    if (!CanDoAttack(EStaminaSpend::FastAttack)) return;
 
     CurrentWeapon->MeleeAttack(EChooseAttack::FastAttack);
 
@@ -128,7 +128,7 @@ void UFMBWeaponComponent::FastMeleeAttack()
 
 void UFMBWeaponComponent::StrongMeleeAttack()
 {
-    if (!CanDoAttack()) return;
+    if (!CanDoAttack(EStaminaSpend::StrongAttack)) return;
 
     CurrentWeapon->MeleeAttack(EChooseAttack::StrongAttack);
 
@@ -140,7 +140,7 @@ void UFMBWeaponComponent::StrongMeleeAttack()
     //==================================================
 }
 
-bool UFMBWeaponComponent::CanDoAttack() const
+bool UFMBWeaponComponent::CanDoAttack(EStaminaSpend AttackStaminaSpend) const
 {
     if (!CanAttack()) return false;
     if (!CurrentWeapon) return false;
@@ -151,7 +151,7 @@ bool UFMBWeaponComponent::CanDoAttack() const
     if (Cast<AFMBPlayerCharacter>(GetOwner()))
     {
         const auto StaminaComponent = FMBUtils::GetFMBPlayerComponent<UFMBStaminaComponent>(GetOwner());
-        if (!StaminaComponent || !(StaminaComponent->SpendStamina(EStaminaSpend::StrongAttack))) return false;
+        if (!StaminaComponent || !(StaminaComponent->SpendStamina(AttackStaminaSpend))) return false;
     }
     return true;
 }

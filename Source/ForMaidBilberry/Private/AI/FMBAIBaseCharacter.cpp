@@ -7,6 +7,7 @@
 #include "FMBHealthBarWidget.h"
 #include "FMBHealthComponent.h"
 #include "Components/WidgetComponent.h"
+#include "UI/FMBEnemySignWidget.h"
 
 AFMBAIBaseCharacter::AFMBAIBaseCharacter(const FObjectInitializer& ObjInit) : Super(ObjInit)
 {
@@ -18,6 +19,12 @@ AFMBAIBaseCharacter::AFMBAIBaseCharacter(const FObjectInitializer& ObjInit) : Su
     HealthBarWidgetComponent->SetRelativeLocation(FVector(20.0f, 8.0f, 110.0f));
     HealthBarWidgetComponent->SetWidgetSpace(EWidgetSpace::Screen);
     HealthBarWidgetComponent->SetDrawAtDesiredSize(true);
+
+    EnemySignWidgetComponent = CreateDefaultSubobject<UWidgetComponent>("EnemySignNiagaraComponent");
+    EnemySignWidgetComponent->SetupAttachment(GetRootComponent());
+    EnemySignWidgetComponent->SetRelativeLocation(FVector(20.0f, 8.0f, 130.0f));
+    EnemySignWidgetComponent->SetWidgetSpace(EWidgetSpace::Screen);
+    EnemySignWidgetComponent->SetDrawAtDesiredSize(true);
 }
 
 void AFMBAIBaseCharacter::BeginPlay()
@@ -29,7 +36,7 @@ void AFMBAIBaseCharacter::BeginPlay()
     if (GetWorld())
     {
         GetWorld()->GetTimerManager().SetTimer(
-            HealthBarVisibleTimerHandle, this, &AFMBAIBaseCharacter::UpdateHealthBarWidgetVisible, 0.5f, true);
+            WidgetsVisibilityTimerHandle, this, &AFMBAIBaseCharacter::UpdateWidgetsVisibility, 0.1f, true);
     }
 }
 
@@ -40,7 +47,11 @@ void AFMBAIBaseCharacter::OnHealthChange(float Health, float HealthDelta)
     const auto HealthBarWidget = Cast<UFMBHealthBarWidget>(HealthBarWidgetComponent->GetUserWidgetObject());
     if (!HealthBarWidget) return;
 
+    const auto EnemySignWidget = Cast<UFMBEnemySignWidget>(EnemySignWidgetComponent->GetUserWidgetObject());
+    if (!EnemySignWidget) return;
+
     HealthBarWidget->SetHealthPercent(HealthComponent->GetHealthPercent());
+    EnemySignWidget->SetEnemySignVisibility(FMath::IsNearlyZero(Health));
 }
 
 void AFMBAIBaseCharacter::OnDeath()
@@ -54,7 +65,7 @@ void AFMBAIBaseCharacter::OnDeath()
     }
 }
 
-void AFMBAIBaseCharacter::UpdateHealthBarWidgetVisible() const
+void AFMBAIBaseCharacter::UpdateWidgetsVisibility() const
 {
     if (!GetWorld() ||                                                 //
         !GetWorld()->GetFirstPlayerController() ||                     //
@@ -64,4 +75,5 @@ void AFMBAIBaseCharacter::UpdateHealthBarWidgetVisible() const
     const auto PlayerLocation = GetWorld()->GetFirstPlayerController()->GetPawnOrSpectator()->GetActorLocation();
     const auto Distance = FVector::Distance(PlayerLocation, GetActorLocation());
     HealthBarWidgetComponent->SetVisibility(Distance < HealthVisibleDistance, true);
+    EnemySignWidgetComponent->SetVisibility(FMath::IsWithinInclusive(Distance, HealthVisibleDistance, EnemySignVisibleDistance), true);
 }

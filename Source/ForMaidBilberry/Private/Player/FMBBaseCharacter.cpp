@@ -17,7 +17,7 @@ AFMBBaseCharacter::AFMBBaseCharacter(const FObjectInitializer& ObjInit)
 {
     PrimaryActorTick.bCanEverTick = true;
     //
-    GetCharacterMovement()->JumpZVelocity = 550.0f;
+    GetCharacterMovement()->JumpZVelocity = 500.0f;
     //
     GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
     //

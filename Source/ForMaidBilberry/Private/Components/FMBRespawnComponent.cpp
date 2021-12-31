@@ -19,7 +19,6 @@ void UFMBRespawnComponent::Respawn(int32 RespawnTime)
 
 void UFMBRespawnComponent::RespawnUpdateTimer()
 {
-    UE_LOG(LogFMBRespawnComponent, Display, TEXT("3. Respawn bot"));
     if (--RespawnCountDown == 0)
     {
         if (!GetWorld()) return;

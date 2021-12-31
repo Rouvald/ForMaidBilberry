@@ -32,6 +32,7 @@ void AFMBGameModeBase::StartPlay()
     // CreateTeamsInfo();
     SetDefaultPlayerName();
     // CurrentRound = 1;
+    StartGameOverConditionTimer();
     StartGameTimer();
 
     SetMatchState(EFMBMatchState::InProgress);
@@ -64,6 +65,11 @@ void AFMBGameModeBase::StartGameTimer()
 {
     // if (GameData.IsInfinityGame) return;
     GetWorld()->GetTimerManager().SetTimer(RoundTimerHandle, this, &AFMBGameModeBase::GameTimerUpdate, 1.0f, true);
+}
+
+void AFMBGameModeBase::StartGameOverConditionTimer()
+{
+    GetWorld()->GetTimerManager().SetTimer(GameOverConditionTimerHandle, this, &AFMBGameModeBase::GameOverCondition, 1.0f, true);
 }
 
 void AFMBGameModeBase::GameTimerUpdate()
@@ -144,15 +150,19 @@ void AFMBGameModeBase::GameOverCondition()
 {
     if (!GetWorld()) return;
 
-    const auto PlayerController = Cast<AFMBPlayerController>(GetWorld()->GetFirstPlayerController());
+    /*const auto PlayerController = Cast<AFMBPlayerController>(GetWorld()->GetFirstPlayerController());
     if (!PlayerController) return;
 
     const auto PlayerState = Cast<AFMBPlayerState>(PlayerController->PlayerState);
-    if (!PlayerState) return;
+    if (!PlayerState) return;*/
 
-    if (GameData.PlayerNum > 1 && GameData.PlayerNum - 1 - PlayerState->GetKillsNum() == 0)
+    if (GetWorld()->GetNumControllers() == 1 /*GameData.PlayerNum > 1 && GameData.PlayerNum - 1 - PlayerState->GetKillsNum() == 0*/)
     {
-        GetWorld()->GetTimerManager().SetTimer(GameOverTimerHandle, this, &AFMBGameModeBase::GameOver, GameData.GameOverDelayTime, false);
+        UE_LOG(LogAFMBGameModeBase, Display, TEXT("%i"), GetWorld()->GetNumControllers());
+        GameOver();
+        GetWorld()->GetTimerManager().ClearTimer(GameOverConditionTimerHandle);
+        // GetWorld()->GetTimerManager().SetTimer(GameOverTimerHandle, this, &AFMBGameModeBase::GameOver, GameData.GameOverDelayTime,
+        // false);
     }
 }
 

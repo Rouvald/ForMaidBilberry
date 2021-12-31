@@ -126,7 +126,8 @@ struct FGameData
 {
     GENERATED_USTRUCT_BODY()
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game", meta = (ClampMin = "1", ClampMax = "50"))
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game",
+        meta = (ClampMin = "1", ClampMax = "50", ToolTip = "For normal game need PlayerNum > 1"))
     int32 PlayerNum = 2;
 
     /*UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Game", meta =(ClampMin ="1", ClampMax ="10"))
@@ -139,8 +140,8 @@ struct FGameData
         meta = (EditCondition = "!IsInfinityGame", ClampMin = "1", ClampMax = "400"))
     int32 GameplayTime = 10;*/ // in second
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game")
-    int32 GameOverDelayTime = 5; // in second
+    /*UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game")
+    int32 GameOverDelayTime = 5;*/ // in second
 
     // For true, need check bWantsPlayerState = true in FMBAIController
     UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Game")

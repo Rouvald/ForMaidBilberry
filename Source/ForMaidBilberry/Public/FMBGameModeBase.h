@@ -69,6 +69,7 @@ private:
     // int32 CurrentRound = 1;
     int32 GameplayTimer = 0;
     FTimerHandle RoundTimerHandle;
+    FTimerHandle GameOverConditionTimerHandle;
     FTimerHandle GameOverTimerHandle;
 
     EFMBMatchState MatchState = EFMBMatchState::WaitingToStart;
@@ -78,6 +79,7 @@ private:
     void SpawnBots();
 
     void StartGameTimer();
+    void StartGameOverConditionTimer();
     void GameTimerUpdate();
     void GameOverCondition();
 

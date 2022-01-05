@@ -71,7 +71,8 @@ void AFMBBaseWeapon::DrawTrace()
     FHitResult HitResult;
     MakeHit(HitResult, TraceStart, TraceEnd);
 
-    // DrawDebugLine(GetWorld(), TraceStart, TraceEnd, FColor::Red, false, 0.05f, 0, 5.0f);
+    // DrawDebugLine(GetWorld(), TraceStart, TraceEnd, FColor::Red, false, 0.05f, 0, 1.0f);
+    // DrawDebugCylinder(GetWorld(), TraceStart, TraceEnd, TraceRadius, 16, FColor::Purple, false, 0.05f, 0, 1.0f);
 
     if (HitResult.bBlockingHit)
     {
@@ -90,11 +91,20 @@ void AFMBBaseWeapon::MakeHit(FHitResult& HitResult, const FVector& TraceStart, c
 {
     if (!GetWorld()) return;
 
+    const FCollisionShape ColCapsule = FCollisionShape::MakeSphere(TraceRadius);
     FCollisionQueryParams CollisionParams;
     CollisionParams.AddIgnoredActor(GetOwner());
     CollisionParams.bReturnPhysicalMaterial = true;
 
-    GetWorld()->LineTraceSingleByChannel(HitResult, TraceStart, TraceEnd, ECollisionChannel::ECC_Visibility, CollisionParams);
+    GetWorld()->SweepSingleByChannel(HitResult, //
+        TraceStart,                             //
+        TraceEnd,                               //
+        FQuat::Identity,                        //
+        ECollisionChannel::ECC_Visibility,      //
+        ColCapsule,                             //
+        CollisionParams                         //
+    );
+    // GetWorld()->LineTraceSingleByChannel(HitResult, TraceStart, TraceEnd, ECollisionChannel::ECC_Visibility, CollisionParams);
 }
 
 void AFMBBaseWeapon::SortEqualCharacter(FHitResult& HitResult)
@@ -129,7 +139,7 @@ void AFMBBaseWeapon::NewDamagedActor(FHitResult& HitResult)
     {
         MakeDamage(HitResult);
         // UE_LOG(BaseWeaponLog, Display, TEXT("Hit %s"), *(Cast<ACharacter>(HitResult.GetActor()))->GetName());
-        // DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 10.0f, 32, FColor::Green, false, 5.0f);
+        // DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 20.0f, 32, FColor::Green, false, 5.0f);
     }
 }
 
@@ -143,20 +153,26 @@ void AFMBBaseWeapon::MakeDamage(FHitResult& HitResult)
 
 void AFMBBaseWeapon::StartDrawTrace()
 {
-    SwordTrailFXComponent->Activate();
+    if (!SwordTrailFXComponent->IsActive())
+    {
+        SwordTrailFXComponent->Activate(true);
+    }
+    SwordTrailFXComponent->SetVisibility(true, true);
     SpawnSwordSlashSound();
 
     // if u wanna use SwordTrails anim notify state -> u need uncomment this down line
     // SwordTrailFXComponent->SetVisibility(false);
 
-    GetWorld()->GetTimerManager().SetTimer(DrawTraceTimerHandle, this, &AFMBBaseWeapon::DrawTrace, 0.005f, true);
+    GetWorldTimerManager().SetTimer(DrawTraceTimerHandle, this, &AFMBBaseWeapon::DrawTrace, 0.1f, true);
 }
 
 void AFMBBaseWeapon::StopDrawTrace()
 {
     HitActors.Empty();
-    GetWorld()->GetTimerManager().ClearTimer(DrawTraceTimerHandle);
-    SwordTrailFXComponent->Deactivate();
+
+    GetWorldTimerManager().ClearTimer(DrawTraceTimerHandle);
+    // SwordTrailFXComponent->Deactivate();
+    SwordTrailFXComponent->SetVisibility(false, true);
 }
 
 void AFMBBaseWeapon::SpawnSwordSlashSound() const

@@ -91,9 +91,11 @@ void AFMBPlayerCharacter::CheckCameraOverlap()
 
 void AFMBPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
+    checkf(PlayerInputComponent, TEXT("PlayerInputComponent = nullptr"));
+
     Super::SetupPlayerInputComponent(PlayerInputComponent);
-    check(PlayerInputComponent);
-    check(WeaponComponent);
+
+    checkf(WeaponComponent, TEXT("WeaponComponent = nullptr"));
 
     PlayerInputComponent->BindAxis("MoveForward", this, &AFMBPlayerCharacter::MoveForward);
     PlayerInputComponent->BindAxis("MoveRight", this, &AFMBPlayerCharacter::MoveRight);
@@ -141,7 +143,7 @@ void AFMBBaseCharacter::SwitchCamera()//
 void AFMBPlayerCharacter::MoveForward(float Amount)
 {
     // IsMovingForward = Amount > 0.0f;
-    if (Amount == 0.0f) return;
+    if (FMath::IsNearlyZero(Amount)) return;
 
     const FRotator Rotation = Controller->GetControlRotation();
     const FRotator RotationYaw(0.0f, Rotation.Yaw, 0.0f);
@@ -153,7 +155,7 @@ void AFMBPlayerCharacter::MoveForward(float Amount)
 
 void AFMBPlayerCharacter::MoveRight(float Amount)
 {
-    if (Amount == 0.0f) return;
+    if (FMath::IsNearlyZero(Amount)) return;
 
     const FRotator Rotation = Controller->GetControlRotation();
     const FRotator RotationYaw(0.0f, Rotation.Yaw, 0.0f);

@@ -31,13 +31,10 @@ void AFMBAIBaseCharacter::BeginPlay()
 {
     Super::BeginPlay();
 
-    check(HealthBarWidgetComponent);
+    checkf(HealthBarWidgetComponent, TEXT("HealthBarWidgetComponent = nullptr"));
+    checkf(EnemySignWidgetComponent, TEXT("EnemySignWidgetComponent = nullptr"));
 
-    if (GetWorld())
-    {
-        GetWorld()->GetTimerManager().SetTimer(
-            WidgetsVisibilityTimerHandle, this, &AFMBAIBaseCharacter::UpdateWidgetsVisibility, 0.1f, true);
-    }
+    GetWorldTimerManager().SetTimer(WidgetsVisibilityTimerHandle, this, &AFMBAIBaseCharacter::UpdateWidgetsVisibility, 0.1f, true);
 }
 
 void AFMBAIBaseCharacter::OnHealthChange(float Health, float HealthDelta)

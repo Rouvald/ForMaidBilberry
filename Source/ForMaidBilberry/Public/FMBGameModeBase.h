@@ -32,16 +32,18 @@ public:
     void BotKiller(AController* VictimController);
 
     FGameData GetGameData() const { return GameData; }
-    int32 GetGameTimer() const { return GameplayTimer; }
+    float GetGameTimer() const { return CurrentDayTime; }
 
     void RespawnRequest(AController* Controller);
 
     float GetDefaultTurnRatePitchSky() const { return DefaultTurnRatePitchSky; }
     float GetTurnRatePitch() const { return TurnRatePitch; }
 
-    void CheckDayTime(bool IsNowNight);
-
+    UFUNCTION(BlueprintCallable)
     bool GetDayTime() const { return DayTime; }
+    void SetDayTime(const bool IsDay);
+
+    void DayTimerUpdate(float Time);
 
 protected:
     UPROPERTY(EditDefaultsOnly, Category = "Game")
@@ -67,20 +69,20 @@ protected:
 
 private:
     // int32 CurrentRound = 1;
-    int32 GameplayTimer = 0;
-    FTimerHandle RoundTimerHandle;
+    float CurrentDayTime = 0;
+    float StartupDayTime = 0;
+    float MaxDayTime = 1440; // 12 minute in second
+    FTimerHandle DayTimerHandle;
     FTimerHandle GameOverConditionTimerHandle;
     FTimerHandle GameOverTimerHandle;
 
     EFMBMatchState MatchState = EFMBMatchState::WaitingToStart;
 
-    bool DayTime = false;
+    bool DayTime = true;
 
     void SpawnBots();
 
-    void StartGameTimer();
     void StartGameOverConditionTimer();
-    void GameTimerUpdate();
     void GameOverCondition();
 
     void ResetPlayers();
@@ -99,4 +101,6 @@ private:
     void SetMatchState(EFMBMatchState State);
 
     void SetDefaultPlayerName() const;
+
+    void SetStartUpDayTime();
 };

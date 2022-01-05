@@ -14,6 +14,6 @@ void UFMBSoundFuncLib::ToggleSoundClassVolume(USoundClass* SoundClass)
 {
     if (!SoundClass) return;
 
-    const auto NextVolume = SoundClass->Properties.Volume ? 0.0f : 1.0f;
+    const auto NextVolume = FMath::IsNearlyZero(SoundClass->Properties.Volume) ? 1.0f : 0.0f;
     SetSoundClassVolume(SoundClass, NextVolume);
 }

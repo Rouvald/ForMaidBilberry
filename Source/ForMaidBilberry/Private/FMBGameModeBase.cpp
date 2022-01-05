@@ -15,6 +15,7 @@
 DEFINE_LOG_CATEGORY_STATIC(LogAFMBGameModeBase, All, All)
 
 // constexpr static int32 MinRoundTimeForRespawn = 10;
+constexpr static int32 PitchToSecondModifier = 8;
 
 AFMBGameModeBase::AFMBGameModeBase()
 {
@@ -33,7 +34,7 @@ void AFMBGameModeBase::StartPlay()
     SetDefaultPlayerName();
     // CurrentRound = 1;
     StartGameOverConditionTimer();
-    StartGameTimer();
+    SetStartUpDayTime();
 
     SetMatchState(EFMBMatchState::InProgress);
 }
@@ -61,28 +62,36 @@ void AFMBGameModeBase::SpawnBots()
     }
 }
 
-void AFMBGameModeBase::StartGameTimer()
+void AFMBGameModeBase::SetStartUpDayTime()
 {
-    // if (GameData.IsInfinityGame) return;
-    GetWorld()->GetTimerManager().SetTimer(RoundTimerHandle, this, &AFMBGameModeBase::GameTimerUpdate, 1.0f, true);
+    if (DefaultTurnRatePitchSky > 0.0f)
+    {
+        StartupDayTime = fmod((DefaultTurnRatePitchSky * PitchToSecondModifier), MaxDayTime);
+    }
+    else
+    {
+        StartupDayTime = fmod((abs(DefaultTurnRatePitchSky) * PitchToSecondModifier), MaxDayTime);
+    }
+    CurrentDayTime = StartupDayTime;
 }
 
 void AFMBGameModeBase::StartGameOverConditionTimer()
 {
-    GetWorld()->GetTimerManager().SetTimer(GameOverConditionTimerHandle, this, &AFMBGameModeBase::GameOverCondition, 1.0f, true);
+    GetWorldTimerManager().SetTimer(GameOverConditionTimerHandle, this, &AFMBGameModeBase::GameOverCondition, 1.0f, true);
 }
 
-void AFMBGameModeBase::GameTimerUpdate()
+void AFMBGameModeBase::DayTimerUpdate(float Time)
 {
-    ++GameplayTimer;
-    /*GetWorld()->GetTimerManager().ClearTimer(RoundTimerHandle);
+    const float CurrentDayTimeTEMP = (CurrentDayTime + Time);
+    CurrentDayTime = fmod(CurrentDayTimeTEMP, MaxDayTime);
+    /*GetWorld()->GetTimerManager().ClearTimer(DayTimerHandle);
 
     GameOver();*/
     /*if (CurrentRound + 1 <= GameData.RoundsNum)
     {
         ++CurrentRound;
         ResetPlayers();
-        StartGameTimer();
+        StartDayimer();
     }
     else
     {
@@ -156,11 +165,11 @@ void AFMBGameModeBase::GameOverCondition()
     const auto PlayerState = Cast<AFMBPlayerState>(PlayerController->PlayerState);
     if (!PlayerState) return;*/
 
-    if (GetWorld()->GetNumControllers() == 1 /*GameData.PlayerNum > 1 && GameData.PlayerNum - 1 - PlayerState->GetKillsNum() == 0*/)
+    if (GetWorld()->GetNumControllers() == 1)
     {
         UE_LOG(LogAFMBGameModeBase, Display, TEXT("%i"), GetWorld()->GetNumControllers());
         GameOver();
-        GetWorld()->GetTimerManager().ClearTimer(GameOverConditionTimerHandle);
+        GetWorldTimerManager().ClearTimer(GameOverConditionTimerHandle);
         // GetWorld()->GetTimerManager().SetTimer(GameOverTimerHandle, this, &AFMBGameModeBase::GameOver, GameData.GameOverDelayTime,
         // false);
     }
@@ -184,7 +193,7 @@ void AFMBGameModeBase::LogPlayerInfo()
 
 void AFMBGameModeBase::StartRespawn(AController* Controller)
 {
-    /*const auto IsRespawnAvailable = GameData.IsInfinityGame || GameplayTimer > MinRoundTimeForRespawn + GameData.RespawnTime;
+    /*const auto IsRespawnAvailable = GameData.IsInfinityGame || CurrentDayTime > MinRoundTimeForRespawn + GameData.RespawnTime;
     if (!IsRespawnAvailable) return;*/
 
     const auto RespawnComponent = FMBUtils::GetFMBPlayerComponent<UFMBRespawnComponent>(Controller);
@@ -255,9 +264,11 @@ void AFMBGameModeBase::SetDefaultPlayerName() const
     PlayerState->SetPlayerName(FMBDefaultPlayerName.ToString());
 }
 
-void AFMBGameModeBase::CheckDayTime(bool IsNowNight)
+void AFMBGameModeBase::SetDayTime(const bool IsDay)
 {
-    DayTime = IsNowNight;
+    if (DayTime == IsDay) return;
+
+    DayTime = IsDay;
 }
 
 /*void AFMBGameModeBase::CreateTeamsInfo()

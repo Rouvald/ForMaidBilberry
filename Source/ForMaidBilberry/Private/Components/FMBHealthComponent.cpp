@@ -113,7 +113,7 @@ void UFMBHealthComponent::PlayHitAnimation() const
     if (const auto Character = Cast<AFMBBaseCharacter>(GetOwner()))
     {
         const auto WeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBWeaponComponent>(Character);
-        if (WeaponComponent || WeaponComponent->GetCurrentWeapon())
+        if (WeaponComponent && WeaponComponent->GetCurrentWeapon())
         {
             Character->PlayAnimMontage(WeaponComponent->GetCurrentWeaponAnimationsData().GetHit);
         }

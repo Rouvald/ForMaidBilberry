@@ -108,7 +108,9 @@ void UFMBWeaponComponent::EquipWeapon(int32 WeaponIndex)
 void UFMBWeaponComponent::NextWeapon()
 {
     if (!CanEquip() || !CanAttack()) return;
-    CurrentWeaponIndex = (++CurrentWeaponIndex) % Weapons.Num();
+    int32 CurrentWeaponIndexTemp = CurrentWeaponIndex;
+    ++CurrentWeaponIndexTemp;
+    CurrentWeaponIndex = (CurrentWeaponIndexTemp) % Weapons.Num();
     EquipWeapon(CurrentWeaponIndex);
 }
 
@@ -145,8 +147,8 @@ bool UFMBWeaponComponent::CanDoAttack(EStaminaSpend AttackStaminaSpend) const
     if (!CanAttack()) return false;
     if (!CurrentWeapon) return false;
 
-    const auto MovementComponent = FMBUtils::GetFMBPlayerComponent<UFMBCharacterMovementComponent>(GetOwner());
-    if (!MovementComponent || MovementComponent->IsFalling() || !MovementComponent->CanRolling()) return false;
+    /*const auto MovementComponent = FMBUtils::GetFMBPlayerComponent<UFMBCharacterMovementComponent>(GetOwner());
+    if (!MovementComponent   || !MovementComponent->CanRolling()) return false;*/
 
     if (Cast<AFMBPlayerCharacter>(GetOwner()))
     {
@@ -179,7 +181,7 @@ void UFMBWeaponComponent::InitAnimation(const FWeaponAnimationsData& WeaponAnima
 {
     const auto RollingEvent = FMBAnimUtils::FindNotifyByClass<UFMBAnimFinishedNotify>(WeaponAnimationData.Roll);
     const auto MovementComponent = FMBUtils::GetFMBPlayerComponent<UFMBCharacterMovementComponent>(GetOwner());
-    if (MovementComponent || RollingEvent)
+    if (MovementComponent && RollingEvent)
     {
         RollingEvent->OnNotify.AddUObject(MovementComponent, &UFMBCharacterMovementComponent::OnRollingFinished);
     }
@@ -308,15 +310,12 @@ void UFMBWeaponComponent::StopDrawTrace()
 
 bool UFMBWeaponComponent::CanAttack() const
 {
-    const auto Character = GetCharacter();
-    if (!Character) return false;
-
     if (AttackAnimInProgress) return false;
 
     if (EquipAnimInProgress) return false;
 
     const auto MovementComponent = FMBUtils::GetFMBPlayerComponent<UFMBCharacterMovementComponent>(GetOwner());
-    if (!MovementComponent && !(MovementComponent->CanRolling())) return false;
+    if (!MovementComponent || MovementComponent->IsFalling() || !(MovementComponent->CanRolling())) return false;
 
     return true;
 }

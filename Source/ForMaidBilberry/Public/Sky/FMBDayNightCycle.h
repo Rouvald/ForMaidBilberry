@@ -4,11 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "FMBCoreTypes.h"
 #include "FMBDayNightCycle.generated.h"
 
 class AFMBGameModeBase;
 class ADirectionalLight;
+class ASkyLight;
 
 UCLASS()
 class FORMAIDBILBERRY_API AFMBDayNightCycle : public AActor
@@ -32,7 +32,12 @@ protected:
 private:
     FTimerHandle DayNightCycleTimerHandle;
 
-    void SetSkyDefaultRotation();
+    UPROPERTY()
+    float CountTime = 0;
 
-    AFMBGameModeBase* GetGameMode();
+    void SetSkyDefaultRotation() const;
+
+    void UpdateDaytime(const float TurnRateLight);
+
+    AFMBGameModeBase* GetGameMode() const;
 };

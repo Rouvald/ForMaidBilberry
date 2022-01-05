@@ -23,7 +23,7 @@ public:
     int32 GetEnemiesNum(int32& AllEnemiesNum) const;
 
     UFUNCTION(BlueprintCallable, Category = "UI")
-    int32 GetGameplayTimeRemaining() const;
+    float GetDayTime() const;
 
     /*UFUNCTION(BlueprintCallable, Category = "UI")
     bool GetIsInfinityGame() const;*/

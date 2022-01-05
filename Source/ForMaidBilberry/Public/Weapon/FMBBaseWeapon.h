@@ -61,6 +61,9 @@ protected:
     FName SwordTrailSocketName = "SwordTrailSocket";
 
     UPROPERTY()
+    float TraceRadius = 20.0f;
+
+    UPROPERTY()
     float DamageAmount = 0;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")

@@ -31,7 +31,7 @@ protected:
     UFMBRespawnComponent* RespawnComponent;
 
 private:
-    bool IsKeyboardInfoVisible = true;
+    bool IsKeyboardInfoVisible = false;
 
     void OnGamePause();
 

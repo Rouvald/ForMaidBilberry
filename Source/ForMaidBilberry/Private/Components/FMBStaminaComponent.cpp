@@ -26,7 +26,7 @@ bool UFMBStaminaComponent::SpendStamina(EStaminaSpend StaminaSpend)
 {
     if (!StaminaSpends.Contains(StaminaSpend)) return false;
 
-    if (!(FMath::IsWithin(GetStamina() - StaminaSpends[StaminaSpend], 0.0f, MaxStamina))) return false;
+    if (!(FMath::IsWithin(Stamina - StaminaSpends[StaminaSpend], 0.0f, MaxStamina))) return false;
 
     StopHealStaminaTimer();
 
@@ -39,7 +39,6 @@ void UFMBStaminaComponent::SetStamina(float NewStamina)
 {
     Stamina = FMath::Clamp(NewStamina, 0.0f, MaxStamina);
     OnStaminaChange.Broadcast(Stamina);
-
     // UE_LOG(HealthLog, Display, TEXT("Stamina change: %0.0f"), GetStamina());
 }
 

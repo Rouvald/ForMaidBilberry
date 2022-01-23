@@ -183,7 +183,7 @@ void AFMBPlayerCharacter::OnStartRunning()
     if (GetVelocity().IsNearlyZero()) return;
 
     if (!StaminaComponent) return;
-    StaminaComponent->StartStaminaRunningTimer();
+    StaminaComponent->StartStaminaRunning();
 
     WantToRun = true;
 }
@@ -191,11 +191,11 @@ void AFMBPlayerCharacter::OnStartRunning()
 void AFMBPlayerCharacter::OnStopRunning()
 {
     if (!StaminaComponent) return;
-    StaminaComponent->StopStaminaRunningTimer();
+    StaminaComponent->StopStaminaRunning();
 
     WantToRun = false;
 
-    StaminaComponent->StartHealStaminaTimer();
+    StaminaComponent->StartHealStamina();
 }
 
 bool AFMBPlayerCharacter::IsRunning() const
@@ -211,8 +211,8 @@ void AFMBPlayerCharacter::OnDeath()
         Controller->ChangeState(NAME_Spectating);
     }
 
-    StaminaComponent->StopHealStaminaTimer();
-    StaminaComponent->StopStaminaRunningTimer();
+    StaminaComponent->StopHealStamina();
+    StaminaComponent->StopStaminaRunning();
 }
 
 void AFMBPlayerCharacter::MakeReportNoise()

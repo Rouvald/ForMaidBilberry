@@ -18,7 +18,7 @@ class FORMAIDBILBERRY_API UFMBWeaponFXComponent : public UActorComponent
 public:
     UFMBWeaponFXComponent();
 
-    void PlayImpactFX(FHitResult& HitResult);
+    void PlayImpactFX(const FHitResult& HitResult);
 
 protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")

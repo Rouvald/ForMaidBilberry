@@ -5,6 +5,8 @@
 #include "FMBUtils.h"
 #include "FMBCoreTypes.h"
 
+DEFINE_LOG_CATEGORY_STATIC(LogFMBStaminaComponent, All, All)
+
 UFMBStaminaComponent::UFMBStaminaComponent()
 {
     PrimaryComponentTick.bCanEverTick = false;
@@ -28,7 +30,7 @@ bool UFMBStaminaComponent::SpendStamina(EStaminaSpend StaminaSpend)
 
     if (!(FMath::IsWithin(Stamina - StaminaSpends[StaminaSpend], 0.0f, MaxStamina))) return false;
 
-    StopHealStaminaTimer();
+    StopHealStamina();
 
     SetStamina(GetStamina() - StaminaSpends[StaminaSpend]);
 
@@ -39,7 +41,7 @@ void UFMBStaminaComponent::SetStamina(float NewStamina)
 {
     Stamina = FMath::Clamp(NewStamina, 0.0f, MaxStamina);
     OnStaminaChange.Broadcast(Stamina);
-    // UE_LOG(HealthLog, Display, TEXT("Stamina change: %0.0f"), GetStamina());
+    // UE_LOG(LogFMBStaminaComponent, Display, TEXT("Stamina change: %0.0f"), Stamina);
 }
 
 void UFMBStaminaComponent::DecreaseRunningStamina()
@@ -50,7 +52,7 @@ void UFMBStaminaComponent::DecreaseRunningStamina()
 
     if (IsStaminaZero() && GetWorld())
     {
-        StopStaminaRunningTimer();
+        StopStaminaRunning();
     }
 }
 
@@ -62,11 +64,11 @@ void UFMBStaminaComponent::AutoHealStamina()
 
     if (IsStaminaFull() && GetWorld())
     {
-        StopHealStaminaTimer();
+        StopHealStamina();
     }
 }
 
-void UFMBStaminaComponent::StartHealStaminaTimer()
+void UFMBStaminaComponent::StartHealStamina()
 {
     if (!GetWorld()) return;
     if (GetWorld()->GetTimerManager().IsTimerActive(StaminaRunningTimerHandle)) return;
@@ -78,14 +80,14 @@ void UFMBStaminaComponent::StartHealStaminaTimer()
     }
 }
 
-void UFMBStaminaComponent::StopHealStaminaTimer()
+void UFMBStaminaComponent::StopHealStamina()
 {
     GetWorld()->GetTimerManager().ClearTimer(StaminaAutoHealTimerHandle);
 }
 
-void UFMBStaminaComponent::StartStaminaRunningTimer()
+void UFMBStaminaComponent::StartStaminaRunning()
 {
-    StopHealStaminaTimer();
+    StopHealStamina();
 
     if (IsStaminaZero()) return;
 
@@ -93,7 +95,7 @@ void UFMBStaminaComponent::StartStaminaRunningTimer()
         StaminaRunningTimerHandle, this, &UFMBStaminaComponent::DecreaseRunningStamina, StaminaUpdateTime, true);
 }
 
-void UFMBStaminaComponent::StopStaminaRunningTimer()
+void UFMBStaminaComponent::StopStaminaRunning()
 {
     GetWorld()->GetTimerManager().ClearTimer(StaminaRunningTimerHandle);
 }

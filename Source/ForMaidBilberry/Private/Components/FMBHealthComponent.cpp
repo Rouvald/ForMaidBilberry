@@ -63,7 +63,7 @@ void UFMBHealthComponent::OnTakeAnyDamage(
     {
         GetWorld()->GetTimerManager().SetTimer(HealTimeHandle, this, &UFMBHealthComponent::AutoHealing, HealUpdateTime, true, HealDelay);
     }
-    PlayCameraShake();
+    // PlayCameraShake();
 }
 
 void UFMBHealthComponent::AutoHealing()

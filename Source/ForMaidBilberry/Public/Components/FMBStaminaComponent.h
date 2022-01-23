@@ -24,11 +24,11 @@ public:
 
     bool SpendStamina(EStaminaSpend StaminaSpend);
 
-    void StartHealStaminaTimer();
-    void StopHealStaminaTimer();
+    void StartHealStamina();
+    void StopHealStamina();
 
-    void StartStaminaRunningTimer();
-    void StopStaminaRunningTimer();
+    void StartStaminaRunning();
+    void StopStaminaRunning();
 
     FStaminaSpendData GetStaminaSpendData() const { return StaminaSpendData; }
 
@@ -37,10 +37,10 @@ protected:
     float MaxStamina = 100.0f;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Stamina")
-    float StaminaHealModifier = 1.0f;
+    float StaminaModifier = 1.0f;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Stamina")
-    float StaminaModifier = 0.5f;
+    float StaminaHealModifier = 1.0f;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Stamina")
     float StaminaUpdateTime = 0.1f;

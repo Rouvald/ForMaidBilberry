@@ -1,0 +1,4767 @@
+{
+  "version": 2,
+  "warnings": [
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\AI\\Services\\FMBRestoreStaminaService.h",
+          "line": 15,
+          "endLine": 15,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\UI\\FMBPlayerHUDWidget.h",
+          "line": 17,
+          "endLine": 17,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\UI\\FMBWeaponItemBoxWidget.h",
+          "line": 19,
+          "endLine": 19,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V547",
+      "cwe": 571,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\Niagara\\Public\\NiagaraParameterStore.h",
+          "line": 800,
+          "endLine": 800,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 570545997,
+            "currentLine": -2139633915,
+            "nextLine": 14751516,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "Expression \u0027Binding.SrcOffset !\u003d - 1\u0027 is always true.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V547",
+      "cwe": 571,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\Niagara\\Public\\NiagaraParameterStore.h",
+          "line": 832,
+          "endLine": 832,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": -2139633915,
+            "nextLine": 14751516,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "Expression \u0027Binding.SrcOffset !\u003d - 1\u0027 is always true.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V547",
+      "cwe": 571,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\Niagara\\Public\\NiagaraParameterStore.h",
+          "line": 864,
+          "endLine": 864,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": -2139633915,
+            "nextLine": 14751516,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "Expression \u0027Binding.SrcOffset !\u003d - 1\u0027 is always true.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Private\\Weapon\\FMBBaseWeapon.cpp",
+          "line": 99,
+          "endLine": 99,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 0,
+            "currentLine": 1898452978,
+            "nextLine": 127716,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027GetWorld()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\Animation\\FMBSwordTrailAnimNotifyState.h",
+          "line": 16,
+          "endLine": 16,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V547",
+      "cwe": 571,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\Niagara\\Public\\NiagaraParameterStore.h",
+          "line": 801,
+          "endLine": 801,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": -2139633915,
+            "currentLine": 14751516,
+            "nextLine": 241968549,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "Expression \u0027Binding.DestOffset !\u003d - 1\u0027 is always true.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V547",
+      "cwe": 571,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\Niagara\\Public\\NiagaraParameterStore.h",
+          "line": 833,
+          "endLine": 833,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": -2139633915,
+            "currentLine": 14751516,
+            "nextLine": 241968549,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "Expression \u0027Binding.DestOffset !\u003d - 1\u0027 is always true.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V547",
+      "cwe": 571,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\Niagara\\Public\\NiagaraParameterStore.h",
+          "line": 865,
+          "endLine": 865,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": -2139633915,
+            "currentLine": 14751516,
+            "nextLine": 241968549,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "Expression \u0027Binding.DestOffset !\u003d - 1\u0027 is always true.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V769",
+      "cwe": 119,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\Niagara\\Classes\\NiagaraDataSet.h",
+          "line": 129,
+          "endLine": 129,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": -1184891386,
+            "currentLine": 1756987123,
+            "nextLine": 1863887859,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The \u0027Int32Data.GetData()\u0027 pointer in the expression could be nullptr. In such case, resulting value of arithmetic operations on this pointer will be senseless and it should not be used.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V769",
+      "cwe": 119,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\Niagara\\Classes\\NiagaraDataSet.h",
+          "line": 130,
+          "endLine": 130,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 1756987123,
+            "currentLine": 1863887859,
+            "nextLine": -17057288,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The \u0027HalfData.GetData()\u0027 pointer in the expression could be nullptr. In such case, resulting value of arithmetic operations on this pointer will be senseless and it should not be used.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V769",
+      "cwe": 119,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\Niagara\\Classes\\NiagaraDataSet.h",
+          "line": 131,
+          "endLine": 131,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 1863887859,
+            "currentLine": -17057288,
+            "nextLine": 1180430421,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The \u0027FloatData.GetData()\u0027 pointer in the expression could be nullptr. In such case, resulting value of arithmetic operations on this pointer will be senseless and it should not be used.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V769",
+      "cwe": 119,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\Niagara\\Classes\\NiagaraDataSet.h",
+          "line": 133,
+          "endLine": 133,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 1180430421,
+            "currentLine": 1107018261,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The \u0027HalfData.GetData()\u0027 pointer in the expression could be nullptr. In such case, resulting value of arithmetic operations on this pointer will be senseless and it should not be used.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\Niagara\\Public\\NiagaraTypes.h",
+          "line": 898,
+          "endLine": 898,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": -1700936401,
+            "nextLine": 125,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027GetStruct()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V769",
+      "cwe": 119,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\Niagara\\Classes\\NiagaraDataSet.h",
+          "line": 128,
+          "endLine": 128,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 0,
+            "currentLine": -1184891386,
+            "nextLine": 1756987123,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The \u0027FloatData.GetData()\u0027 pointer in the expression could be nullptr. In such case, resulting value of arithmetic operations on this pointer will be senseless and it should not be used.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V769",
+      "cwe": 119,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\Niagara\\Classes\\NiagaraDataSet.h",
+          "line": 132,
+          "endLine": 132,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": -17057288,
+            "currentLine": 1180430421,
+            "nextLine": 1107018261,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The \u0027Int32Data.GetData()\u0027 pointer in the expression could be nullptr. In such case, resulting value of arithmetic operations on this pointer will be senseless and it should not be used.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraCore\\Public\\NiagaraMergeable.h",
+          "line": 10,
+          "endLine": 10,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\AI\\FMBAIBaseCharacter.h",
+          "line": 17,
+          "endLine": 17,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\UI\\FMBHealthPickupWidget.h",
+          "line": 16,
+          "endLine": 16,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 5816,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\Components\\FMBRespawnComponent.h",
+          "line": 12,
+          "endLine": 12,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\Menu\\UI\\FMBSelectCharacterWidget.h",
+          "line": 19,
+          "endLine": 19,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\Player\\FMBBaseCharacter.h",
+          "line": 19,
+          "endLine": 19,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\Niagara\\Classes\\NiagaraDataInterface.h",
+          "line": 246,
+          "endLine": 246,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 503904461,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\Player\\FMBPlayerState.h",
+          "line": 15,
+          "endLine": 15,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 5816,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\AI\\FMBAIController.h",
+          "line": 17,
+          "endLine": 17,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\AI\\Services\\FMBAttackService.h",
+          "line": 16,
+          "endLine": 16,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 5816,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\UI\\FMBKeyboardInfoWidget.h",
+          "line": 18,
+          "endLine": 18,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 146,
+          "endLine": 146,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": -1813434310,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 114,
+          "endLine": 114,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": -1650659810,
+            "currentLine": -1857217378,
+            "nextLine": 494992236,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 101,
+          "endLine": 101,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": -1592096661,
+            "currentLine": 1585885840,
+            "nextLine": 1393097199,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 133,
+          "endLine": 133,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 387121601,
+            "currentLine": 713008566,
+            "nextLine": -1979931654,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\Sky\\FMBDayNightCycle.h",
+          "line": 16,
+          "endLine": 16,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\Menu\\UI\\FMBGoToMenuButtonWidget.h",
+          "line": 16,
+          "endLine": 16,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 119,
+          "endLine": 119,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": -217634541,
+            "currentLine": -824056930,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 125,
+          "endLine": 125,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 0,
+            "currentLine": 60284553,
+            "nextLine": 120577517,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 93,
+          "endLine": 93,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": -336615040,
+            "currentLine": 2049237184,
+            "nextLine": -189650945,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 95,
+          "endLine": 95,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": -189650945,
+            "currentLine": 1199033660,
+            "nextLine": 1346730479,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 102,
+          "endLine": 102,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 1585885840,
+            "currentLine": 1393097199,
+            "nextLine": 562065677,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 118,
+          "endLine": 118,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": -236932112,
+            "currentLine": -217634541,
+            "nextLine": -824056930,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 105,
+          "endLine": 105,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": -1862242036,
+            "currentLine": 1053193537,
+            "nextLine": 1242331541,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 99,
+          "endLine": 99,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 676684360,
+            "currentLine": -226031989,
+            "nextLine": -1592096661,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 97,
+          "endLine": 97,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 1346730479,
+            "currentLine": -1593109087,
+            "nextLine": 676684360,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 122,
+          "endLine": 122,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": -509878373,
+            "currentLine": -912831526,
+            "nextLine": -482890899,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 103,
+          "endLine": 103,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 1393097199,
+            "currentLine": 562065677,
+            "nextLine": -1862242036,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 107,
+          "endLine": 107,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 1242331541,
+            "currentLine": 1813276838,
+            "nextLine": 816324073,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 106,
+          "endLine": 106,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 1053193537,
+            "currentLine": 1242331541,
+            "nextLine": 1813276838,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 115,
+          "endLine": 115,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": -1857217378,
+            "currentLine": 494992236,
+            "nextLine": -882728720,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 137,
+          "endLine": 137,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 11496,
+            "currentLine": 255306086,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 117,
+          "endLine": 117,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": -882728720,
+            "currentLine": -236932112,
+            "nextLine": -217634541,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 109,
+          "endLine": 109,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 816324073,
+            "currentLine": -188892477,
+            "nextLine": -414043641,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 110,
+          "endLine": 110,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": -188892477,
+            "currentLine": -414043641,
+            "nextLine": -394109943,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 113,
+          "endLine": 113,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 1950389883,
+            "currentLine": -1650659810,
+            "nextLine": -1857217378,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 126,
+          "endLine": 126,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 60284553,
+            "currentLine": 120577517,
+            "nextLine": 788306706,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 111,
+          "endLine": 111,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": -414043641,
+            "currentLine": -394109943,
+            "nextLine": 1950389883,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 94,
+          "endLine": 94,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 2049237184,
+            "currentLine": -189650945,
+            "nextLine": 1199033660,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 127,
+          "endLine": 127,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 120577517,
+            "currentLine": 788306706,
+            "nextLine": -1234098860,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 130,
+          "endLine": 130,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": -1411770366,
+            "currentLine": -1561651050,
+            "nextLine": 1371614552,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 98,
+          "endLine": 98,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": -1593109087,
+            "currentLine": 676684360,
+            "nextLine": -226031989,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 123,
+          "endLine": 123,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": -912831526,
+            "currentLine": -482890899,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 129,
+          "endLine": 129,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": -1234098860,
+            "currentLine": -1411770366,
+            "nextLine": -1561651050,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 134,
+          "endLine": 134,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 713008566,
+            "currentLine": -1979931654,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 131,
+          "endLine": 131,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": -1561651050,
+            "currentLine": 1371614552,
+            "nextLine": 387121601,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 121,
+          "endLine": 121,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 0,
+            "currentLine": -509878373,
+            "nextLine": -912831526,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\Menu\\UI\\FMBSelectLevelWidget.h",
+          "line": 22,
+          "endLine": 22,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\Components\\FMBCharacterMovementComponent.h",
+          "line": 15,
+          "endLine": 15,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 100,
+          "endLine": 100,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": -226031989,
+            "currentLine": -1592096661,
+            "nextLine": 1585885840,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 128,
+          "endLine": 128,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 788306706,
+            "currentLine": -1234098860,
+            "nextLine": -1411770366,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 92,
+          "endLine": 92,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 0,
+            "currentLine": -336615040,
+            "nextLine": 2049237184,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\Components\\FMBAIPerceptionComponent.h",
+          "line": 15,
+          "endLine": 15,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 96,
+          "endLine": 96,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 1199033660,
+            "currentLine": 1346730479,
+            "nextLine": -1593109087,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 132,
+          "endLine": 132,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 1371614552,
+            "currentLine": 387121601,
+            "nextLine": 713008566,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 104,
+          "endLine": 104,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 562065677,
+            "currentLine": -1862242036,
+            "nextLine": 1053193537,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 116,
+          "endLine": 116,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 494992236,
+            "currentLine": -882728720,
+            "nextLine": -236932112,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 108,
+          "endLine": 108,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 1813276838,
+            "currentLine": 816324073,
+            "nextLine": -188892477,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 112,
+          "endLine": 112,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": -394109943,
+            "currentLine": 1950389883,
+            "nextLine": -1650659810,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShader.h",
+          "line": 140,
+          "endLine": 140,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 0,
+            "currentLine": 501626169,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\Sound\\FMBSoundFuncLib.h",
+          "line": 16,
+          "endLine": 16,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\AI\\Tasks\\FMBClearLocationTask.h",
+          "line": 15,
+          "endLine": 15,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 5816,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\Niagara\\Classes\\NiagaraDataSet.h",
+          "line": 385,
+          "endLine": 385,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 0,
+            "currentLine": 96026131,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027CompiledData.Get()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\Animation\\FMBChangeEquipWeaponAnimNotify.h",
+          "line": 12,
+          "endLine": 12,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 193,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\AI\\Services\\FMBChangeWeaponService.h",
+          "line": 15,
+          "endLine": 15,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 5816,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\UI\\FMBGameDataWidget.h",
+          "line": 17,
+          "endLine": 17,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 5816,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\AI\\Services\\FMBFindEnemyService.h",
+          "line": 15,
+          "endLine": 15,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\UI\\FMBGoToMenuWidget.h",
+          "line": 16,
+          "endLine": 16,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShared.h",
+          "line": 206,
+          "endLine": 206,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 66085943,
+            "currentLine": 1856323055,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShared.h",
+          "line": 210,
+          "endLine": 210,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 517642357,
+            "currentLine": 2038079228,
+            "nextLine": 193,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShared.h",
+          "line": 229,
+          "endLine": 229,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": -1699675686,
+            "currentLine": 592758107,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShared.h",
+          "line": 237,
+          "endLine": 237,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": -712548103,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShared.h",
+          "line": 245,
+          "endLine": 245,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 1179953749,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShared.h",
+          "line": 253,
+          "endLine": 253,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 1977524751,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShared.h",
+          "line": 378,
+          "endLine": 378,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 1994007358,
+            "currentLine": 960465701,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShared.h",
+          "line": 381,
+          "endLine": 381,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": -1064653341,
+            "currentLine": -1813434310,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShared.h",
+          "line": 387,
+          "endLine": 387,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": -216775358,
+            "currentLine": 1671026648,
+            "nextLine": 193,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\UI\\FMBWeaponDataWidget.h",
+          "line": 14,
+          "endLine": 14,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 11448,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShared.h",
+          "line": 232,
+          "endLine": 232,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 1380178713,
+            "currentLine": -977413468,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShared.h",
+          "line": 240,
+          "endLine": 240,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 1013058327,
+            "currentLine": 2094007785,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShared.h",
+          "line": 248,
+          "endLine": 248,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 737063073,
+            "currentLine": -1547968805,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShared.h",
+          "line": 256,
+          "endLine": 256,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 861791878,
+            "currentLine": -1722006331,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraShared.h",
+          "line": 384,
+          "endLine": 384,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": -673762076,
+            "currentLine": 1706545650,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\AI\\EQS\\FMBEnemyEnvQueryContext.h",
+          "line": 15,
+          "endLine": 15,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\FMBGameModeBase.h",
+          "line": 15,
+          "endLine": 15,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\Niagara\\Classes\\NiagaraScript.h",
+          "line": 375,
+          "endLine": 375,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 503904461,
+            "nextLine": 5816,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\Menu\\UI\\FMBSelectCharacterButtonWidget.h",
+          "line": 19,
+          "endLine": 19,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 5816,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\Niagara\\Public\\NiagaraComponent.h",
+          "line": 56,
+          "endLine": 56,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 2105925940,
+            "currentLine": 503904461,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\PickUps\\FMBHealthPickUp.h",
+          "line": 15,
+          "endLine": 15,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 45270,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V1032",
+      "cwe": 843,
+      "level": 2,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraCore\\Public\\NiagaraDataInterfaceBase.h",
+          "line": 94,
+          "endLine": 94,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 0,
+            "currentLine": 1856323055,
+            "nextLine": 193,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The pointer \u0027FieldBuffer\u0027 is cast to a more strictly aligned pointer type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V575",
+      "cwe": 628,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\Niagara\\Public\\NiagaraTypes.h",
+          "line": 1529,
+          "endLine": 1529,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 1148320749,
+            "currentLine": -2108350389,
+            "nextLine": 125,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The potential null pointer is passed into \u0027Memcpy\u0027 function. Inspect the second argument.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V575",
+      "cwe": 628,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\Niagara\\Public\\NiagaraTypes.h",
+          "line": 1537,
+          "endLine": 1537,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 1665313,
+            "currentLine": 195142878,
+            "nextLine": 125,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The potential null pointer is passed into \u0027Memcpy\u0027 function. Inspect the first argument.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V575",
+      "cwe": 628,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\Niagara\\Public\\NiagaraTypes.h",
+          "line": 1554,
+          "endLine": 1554,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 1665313,
+            "currentLine": -2041241044,
+            "nextLine": 125,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The potential null pointer is passed into \u0027Memcpy\u0027 function. Inspect the first argument.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraCore\\Public\\NiagaraDataInterfaceBase.h",
+          "line": 103,
+          "endLine": 103,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 503904461,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\Niagara\\Public\\NiagaraFunctionLibrary.h",
+          "line": 26,
+          "endLine": 26,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 503904461,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\Player\\FMBPlayerCharacter.h",
+          "line": 20,
+          "endLine": 20,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 5816,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Private\\Sky\\FMBDayNightCycle.cpp",
+          "line": 76,
+          "endLine": 76,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 608439690,
+            "currentLine": 606837282,
+            "nextLine": 125,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027GetWorld()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\Menu\\FMBMenuPlayerController.h",
+          "line": 15,
+          "endLine": 15,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\UI\\FMBPauseWidget.h",
+          "line": 16,
+          "endLine": 16,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 45270,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\UI\\FMBEnemySignWidget.h",
+          "line": 16,
+          "endLine": 16,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 5816,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\UI\\FMBPlayerStatRowWidget.h",
+          "line": 18,
+          "endLine": 18,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V575",
+      "cwe": 628,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\Niagara\\Public\\NiagaraTypes.h",
+          "line": 1508,
+          "endLine": 1508,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 125,
+            "currentLine": -462319835,
+            "nextLine": 125,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The potential null pointer is passed into \u0027Memcmp\u0027 function. Inspect the first argument.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V575",
+      "cwe": 628,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\Niagara\\Public\\NiagaraTypes.h",
+          "line": 1508,
+          "endLine": 1508,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 125,
+            "currentLine": -462319835,
+            "nextLine": 125,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The potential null pointer is passed into \u0027Memcmp\u0027 function. Inspect the second argument.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\AI\\Tasks\\FMBAttackTask.h",
+          "line": 15,
+          "endLine": 15,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\NiagaraShader\\Public\\NiagaraScriptBase.h",
+          "line": 50,
+          "endLine": 50,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 503904461,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\Niagara\\Public\\NiagaraMessageDataBase.h",
+          "line": 11,
+          "endLine": 11,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\Animation\\FMBAnimNotify.h",
+          "line": 14,
+          "endLine": 14,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 5816,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\Menu\\FMBMenuGameModeBase.h",
+          "line": 16,
+          "endLine": 16,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\UI\\FMBBaseWidget.h",
+          "line": 16,
+          "endLine": 16,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 5816,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\Weapon\\Components\\FMBWeaponFXComponent.h",
+          "line": 16,
+          "endLine": 16,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Private\\Menu\\UI\\FMBMenuHUD.cpp",
+          "line": 28,
+          "endLine": 28,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": -328591262,
+            "nextLine": 190139,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027GetWorld()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\Niagara\\Classes\\NiagaraSystem.h",
+          "line": 192,
+          "endLine": 192,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 503904461,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\Components\\FMBStaminaComponent.h",
+          "line": 13,
+          "endLine": 13,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\Menu\\UI\\FMBMenuHUD.h",
+          "line": 17,
+          "endLine": 17,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Private\\FMBGameModeBase.cpp",
+          "line": 60,
+          "endLine": 60,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 0,
+            "currentLine": 1475114807,
+            "nextLine": -1635805420,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027GetWorld()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Private\\FMBGameModeBase.cpp",
+          "line": 168,
+          "endLine": 168,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 0,
+            "currentLine": 960167234,
+            "nextLine": 123,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027GetWorld()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Private\\FMBGameModeBase.cpp",
+          "line": 107,
+          "endLine": 107,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 0,
+            "currentLine": 477296543,
+            "nextLine": 123,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027GetWorld()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Private\\FMBGameModeBase.cpp",
+          "line": 182,
+          "endLine": 182,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 0,
+            "currentLine": 477296543,
+            "nextLine": 123,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027GetWorld()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Private\\FMBGameModeBase.cpp",
+          "line": 258,
+          "endLine": 258,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 0,
+            "currentLine": -774041250,
+            "nextLine": -1684416155,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027GetWorld()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "Renew",
+      "cwe": 0,
+      "level": 0,
+      "positions": [
+        {
+          "file": "",
+          "line": 1,
+          "endLine": 1,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 0,
+            "currentLine": 0,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "Your license will expire in 21 days. Click \u0027Renew\u0027 to learn more or contact us at support@viva64.com.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\Dev\\FMBDevDamageActor.h",
+          "line": 14,
+          "endLine": 14,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\Animation\\FMBAnimFinishedNotify.h",
+          "line": 15,
+          "endLine": 15,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 193,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\Components\\FMBWeaponComponent.h",
+          "line": 20,
+          "endLine": 20,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\Niagara\\Classes\\NiagaraParameterCollection.h",
+          "line": 126,
+          "endLine": 126,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 503904461,
+            "nextLine": 5816,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\FMBGameInstance.h",
+          "line": 17,
+          "endLine": 17,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 5816,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\AI\\Tasks\\FMBNextLocationTask.h",
+          "line": 15,
+          "endLine": 15,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\Niagara\\Classes\\NiagaraParameterCollection.h",
+          "line": 16,
+          "endLine": 16,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 503904461,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\Niagara\\Classes\\NiagaraEffectType.h",
+          "line": 211,
+          "endLine": 211,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\Niagara\\Classes\\NiagaraEffectType.h",
+          "line": 221,
+          "endLine": 221,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\Niagara\\Classes\\NiagaraEffectType.h",
+          "line": 231,
+          "endLine": 231,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\Niagara\\Classes\\NiagaraEffectType.h",
+          "line": 243,
+          "endLine": 243,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 503904461,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V572",
+      "cwe": 665,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Intermediate\\Build\\Win64\\UE4Editor\\Inc\\ForMaidBilberry\\FMBCoreTypes.gen.cpp",
+          "line": 367,
+          "endLine": 367,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 1572815518,
+            "nextLine": 125,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "It is odd that the object which was created using \u0027new\u0027 operator is immediately cast to another type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V572",
+      "cwe": 665,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Intermediate\\Build\\Win64\\UE4Editor\\Inc\\ForMaidBilberry\\FMBCoreTypes.gen.cpp",
+          "line": 473,
+          "endLine": 473,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 1977287934,
+            "nextLine": 125,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "It is odd that the object which was created using \u0027new\u0027 operator is immediately cast to another type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V572",
+      "cwe": 665,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Intermediate\\Build\\Win64\\UE4Editor\\Inc\\ForMaidBilberry\\FMBCoreTypes.gen.cpp",
+          "line": 594,
+          "endLine": 594,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": -1158815646,
+            "nextLine": 125,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "It is odd that the object which was created using \u0027new\u0027 operator is immediately cast to another type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V572",
+      "cwe": 665,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Intermediate\\Build\\Win64\\UE4Editor\\Inc\\ForMaidBilberry\\FMBCoreTypes.gen.cpp",
+          "line": 711,
+          "endLine": 711,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": -1361643438,
+            "nextLine": 125,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "It is odd that the object which was created using \u0027new\u0027 operator is immediately cast to another type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V572",
+      "cwe": 665,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Intermediate\\Build\\Win64\\UE4Editor\\Inc\\ForMaidBilberry\\FMBCoreTypes.gen.cpp",
+          "line": 811,
+          "endLine": 811,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": -317520813,
+            "nextLine": 125,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "It is odd that the object which was created using \u0027new\u0027 operator is immediately cast to another type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V572",
+      "cwe": 665,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Intermediate\\Build\\Win64\\UE4Editor\\Inc\\ForMaidBilberry\\FMBCoreTypes.gen.cpp",
+          "line": 917,
+          "endLine": 917,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": -340379705,
+            "nextLine": 125,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "It is odd that the object which was created using \u0027new\u0027 operator is immediately cast to another type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V572",
+      "cwe": 665,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Intermediate\\Build\\Win64\\UE4Editor\\Inc\\ForMaidBilberry\\FMBCoreTypes.gen.cpp",
+          "line": 1041,
+          "endLine": 1041,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": -689802425,
+            "nextLine": 125,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "It is odd that the object which was created using \u0027new\u0027 operator is immediately cast to another type.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\Menu\\UI\\FMBMenuWidget.h",
+          "line": 17,
+          "endLine": 17,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 45270,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\Menu\\UI\\FMBLevelItemWidget.h",
+          "line": 20,
+          "endLine": 20,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 5816,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\Components\\FMBHealthComponent.h",
+          "line": 15,
+          "endLine": 15,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Private\\Player\\FMBPlayerController.cpp",
+          "line": 20,
+          "endLine": 20,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": -1268008956,
+            "nextLine": 190139,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027GetWorld()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Private\\Player\\FMBPlayerController.cpp",
+          "line": 56,
+          "endLine": 56,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 0,
+            "currentLine": 2056799911,
+            "nextLine": 125,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027GetWorld()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Private\\Player\\FMBPlayerController.cpp",
+          "line": 63,
+          "endLine": 63,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 0,
+            "currentLine": 158010803,
+            "nextLine": 1337406054,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027GetWorld()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\Niagara\\Public\\NiagaraComponentPool.h",
+          "line": 114,
+          "endLine": 114,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 503904461,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 231\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 18\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 156\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 11\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 160\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 154\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 243\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 59\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 12\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 124\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 17\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 20\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 65\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 50\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 74\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 130\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 211\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 26\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 375\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 25\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 28\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 122\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 246\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 192\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 212\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 334\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 62\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 1552\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 14\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 221\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 103\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 129\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 89\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 70\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 19\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 469\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 61\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 126\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 56\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 13\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 27\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 15\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 10\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 24\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 16\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V769",
+      "cwe": 119,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\Niagara\\Public\\NiagaraParameterStore.h",
+          "line": 644,
+          "endLine": 644,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 1069068859,
+            "nextLine": 544933,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The \u0027GetParameterDataArray().GetData()\u0027 pointer in the expression could be nullptr. In such case, resulting value of arithmetic operations on this pointer will be senseless and it should not be used.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 22\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 77\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 189\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V003",
+      "cwe": 0,
+      "level": 0,
+      "positions": [],
+      "message": "java.lang.NumberFormatException: For input string: \" 114\"",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V769",
+      "cwe": 119,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\Niagara\\Public\\NiagaraParameterStore.h",
+          "line": 346,
+          "endLine": 346,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 546063957,
+            "nextLine": 125,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The \u0027ParameterData.GetData()\u0027 pointer in the \u0027ParameterData.GetData() + Offset\u0027 expression could be nullptr. In such case, resulting value will be senseless and it should not be used.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V769",
+      "cwe": 119,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\Niagara\\Public\\NiagaraParameterStore.h",
+          "line": 638,
+          "endLine": 638,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 546063957,
+            "nextLine": 125,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "The \u0027ParameterData.GetData()\u0027 pointer in the \u0027ParameterData.GetData() + Offset\u0027 expression could be nullptr. In such case, resulting value will be senseless and it should not be used.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\UI\\FMBGameHUD.h",
+          "line": 18,
+          "endLine": 18,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\UI\\FMBSpectatingWidget.h",
+          "line": 16,
+          "endLine": 16,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Private\\UI\\FMBGameHUD.cpp",
+          "line": 29,
+          "endLine": 29,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": -1268008956,
+            "nextLine": 190139,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027GetWorld()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\AI\\Tasks\\FMBRotationTask.h",
+          "line": 15,
+          "endLine": 15,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 5816,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\Player\\FMBPlayerController.h",
+          "line": 17,
+          "endLine": 17,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Private\\AI\\FMBAIBaseCharacter.cpp",
+          "line": 72,
+          "endLine": 72,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 0,
+            "currentLine": 279209128,
+            "nextLine": 1037752187,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027GetWorld()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\Weapon\\FMBBaseWeapon.h",
+          "line": 19,
+          "endLine": 19,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\UI\\FMBHealthBarWidget.h",
+          "line": 16,
+          "endLine": 16,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 5816,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\PickUps\\FMBBasePickUp.h",
+          "line": 16,
+          "endLine": 16,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\UE4_Projects\\ForMaidBilberry\\Source\\ForMaidBilberry\\Public\\UI\\FMBGameOverWidget.h",
+          "line": 20,
+          "endLine": 20,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 45270,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\Niagara\\Public\\NiagaraRendererProperties.h",
+          "line": 160,
+          "endLine": 160,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 3937101,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    },
+    {
+      "code": "V522",
+      "cwe": 690,
+      "level": 3,
+      "positions": [
+        {
+          "file": "C:\\Program Files\\Epic Games\\UE_4.26\\Engine\\Plugins\\FX\\Niagara\\Source\\Niagara\\Classes\\NiagaraEmitter.h",
+          "line": 212,
+          "endLine": 212,
+          "column": 1,
+          "endColumn": 2147483647,
+          "navigation": {
+            "previousLine": 123,
+            "currentLine": 503904461,
+            "nextLine": 0,
+            "columns": 0
+          }
+        }
+      ],
+      "message": "There might be dereferencing of a potential null pointer \u0027(EInternal *) X.GetObj()\u0027.",
+      "projects": [],
+      "favorite": false,
+      "falseAlarm": false
+    }
+  ]
+}

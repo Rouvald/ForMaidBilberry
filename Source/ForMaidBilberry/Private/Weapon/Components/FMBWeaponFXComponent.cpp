@@ -10,7 +10,7 @@ UFMBWeaponFXComponent::UFMBWeaponFXComponent()
     PrimaryComponentTick.bCanEverTick = false;
 }
 
-void UFMBWeaponFXComponent::PlayImpactFX(FHitResult& HitResult)
+void UFMBWeaponFXComponent::PlayImpactFX(const FHitResult& HitResult)
 {
     auto ImpactData = DefaultImpactData;
 

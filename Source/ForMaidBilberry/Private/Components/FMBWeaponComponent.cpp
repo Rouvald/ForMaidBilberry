@@ -138,7 +138,7 @@ void UFMBWeaponComponent::StrongMeleeAttack()
     // StopMovement();
     PlayAnimMontage(CurrentWeaponAnimationsData.StrongAttack);
     //==================================================
-    // UE_LOG(BaseWeaponComponentLog, Display, TEXT("Strong Attack make"));
+    // UE_LOG(BaseWeaponComponentLog, Display, TEXT("%s: Strong Attack"), *GetOwner()->GetName());
     //==================================================
 }
 
@@ -234,7 +234,7 @@ void UFMBWeaponComponent::OnAttackFinished(USkeletalMeshComponent* MeshComp)
     const auto StaminaComponent = FMBUtils::GetFMBPlayerComponent<UFMBStaminaComponent>(GetOwner());
     if (StaminaComponent)
     {
-        StaminaComponent->StartHealStaminaTimer();
+        StaminaComponent->StartHealStamina();
     }
     StopDrawTrace();
 }
@@ -303,8 +303,8 @@ void UFMBWeaponComponent::StopDrawTrace()
     if (CurrentWeapon)
     {
         CurrentWeapon->StopDrawTrace();
-        AttackAnimInProgress = false;
     }
+    AttackAnimInProgress = false;
     // StartMovement();
 }
 

@@ -11,7 +11,7 @@
 #include "FMBCoreTypes.h"
 #include "Sound/SoundCue.h"
 
-DECLARE_LOG_CATEGORY_CLASS(BaseWeaponLog, All, All);
+DECLARE_LOG_CATEGORY_CLASS(LogFMBBaseWeapon, All, All);
 
 AFMBBaseWeapon::AFMBBaseWeapon()
 {
@@ -50,7 +50,6 @@ void AFMBBaseWeapon::MeleeAttack(EChooseAttack ChooseAttack)
     {
         DamageAmount = ChooseDamageAmount[ChooseAttack];
     }
-
     StartDrawTrace();
 }
 
@@ -66,8 +65,6 @@ void AFMBBaseWeapon::DrawTrace()
 
     const FVector TraceStart = FindBladeSocketLocation(StartBladeTraceSocketName);
     const FVector TraceEnd = FindBladeSocketLocation(EndBladeTraceSocketName);
-    if (TraceStart.IsZero() || TraceEnd.IsZero()) return;
-
     FHitResult HitResult;
     MakeHit(HitResult, TraceStart, TraceEnd);
 
@@ -78,6 +75,7 @@ void AFMBBaseWeapon::DrawTrace()
     {
         SortEqualCharacter(HitResult);
     }
+    // UE_LOG(LogFMBBaseWeapon, Display, TEXT("%s: timer check"), *GetOwner()->GetName());
 }
 
 FVector AFMBBaseWeapon::FindBladeSocketLocation(FName BladeTraceSocketName) const
@@ -104,12 +102,18 @@ void AFMBBaseWeapon::MakeHit(FHitResult& HitResult, const FVector& TraceStart, c
         ColCapsule,                             //
         CollisionParams                         //
     );
+    // DrawDebugCylinder(GetWorld(), TraceStart, TraceEnd, TraceRadius, 12, FColor::Purple, false, 1);
     // GetWorld()->LineTraceSingleByChannel(HitResult, TraceStart, TraceEnd, ECollisionChannel::ECC_Visibility, CollisionParams);
 }
 
-void AFMBBaseWeapon::SortEqualCharacter(FHitResult& HitResult)
+void AFMBBaseWeapon::SortEqualCharacter(const FHitResult& HitResult)
 {
-    if (HitActors.Num() == 0)
+    if (!HitActors.Contains(HitResult.GetActor()))
+    {
+        NewDamagedActor(HitResult);
+        WeaponFXComponent->PlayImpactFX(HitResult);
+    }
+    /*if (HitActors.Num() == 0)
     {
         NewDamagedActor(HitResult);
         WeaponFXComponent->PlayImpactFX(HitResult);
@@ -129,12 +133,12 @@ void AFMBBaseWeapon::SortEqualCharacter(FHitResult& HitResult)
             NewDamagedActor(HitResult);
             WeaponFXComponent->PlayImpactFX(HitResult);
         }
-    }
+    }*/
 }
 
-void AFMBBaseWeapon::NewDamagedActor(FHitResult& HitResult)
+void AFMBBaseWeapon::NewDamagedActor(const FHitResult& HitResult)
 {
-    HitActors.Add(Cast<AActor>(HitResult.GetActor()));
+    HitActors.AddUnique(Cast<AActor>(HitResult.GetActor()));
     if (HitResult.bBlockingHit)
     {
         MakeDamage(HitResult);
@@ -143,7 +147,7 @@ void AFMBBaseWeapon::NewDamagedActor(FHitResult& HitResult)
     }
 }
 
-void AFMBBaseWeapon::MakeDamage(FHitResult& HitResult)
+void AFMBBaseWeapon::MakeDamage(const FHitResult& HitResult)
 {
     const auto DamagedActor = HitResult.GetActor();
     if (!DamagedActor) return;
@@ -162,6 +166,12 @@ void AFMBBaseWeapon::StartDrawTrace()
 
     // if u wanna use SwordTrails anim notify state -> u need uncomment this down line
     // SwordTrailFXComponent->SetVisibility(false);
+
+    if (HitActors.Num() != 0)
+    {
+        HitActors.Empty();
+        UE_LOG(LogFMBBaseWeapon, Warning, TEXT("HitActors not empty"));
+    }
 
     GetWorldTimerManager().SetTimer(DrawTraceTimerHandle, this, &AFMBBaseWeapon::DrawTrace, 0.1f, true);
 }

@@ -8,7 +8,7 @@
 DEFINE_LOG_CATEGORY_STATIC(LogFMBDayNightCycle, All, All)
 
 constexpr static int32 OneSecond = 1;
-constexpr static int32 PitchToSecondModifier = 8;
+constexpr static int32 PitchToSecondModifierDN = 8;
 
 AFMBDayNightCycle::AFMBDayNightCycle()
 {
@@ -60,7 +60,7 @@ void AFMBDayNightCycle::UpdateDaytime(const float TurnRateLight)
     const auto FMBGameMode = GetGameMode();
     if (!FMBGameMode) return;
 
-    CountTime = TurnRateLight * (PitchToSecondModifier / 2);
+    CountTime = TurnRateLight * (PitchToSecondModifierDN / 2);
 
     FMBGameMode->DayTimerUpdate(CountTime);
     /*if (CountSecondTime >= OneSecond)

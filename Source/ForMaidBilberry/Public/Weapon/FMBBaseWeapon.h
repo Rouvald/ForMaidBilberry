@@ -61,7 +61,7 @@ protected:
     FName SwordTrailSocketName = "SwordTrailSocket";
 
     UPROPERTY()
-    float TraceRadius = 20.0f;
+    float TraceRadius = 5.0f;
 
     UPROPERTY()
     float DamageAmount = 0;
@@ -97,9 +97,9 @@ protected:
     FVector FindBladeSocketLocation(FName BladeTraceSocketName) const;
     void MakeHit(FHitResult& HitResult, const FVector& TraceStart, const FVector& TraceEnd) const;
 
-    void SortEqualCharacter(FHitResult& HitResult);
-    void NewDamagedActor(FHitResult& HitResult);
-    void MakeDamage(FHitResult& HitResult);
+    void SortEqualCharacter(const FHitResult& HitResult);
+    void NewDamagedActor(const FHitResult& HitResult);
+    void MakeDamage(const FHitResult& HitResult);
 
     void StartDrawTrace();
 

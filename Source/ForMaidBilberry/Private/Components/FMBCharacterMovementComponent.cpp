@@ -66,7 +66,7 @@ void UFMBCharacterMovementComponent::OnRollingFinished(USkeletalMeshComponent* M
     const auto StaminaComponent = FMBUtils::GetFMBPlayerComponent<UFMBStaminaComponent>(GetPawnOwner());
     if (!StaminaComponent) return;
 
-    StaminaComponent->StartHealStaminaTimer();
+    StaminaComponent->StartHealStamina();
 
     Character->GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Block);
     RollingAnimInProgress = false;

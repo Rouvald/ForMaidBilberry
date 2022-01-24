@@ -108,9 +108,6 @@ private:
 
     // void ShieldVisibility(EWeaponType CurrentWeaponType) const;
 
-    void StartMovement() const;
-    void StopMovement() const;
-
     bool CanDoAttack(const EStaminaSpend AttackStaminaSpend) const;
     void SpendStamina(const EStaminaSpend StaminaSpend) const;
 

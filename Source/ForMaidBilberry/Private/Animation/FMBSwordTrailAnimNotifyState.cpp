@@ -9,21 +9,22 @@
 
 void UFMBSwordTrailAnimNotifyState::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float TotalDuration)
 {
+    Super::NotifyBegin(MeshComp, Animation, TotalDuration);
+
     const auto SwordTrailFXComponent = GetSwordTrailFXComponent(MeshComp);
     if (!SwordTrailFXComponent) return;
 
     SwordTrailFXComponent->SetVisibility(true);
-
-    Super::NotifyBegin(MeshComp, Animation, TotalDuration);
 }
+
 void UFMBSwordTrailAnimNotifyState::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation)
 {
+    Super::NotifyEnd(MeshComp, Animation);
+
     const auto SwordTrailFXComponent = GetSwordTrailFXComponent(MeshComp);
     if (!SwordTrailFXComponent) return;
 
     SwordTrailFXComponent->SetVisibility(false);
-
-    Super::NotifyEnd(MeshComp, Animation);
 }
 
 UNiagaraComponent* UFMBSwordTrailAnimNotifyState::GetSwordTrailFXComponent(USkeletalMeshComponent* MeshComp) const

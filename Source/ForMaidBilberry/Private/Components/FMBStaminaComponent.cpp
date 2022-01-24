@@ -28,7 +28,7 @@ bool UFMBStaminaComponent::CanSpendStamina(const EStaminaSpend StaminaSpend)
 {
     if (!StaminaSpends.Contains(StaminaSpend)) return false;
 
-    return FMath::IsWithin(Stamina - StaminaSpends[StaminaSpend], 0.0f, MaxStamina);
+    return FMath::IsWithinInclusive(Stamina - StaminaSpends[StaminaSpend], 0.0f, MaxStamina);
 }
 
 void UFMBStaminaComponent::SpendStamina(const EStaminaSpend StaminaSpend)

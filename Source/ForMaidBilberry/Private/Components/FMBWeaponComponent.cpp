@@ -237,6 +237,7 @@ void UFMBWeaponComponent::CheckAttackFinishedAnimNotify(UAnimMontage* Animation)
 
 void UFMBWeaponComponent::OnAttackFinished(USkeletalMeshComponent* MeshComp)
 {
+    if (GetOwner() != MeshComp->GetOwner()) return;
     const auto StaminaComponent = GetOwner()->FindComponentByClass<UFMBStaminaComponent>();
     if (StaminaComponent)
     {
@@ -247,6 +248,7 @@ void UFMBWeaponComponent::OnAttackFinished(USkeletalMeshComponent* MeshComp)
 
 void UFMBWeaponComponent::OnEquipFinished(USkeletalMeshComponent* MeshComp)
 {
+    if (GetOwner() != MeshComp->GetOwner()) return;
     const auto Character = GetCharacter();
     if (!Character || Character->GetMesh() != MeshComp) return;
 
@@ -255,6 +257,7 @@ void UFMBWeaponComponent::OnEquipFinished(USkeletalMeshComponent* MeshComp)
 
 void UFMBWeaponComponent::OnChangeEquipWeapon(USkeletalMeshComponent* MeshComp)
 {
+    if (GetOwner() != MeshComp->GetOwner()) return;
     if (CurrentWeaponIndex < 0 || CurrentWeaponIndex > Weapons.Num())
     {
         UE_LOG(LogFMBWeaponComponent, Display, TEXT("Incorrect Weapon Index"));
@@ -312,28 +315,6 @@ bool UFMBWeaponComponent::CanAttack() const
 bool UFMBWeaponComponent::CanEquip() const
 {
     return !EquipAnimInProgress;
-}
-
-void UFMBWeaponComponent::StartMovement() const
-{
-    const auto MovementComponent = GetOwner()->FindComponentByClass<UFMBCharacterMovementComponent>();
-    if (!MovementComponent) return;
-
-    if (!AttackAnimInProgress && MovementComponent->MovementMode != MOVE_Walking)
-    {
-        MovementComponent->SetMovementMode(EMovementMode::MOVE_Walking);
-    }
-}
-
-void UFMBWeaponComponent::StopMovement() const
-{
-    const auto MovementComponent = GetOwner()->FindComponentByClass<UFMBCharacterMovementComponent>();
-    if (!MovementComponent) return;
-
-    if (AttackAnimInProgress)
-    {
-        MovementComponent->SetMovementMode(EMovementMode::MOVE_None);
-    }
 }
 
 AFMBBaseCharacter* UFMBWeaponComponent::GetCharacter() const

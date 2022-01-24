@@ -61,7 +61,7 @@ protected:
     FName SwordTrailSocketName = "SwordTrailSocket";
 
     UPROPERTY()
-    float TraceRadius = 5.0f;
+    float TraceRadius = 10.0f;
 
     UPROPERTY()
     float DamageAmount = 0;

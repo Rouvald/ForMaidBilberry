@@ -33,7 +33,7 @@ void UFMBCharacterMovementComponent::Rolling()
     if (!WeaponComponent || !(WeaponComponent->CanEquip()) || !(WeaponComponent->CanAttack())) return;
 
     const auto StaminaComponent = FMBUtils::GetFMBPlayerComponent<UFMBStaminaComponent>(Character);
-    if (!StaminaComponent || !(StaminaComponent->SpendStamina(EStaminaSpend::Rolling))) return;
+    if (!StaminaComponent || !(StaminaComponent->CanSpendStamina(EStaminaSpend::Rolling))) return;
 
     if (!Velocity.IsZero())
     {
@@ -44,7 +44,16 @@ void UFMBCharacterMovementComponent::Rolling()
             Character->SetActorRotation(VelocityNormal.Rotation());
         }
     }
-
+    else
+    {
+        FVector ViewLocation;
+        FRotator ViewRotation;
+        if (FMBUtils::GetTraceData(Character, ViewLocation, ViewRotation))
+        {
+            Character->SetActorRotation(FRotator{0.0f, ViewRotation.Yaw, 0.0f});
+        }
+    }
+    StaminaComponent->SpendStamina(EStaminaSpend::Rolling);
     RollingAnimInProgress = true;
     Character->GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Ignore);
 

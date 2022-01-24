@@ -68,9 +68,6 @@ void AFMBBaseWeapon::DrawTrace()
     FHitResult HitResult;
     MakeHit(HitResult, TraceStart, TraceEnd);
 
-    // DrawDebugLine(GetWorld(), TraceStart, TraceEnd, FColor::Red, false, 0.05f, 0, 1.0f);
-    // DrawDebugCylinder(GetWorld(), TraceStart, TraceEnd, TraceRadius, 16, FColor::Purple, false, 0.05f, 0, 1.0f);
-
     if (HitResult.bBlockingHit)
     {
         SortEqualCharacter(HitResult);
@@ -92,6 +89,7 @@ void AFMBBaseWeapon::MakeHit(FHitResult& HitResult, const FVector& TraceStart, c
     const FCollisionShape ColCapsule = FCollisionShape::MakeSphere(TraceRadius);
     FCollisionQueryParams CollisionParams;
     CollisionParams.AddIgnoredActor(GetOwner());
+    CollisionParams.AddIgnoredActor(this);
     CollisionParams.bReturnPhysicalMaterial = true;
 
     GetWorld()->SweepSingleByChannel(HitResult, //
@@ -102,7 +100,7 @@ void AFMBBaseWeapon::MakeHit(FHitResult& HitResult, const FVector& TraceStart, c
         ColCapsule,                             //
         CollisionParams                         //
     );
-    // DrawDebugCylinder(GetWorld(), TraceStart, TraceEnd, TraceRadius, 12, FColor::Purple, false, 1);
+    // DrawDebugCylinder(GetWorld(), TraceStart, TraceEnd, TraceRadius, 12, FColor::Purple, false, 0.1f);
     // GetWorld()->LineTraceSingleByChannel(HitResult, TraceStart, TraceEnd, ECollisionChannel::ECC_Visibility, CollisionParams);
 }
 
@@ -113,27 +111,6 @@ void AFMBBaseWeapon::SortEqualCharacter(const FHitResult& HitResult)
         NewDamagedActor(HitResult);
         WeaponFXComponent->PlayImpactFX(HitResult);
     }
-    /*if (HitActors.Num() == 0)
-    {
-        NewDamagedActor(HitResult);
-        WeaponFXComponent->PlayImpactFX(HitResult);
-    }
-    else
-    {
-        bool CheckNewHitActor = false;
-        for (const auto HitActor : HitActors)
-        {
-            if (HitActor == Cast<AActor>(HitResult.GetActor()))
-            {
-                CheckNewHitActor = true;
-            }
-        }
-        if (!CheckNewHitActor)
-        {
-            NewDamagedActor(HitResult);
-            WeaponFXComponent->PlayImpactFX(HitResult);
-        }
-    }*/
 }
 
 void AFMBBaseWeapon::NewDamagedActor(const FHitResult& HitResult)
@@ -172,8 +149,7 @@ void AFMBBaseWeapon::StartDrawTrace()
         HitActors.Empty();
         UE_LOG(LogFMBBaseWeapon, Warning, TEXT("HitActors not empty"));
     }
-
-    GetWorldTimerManager().SetTimer(DrawTraceTimerHandle, this, &AFMBBaseWeapon::DrawTrace, 0.1f, true);
+    GetWorldTimerManager().SetTimer(DrawTraceTimerHandle, this, &AFMBBaseWeapon::DrawTrace, 0.05f, true);
 }
 
 void AFMBBaseWeapon::StopDrawTrace()

@@ -7,6 +7,8 @@
 #include "FMBWeaponComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
+// DEFINE_LOG_CATEGORY_STATIC(LogFMBAttackTask, All, All)
+
 UFMBAttackTask::UFMBAttackTask()
 {
     NodeName = "Attack Enemy";
@@ -27,7 +29,6 @@ EBTNodeResult::Type UFMBAttackTask::ExecuteTask(UBehaviorTreeComponent& OwnerCom
     const auto WeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBWeaponComponent>(Pawn);
     const auto PerceiveActor = PerceiveComponent->GetEnemyPlayer();
     if (!WeaponComponent || !PerceiveActor) return EBTNodeResult::Failed;
-
     FMath::RandBool() ? WeaponComponent->FastMeleeAttack() : WeaponComponent->StrongMeleeAttack();
 
     return EBTNodeResult::Succeeded;

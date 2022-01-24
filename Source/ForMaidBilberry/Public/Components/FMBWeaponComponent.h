@@ -92,6 +92,8 @@ private:
 
     int32 CurrentWeaponIndex = 0;
 
+    bool IsPlayerCharacter{false};
+
     void SpawnWeapons();
     void AttachWeaponToSocket(AFMBBaseWeapon* Weapon, USceneComponent* MeshComp, const FName& WeaponSocket) const;
     void EquipWeapon(int32 WeaponIndex);
@@ -109,7 +111,8 @@ private:
     void StartMovement() const;
     void StopMovement() const;
 
-    bool CanDoAttack(EStaminaSpend AttackStaminaSpend) const;
+    bool CanDoAttack(const EStaminaSpend AttackStaminaSpend) const;
+    void SpendStamina(const EStaminaSpend StaminaSpend) const;
 
     AFMBBaseCharacter* GetCharacter() const;
 };

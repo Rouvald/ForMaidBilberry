@@ -24,17 +24,18 @@ void UFMBStaminaComponent::BeginPlay()
     StaminaSpends.Add(EStaminaSpend::StrongAttack, StaminaSpendData.StrongAttackStaminaSpend);
 }
 
-bool UFMBStaminaComponent::SpendStamina(EStaminaSpend StaminaSpend)
+bool UFMBStaminaComponent::CanSpendStamina(const EStaminaSpend StaminaSpend)
 {
     if (!StaminaSpends.Contains(StaminaSpend)) return false;
 
-    if (!(FMath::IsWithin(Stamina - StaminaSpends[StaminaSpend], 0.0f, MaxStamina))) return false;
+    return FMath::IsWithin(Stamina - StaminaSpends[StaminaSpend], 0.0f, MaxStamina);
+}
 
+void UFMBStaminaComponent::SpendStamina(const EStaminaSpend StaminaSpend)
+{
     StopHealStamina();
 
     SetStamina(GetStamina() - StaminaSpends[StaminaSpend]);
-
-    return true;
 }
 
 void UFMBStaminaComponent::SetStamina(float NewStamina)

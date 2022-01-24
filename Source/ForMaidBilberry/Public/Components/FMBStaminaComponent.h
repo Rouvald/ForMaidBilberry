@@ -22,7 +22,8 @@ public:
 
     float GetStamina() const { return Stamina; }
 
-    bool SpendStamina(EStaminaSpend StaminaSpend);
+    bool CanSpendStamina(const EStaminaSpend StaminaSpend);
+    void SpendStamina(const EStaminaSpend StaminaSpend);
 
     void StartHealStamina();
     void StopHealStamina();

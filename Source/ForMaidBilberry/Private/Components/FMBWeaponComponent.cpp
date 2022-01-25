@@ -237,8 +237,10 @@ void UFMBWeaponComponent::CheckAttackFinishedAnimNotify(UAnimMontage* Animation)
 
 void UFMBWeaponComponent::OnAttackFinished(USkeletalMeshComponent* MeshComp)
 {
-    if (GetOwner() != MeshComp->GetOwner()) return;
-    const auto StaminaComponent = GetOwner()->FindComponentByClass<UFMBStaminaComponent>();
+    const auto Character = GetCharacter();
+    if (!Character || Character->GetMesh() != MeshComp) return;
+
+    const auto StaminaComponent = Character->FindComponentByClass<UFMBStaminaComponent>();
     if (StaminaComponent)
     {
         StaminaComponent->StartHealStamina();
@@ -248,7 +250,6 @@ void UFMBWeaponComponent::OnAttackFinished(USkeletalMeshComponent* MeshComp)
 
 void UFMBWeaponComponent::OnEquipFinished(USkeletalMeshComponent* MeshComp)
 {
-    if (GetOwner() != MeshComp->GetOwner()) return;
     const auto Character = GetCharacter();
     if (!Character || Character->GetMesh() != MeshComp) return;
 
@@ -257,7 +258,6 @@ void UFMBWeaponComponent::OnEquipFinished(USkeletalMeshComponent* MeshComp)
 
 void UFMBWeaponComponent::OnChangeEquipWeapon(USkeletalMeshComponent* MeshComp)
 {
-    if (GetOwner() != MeshComp->GetOwner()) return;
     if (CurrentWeaponIndex < 0 || CurrentWeaponIndex > Weapons.Num())
     {
         UE_LOG(LogFMBWeaponComponent, Display, TEXT("Incorrect Weapon Index"));
@@ -266,9 +266,9 @@ void UFMBWeaponComponent::OnChangeEquipWeapon(USkeletalMeshComponent* MeshComp)
     const auto Character = GetCharacter();
     if (!Character || Character->GetMesh() != MeshComp) return;
 
-    StopDrawTrace();
     if (CurrentWeapon)
     {
+        CurrentWeapon->StopDrawTrace();
         if (CurrentWeapon->GetRootComponent())
         {
             CurrentWeapon->GetRootComponent()->SetVisibility(false, true);

@@ -6,13 +6,14 @@
 #include "UI/FMBGameHUD.h"
 #include "AIController.h"
 #include "EngineUtils.h"
+#include "FMBGameInstance.h"
 #include "FMBRespawnComponent.h"
 #include "FMBUtils.h"
 #include "GameFramework/GameMode.h"
 #include "GameFramework/PlayerStart.h"
 #include "Player/FMBPlayerState.h"
 
-DEFINE_LOG_CATEGORY_STATIC(LogAFMBGameModeBase, All, All)
+DEFINE_LOG_CATEGORY_STATIC(LogFMBGameModeBase, All, All)
 
 // constexpr static int32 MinRoundTimeForRespawn = 10;
 constexpr static int32 PitchToSecondModifier = 8;
@@ -29,11 +30,24 @@ void AFMBGameModeBase::StartPlay()
 {
     Super::StartPlay();
 
+    if (GetWorld())
+    {
+        const auto GameInstance = GetWorld()->GetGameInstance<UFMBGameInstance>();
+        if (GameInstance)
+        {
+            GameData = GameInstance->GetStartLevel().GameData;
+        }
+    }
     SpawnBots();
-    // CreateTeamsInfo();
     SetDefaultPlayerName();
-    // CurrentRound = 1;
-    StartGameOverConditionTimer();
+    if (GameData.bIsWalkAlone)
+    {
+        GameData.PlayerNum = 1;
+    }
+    else
+    {
+        StartGameOverConditionTimer();
+    }
     SetStartUpDayTime();
 
     SetMatchState(EFMBMatchState::InProgress);
@@ -64,13 +78,13 @@ void AFMBGameModeBase::SpawnBots()
 
 void AFMBGameModeBase::SetStartUpDayTime()
 {
-    if (DefaultTurnRatePitchSky > 0.0f)
+    if (GameData.DefaultTurnRatePitchSky > 0.0f)
     {
-        StartupDayTime = fmod((DefaultTurnRatePitchSky * PitchToSecondModifier), MaxDayTime);
+        StartupDayTime = fmod((GameData.DefaultTurnRatePitchSky * PitchToSecondModifier), MaxDayTime);
     }
     else
     {
-        StartupDayTime = fmod((abs(DefaultTurnRatePitchSky) * PitchToSecondModifier), MaxDayTime);
+        StartupDayTime = fmod((abs(GameData.DefaultTurnRatePitchSky) * PitchToSecondModifier), MaxDayTime);
     }
     CurrentDayTime = StartupDayTime;
 }
@@ -95,7 +109,7 @@ void AFMBGameModeBase::DayTimerUpdate(float Time)
     }
     else
     {
-        UE_LOG(LogAFMBGameModeBase, Display, TEXT("========GAME OVER========"));
+        UE_LOG(LogFMBGameModeBase, Display, TEXT("========GAME OVER========"));
         LogPlayerInfo();
     }*/
 }
@@ -167,7 +181,6 @@ void AFMBGameModeBase::GameOverCondition()
 
     if (GetWorld()->GetNumControllers() == 1)
     {
-        UE_LOG(LogAFMBGameModeBase, Display, TEXT("%i"), GetWorld()->GetNumControllers());
         GameOver();
         GetWorldTimerManager().ClearTimer(GameOverConditionTimerHandle);
         // GetWorld()->GetTimerManager().SetTimer(GameOverTimerHandle, this, &AFMBGameModeBase::GameOver, GameData.GameOverDelayTime,
@@ -209,7 +222,7 @@ void AFMBGameModeBase::RespawnRequest(AController* Controller)
 
 void AFMBGameModeBase::GameOver()
 {
-    UE_LOG(LogAFMBGameModeBase, Display, TEXT("========GAME OVER========"));
+    UE_LOG(LogFMBGameModeBase, Display, TEXT("========GAME OVER========"));
     LogPlayerInfo();
 
     for (const auto Pawn : TActorRange<APawn>(GetWorld()))

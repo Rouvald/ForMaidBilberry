@@ -36,8 +36,8 @@ public:
 
     void RespawnRequest(AController* Controller);
 
-    float GetDefaultTurnRatePitchSky() const { return DefaultTurnRatePitchSky; }
-    float GetTurnRatePitch() const { return TurnRatePitch; }
+    float GetDefaultTurnRatePitchSky() const { return GameData.DefaultTurnRatePitchSky; }
+    float GetTurnRatePitch() const { return GameData.TurnRatePitch; }
 
     UFUNCTION(BlueprintCallable)
     bool GetDayTime() const { return DayTime; }
@@ -60,12 +60,6 @@ protected:
 
     UPROPERTY(VisibleAnywhere, Category = "Game", meta = (ToolTip = "This tag must have at least 1 PlayerStart in the Level."))
     FName PlayerStartTagName = "Player";
-
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sky")
-    float DefaultTurnRatePitchSky = -90.0f;
-
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sky", meta = (ToolTip = "Value = 0.23 is minimum for DayNightCycle"))
-    float TurnRatePitch = 0.3f;
 
 private:
     // int32 CurrentRound = 1;

@@ -56,7 +56,10 @@ void UFMBLevelItemWidget::SetLevelData(const FLevelData& Data)
     }
     if (LevelDescriptionTextBlock)
     {
-        LevelDescriptionTextBlock->SetText(FText::FromName(LevelData.LevelDescriptionName));
+        const FString ModeText{TEXT("Mode: ")};
+        const FText LevelMode{FText::FromString(ModeText + LevelData.LevelDescriptionName.ToString())};
+        LevelDescriptionTextBlock->SetText(LevelMode);
+        UE_LOG(LogTemp, Display, TEXT("%s"), *LevelDescriptionTextBlock->GetText().ToString());
     }
     if (LevelImage)
     {

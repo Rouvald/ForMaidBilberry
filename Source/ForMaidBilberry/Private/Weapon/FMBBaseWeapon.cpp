@@ -134,15 +134,9 @@ void AFMBBaseWeapon::MakeDamage(const FHitResult& HitResult)
 
 void AFMBBaseWeapon::StartDrawTrace()
 {
-    if (!SwordTrailFXComponent->IsActive())
-    {
-        SwordTrailFXComponent->Activate(true);
-    }
-    SwordTrailFXComponent->SetVisibility(true, true);
-    SpawnSwordSlashSound();
+    SwordTrailFXComponent->Activate(true);
 
-    // if u wanna use SwordTrails anim notify state -> u need uncomment this down line
-    // SwordTrailFXComponent->SetVisibility(false);
+    SpawnSwordSlashSound();
 
     if (HitActors.Num() != 0)
     {
@@ -157,8 +151,7 @@ void AFMBBaseWeapon::StopDrawTrace()
     HitActors.Empty();
 
     GetWorldTimerManager().ClearTimer(DrawTraceTimerHandle);
-    // SwordTrailFXComponent->Deactivate();
-    SwordTrailFXComponent->SetVisibility(false, true);
+    SwordTrailFXComponent->Deactivate();
 }
 
 void AFMBBaseWeapon::SpawnSwordSlashSound() const

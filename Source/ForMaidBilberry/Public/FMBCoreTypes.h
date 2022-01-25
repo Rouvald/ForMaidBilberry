@@ -126,22 +126,12 @@ struct FGameData
 {
     GENERATED_USTRUCT_BODY()
 
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game")
+    bool bIsWalkAlone{false};
+
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game",
-        meta = (ClampMin = "1", ClampMax = "50", ToolTip = "For normal game need PlayerNum > 1"))
+        meta = (EditCondition = "!bIsWalkAlone", ClampMin = "1", ClampMax = "50", ToolTip = "For normal game need PlayerNum > 1"))
     int32 PlayerNum = 2;
-
-    /*UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Game", meta =(ClampMin ="1", ClampMax ="10"))
-    int32 RoundsNum = 4;*/
-
-    /*UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game")
-    bool IsInfinityGame = true;*/
-
-    /*UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game",
-        meta = (EditCondition = "!IsInfinityGame", ClampMin = "1", ClampMax = "400"))
-    int32 GameplayTime = 10;*/ // in second
-
-    /*UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game")
-    int32 GameOverDelayTime = 5;*/ // in second
 
     // For true, need check bWantsPlayerState = true in FMBAIController
     UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Game")
@@ -150,11 +140,11 @@ struct FGameData
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game", meta = (ClampMin = "3", ClampMax = "30"))
     int32 RespawnTime = 10; // in second
 
-    /*UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Game")
-    USkeletalMesh* DefaultTeamSkeletalMesh;
+    UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Sky")
+    float DefaultTurnRatePitchSky = -90.0f;
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Game")
-    TArray<USkeletalMesh*> TeamSkeletalMeshes;*/
+    UPROPERTY(EditDefaultsOnly, Category = "Sky")
+    float TurnRatePitch = 0.25f;
 };
 
 UENUM(BlueprintType)
@@ -191,6 +181,9 @@ struct FLevelData
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game")
     UTexture2D* LevelImage;
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game")
+    FGameData GameData;
 };
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnLevelSelectedSignature, const FLevelData&);

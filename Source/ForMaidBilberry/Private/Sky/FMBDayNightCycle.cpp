@@ -63,11 +63,6 @@ void AFMBDayNightCycle::UpdateDaytime(const float TurnRateLight)
     CountTime = TurnRateLight * (PitchToSecondModifierDN / 2);
 
     FMBGameMode->DayTimerUpdate(CountTime);
-    /*if (CountSecondTime >= OneSecond)
-    {
-        FMBGameMode->DayTimerUpdate();
-        CountSecondTime = 0;
-    }*/
 }
 
 AFMBGameModeBase* AFMBDayNightCycle::GetGameMode() const

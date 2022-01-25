@@ -7,6 +7,7 @@
 #include "FMBDayNightCycle.generated.h"
 
 class AFMBGameModeBase;
+class UFMBGameInstance;
 class ADirectionalLight;
 class ASkyLight;
 
@@ -40,4 +41,6 @@ private:
     void UpdateDaytime(const float TurnRateLight);
 
     AFMBGameModeBase* GetGameMode() const;
+
+    UFMBGameInstance* GetGameInstance() const;
 };

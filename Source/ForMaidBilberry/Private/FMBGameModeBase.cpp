@@ -16,7 +16,7 @@
 DEFINE_LOG_CATEGORY_STATIC(LogFMBGameModeBase, All, All)
 
 // constexpr static int32 MinRoundTimeForRespawn = 10;
-constexpr static int32 PitchToSecondModifier = 8;
+// constexpr static int32 PitchToSecondModifier = 8;
 
 AFMBGameModeBase::AFMBGameModeBase()
 {
@@ -49,7 +49,6 @@ void AFMBGameModeBase::StartPlay()
         StartGameOverConditionTimer();
     }
     SetStartUpDayTime();
-
     SetMatchState(EFMBMatchState::InProgress);
 }
 
@@ -78,15 +77,7 @@ void AFMBGameModeBase::SpawnBots()
 
 void AFMBGameModeBase::SetStartUpDayTime()
 {
-    if (GameData.DefaultTurnRatePitchSky > 0.0f)
-    {
-        StartupDayTime = fmod((GameData.DefaultTurnRatePitchSky * PitchToSecondModifier), MaxDayTime);
-    }
-    else
-    {
-        StartupDayTime = fmod((abs(GameData.DefaultTurnRatePitchSky) * PitchToSecondModifier), MaxDayTime);
-    }
-    CurrentDayTime = StartupDayTime;
+    GameData.bIsDefaultDay ? CurrentDayTime = MaxDayTime / 2 : CurrentDayTime = 0.0f;
 }
 
 void AFMBGameModeBase::StartGameOverConditionTimer()

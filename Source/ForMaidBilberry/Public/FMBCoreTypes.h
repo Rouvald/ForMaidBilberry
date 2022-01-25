@@ -140,10 +140,10 @@ struct FGameData
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game", meta = (ClampMin = "3", ClampMax = "30"))
     int32 RespawnTime = 10; // in second
 
-    UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Sky")
-    float DefaultTurnRatePitchSky = -90.0f;
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sky")
+    bool bIsDefaultDay{true};
 
-    UPROPERTY(EditDefaultsOnly, Category = "Sky")
+    UPROPERTY(EditDefaultsOnly, Category = "Sky", meta = (ClampMin = "0.23", ClampMax = "10", ToolTip = "Minimum value = 0.23"))
     float TurnRatePitch = 0.25f;
 };
 

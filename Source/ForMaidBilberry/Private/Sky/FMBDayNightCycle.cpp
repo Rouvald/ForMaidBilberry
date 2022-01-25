@@ -1,13 +1,14 @@
 // For Maid Bilberry Game. All Rights Recerved
 
 #include "Sky/FMBDayNightCycle.h"
+#include "FMBGameInstance.h"
 #include "FMBGameModeBase.h"
 #include "Misc/OutputDeviceNull.h"
 #include "Engine/DirectionalLight.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogFMBDayNightCycle, All, All)
 
-constexpr static int32 OneSecond = 1;
+// constexpr static int32 OneSecond = 1;
 constexpr static int32 PitchToSecondModifierDN = 8;
 
 AFMBDayNightCycle::AFMBDayNightCycle()
@@ -45,12 +46,17 @@ void AFMBDayNightCycle::Tick(float DeltaTime)
 
 void AFMBDayNightCycle::SetSkyDefaultRotation() const
 {
+    const auto FMBGameInstance = GetGameInstance();
+    if (!FMBGameInstance) return;
+
     const auto FMBGameMode = GetGameMode();
     if (!FMBGameMode) return;
 
+    const float DefaultPitch{FMBGameInstance->GetStartLevel().GameData.bIsDefaultDay ? -90.0f : 90.0f};
+
     if (LightSource)
     {
-        LightSource->SetActorRotation(FRotator(FMBGameMode->GetDefaultTurnRatePitchSky(), 0.0f, 0.0f));
+        LightSource->SetActorRotation(FRotator(DefaultPitch, 0.0f, 0.0f));
         FMBGameMode->SetDayTime(LightSource->GetActorRotation().Pitch > 0.0f);
     }
 }
@@ -69,4 +75,10 @@ AFMBGameModeBase* AFMBDayNightCycle::GetGameMode() const
 {
     if (!GetWorld()) return nullptr;
     return Cast<AFMBGameModeBase>(GetWorld()->GetAuthGameMode());
+}
+
+UFMBGameInstance* AFMBDayNightCycle::GetGameInstance() const
+{
+    if (!GetWorld()) return nullptr;
+    return Cast<UFMBGameInstance>(GetWorld()->GetGameInstance());
 }

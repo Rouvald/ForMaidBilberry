@@ -36,7 +36,7 @@ public:
 
     void RespawnRequest(AController* Controller);
 
-    float GetDefaultTurnRatePitchSky() const { return GameData.DefaultTurnRatePitchSky; }
+    // bool GetIsDefaultDay() const { return GameData.bIsDefaultDay; }
     float GetTurnRatePitch() const { return GameData.TurnRatePitch; }
 
     UFUNCTION(BlueprintCallable)
@@ -64,7 +64,6 @@ protected:
 private:
     // int32 CurrentRound = 1;
     float CurrentDayTime = 0;
-    float StartupDayTime = 0;
     float MaxDayTime = 1440; // 12 minute in second
     FTimerHandle DayTimerHandle;
     FTimerHandle GameOverConditionTimerHandle;

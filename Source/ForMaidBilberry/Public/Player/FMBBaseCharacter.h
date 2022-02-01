@@ -23,7 +23,7 @@ public:
 
     virtual void Tick(float DeltaTime) override;
 
-    UFUNCTION(BlueprintCallable, Category = "Movement")
+    // UFUNCTION(BlueprintCallable, Category = "Movement")
     virtual bool IsRunning() const;
 
     // UFUNCTION(BlueprintCallable, Category="Movement")

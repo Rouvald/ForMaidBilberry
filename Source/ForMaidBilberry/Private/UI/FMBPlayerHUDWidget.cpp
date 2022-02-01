@@ -33,8 +33,7 @@ void UFMBPlayerHUDWidget::OnHealthChange(float Health, float HealthDelta)
 {
     if (HealthDelta < 0.0f)
     {
-        OnTakeDamage();
-
+        // OnTakeDamage();
         if (!IsAnimationPlaying(BloodyScreenAnim))
         {
             PlayAnimation(BloodyScreenAnim);
@@ -78,15 +77,14 @@ bool UFMBPlayerHUDWidget::GetArmoryWeaponUIData(FWeaponUIData& WeaponUIData) con
     return WeaponComponent->GetArmoryWeaponUIData(WeaponUIData);
 }
 
-bool UFMBPlayerHUDWidget::IsPlayerAlive() const
+ESlateVisibility UFMBPlayerHUDWidget::IsPlayerAlive() const
 {
     const auto HealthComponent = FMBUtils::GetFMBPlayerComponent<UFMBHealthComponent>(GetOwningPlayerPawn());
-
-    return HealthComponent && !HealthComponent->IsDead();
+    return HealthComponent && !HealthComponent->IsDead() ? ESlateVisibility::Visible : ESlateVisibility::Collapsed;
 }
 
-bool UFMBPlayerHUDWidget::IsPlayerSpectating() const
+ESlateVisibility UFMBPlayerHUDWidget::IsPlayerSpectating() const
 {
     const auto Controller = GetOwningPlayer();
-    return Controller && Controller->GetStateName() == NAME_Spectating;
+    return Controller && Controller->GetStateName() == NAME_Spectating ? ESlateVisibility::Visible : ESlateVisibility::Collapsed;
 }

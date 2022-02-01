@@ -3,34 +3,45 @@
 #include "UI/FMBGameDataWidget.h"
 #include "FMBGameModeBase.h"
 #include "FMBPlayerState.h"
+#include "Kismet/KismetStringLibrary.h"
 
-int32 UFMBGameDataWidget::GetKillsNum() const
+FText UFMBGameDataWidget::GetKillsNum() const
 {
-    const auto PlayerState = GetPlayerState();
-    return PlayerState ? PlayerState->GetKillsNum() : 0;
+    const auto PlayerState{GetPlayerState()};
+    if (!PlayerState) return FText{FText::FromString(TEXT("Error"))};
+
+    const FString KillsNum{TEXT("Kills: ") + FString::FromInt(PlayerState->GetKillsNum())};
+    return FText::FromString(KillsNum);
 }
 
-int32 UFMBGameDataWidget::GetEnemiesNum(int32& AllEnemiesNum) const
+FText UFMBGameDataWidget::GetEnemiesNum() const
 {
     const auto GameMode = GetGameModeBase();
     const auto PlayerState = GetPlayerState();
+    if (!GetWorld() || !PlayerState || !GameMode) return FText{FText::FromString(TEXT("Error"))};
 
-    AllEnemiesNum = GameMode ? GameMode->GetGameData().PlayerNum - 1 : 0;
-
-    return GameMode && PlayerState ? GameMode->GetGameData().PlayerNum - 1 - PlayerState->GetKillsNum() : 0;
+    const int32 CurrentEnemiesNum{GetWorld()->GetNumControllers() - 1};
+    const FString EnemiesNum{TEXT("Left ") + FString::FromInt(CurrentEnemiesNum) + TEXT(" enemy")};
+    return FText::FromString(EnemiesNum);
 }
 
-float UFMBGameDataWidget::GetDayTime() const
+FText UFMBGameDataWidget::GetDayTime() const
 {
-    const auto GameMode = GetGameModeBase();
-    return GameMode ? GameMode->GetGameTimer() : 0;
+    const auto GameMode{GetGameModeBase()};
+    if (!GameMode) return FText{FText::FromString(TEXT("Error"))};
+
+    const FText DayTime{FText::FromString(UKismetStringLibrary::TimeSecondsToString(GameMode->GetGameTimer()).Mid(0, 5))};
+    return DayTime;
 }
 
-/*bool UFMBGameDataWidget::GetIsInfinityGame() const
+ESlateVisibility UFMBGameDataWidget::IsPlayerAlone() const
 {
-    const auto GameMode = GetGameModeBase();
-    return GameMode ? GameMode->GetGameData().IsInfinityGame : false;
-}*/
+    const auto GameMode{GetGameModeBase()};
+    if (!GetWorld() || !GameMode) return ESlateVisibility::Hidden;
+
+    const int32 CurrentEnemiesNum{GetWorld()->GetNumControllers() - 1};
+    return (GameMode->GetGameData().bIsWalkAlone && CurrentEnemiesNum == 0) ? ESlateVisibility::Hidden : ESlateVisibility::Visible;
+}
 
 AFMBGameModeBase* UFMBGameDataWidget::GetGameModeBase() const
 {

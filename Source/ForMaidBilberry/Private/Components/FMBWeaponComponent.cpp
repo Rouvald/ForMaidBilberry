@@ -10,7 +10,6 @@
 #include "Components/FMBCharacterMovementComponent.h"
 #include "Components/FMBStaminaComponent.h"
 #include "FMBCoreTypes.h"
-#include "FMBPlayerCharacter.h"
 
 DECLARE_LOG_CATEGORY_CLASS(LogFMBWeaponComponent, All, All);
 
@@ -27,13 +26,16 @@ void UFMBWeaponComponent::BeginPlay()
     CurrentWeaponIndex = 0;
 
     CheckWeaponAnimationsData();
-    SpawnWeapons();
 
-    EquipWeapon(CurrentWeaponIndex);
-
-    if (Cast<AFMBPlayerCharacter>(GetOwner()))
+    Character = Cast<AFMBBaseCharacter>(GetOwner());
+    if (Character)
     {
-        IsPlayerCharacter = true;
+        SpawnWeapons();
+        EquipWeapon(CurrentWeaponIndex);
+        if (Character->IsPlayerControlled())
+        {
+            IsPlayerCharacter = true;
+        }
     }
 }
 
@@ -54,7 +56,6 @@ void UFMBWeaponComponent::SpawnWeapons()
 {
     if (!GetWorld()) return;
 
-    const auto Character = GetCharacter();
     if (!Character) return;
 
     for (auto WeaponClass : WeaponClasses)
@@ -84,7 +85,6 @@ void UFMBWeaponComponent::AttachWeaponToSocket(AFMBBaseWeapon* Weapon, USceneCom
 
 void UFMBWeaponComponent::EquipWeapon(int32 WeaponIndex)
 {
-    const auto Character = GetCharacter();
     if (!Character) return;
 
     EquipAnimInProgress = true;
@@ -166,7 +166,6 @@ bool UFMBWeaponComponent::CanDoAttack(const EStaminaSpend AttackStaminaSpend) co
 
 void UFMBWeaponComponent::PlayAnimMontage(UAnimMontage* Animation) const
 {
-    const auto Character = GetCharacter();
     if (!Character) return;
     Character->PlayAnimMontage(Animation);
 }
@@ -237,7 +236,6 @@ void UFMBWeaponComponent::CheckAttackFinishedAnimNotify(UAnimMontage* Animation)
 
 void UFMBWeaponComponent::OnAttackFinished(USkeletalMeshComponent* MeshComp)
 {
-    const auto Character = GetCharacter();
     if (!Character || Character->GetMesh() != MeshComp) return;
 
     const auto StaminaComponent = Character->FindComponentByClass<UFMBStaminaComponent>();
@@ -250,7 +248,6 @@ void UFMBWeaponComponent::OnAttackFinished(USkeletalMeshComponent* MeshComp)
 
 void UFMBWeaponComponent::OnEquipFinished(USkeletalMeshComponent* MeshComp)
 {
-    const auto Character = GetCharacter();
     if (!Character || Character->GetMesh() != MeshComp) return;
 
     EquipAnimInProgress = false;
@@ -263,7 +260,6 @@ void UFMBWeaponComponent::OnChangeEquipWeapon(USkeletalMeshComponent* MeshComp)
         UE_LOG(LogFMBWeaponComponent, Display, TEXT("Incorrect Weapon Index"));
         return;
     }
-    const auto Character = GetCharacter();
     if (!Character || Character->GetMesh() != MeshComp) return;
 
     if (CurrentWeapon)
@@ -315,14 +311,6 @@ bool UFMBWeaponComponent::CanAttack() const
 bool UFMBWeaponComponent::CanEquip() const
 {
     return !EquipAnimInProgress;
-}
-
-AFMBBaseCharacter* UFMBWeaponComponent::GetCharacter() const
-{
-    const auto Character = Cast<AFMBBaseCharacter>(GetOwner());
-    if (!Character) return nullptr;
-
-    return Character;
 }
 
 bool UFMBWeaponComponent::GetCurrentWeaponUIData(FWeaponUIData& WeaponUIData) const

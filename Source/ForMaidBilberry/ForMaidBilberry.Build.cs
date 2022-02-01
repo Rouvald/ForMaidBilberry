@@ -32,7 +32,9 @@ public class ForMaidBilberry : ModuleRules
             "ForMaidBilberry/Public/Menu",              //
             "ForMaidBilberry/Public/Menu/UI",           //
             "ForMaidBilberry/Public/Sound",             //
-            "ForMaidBilberry/Public/Sky"                //
+            "ForMaidBilberry/Public/Sky",               //
+            "ForMaidBilberry/Public/GameModes",         //
+            "ForMaidBilberry/Public/Environment"        //
         });
         // Uncomment if you are using Slate UI
         // PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });

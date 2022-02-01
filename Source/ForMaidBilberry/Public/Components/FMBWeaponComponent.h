@@ -43,14 +43,11 @@ public:
 
     // const TArray<TSubclassOf<AFMBBaseWeapon>>& GetWeaponClasses() const { return WeaponClasses; }
 
-    UFUNCTION(BlueprintCallable)
-    AFMBBaseWeapon* GetCurrentWeapon() const { return CurrentWeapon; }
+    FORCEINLINE AFMBBaseWeapon* GetCurrentWeapon() const { return CurrentWeapon; }
+    FORCEINLINE FWeaponAnimationsData GetCurrentWeaponAnimationsData() const { return CurrentWeaponAnimationsData; }
+    FORCEINLINE int32 GetCurrentWeaponIndex() const { return CurrentWeaponIndex; }
 
-    UFUNCTION(BlueprintCallable)
-    FWeaponAnimationsData GetCurrentWeaponAnimationsData() const { return CurrentWeaponAnimationsData; }
-
-    UFUNCTION(BlueprintCallable)
-    int32 GetCurrentWeaponIndex() const { return CurrentWeaponIndex; }
+    FORCEINLINE const TMap<EWeaponType, FWeaponAnimationsData>& GetWeaponAnimationsData() const { return WeaponsAnimationsData; }
 
 protected:
     // UPROPERTY(EditDefaultsOnly, Category="Shield")
@@ -75,22 +72,25 @@ protected:
 
 private:
     UPROPERTY()
-    AFMBBaseWeapon* CurrentWeapon = nullptr;
+    AFMBBaseCharacter* Character{nullptr};
 
     UPROPERTY()
-    AFMBBaseWeapon* ArmoryWeapon = nullptr;
+    AFMBBaseWeapon* CurrentWeapon{nullptr};
+
+    UPROPERTY()
+    AFMBBaseWeapon* ArmoryWeapon{nullptr};
 
     UPROPERTY()
     FWeaponAnimationsData CurrentWeaponAnimationsData;
 
-    bool AttackAnimInProgress = false;
+    bool AttackAnimInProgress{false};
 
-    bool EquipAnimInProgress = false;
+    bool EquipAnimInProgress{false};
 
     UPROPERTY()
     TArray<AFMBBaseWeapon*> Weapons;
 
-    int32 CurrentWeaponIndex = 0;
+    int32 CurrentWeaponIndex{0};
 
     bool IsPlayerCharacter{false};
 
@@ -110,6 +110,4 @@ private:
 
     bool CanDoAttack(const EStaminaSpend AttackStaminaSpend) const;
     void SpendStamina(const EStaminaSpend StaminaSpend) const;
-
-    AFMBBaseCharacter* GetCharacter() const;
 };

@@ -21,6 +21,9 @@ public:
 
     virtual void Tick(float DeltaTime) override;
 
+    UFUNCTION(BlueprintCallable)
+    bool GetDayTime() const;
+
 protected:
     UPROPERTY(EditAnywhere, Category = "Sky")
     AActor* SkySphere;

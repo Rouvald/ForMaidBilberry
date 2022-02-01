@@ -21,7 +21,7 @@ class FORMAIDBILBERRY_API AFMBPlayerCharacter : public AFMBBaseCharacter
 public:
     AFMBPlayerCharacter(const FObjectInitializer& ObjInit);
 
-    virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+    virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
     virtual bool IsRunning() const override;
 
 protected:

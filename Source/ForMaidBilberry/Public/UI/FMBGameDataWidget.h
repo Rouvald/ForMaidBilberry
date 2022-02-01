@@ -17,13 +17,16 @@ class FORMAIDBILBERRY_API UFMBGameDataWidget : public UUserWidget
     GENERATED_BODY()
 public:
     UFUNCTION(BlueprintCallable, Category = "UI")
-    int32 GetKillsNum() const;
+    FText GetKillsNum() const;
 
     UFUNCTION(BlueprintCallable, Category = "UI")
-    int32 GetEnemiesNum(int32& AllEnemiesNum) const;
+    FText GetEnemiesNum() const;
 
     UFUNCTION(BlueprintCallable, Category = "UI")
-    float GetDayTime() const;
+    FText GetDayTime() const;
+
+    UFUNCTION(BlueprintCallable, Category = "UI")
+    ESlateVisibility IsPlayerAlone() const;
 
     /*UFUNCTION(BlueprintCallable, Category = "UI")
     bool GetIsInfinityGame() const;*/

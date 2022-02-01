@@ -30,13 +30,13 @@ public:
     bool GetArmoryWeaponUIData(FWeaponUIData& WeaponUIData) const;
 
     UFUNCTION(BlueprintCallable, Category = "UI")
-    bool IsPlayerAlive() const;
+    ESlateVisibility IsPlayerAlive() const;
 
     UFUNCTION(BlueprintCallable, Category = "UI")
-    bool IsPlayerSpectating() const;
+    ESlateVisibility IsPlayerSpectating() const;
 
-    UFUNCTION(BlueprintImplementableEvent, Category = "UI")
-    void OnTakeDamage();
+    /*UFUNCTION(BlueprintImplementableEvent, Category = "UI")
+    void OnTakeDamage();*/
 
 protected:
     UPROPERTY(meta = (BindWidgetAnim), Transient)

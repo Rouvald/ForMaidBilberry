@@ -30,24 +30,8 @@ void AFMBGameModeBase::StartPlay()
 {
     Super::StartPlay();
 
-    if (GetWorld())
-    {
-        const auto GameInstance = GetWorld()->GetGameInstance<UFMBGameInstance>();
-        if (GameInstance)
-        {
-            GameData = GameInstance->GetStartLevel().GameData;
-        }
-    }
     SpawnBots();
     SetDefaultPlayerName();
-    if (GameData.bIsWalkAlone)
-    {
-        GameData.PlayerNum = 1;
-    }
-    else
-    {
-        StartGameOverConditionTimer();
-    }
     SetStartUpDayTime();
     SetMatchState(EFMBMatchState::InProgress);
 }
@@ -80,10 +64,10 @@ void AFMBGameModeBase::SetStartUpDayTime()
     GameData.bIsDefaultDay ? CurrentDayTime = MaxDayTime / 2 : CurrentDayTime = 0.0f;
 }
 
-void AFMBGameModeBase::StartGameOverConditionTimer()
+/*void AFMBGameModeBase::StartGameOverConditionTimer()
 {
     GetWorldTimerManager().SetTimer(GameOverConditionTimerHandle, this, &AFMBGameModeBase::GameOverCondition, 1.0f, true);
-}
+}*/
 
 void AFMBGameModeBase::DayTimerUpdate(float Time)
 {
@@ -141,7 +125,8 @@ void AFMBGameModeBase::PlayerKiller(AController* KillerController, AController* 
     if (KillerPlayerState)
     {
         KillerPlayerState->AddKill();
-        GameOverCondition();
+        GetWorldTimerManager().SetTimer(
+            GameOverConditionTimerHandle, this, &AFMBGameModeBase::GameOverCondition, GameData.RespawnTime + 1.0f);
     }
     if (VictimController && GameData.CanBotsRespawn)
     {
@@ -173,7 +158,7 @@ void AFMBGameModeBase::GameOverCondition()
     if (GetWorld()->GetNumControllers() == 1)
     {
         GameOver();
-        GetWorldTimerManager().ClearTimer(GameOverConditionTimerHandle);
+        // GetWorldTimerManager().ClearTimer(GameOverConditionTimerHandle);
         // GetWorld()->GetTimerManager().SetTimer(GameOverTimerHandle, this, &AFMBGameModeBase::GameOver, GameData.GameOverDelayTime,
         // false);
     }

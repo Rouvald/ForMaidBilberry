@@ -31,16 +31,15 @@ public:
     void PlayerKiller(AController* KillerController, AController* VictimController);
     void BotKiller(AController* VictimController);
 
-    FGameData GetGameData() const { return GameData; }
-    float GetGameTimer() const { return CurrentDayTime; }
+    FORCEINLINE FGameData GetGameData() const { return GameData; }
+    FORCEINLINE float GetGameTimer() const { return CurrentDayTime; }
 
     void RespawnRequest(AController* Controller);
 
     // bool GetIsDefaultDay() const { return GameData.bIsDefaultDay; }
-    float GetTurnRatePitch() const { return GameData.TurnRatePitch; }
+    FORCEINLINE float GetTurnRatePitch() const { return GameData.TurnRatePitch; }
 
-    UFUNCTION(BlueprintCallable)
-    bool GetDayTime() const { return DayTime; }
+    FORCEINLINE bool GetDayTime() const { return DayTime; }
     void SetDayTime(const bool IsDay);
 
     void DayTimerUpdate(float Time);
@@ -63,11 +62,11 @@ protected:
 
 private:
     // int32 CurrentRound = 1;
-    float CurrentDayTime = 0;
-    float MaxDayTime = 1440; // 12 minute in second
+    float CurrentDayTime{0};
+    float MaxDayTime{1440}; // 12 minute in second
     FTimerHandle DayTimerHandle;
     FTimerHandle GameOverConditionTimerHandle;
-    FTimerHandle GameOverTimerHandle;
+    // FTimerHandle GameOverTimerHandle;
 
     EFMBMatchState MatchState = EFMBMatchState::WaitingToStart;
 
@@ -75,7 +74,7 @@ private:
 
     void SpawnBots();
 
-    void StartGameOverConditionTimer();
+    // void StartGameOverConditionTimer();
     void GameOverCondition();
 
     void ResetPlayers();

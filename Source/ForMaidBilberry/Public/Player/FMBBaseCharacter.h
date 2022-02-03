@@ -11,6 +11,7 @@
 
 class UFMBHealthComponent;
 class UFMBWeaponComponent;
+class UFMBCharacterMovementComponent;
 class USoundCue;
 
 UCLASS()
@@ -29,32 +30,32 @@ public:
     // UFUNCTION(BlueprintCallable, Category="Movement")
     // float GetMovementDirection() const;
 
-    void SetTeamSkeletalMesh(USkeletalMesh* TeamSkeletalMesh) const;
+    // void SetTeamSkeletalMesh(USkeletalMesh* TeamSkeletalMesh) const;
 
 protected:
     UPROPERTY(EditDefaultsOnly, Category = "Backpack")
-    UStaticMeshComponent* Backpack;
+    UStaticMeshComponent* Backpack{nullptr};
 
     UPROPERTY(EditDefaultsOnly, Category = "Weapon")
-    FName BackpackSocketName = "Backpack";
+    FName BackpackSocketName{TEXT("Backpack")};
 
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
-    UFMBHealthComponent* HealthComponent;
+    UFMBHealthComponent* HealthComponent{nullptr};
 
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
-    UFMBWeaponComponent* WeaponComponent;
+    UFMBWeaponComponent* WeaponComponent{nullptr};
 
     UPROPERTY(EditDefaultsOnly, Category = "Damage")
-    float LifeSpanOnDeath = 5.0f;
+    float LifeSpanOnDeath{5.0f};
 
     UPROPERTY(EditDefaultsOnly, Category = "Damage")
-    FVector2D LandedVelocityZ = {900.f, 1200.0f};
+    FVector2D LandedVelocityZ{900.f, 1200.0f};
 
     UPROPERTY(EditDefaultsOnly, Category = "Damage")
-    FVector2D LandedDamage = {10.f, 100.0f};
+    FVector2D LandedDamage{10.f, 100.0f};
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sound")
-    USoundCue* CharacterDeathSound;
+    USoundCue* CharacterDeathSound{nullptr};
 
     virtual void BeginPlay() override;
 
@@ -63,5 +64,5 @@ protected:
 
 private:
     UFUNCTION()
-    void OnGroundLanded(const FHitResult& Hitresult);
+    void OnGroundLanded(const FHitResult& HitResult);
 };

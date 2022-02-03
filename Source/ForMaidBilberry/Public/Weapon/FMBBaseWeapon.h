@@ -21,65 +21,61 @@ class FORMAIDBILBERRY_API AFMBBaseWeapon : public AActor
 public:
     AFMBBaseWeapon();
 
-    virtual void MeleeAttack(EChooseAttack ChooseAttack);
+    virtual void MeleeAttack(const EChooseAttack ChooseAttack);
 
     // UFUNCTION(BlueprintCallable)
     // FWeaponAnimationData GetWeaponAnimationData() const {return WeaponAnimationData;}
 
-    UFUNCTION(BlueprintCallable)
-    const EWeaponType& GetWeaponType() const { return WeaponType; }
+    // UFUNCTION(BlueprintCallable)
+    FORCEINLINE const EWeaponType& GetWeaponType() const { return WeaponType; }
 
     void StopDrawTrace();
 
-    const FWeaponUIData& GetWeaponUIData() const { return WeaponUIData; }
-
-    UNiagaraComponent* GetSwordTrailFXComponent() const { return SwordTrailFXComponent; }
+    FORCEINLINE const FWeaponUIData& GetWeaponUIData() const { return WeaponUIData; }
+    FORCEINLINE UNiagaraComponent* GetSwordTrailFXComponent() const { return SwordTrailFXComponent; }
 
 protected:
-    UPROPERTY()
-    USceneComponent* DefaultRootComponent;
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Component")
+    USceneComponent* DefaultRootComponent{nullptr};
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Component")
-    UStaticMeshComponent* WeaponMesh;
+    UStaticMeshComponent* WeaponMesh{nullptr};
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Component")
-    UFMBWeaponFXComponent* WeaponFXComponent;
+    UFMBWeaponFXComponent* WeaponFXComponent{nullptr};
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Component")
-    UNiagaraComponent* SwordTrailFXComponent;
+    UNiagaraComponent* SwordTrailFXComponent{nullptr};
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
-    EWeaponType WeaponType;
+    EWeaponType WeaponType{EWeaponType::EWT_RedSword};
 
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-    FName StartBladeTraceSocketName = "StartBladeTraceSocket";
+    FName StartBladeTraceSocketName{"StartBladeTraceSocket"};
 
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-    FName EndBladeTraceSocketName = "EndBladeTraceSocket";
+    FName EndBladeTraceSocketName{"EndBladeTraceSocket"};
 
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-    FName SwordTrailSocketName = "SwordTrailSocket";
+    FName SwordTrailSocketName{"SwordTrailSocket"};
 
     UPROPERTY()
-    float TraceRadius = 10.0f;
+    float TraceRadius{10.0f};
 
     UPROPERTY()
-    float DamageAmount = 0;
+    float DamageAmount{0};
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
-    float FastAttackDamage = 10.0f;
+    float FastAttackDamage{10.0f};
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
-    float StrongAttackDamage = 30.0f;
+    float StrongAttackDamage{30.0f};
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
     FWeaponUIData WeaponUIData;
 
-    /*UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
-    UNiagaraSystem* SwordTrailFX;*/
-
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sound")
-    USoundCue* SwordSlashSound;
+    USoundCue* SwordSlashSound{nullptr};
 
     FTimerHandle DrawTraceTimerHandle;
 
@@ -90,11 +86,9 @@ protected:
 
     virtual void BeginPlay() override;
 
-    AController* GetController() const;
-
     void DrawTrace();
 
-    FVector FindBladeSocketLocation(FName BladeTraceSocketName) const;
+    FVector FindBladeSocketLocation(const FName BladeTraceSocketName) const;
     void MakeHit(FHitResult& HitResult, const FVector& TraceStart, const FVector& TraceEnd) const;
 
     void SortEqualCharacter(const FHitResult& HitResult);
@@ -104,4 +98,6 @@ protected:
     void StartDrawTrace();
 
     void SpawnSwordSlashSound() const;
+
+    AController* GetController() const;
 };

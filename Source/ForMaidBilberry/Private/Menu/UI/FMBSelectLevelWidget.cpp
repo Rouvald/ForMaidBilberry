@@ -29,7 +29,7 @@ void UFMBSelectLevelWidget::InitLevelItem()
     if (!LevelItemsBox) return;
     LevelItemsBox->ClearChildren();
 
-    int32 LevelID = 0;
+    int32 LevelID{0};
     for (auto LevelData : GameInstance->GetLevelsData())
     {
         const auto LevelItemWidget = CreateWidget<UFMBLevelItemWidget>(GetWorld(), LevelItemWidgetClass);

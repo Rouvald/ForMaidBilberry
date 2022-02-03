@@ -22,34 +22,34 @@ public:
     FOnLevelSelectedSignature OnLevelSelected;
 
     void SetLevelData(const FLevelData& Data);
-    FLevelData GetLevelData() const { return LevelData; }
+    FORCEINLINE FLevelData GetLevelData() const { return LevelData; }
 
-    void IsLevelSelected(bool IsSelected);
+    void IsLevelSelected(bool IsSelected) const;
 
     /*float GetNormalSizeBox () const {return NormalSizeBox;}
     float GetSelectedSizeBox () const {return SelectedSizeBox;}*/
 
 protected:
     UPROPERTY(meta = (BindWidget))
-    USizeBox* LevelIconSizeBox;
+    USizeBox* LevelIconSizeBox{nullptr};
 
     UPROPERTY(meta = (BindWidget))
-    USizeBox* LevelFrameSizeBox;
+    USizeBox* LevelFrameSizeBox{nullptr};
 
     UPROPERTY(meta = (BindWidget))
-    UTextBlock* LevelNameTextBlock;
+    UTextBlock* LevelNameTextBlock{nullptr};
 
     UPROPERTY(meta = (BindWidget))
-    UTextBlock* LevelDescriptionTextBlock;
+    UTextBlock* LevelDescriptionTextBlock{nullptr};
 
     UPROPERTY(meta = (BindWidget))
-    UImage* LevelImage = nullptr;
+    UImage* LevelImage{nullptr};
 
     UPROPERTY(meta = (BindWidget))
-    UImage* LevelHoveredImage = nullptr;
+    UImage* LevelHoveredImage{nullptr};
 
     UPROPERTY(meta = (BindWidget))
-    UButton* SelectLevelButton;
+    UButton* SelectLevelButton{nullptr};
 
     /*UPROPERTY(meta = (BindWidget))
     UTextBlock* LevelDescriptionTextBlock;*/
@@ -59,13 +59,13 @@ protected:
 private:
     FLevelData LevelData;
 
-    float NormalIconSizeBox = 125.0f;
-    float SelectedIconSizeBox = 250.0f;
+    float NormalIconSizeBox{125.0f};
+    float SelectedIconSizeBox{250.0f};
 
-    float NormalFrameSizeBox = 150.0f;
-    float SelectedFrameSizeBox = 300.0f;
+    float NormalFrameSizeBox{150.0f};
+    float SelectedFrameSizeBox{300.0f};
 
-    float LevelItemHoveredRenderOpacity = 0.3f;
+    float LevelItemHoveredRenderOpacity{0.3f};
 
     UFUNCTION()
     void OnLevelItemClicked();

@@ -23,13 +23,13 @@ class FORMAIDBILBERRY_API UFMBSelectLevelWidget : public UFMBBaseWidget
 
 protected:
     UPROPERTY(meta = (BindWidget))
-    UVerticalBox* LevelItemsBox;
+    UVerticalBox* LevelItemsBox{nullptr};
 
     UPROPERTY(meta = (BindWidget))
-    UButton* StartGameButton;
+    UButton* StartGameButton{nullptr};
 
     UPROPERTY(meta = (BindWidgetAnim), Transient)
-    UWidgetAnimation* LoadingLevelAnim;
+    UWidgetAnimation* LoadingLevelAnim{nullptr};
 
     UPROPERTY(EditDefaultsOnly, Category = "UI")
     TSubclassOf<UUserWidget> LevelItemWidgetClass;

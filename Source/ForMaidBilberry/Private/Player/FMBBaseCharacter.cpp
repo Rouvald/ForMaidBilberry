@@ -28,10 +28,10 @@ AFMBBaseCharacter::AFMBBaseCharacter(const FObjectInitializer& ObjInit)
     //
     GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -90.0f), FRotator(0.0f, -90.0f, 0.0f));
 
-    HealthComponent = CreateDefaultSubobject<UFMBHealthComponent>("HealthComponent");
-    WeaponComponent = CreateDefaultSubobject<UFMBWeaponComponent>("WeaponComponent");
+    HealthComponent = CreateDefaultSubobject<UFMBHealthComponent>(TEXT("HealthComponent"));
+    WeaponComponent = CreateDefaultSubobject<UFMBWeaponComponent>(TEXT("WeaponComponent"));
 
-    Backpack = CreateDefaultSubobject<UStaticMeshComponent>("Backpack");
+    Backpack = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Backpack"));
     Backpack->SetupAttachment(GetMesh(), BackpackSocketName);
     Backpack->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 }
@@ -40,9 +40,8 @@ void AFMBBaseCharacter::BeginPlay()
 {
     Super::BeginPlay();
 
-    check(GetMesh());
-    check(HealthComponent);
-    check(GetCharacterMovement());
+    checkf(GetMesh(), TEXT("Mesh = nullptr"));
+    checkf(HealthComponent, TEXT("HealthComponent = nullptr"));
 
     OnHealthChange(HealthComponent->GetHealth(), 0.0f);
     HealthComponent->OnDeath.AddUObject(this, &AFMBBaseCharacter::OnDeath);
@@ -79,8 +78,6 @@ void AFMBBaseCharacter::OnDeath()
 {
     UE_LOG(BaseCharacterLog, Display, TEXT("Player %s is dead"), *GetName());
 
-    // PlayAnimMontage(DeathAnimMontage);
-
     GetCharacterMovement()->DisableMovement();
     SetLifeSpan(LifeSpanOnDeath);
     GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
@@ -93,7 +90,7 @@ void AFMBBaseCharacter::OnDeath()
     UGameplayStatics::PlaySoundAtLocation(GetWorld(), CharacterDeathSound, GetActorLocation());
 }
 
-void AFMBBaseCharacter::OnGroundLanded(const FHitResult& Hitresult)
+void AFMBBaseCharacter::OnGroundLanded(const FHitResult& HitResult)
 {
     const auto VelocityZ = GetVelocity().Z * (-1);
     // UE_LOG(BaseCharacterLog, Display, TEXT("VelocityZ %f"), VelocityZ);
@@ -101,14 +98,16 @@ void AFMBBaseCharacter::OnGroundLanded(const FHitResult& Hitresult)
     if (VelocityZ < LandedVelocityZ.X) return;
 
     const auto FinalDamage = FMath::GetMappedRangeValueClamped(LandedVelocityZ, LandedDamage, VelocityZ);
-    UE_LOG(BaseCharacterLog, Display, TEXT("FinalDamage %f"), FinalDamage);
+    // UE_LOG(BaseCharacterLog, Display, TEXT("FinalDamage %f"), FinalDamage);
     TakeDamage(FinalDamage, FDamageEvent{}, nullptr, nullptr);
 }
 
-void AFMBBaseCharacter::SetTeamSkeletalMesh(USkeletalMesh* TeamSkeletalMesh) const
+/*
+ *void AFMBBaseCharacter::SetTeamSkeletalMesh(USkeletalMesh* TeamSkeletalMesh) const
 {
     if (TeamSkeletalMesh)
     {
         GetMesh()->SetSkeletalMesh(TeamSkeletalMesh, true);
     }
 }
+*/

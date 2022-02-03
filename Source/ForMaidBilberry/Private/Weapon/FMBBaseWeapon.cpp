@@ -6,9 +6,9 @@
 #include "Kismet/GameplayStatics.h"
 #include "FMBBaseCharacter.h"
 #include "Weapon/Components/FMBWeaponFXComponent.h"
-#include "NiagaraFunctionLibrary.h"
 #include "NiagaraComponent.h"
 #include "FMBCoreTypes.h"
+#include "FMBUtils.h"
 #include "Sound/SoundCue.h"
 
 DECLARE_LOG_CATEGORY_CLASS(LogFMBBaseWeapon, All, All);
@@ -17,32 +17,32 @@ AFMBBaseWeapon::AFMBBaseWeapon()
 {
     PrimaryActorTick.bCanEverTick = false;
 
-    DefaultRootComponent = CreateDefaultSubobject<USceneComponent>("DefaultRootComponent");
+    DefaultRootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("DefaultRootComponent"));
     RootComponent = DefaultRootComponent;
 
-    WeaponMesh = CreateDefaultSubobject<UStaticMeshComponent>("WeaponMesh");
+    WeaponMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("WeaponMesh"));
     WeaponMesh->SetupAttachment(DefaultRootComponent);
     WeaponMesh->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 
-    WeaponFXComponent = CreateDefaultSubobject<UFMBWeaponFXComponent>("WeaponFXComponent");
+    WeaponFXComponent = CreateDefaultSubobject<UFMBWeaponFXComponent>(TEXT("WeaponFXComponent"));
 
-    SwordTrailFXComponent = CreateDefaultSubobject<UNiagaraComponent>("SwordTrailFXComponent");
+    SwordTrailFXComponent = CreateDefaultSubobject<UNiagaraComponent>(TEXT("SwordTrailFXComponent"));
     SwordTrailFXComponent->SetupAttachment(WeaponMesh, SwordTrailSocketName);
 }
 
 void AFMBBaseWeapon::BeginPlay()
 {
     Super::BeginPlay();
-    check(WeaponMesh);
-    check(WeaponFXComponent);
+    checkf(WeaponMesh, TEXT("WeaponMesh = nullptr"));
+    checkf(WeaponFXComponent, TEXT("WeaponFxComponent = nullptr"));
 
-    ChooseDamageAmount.Add(EChooseAttack::FastAttack, FastAttackDamage);
-    ChooseDamageAmount.Add(EChooseAttack::StrongAttack, StrongAttackDamage);
+    ChooseDamageAmount.Add(EChooseAttack::ECA_FastAttack, FastAttackDamage);
+    ChooseDamageAmount.Add(EChooseAttack::ECA_StrongAttack, StrongAttackDamage);
 
     SwordTrailFXComponent->Deactivate();
 }
 
-void AFMBBaseWeapon::MeleeAttack(EChooseAttack ChooseAttack)
+void AFMBBaseWeapon::MeleeAttack(const EChooseAttack ChooseAttack)
 {
     if (!GetWorld()) return;
 
@@ -53,18 +53,12 @@ void AFMBBaseWeapon::MeleeAttack(EChooseAttack ChooseAttack)
     StartDrawTrace();
 }
 
-AController* AFMBBaseWeapon::GetController() const
-{
-    const auto Pawn = Cast<APawn>(GetOwner());
-    return Pawn ? Pawn->GetController() : nullptr;
-}
-
 void AFMBBaseWeapon::DrawTrace()
 {
     if (!GetWorld()) return;
 
-    const FVector TraceStart = FindBladeSocketLocation(StartBladeTraceSocketName);
-    const FVector TraceEnd = FindBladeSocketLocation(EndBladeTraceSocketName);
+    const FVector TraceStart{FindBladeSocketLocation(StartBladeTraceSocketName)};
+    const FVector TraceEnd{FindBladeSocketLocation(EndBladeTraceSocketName)};
     FHitResult HitResult;
     MakeHit(HitResult, TraceStart, TraceEnd);
 
@@ -72,10 +66,9 @@ void AFMBBaseWeapon::DrawTrace()
     {
         SortEqualCharacter(HitResult);
     }
-    // UE_LOG(LogFMBBaseWeapon, Display, TEXT("%s: timer check"), *GetOwner()->GetName());
 }
 
-FVector AFMBBaseWeapon::FindBladeSocketLocation(FName BladeTraceSocketName) const
+FVector AFMBBaseWeapon::FindBladeSocketLocation(const FName BladeTraceSocketName) const
 {
     const FTransform BladeSocketTransform = WeaponMesh->GetSocketTransform(BladeTraceSocketName);
     const FVector BladeTrace = BladeSocketTransform.GetLocation();
@@ -106,22 +99,30 @@ void AFMBBaseWeapon::MakeHit(FHitResult& HitResult, const FVector& TraceStart, c
 
 void AFMBBaseWeapon::SortEqualCharacter(const FHitResult& HitResult)
 {
-    if (!HitActors.Contains(HitResult.GetActor()))
+    if (HitActors.Contains(HitResult.GetActor())) return;
+
+    const auto OwnerPawn = Cast<APawn>(GetOwner());
+    const auto HittedActor = Cast<APawn>(HitResult.GetActor());
+
+    /* @note: in future we can add AActor that can be broke ( like wooden chest ) */
+    if (!HittedActor)
     {
         NewDamagedActor(HitResult);
         WeaponFXComponent->PlayImpactFX(HitResult);
+        return;
     }
+    if (FMBUtils::AreBothBots(OwnerPawn->GetController(), HittedActor->GetController())) return;
+
+    NewDamagedActor(HitResult);
+    WeaponFXComponent->PlayImpactFX(HitResult);
 }
 
 void AFMBBaseWeapon::NewDamagedActor(const FHitResult& HitResult)
 {
-    HitActors.AddUnique(Cast<AActor>(HitResult.GetActor()));
-    if (HitResult.bBlockingHit)
-    {
-        MakeDamage(HitResult);
-        // UE_LOG(BaseWeaponLog, Display, TEXT("Hit %s"), *(Cast<ACharacter>(HitResult.GetActor()))->GetName());
-        // DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 20.0f, 32, FColor::Green, false, 5.0f);
-    }
+    HitActors.AddUnique(HitResult.GetActor());
+    MakeDamage(HitResult);
+    // UE_LOG(BaseWeaponLog, Display, TEXT("Hit %s"), *(Cast<ACharacter>(HitResult.GetActor()))->GetName());
+    // DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 20.0f, 32, FColor::Green, false, 5.0f);
 }
 
 void AFMBBaseWeapon::MakeDamage(const FHitResult& HitResult)
@@ -163,4 +164,10 @@ void AFMBBaseWeapon::SpawnSwordSlashSound() const
         FRotator::ZeroRotator,                            //
         EAttachLocation::SnapToTarget,                    //
         true);
+}
+
+AController* AFMBBaseWeapon::GetController() const
+{
+    const auto OwnerPawn = Cast<APawn>(GetOwner());
+    return OwnerPawn ? OwnerPawn->GetController() : nullptr;
 }

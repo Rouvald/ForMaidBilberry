@@ -17,10 +17,7 @@ class FORMAIDBILBERRY_API UFMBSpectatingWidget : public UUserWidget
 
 public:
     UFUNCTION(BlueprintCallable, Category = "UI")
-    bool GetRespawnTime(int32& RespawnCountDownTime) const;
-
-    UFUNCTION(BlueprintCallable, Category = "UI")
-    bool GetGameplayTimeRemaining(int32& GameplayTimeRemaining) const;
+    FText GetRespawnTime() const;
 
 private:
     AFMBGameModeBase* GetGameModeBase() const;

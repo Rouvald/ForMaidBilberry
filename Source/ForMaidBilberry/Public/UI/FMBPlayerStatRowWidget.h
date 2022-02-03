@@ -18,21 +18,21 @@ class FORMAIDBILBERRY_API UFMBPlayerStatRowWidget : public UUserWidget
     GENERATED_BODY()
 
 public:
-    void SetPlayerName(const FText& Text);
-    void SetKillsNum(const FText& Text);
-    void SetDeathsNum(const FText& Text);
-    void SetBackGroundImageVisibility(bool IsVisible);
+    void SetPlayerName(const FText& Text) const;
+    void SetKillsNum(const FText& Text) const;
+    void SetDeathsNum(const FText& Text) const;
+    void SetBackGroundImageVisibility(bool IsVisible) const;
 
 protected:
     UPROPERTY(meta = (BindWidget))
-    UTextBlock* PlayerNameText;
+    UTextBlock* PlayerNameText{nullptr};
 
     UPROPERTY(meta = (BindWidget))
-    UTextBlock* KillsNumText;
+    UTextBlock* KillsNumText{nullptr};
 
     UPROPERTY(meta = (BindWidget))
-    UTextBlock* DeathsNumText;
+    UTextBlock* DeathsNumText{nullptr};
 
     UPROPERTY(meta = (BindWidget))
-    UImage* BackgroundImage;
+    UImage* BackgroundImage{nullptr};
 };

@@ -55,44 +55,33 @@ protected:
     FGameData GameData;
 
     UPROPERTY(EditDefaultsOnly, Category = "Game")
-    FName FMBDefaultPlayerName = "Player";
+    FName FMBDefaultPlayerName{"Player"};
 
     UPROPERTY(VisibleAnywhere, Category = "Game", meta = (ToolTip = "This tag must have at least 1 PlayerStart in the Level."))
-    FName PlayerStartTagName = "Player";
+    FName PlayerStartTagName{"Player"};
 
 private:
-    // int32 CurrentRound = 1;
     float CurrentDayTime{0};
-    float MaxDayTime{1440}; // 12 minute in second
+    float MaxDayTime{1440}; // 24 minute in second
     FTimerHandle DayTimerHandle;
     FTimerHandle GameOverConditionTimerHandle;
-    // FTimerHandle GameOverTimerHandle;
 
-    EFMBMatchState MatchState = EFMBMatchState::WaitingToStart;
+    EGameState MatchState{EGameState::EGS_WaitingToStart};
 
-    bool DayTime = true;
+    bool DayTime{true};
 
     void SpawnBots();
-
-    // void StartGameOverConditionTimer();
-    void GameOverCondition();
+    void SetDefaultPlayerName() const;
+    void SetStartUpDayTime();
 
     void ResetPlayers();
     void ResetOnePlayer(AController* Controller);
-
-    // void CreateTeamsInfo();
-    // USkeletalMesh* DetermineSkeletalMeshByTeamID(int32 TeamID);
-    // void SetTeamSkeletalMesh(AController* Controller);
-
-    void LogPlayerInfo();
-
     void StartRespawn(AController* Controller);
 
+    void LogPlayerInfo() const;
+
     void GameOver();
+    void GameOverCondition();
 
-    void SetMatchState(EFMBMatchState State);
-
-    void SetDefaultPlayerName() const;
-
-    void SetStartUpDayTime();
+    void SetMatchState(EGameState State);
 };

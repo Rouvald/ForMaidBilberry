@@ -28,9 +28,6 @@ public:
     UFUNCTION(BlueprintCallable, Category = "UI")
     ESlateVisibility IsPlayerAlone() const;
 
-    /*UFUNCTION(BlueprintCallable, Category = "UI")
-    bool GetIsInfinityGame() const;*/
-
 private:
     AFMBGameModeBase* GetGameModeBase() const;
 

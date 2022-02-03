@@ -59,7 +59,6 @@ void UFMBLevelItemWidget::SetLevelData(const FLevelData& Data)
         const FString ModeText{TEXT("Mode: ")};
         const FText LevelMode{FText::FromString(ModeText + LevelData.LevelDescriptionName.ToString())};
         LevelDescriptionTextBlock->SetText(LevelMode);
-        UE_LOG(LogTemp, Display, TEXT("%s"), *LevelDescriptionTextBlock->GetText().ToString());
     }
     if (LevelImage)
     {
@@ -67,25 +66,25 @@ void UFMBLevelItemWidget::SetLevelData(const FLevelData& Data)
     }
 }
 
-void UFMBLevelItemWidget::IsLevelSelected(bool IsSelected)
+void UFMBLevelItemWidget::IsLevelSelected(bool bIsSelected) const
 {
     if (LevelIconSizeBox)
     {
-        LevelIconSizeBox->SetWidthOverride(IsSelected ? SelectedIconSizeBox : NormalIconSizeBox);
-        LevelIconSizeBox->SetHeightOverride(IsSelected ? SelectedIconSizeBox : NormalIconSizeBox);
+        LevelIconSizeBox->SetWidthOverride(bIsSelected ? SelectedIconSizeBox : NormalIconSizeBox);
+        LevelIconSizeBox->SetHeightOverride(bIsSelected ? SelectedIconSizeBox : NormalIconSizeBox);
     }
     if (LevelFrameSizeBox)
     {
-        LevelFrameSizeBox->SetWidthOverride(IsSelected ? SelectedFrameSizeBox : NormalFrameSizeBox);
-        LevelFrameSizeBox->SetHeightOverride(IsSelected ? SelectedFrameSizeBox : NormalFrameSizeBox);
+        LevelFrameSizeBox->SetWidthOverride(bIsSelected ? SelectedFrameSizeBox : NormalFrameSizeBox);
+        LevelFrameSizeBox->SetHeightOverride(bIsSelected ? SelectedFrameSizeBox : NormalFrameSizeBox);
     }
     if (LevelNameTextBlock)
     {
-        LevelNameTextBlock->SetVisibility(IsSelected ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
+        LevelNameTextBlock->SetVisibility(bIsSelected ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
     }
     if (LevelDescriptionTextBlock)
     {
-        LevelDescriptionTextBlock->SetVisibility(IsSelected ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
+        LevelDescriptionTextBlock->SetVisibility(bIsSelected ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
     }
 }
 

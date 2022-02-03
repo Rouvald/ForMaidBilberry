@@ -19,5 +19,5 @@ public:
 
 protected:
     UPROPERTY(meta = (BindWidgetAnim), Transient)
-    UWidgetAnimation* BlinkingAnim;
+    UWidgetAnimation* BlinkingAnim{nullptr};
 };

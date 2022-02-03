@@ -21,7 +21,7 @@ void UFMBGoToMenuButtonWidget::OnBackToMenu()
         const auto GameMode = Cast<AFMBMenuGameModeBase>(GetWorld()->GetAuthGameMode());
         if (GameMode)
         {
-            GameMode->SetMenuState(EFMBMenuState::MainMenu);
+            GameMode->SetMenuState(EMenuState::EMS_MainMenu);
         }
     }
 }

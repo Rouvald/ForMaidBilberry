@@ -12,13 +12,16 @@ DECLARE_LOG_CATEGORY_CLASS(MovementComponentLog, All, All);
 void UFMBCharacterMovementComponent::BeginPlay()
 {
     Super::BeginPlay();
+
+    if (GetOwner())
+    {
+        Character = Cast<AFMBBaseCharacter>(GetOwner());
+    }
 }
 
 float UFMBCharacterMovementComponent::GetMaxSpeed() const
 {
     const auto MaxSpeed = Super::GetMaxSpeed();
-    const auto Character = Cast<AFMBBaseCharacter>(GetPawnOwner());
-
     return Character && Character->IsRunning() ? MaxSpeed * RunModifier : MaxSpeed;
 }
 
@@ -26,14 +29,13 @@ void UFMBCharacterMovementComponent::Rolling()
 {
     if (IsFalling() || !CanRolling()) return;
 
-    const auto Character = Cast<AFMBBaseCharacter>(GetPawnOwner());
     if (!Character) return;
 
     const auto WeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBWeaponComponent>(Character);
     if (!WeaponComponent || !(WeaponComponent->CanEquip()) || !(WeaponComponent->CanAttack())) return;
 
     const auto StaminaComponent = FMBUtils::GetFMBPlayerComponent<UFMBStaminaComponent>(Character);
-    if (!StaminaComponent || !(StaminaComponent->CanSpendStamina(EStaminaSpend::Rolling))) return;
+    if (!StaminaComponent || !(StaminaComponent->CanSpendStamina(EStaminaSpend::ESS_Rolling))) return;
 
     if (!Velocity.IsZero())
     {
@@ -53,7 +55,7 @@ void UFMBCharacterMovementComponent::Rolling()
             Character->SetActorRotation(FRotator{0.0f, ViewRotation.Yaw, 0.0f});
         }
     }
-    StaminaComponent->SpendStamina(EStaminaSpend::Rolling);
+    StaminaComponent->SpendStamina(EStaminaSpend::ESS_Rolling);
     RollingAnimInProgress = true;
     Character->GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Ignore);
 
@@ -63,16 +65,15 @@ void UFMBCharacterMovementComponent::Rolling()
         Character->PlayAnimMontage(WeaponComponent->GetCurrentWeaponAnimationsData().Roll);
     }
     //==================================================
-    // UE_LOG(MovementComponentLog, Display, TEXT("Rolling animation play"));
+    // UE_LOG(MovementComponentLog, Display, TEXT("ESS_Rolling animation play"));
     //==================================================
 }
 
 void UFMBCharacterMovementComponent::OnRollingFinished(USkeletalMeshComponent* MeshComp)
 {
-    const auto Character = Cast<AFMBBaseCharacter>(GetPawnOwner());
     if (!Character || Character->GetMesh() != MeshComp) return;
 
-    const auto StaminaComponent = FMBUtils::GetFMBPlayerComponent<UFMBStaminaComponent>(GetPawnOwner());
+    const auto StaminaComponent = FMBUtils::GetFMBPlayerComponent<UFMBStaminaComponent>(Character);
     if (!StaminaComponent) return;
 
     StaminaComponent->StartHealStamina();

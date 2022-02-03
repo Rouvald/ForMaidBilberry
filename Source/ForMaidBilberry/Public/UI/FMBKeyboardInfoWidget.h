@@ -19,10 +19,10 @@ class FORMAIDBILBERRY_API UFMBKeyboardInfoWidget : public UUserWidget
 
 protected:
     UPROPERTY(meta = (BindWidget))
-    UOverlay* KeyboardInfoOverlay;
+    UOverlay* KeyboardInfoOverlay{nullptr};
 
     UPROPERTY(meta = (BindWidget))
-    UOverlay* KeyboardInfoVisibilityOverlay;
+    UOverlay* KeyboardInfoVisibilityOverlay{nullptr};
 
     virtual void NativeOnInitialized() override;
     virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;

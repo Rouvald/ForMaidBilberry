@@ -19,5 +19,5 @@ public:
 
 protected:
     UPROPERTY(meta = (BindWidget))
-    UImage* EnemySignImage;
+    UImage* EnemySignImage{nullptr};
 };

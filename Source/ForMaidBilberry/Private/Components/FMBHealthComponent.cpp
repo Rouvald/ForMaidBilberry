@@ -9,7 +9,7 @@
 #include "FMBGameModeBase.h"
 #include "AIController.h"
 
-DECLARE_LOG_CATEGORY_CLASS(HealthLog, All, All);
+DECLARE_LOG_CATEGORY_CLASS(LogFMBHealthComponent, All, All);
 
 UFMBHealthComponent::UFMBHealthComponent()
 {
@@ -23,10 +23,13 @@ void UFMBHealthComponent::BeginPlay()
     check(MaxHealth > 0);
     SetHealth(MaxHealth);
 
-    const auto Controller = GetOwner();
-    if (Controller)
+    if (GetOwner())
     {
-        Controller->OnTakeAnyDamage.AddDynamic(this, &UFMBHealthComponent::OnTakeAnyDamage);
+        Character = Cast<AFMBBaseCharacter>(GetOwner());
+    }
+    if (Character)
+    {
+        Character->OnTakeAnyDamage.AddDynamic(this, &UFMBHealthComponent::OnTakeAnyDamage);
     }
 }
 
@@ -35,35 +38,32 @@ void UFMBHealthComponent::OnTakeAnyDamage(
 {
     if (Damage <= 0.0f || IsDead() || !GetWorld()) return;
 
-    if (InstigatedBy)
+    /*if (InstigatedBy)
     {
-        const auto DamagedPawn = Cast<APawn>(GetOwner());
-        if (!DamagedPawn) return;
+        if (!Character) return;
 
-        if (AreBothBots(DamagedPawn->GetController(), InstigatedBy)) return;
-    }
+        if (FMBUtils::AreBothBots(Character->GetController(), InstigatedBy)) return;
+    }*/
 
     // TODO: Hit anim don't loop, when periodical damage  // NEED FIX or not XD
-    /*if (CheckAllAnimInProgress())
+    if (CheckAllAnimInProgress())
     {
         PlayHitAnimation();
-    }*/
+    }
 
     SetHealth(Health - Damage);
     GetWorld()->GetTimerManager().ClearTimer(HealTimeHandle);
-
-    // UE_LOG(HealthLog, Display, TEXT("Health: %f"), GetHealth());
 
     if (IsDead())
     {
         Killed(InstigatedBy);
         OnDeath.Broadcast();
     }
-    else if (AutoHeal)
+    else if (bAutoHeal)
     {
         GetWorld()->GetTimerManager().SetTimer(HealTimeHandle, this, &UFMBHealthComponent::AutoHealing, HealUpdateTime, true, HealDelay);
     }
-    // PlayCameraShake();
+    PlayCameraShake();
 }
 
 void UFMBHealthComponent::AutoHealing()
@@ -100,17 +100,18 @@ bool UFMBHealthComponent::IsHealthFull() const
 
 bool UFMBHealthComponent::CheckAllAnimInProgress() const
 {
-    const auto MovementComponent = FMBUtils::GetFMBPlayerComponent<UFMBCharacterMovementComponent>(GetOwner());
+    if (!Character) return false;
+    const auto MovementComponent = FMBUtils::GetFMBPlayerComponent<UFMBCharacterMovementComponent>(Character);
     if (!MovementComponent || !(MovementComponent->CanRolling())) return false;
 
-    const auto WeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBWeaponComponent>(GetOwner());
+    const auto WeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBWeaponComponent>(Character);
     if (!WeaponComponent || !(WeaponComponent->CanAttack()) || !(WeaponComponent->CanEquip())) return false;
     return true;
 }
 
 void UFMBHealthComponent::PlayHitAnimation() const
 {
-    if (const auto Character = Cast<AFMBBaseCharacter>(GetOwner()))
+    if (Character)
     {
         const auto WeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBWeaponComponent>(Character);
         if (WeaponComponent && WeaponComponent->GetCurrentWeapon())
@@ -126,31 +127,23 @@ void UFMBHealthComponent::PlayHitAnimation() const
 void UFMBHealthComponent::PlayCameraShake() const
 {
     if (IsDead()) return;
-    const auto Player = Cast<APawn>(GetOwner());
-    if (!Player) return;
+    if (!Character) return;
 
-    const auto PlayerController = Player->GetController<APlayerController>();
+    const auto PlayerController = Character->GetController<APlayerController>();
     if (!PlayerController || !PlayerController->PlayerCameraManager) return;
 
     PlayerController->PlayerCameraManager->StartCameraShake(CameraShake);
 }
 
-void UFMBHealthComponent::Killed(AController* KillerController)
+void UFMBHealthComponent::Killed(AController* KillerController) const
 {
     if (!GetWorld()) return;
 
     const auto GameMode = Cast<AFMBGameModeBase>(GetWorld()->GetAuthGameMode());
     if (!GameMode) return;
 
-    const auto Player = Cast<APawn>(GetOwner());
-    const auto VictimController = Player ? Player->GetController() : nullptr;
+    const auto VictimController = Character ? Character->GetController() : nullptr;
 
     Cast<APlayerController>(KillerController) ? GameMode->PlayerKiller(KillerController, VictimController)
                                               : GameMode->BotKiller(VictimController);
-}
-
-bool UFMBHealthComponent::AreBothBots(AController* Controller1, AController* Controller2) const
-{
-    if (!Controller1 || !Controller2 || Controller1 == Controller2) return false;
-    return !Controller1->IsPlayerController() && !Controller2->IsPlayerController();
 }

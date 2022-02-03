@@ -5,22 +5,15 @@
 #include "FMBRespawnComponent.h"
 #include "FMBUtils.h"
 
-bool UFMBSpectatingWidget::GetRespawnTime(int32& RespawnCountDownTime) const
+FText UFMBSpectatingWidget::GetRespawnTime() const
 {
     const auto RespawnComponent = FMBUtils::GetFMBPlayerComponent<UFMBRespawnComponent>(GetOwningPlayer());
-    if (!RespawnComponent || !RespawnComponent->IsRespawnStarted()) return false;
+    if (!RespawnComponent || !RespawnComponent->IsRespawnStarted()) return FText{FText::FromString(TEXT("Error"))};
 
-    RespawnCountDownTime = RespawnComponent->GetRespawnCountDown();
-    return true;
-}
+    const int32 RespawnCountDownTime = RespawnComponent->GetRespawnCountDown();
 
-bool UFMBSpectatingWidget::GetGameplayTimeRemaining(int32& GameplayTimeRemaining) const
-{
-    const auto GameMode = GetGameModeBase();
-    if (!GameMode) return false;
-
-    GameplayTimeRemaining = GameMode->GetGameTimer();
-    return true;
+    const FString RespawnTime{TEXT("Respawn in ") + FString::FromInt(RespawnCountDownTime)};
+    return FText::FromString(RespawnTime);
 }
 
 AFMBGameModeBase* UFMBSpectatingWidget::GetGameModeBase() const

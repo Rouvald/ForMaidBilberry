@@ -25,17 +25,12 @@ void UFMBWeaponComponent::BeginPlay()
     checkf(Weapons.Num() <= 0, TEXT("Character don't have weapon"));
     CurrentWeaponIndex = 0;
 
-    CheckWeaponAnimationsData();
-
     Character = Cast<AFMBBaseCharacter>(GetOwner());
     if (Character)
     {
+        CheckWeaponAnimationsData();
         SpawnWeapons();
         EquipWeapon(CurrentWeaponIndex);
-        if (Character->IsPlayerControlled())
-        {
-            IsPlayerCharacter = true;
-        }
     }
 }
 
@@ -55,7 +50,6 @@ void UFMBWeaponComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 void UFMBWeaponComponent::SpawnWeapons()
 {
     if (!GetWorld()) return;
-
     if (!Character) return;
 
     for (auto WeaponClass : WeaponClasses)
@@ -94,7 +88,7 @@ void UFMBWeaponComponent::EquipWeapon(int32 WeaponIndex)
     }
     else
     {
-        PlayAnimMontage(WeaponsAnimationsData[EWeaponType::RedSword].Equip);
+        PlayAnimMontage(WeaponsAnimationsData[EWeaponType::EWT_RedSword].Equip);
     }
     //==================================================
     // UE_LOG(BaseWeaponComponentLog, Display, TEXT("Equip"));
@@ -112,10 +106,10 @@ void UFMBWeaponComponent::NextWeapon()
 
 void UFMBWeaponComponent::FastMeleeAttack()
 {
-    if (!CanDoAttack(EStaminaSpend::FastAttack)) return;
+    if (!CanDoAttack(EStaminaSpend::ESS_FastAttack)) return;
 
-    SpendStamina(EStaminaSpend::FastAttack);
-    CurrentWeapon->MeleeAttack(EChooseAttack::FastAttack);
+    SpendStamina(EStaminaSpend::ESS_FastAttack);
+    CurrentWeapon->MeleeAttack(EChooseAttack::ECA_FastAttack);
 
     AttackAnimInProgress = true;
     // StopMovement();
@@ -127,24 +121,24 @@ void UFMBWeaponComponent::FastMeleeAttack()
 
 void UFMBWeaponComponent::StrongMeleeAttack()
 {
-    if (!CanDoAttack(EStaminaSpend::StrongAttack)) return;
+    if (!CanDoAttack(EStaminaSpend::ESS_StrongAttack)) return;
     AttackAnimInProgress = true;
 
-    SpendStamina(EStaminaSpend::StrongAttack);
-    CurrentWeapon->MeleeAttack(EChooseAttack::StrongAttack);
+    SpendStamina(EStaminaSpend::ESS_StrongAttack);
+    CurrentWeapon->MeleeAttack(EChooseAttack::ECA_StrongAttack);
 
     // StopMovement();
     PlayAnimMontage(CurrentWeaponAnimationsData.StrongAttack);
     //==================================================
-    // UE_LOG(BaseWeaponComponentLog, Display, TEXT("%s: Strong Attack"), *GetOwner()->GetName());
+    // UE_LOG(BaseWeaponComponentLog, Display, TEXT("%s: Strong Attack"));
     //==================================================
 }
 
 void UFMBWeaponComponent::SpendStamina(const EStaminaSpend StaminaSpend) const
 {
-    if (!IsPlayerCharacter) return;
+    if (!Character || !Character->IsPlayerControlled()) return;
 
-    const auto StaminaComponent = GetOwner()->FindComponentByClass<UFMBStaminaComponent>();
+    const auto StaminaComponent = Character->FindComponentByClass<UFMBStaminaComponent>();
     if (!StaminaComponent) return;
 
     StaminaComponent->SpendStamina(StaminaSpend);
@@ -155,9 +149,9 @@ bool UFMBWeaponComponent::CanDoAttack(const EStaminaSpend AttackStaminaSpend) co
     if (!CurrentWeapon) return false;
     if (!CanAttack()) return false;
 
-    if (IsPlayerCharacter)
+    if (Character && Character->IsPlayerControlled())
     {
-        const auto StaminaComponent = GetOwner()->FindComponentByClass<UFMBStaminaComponent>();
+        const auto StaminaComponent = Character->FindComponentByClass<UFMBStaminaComponent>();
         if (!StaminaComponent || !(StaminaComponent->CanSpendStamina(AttackStaminaSpend))) return false;
     }
 
@@ -172,20 +166,22 @@ void UFMBWeaponComponent::PlayAnimMontage(UAnimMontage* Animation) const
 
 void UFMBWeaponComponent::CheckWeaponAnimationsData()
 {
-    if (WeaponsAnimationsData.Contains(EWeaponType::RedSword))
+    if (WeaponsAnimationsData.Contains(EWeaponType::EWT_RedSword))
     {
-        InitAnimation(WeaponsAnimationsData[EWeaponType::RedSword]);
+        InitAnimation(WeaponsAnimationsData[EWeaponType::EWT_RedSword]);
     }
-    if (WeaponsAnimationsData.Contains(EWeaponType::YellowSword))
+    if (WeaponsAnimationsData.Contains(EWeaponType::EWT_YellowSword))
     {
-        InitAnimation(WeaponsAnimationsData[EWeaponType::YellowSword]);
+        InitAnimation(WeaponsAnimationsData[EWeaponType::EWT_YellowSword]);
     }
 }
 
 void UFMBWeaponComponent::InitAnimation(const FWeaponAnimationsData& WeaponAnimationData)
 {
+    if (!Character) return;
+
     const auto RollingEvent = FMBAnimUtils::FindNotifyByClass<UFMBAnimFinishedNotify>(WeaponAnimationData.Roll);
-    const auto MovementComponent = GetOwner()->FindComponentByClass<UFMBCharacterMovementComponent>();
+    const auto MovementComponent = Character->FindComponentByClass<UFMBCharacterMovementComponent>();
     if (MovementComponent && RollingEvent)
     {
         RollingEvent->OnNotify.AddUObject(MovementComponent, &UFMBCharacterMovementComponent::OnRollingFinished);
@@ -281,7 +277,6 @@ void UFMBWeaponComponent::OnChangeEquipWeapon(USkeletalMeshComponent* MeshComp)
     if (WeaponsAnimationsData.Contains(CurrentWeapon->GetWeaponType()))
     {
         CurrentWeaponAnimationsData = WeaponsAnimationsData[CurrentWeapon->GetWeaponType()];
-        // ShieldVisibility(CurrentWeapon->GetWeaponType());
     }
     AttachWeaponToSocket(CurrentWeapon, Character->GetMesh(), CurrentWeaponAnimationsData.WeaponEquipSocketName);
 }
@@ -302,7 +297,7 @@ bool UFMBWeaponComponent::CanAttack() const
 
     if (!CanEquip()) return false;
 
-    const auto MovementComponent = GetOwner()->FindComponentByClass<UFMBCharacterMovementComponent>();
+    const auto MovementComponent = Character->FindComponentByClass<UFMBCharacterMovementComponent>();
     if (!MovementComponent || MovementComponent->IsFalling() || !(MovementComponent->CanRolling())) return false;
 
     return true;

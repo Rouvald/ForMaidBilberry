@@ -37,14 +37,14 @@ void UFMBSelectCharacterWidget::InitCharacterMesh()
 
         ++CharacterID;
     }
-    if (GameInstance->GetStartCharacter().CharacterName.IsNone())
+    /*if (GameInstance->GetStartCharacter().CharacterName.IsNone())
     {
         OnCharacterMeshSelected(GameInstance->GetCharactersData()[0]);
     }
     else
     {
         OnCharacterMeshSelected(GameInstance->GetStartCharacter());
-    }
+    }*/
 }
 
 void UFMBSelectCharacterWidget::OnCharacterMeshSelected(const FCharacterData& Data)
@@ -52,7 +52,7 @@ void UFMBSelectCharacterWidget::OnCharacterMeshSelected(const FCharacterData& Da
     const auto GameInstance = GetFMBGameInstance();
     if (!GameInstance) return;
 
-    GameInstance->SetStartCharacter(Data);
+    // GameInstance->SetStartCharacter(Data);
 
     for (const auto SelectCharacterButtonWidget : SelectCharacterButtonWidgets)
     {

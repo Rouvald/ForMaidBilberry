@@ -11,9 +11,9 @@ void AFMBMenuHUD::BeginPlay()
 {
     Super::BeginPlay();
 
-    MenuWidgets.Add(EFMBMenuState::MainMenu, CreateWidget<UFMBBaseWidget>(GetWorld(), MenuWidgetClass));
-    MenuWidgets.Add(EFMBMenuState::SelectLevel, CreateWidget<UFMBBaseWidget>(GetWorld(), SelectLevelWidgetClass));
-    // MenuWidgets.Add(EFMBMenuState::ChangeSkin, CreateWidget<UUserWidget>(GetWorld(), SelectCharacterWidgetClass));
+    MenuWidgets.Add(EMenuState::EMS_MainMenu, CreateWidget<UFMBBaseWidget>(GetWorld(), MenuWidgetClass));
+    MenuWidgets.Add(EMenuState::EMS_SelectLevel, CreateWidget<UFMBBaseWidget>(GetWorld(), SelectLevelWidgetClass));
+    // MenuWidgets.Add(EMenuState::EMS_ChangeSkin, CreateWidget<UUserWidget>(GetWorld(), SelectCharacterWidgetClass));
     for (const auto MenuWidgetPair : MenuWidgets)
     {
         const auto MenuWidget = MenuWidgetPair.Value;
@@ -33,7 +33,7 @@ void AFMBMenuHUD::BeginPlay()
     }
 }
 
-void AFMBMenuHUD::OnMenuStateChanged(EFMBMenuState State)
+void AFMBMenuHUD::OnMenuStateChanged(EMenuState State)
 {
     if (CurrentWidget)
     {
@@ -48,7 +48,7 @@ void AFMBMenuHUD::OnMenuStateChanged(EFMBMenuState State)
         CurrentWidget->SetVisibility(ESlateVisibility::Visible);
         CurrentWidget->Show();
     }
-    UE_LOG(LogFMBMenuHUD, Display, TEXT("Menu State: %s"), *UEnum::GetValueAsString(State));
+    // UE_LOG(LogFMBMenuHUD, Display, TEXT("Menu State: %s"), *UEnum::GetValueAsString(State));
 }
 
 /*void AFMBMenuHUD::SetCurrentWidgetVisibility(bool IsVisibility) const

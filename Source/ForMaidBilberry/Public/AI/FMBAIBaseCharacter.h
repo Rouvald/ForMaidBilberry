@@ -20,24 +20,24 @@ public:
     AFMBAIBaseCharacter(const FObjectInitializer& ObjInit);
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "AI")
-    UBehaviorTree* BehaviorTreeAsset;
+    UBehaviorTree* BehaviorTreeAsset{nullptr};
 
 protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Component")
-    UWidgetComponent* HealthBarWidgetComponent;
+    UWidgetComponent* HealthBarWidgetComponent{nullptr};
 
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
-    UWidgetComponent* EnemySignWidgetComponent;
+    UWidgetComponent* EnemySignWidgetComponent{nullptr};
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
-    float HealthVisibleDistance = 1000.0f;
+    float HealthVisibleDistance{1000.0f};
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
-    float EnemySignVisibleDistance = 4000.0f;
+    float EnemySignVisibleDistance{4000.0f};
 
     virtual void BeginPlay() override;
     virtual void OnDeath() override;
-    ;
+
     virtual void OnHealthChange(float Health, float HealthDelta) override;
 
 private:

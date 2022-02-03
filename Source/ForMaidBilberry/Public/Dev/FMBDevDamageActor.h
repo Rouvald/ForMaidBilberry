@@ -21,16 +21,16 @@ protected:
     USceneComponent* SceneComponent;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    float Radius = 500.0f;
+    float Radius{500.0f};
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    FColor SphereColor = FColor::Red;
+    FColor SphereColor{FColor::Red};
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    float Damage = 10.0f;
+    float Damage{10.0f};
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    bool DoFullDamage = false;
+    bool bDoFullDamage{false};
 
     virtual void BeginPlay() override;
 

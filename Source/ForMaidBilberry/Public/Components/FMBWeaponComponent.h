@@ -92,8 +92,6 @@ private:
 
     int32 CurrentWeaponIndex{0};
 
-    bool IsPlayerCharacter{false};
-
     void SpawnWeapons();
     void AttachWeaponToSocket(AFMBBaseWeapon* Weapon, USceneComponent* MeshComp, const FName& WeaponSocket) const;
     void EquipWeapon(int32 WeaponIndex);

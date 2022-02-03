@@ -19,8 +19,8 @@ public:
 
 protected:
     UPROPERTY(meta = (BindWidgetAnim), Transient)
-    UWidgetAnimation* ShowAnim;
+    UWidgetAnimation* ShowAnim{nullptr};
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sound")
-    USoundCue* OpenWidgetSound;
+    USoundCue* OpenWidgetSound{nullptr};
 };

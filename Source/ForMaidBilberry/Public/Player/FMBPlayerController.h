@@ -23,19 +23,19 @@ public:
 
     virtual void SetupInputComponent() override;
 
-    UFUNCTION(BlueprintCallable)
-    bool GetIsKeyboardInfoVisible() const { return IsKeyboardInfoVisible; }
+    // UFUNCTION(BlueprintCallable)
+    FORCEINLINE bool GetIsKeyboardInfoVisible() const { return IsKeyboardInfoVisible; }
 
 protected:
     UPROPERTY(EditDefaultsOnly, Category = "Component")
-    UFMBRespawnComponent* RespawnComponent;
+    UFMBRespawnComponent* RespawnComponent{nullptr};
 
 private:
-    bool IsKeyboardInfoVisible = false;
+    bool IsKeyboardInfoVisible{false};
 
     void OnGamePause();
 
-    void OnMatchStateChange(EFMBMatchState State);
+    void OnMatchStateChange(EGameState State);
 
     void OnVolumeMute();
 

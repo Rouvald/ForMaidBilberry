@@ -17,10 +17,10 @@ class FORMAIDBILBERRY_API UFMBMenuWidget : public UFMBBaseWidget
     GENERATED_BODY()
 protected:
     UPROPERTY(meta = (BindWidget))
-    UButton* SelectLevelButton;
+    UButton* SelectLevelButton{nullptr};
 
     UPROPERTY(meta = (BindWidget))
-    UButton* QuitGameButton;
+    UButton* QuitGameButton{nullptr};
 
     /*UPROPERTY(meta=(BindWidget))
     UButton* SelectCharacterButton;*/

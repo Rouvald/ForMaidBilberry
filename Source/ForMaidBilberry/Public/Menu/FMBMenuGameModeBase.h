@@ -22,10 +22,8 @@ public:
 
     virtual void StartPlay() override;
 
-    void SetMenuState(EFMBMenuState State);
-
-    // void SetCharacterSkeletalMesh(USkeletalMesh* NewSkeletalMesh);
+    void SetMenuState(EMenuState State);
 
 private:
-    EFMBMenuState MenuState = EFMBMenuState::WaitingToStart;
+    EMenuState CurrentMenuState{EMenuState::EMS_WaitingToStart};
 };

@@ -27,7 +27,7 @@ void AFMBDayNightCycle::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
 
-    const auto FMBGameMode{GetGameMode()};
+    const auto FMBGameMode{FMBGetGameMode()};
     if (FMBGameMode)
     {
         if (LightSource)
@@ -46,10 +46,10 @@ void AFMBDayNightCycle::Tick(float DeltaTime)
 
 void AFMBDayNightCycle::SetSkyDefaultRotation() const
 {
-    const auto FMBGameInstance{GetGameInstance()};
+    const auto FMBGameInstance{FMBGetGameInstance()};
     if (!FMBGameInstance) return;
 
-    const auto FMBGameMode{GetGameMode()};
+    const auto FMBGameMode{FMBGetGameMode()};
     if (!FMBGameMode) return;
 
     const float DefaultPitch{FMBGameInstance->GetStartLevel().GameData.bIsDefaultDay ? -90.0f : 90.0f};
@@ -63,7 +63,7 @@ void AFMBDayNightCycle::SetSkyDefaultRotation() const
 
 void AFMBDayNightCycle::UpdateDaytime(const float TurnRateLight)
 {
-    const auto FMBGameMode{GetGameMode()};
+    const auto FMBGameMode{FMBGetGameMode()};
     if (!FMBGameMode) return;
 
     CountTime = TurnRateLight * (PitchToSecondModifierDN / 2);
@@ -73,20 +73,20 @@ void AFMBDayNightCycle::UpdateDaytime(const float TurnRateLight)
 
 bool AFMBDayNightCycle::GetDayTime() const
 {
-    const auto FMBGameMode{GetGameMode()};
+    const auto FMBGameMode{FMBGetGameMode()};
     if (!FMBGameMode) return false;
 
     return FMBGameMode->GetDayTime();
 }
 
-AFMBGameModeBase* AFMBDayNightCycle::GetGameMode() const
+AFMBGameModeBase* AFMBDayNightCycle::FMBGetGameMode() const
 {
     if (!GetWorld()) return nullptr;
     return Cast<AFMBGameModeBase>(GetWorld()->GetAuthGameMode());
 }
 
-UFMBGameInstance* AFMBDayNightCycle::GetGameInstance() const
+UFMBGameInstance* AFMBDayNightCycle::FMBGetGameInstance() const
 {
     if (!GetWorld()) return nullptr;
-    return Cast<UFMBGameInstance>(GetWorld()->GetGameInstance());
+    return Cast<UFMBGameInstance>(GetGameInstance());
 }

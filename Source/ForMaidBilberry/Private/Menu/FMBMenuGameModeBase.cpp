@@ -17,15 +17,15 @@ void AFMBMenuGameModeBase::StartPlay()
 {
     Super::StartPlay();
 
-    SetMenuState(EFMBMenuState::MainMenu);
+    SetMenuState(EMenuState::EMS_MainMenu);
 }
 
-void AFMBMenuGameModeBase::SetMenuState(EFMBMenuState State)
+void AFMBMenuGameModeBase::SetMenuState(EMenuState State)
 {
-    if (MenuState == State) return;
+    if (CurrentMenuState == State) return;
 
-    MenuState = State;
-    OnMenuStateChange.Broadcast(MenuState);
+    CurrentMenuState = State;
+    OnMenuStateChange.Broadcast(CurrentMenuState);
 }
 
 /*void AFMBMenuGameModeBase::SetCharacterSkeletalMesh(USkeletalMesh* NewSkeletalMesh)

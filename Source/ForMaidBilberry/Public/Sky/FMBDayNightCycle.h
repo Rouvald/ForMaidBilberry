@@ -26,10 +26,10 @@ public:
 
 protected:
     UPROPERTY(EditAnywhere, Category = "Sky")
-    AActor* SkySphere;
+    AActor* SkySphere{nullptr};
 
     UPROPERTY(EditAnywhere, Category = "Sky")
-    ADirectionalLight* LightSource;
+    ADirectionalLight* LightSource{nullptr};
 
     virtual void BeginPlay() override;
 
@@ -37,13 +37,13 @@ private:
     FTimerHandle DayNightCycleTimerHandle;
 
     UPROPERTY()
-    float CountTime = 0;
+    float CountTime{0};
 
     void SetSkyDefaultRotation() const;
 
     void UpdateDaytime(const float TurnRateLight);
 
-    AFMBGameModeBase* GetGameMode() const;
+    AFMBGameModeBase* FMBGetGameMode() const;
 
-    UFMBGameInstance* GetGameInstance() const;
+    UFMBGameInstance* FMBGetGameInstance() const;
 };

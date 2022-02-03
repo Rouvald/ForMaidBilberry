@@ -5,7 +5,7 @@
 #include "FMBHealthComponent.h"
 #include "FMBUtils.h"
 
-DEFINE_LOG_CATEGORY_STATIC(HealthPickUpLog, All, All)
+DEFINE_LOG_CATEGORY_STATIC(LogFMBHealthPickUp, All, All)
 
 bool AFMBHealthPickUp::GivePickUpTo(APawn* Pawn)
 {

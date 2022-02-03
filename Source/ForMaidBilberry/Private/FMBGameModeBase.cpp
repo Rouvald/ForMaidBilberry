@@ -6,17 +6,12 @@
 #include "UI/FMBGameHUD.h"
 #include "AIController.h"
 #include "EngineUtils.h"
-#include "FMBGameInstance.h"
 #include "FMBRespawnComponent.h"
 #include "FMBUtils.h"
 #include "GameFramework/GameMode.h"
-#include "GameFramework/PlayerStart.h"
 #include "Player/FMBPlayerState.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogFMBGameModeBase, All, All)
-
-// constexpr static int32 MinRoundTimeForRespawn = 10;
-// constexpr static int32 PitchToSecondModifier = 8;
 
 AFMBGameModeBase::AFMBGameModeBase()
 {
@@ -33,7 +28,7 @@ void AFMBGameModeBase::StartPlay()
     SpawnBots();
     SetDefaultPlayerName();
     SetStartUpDayTime();
-    SetMatchState(EFMBMatchState::InProgress);
+    SetMatchState(EGameState::EGS_InProgress);
 }
 
 UClass* AFMBGameModeBase::GetDefaultPawnClassForController_Implementation(AController* InController)
@@ -49,7 +44,7 @@ void AFMBGameModeBase::SpawnBots()
 {
     if (!GetWorld()) return;
 
-    for (int32 i = 0; i < GameData.PlayerNum - 1; ++i)
+    for (int32 i = 0; i < (GameData.PlayerNum - 1); ++i)
     {
         FActorSpawnParameters SpawnInfo;
         SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
@@ -64,29 +59,10 @@ void AFMBGameModeBase::SetStartUpDayTime()
     GameData.bIsDefaultDay ? CurrentDayTime = MaxDayTime / 2 : CurrentDayTime = 0.0f;
 }
 
-/*void AFMBGameModeBase::StartGameOverConditionTimer()
-{
-    GetWorldTimerManager().SetTimer(GameOverConditionTimerHandle, this, &AFMBGameModeBase::GameOverCondition, 1.0f, true);
-}*/
-
 void AFMBGameModeBase::DayTimerUpdate(float Time)
 {
     const float CurrentDayTimeTEMP = (CurrentDayTime + Time);
-    CurrentDayTime = fmod(CurrentDayTimeTEMP, MaxDayTime);
-    /*GetWorld()->GetTimerManager().ClearTimer(DayTimerHandle);
-
-    GameOver();*/
-    /*if (CurrentRound + 1 <= GameData.RoundsNum)
-    {
-        ++CurrentRound;
-        ResetPlayers();
-        StartDayimer();
-    }
-    else
-    {
-        UE_LOG(LogFMBGameModeBase, Display, TEXT("========GAME OVER========"));
-        LogPlayerInfo();
-    }*/
+    CurrentDayTime = FMath::Fmod(CurrentDayTimeTEMP, MaxDayTime);
 }
 
 void AFMBGameModeBase::ResetPlayers()
@@ -106,7 +82,6 @@ void AFMBGameModeBase::ResetOnePlayer(AController* Controller)
         Controller->GetPawn()->Reset();
     }
     RestartPlayer(Controller);
-    // SetTeamSkeletalMesh(Controller);
 }
 
 AActor* AFMBGameModeBase::FindPlayerStart_Implementation(AController* Player, const FString& IncomingName)
@@ -136,9 +111,7 @@ void AFMBGameModeBase::PlayerKiller(AController* KillerController, AController* 
 
 void AFMBGameModeBase::BotKiller(AController* VictimController)
 {
-    const auto VictimPlayerState = VictimController ? Cast<AFMBPlayerState>(VictimController->PlayerState) : nullptr;
-
-    if (VictimPlayerState)
+    if (const auto VictimPlayerState = VictimController ? Cast<AFMBPlayerState>(VictimController->PlayerState) : nullptr)
     {
         VictimPlayerState->AddDeath();
         StartRespawn(VictimController);
@@ -149,22 +122,13 @@ void AFMBGameModeBase::GameOverCondition()
 {
     if (!GetWorld()) return;
 
-    /*const auto PlayerController = Cast<AFMBPlayerController>(GetWorld()->GetFirstPlayerController());
-    if (!PlayerController) return;
-
-    const auto PlayerState = Cast<AFMBPlayerState>(PlayerController->PlayerState);
-    if (!PlayerState) return;*/
-
     if (GetWorld()->GetNumControllers() == 1)
     {
         GameOver();
-        // GetWorldTimerManager().ClearTimer(GameOverConditionTimerHandle);
-        // GetWorld()->GetTimerManager().SetTimer(GameOverTimerHandle, this, &AFMBGameModeBase::GameOver, GameData.GameOverDelayTime,
-        // false);
     }
 }
 
-void AFMBGameModeBase::LogPlayerInfo()
+void AFMBGameModeBase::LogPlayerInfo() const
 {
     if (!GetWorld()) return;
 
@@ -209,10 +173,10 @@ void AFMBGameModeBase::GameOver()
             Pawn->DisableInput(nullptr);
         }
     }
-    SetMatchState(EFMBMatchState::GameOver);
+    SetMatchState(EGameState::EGS_GameOver);
 }
 
-void AFMBGameModeBase::SetMatchState(EFMBMatchState State)
+void AFMBGameModeBase::SetMatchState(EGameState State)
 {
     if (MatchState == State) return;
 
@@ -225,7 +189,7 @@ bool AFMBGameModeBase::SetPause(APlayerController* PC, FCanUnpause CanUnpauseDel
     const auto IsPauseSet = Super::SetPause(PC, CanUnpauseDelegate);
     if (IsPauseSet)
     {
-        SetMatchState(EFMBMatchState::Pause);
+        SetMatchState(EGameState::EGS_Pause);
     }
     return IsPauseSet;
 }
@@ -235,7 +199,7 @@ bool AFMBGameModeBase::ClearPause()
     const auto IsPauseClear = Super::ClearPause();
     if (IsPauseClear)
     {
-        SetMatchState(EFMBMatchState::InProgress);
+        SetMatchState(EGameState::EGS_InProgress);
     }
     return IsPauseClear;
 }

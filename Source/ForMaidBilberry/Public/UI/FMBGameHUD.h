@@ -16,9 +16,8 @@ UCLASS()
 class FORMAIDBILBERRY_API AFMBGameHUD : public AHUD
 {
     GENERATED_BODY()
-
-public:
-    virtual void DrawHUD() override;
+    // public:
+    // virtual void DrawHUD() override;
 
 protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
@@ -34,12 +33,12 @@ protected:
 
 private:
     UPROPERTY()
-    TMap<EFMBMatchState, UFMBBaseWidget*> GameWidgets;
+    TMap<EGameState, UFMBBaseWidget*> GameWidgets;
 
     UPROPERTY()
-    UFMBBaseWidget* CurrentWidget = nullptr;
+    UFMBBaseWidget* CurrentWidget{nullptr};
 
-    void DrawTwoLine();
+    // void DrawTwoLine();
 
-    void OnMatchStateChange(EFMBMatchState State);
+    void OnMatchStateChange(EGameState State);
 };

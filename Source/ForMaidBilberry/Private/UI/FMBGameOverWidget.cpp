@@ -13,8 +13,7 @@ void UFMBGameOverWidget::NativeOnInitialized()
 {
     if (GetWorld())
     {
-        const auto GameMode = Cast<AFMBGameModeBase>(GetWorld()->GetAuthGameMode());
-        if (GameMode)
+        if (const auto GameMode = Cast<AFMBGameModeBase>(GetWorld()->GetAuthGameMode()))
         {
             GameMode->OnMatchStateChange.AddUObject(this, &UFMBGameOverWidget::OnMatchStateChange);
         }
@@ -25,9 +24,9 @@ void UFMBGameOverWidget::NativeOnInitialized()
     }
 }
 
-void UFMBGameOverWidget::OnMatchStateChange(EFMBMatchState State)
+void UFMBGameOverWidget::OnMatchStateChange(EGameState State)
 {
-    if (State == EFMBMatchState::GameOver)
+    if (State == EGameState::EGS_GameOver)
     {
         UpdatePlayerStat();
     }
@@ -41,10 +40,10 @@ void UFMBGameOverWidget::UpdatePlayerStat()
 
     for (auto It = GetWorld()->GetControllerIterator(); It; ++It)
     {
-        const auto Controller = It->Get();
+        const auto Controller{It->Get()};
         if (!Controller || !Controller->IsPlayerController()) continue;
 
-        const auto PlayerState = Cast<AFMBPlayerState>(Controller->PlayerState);
+        const auto PlayerState{Cast<AFMBPlayerState>(Controller->PlayerState)};
         if (!PlayerState) continue;
 
         const auto PlayerStatRow = CreateWidget<UFMBPlayerStatRowWidget>(GetWorld(), PlayerStatRowWidgetClass);

@@ -20,11 +20,11 @@ public:
     void SetTeamSkeletalMesh(USkeletalMesh* NewTeamSkeletalMesh) { TeamSkeletalMesh = NewTeamSkeletalMesh;}
     USkeletalMesh* GetTeamSkeletalMesh() const {return TeamSkeletalMesh;}*/
 
-    int32 GetKillsNum() const { return KillsNum; }
-    void AddKill() { ++KillsNum; }
+    FORCEINLINE int32 GetKillsNum() const { return KillsNum; }
+    FORCEINLINE void AddKill() { ++KillsNum; }
 
-    int32 GetDeathsNum() const { return DeathsNum; }
-    void AddDeath() { ++DeathsNum; }
+    FORCEINLINE int32 GetDeathsNum() const { return DeathsNum; }
+    FORCEINLINE void AddDeath() { ++DeathsNum; }
 
     void LogInfo();
 
@@ -34,6 +34,6 @@ private:
     UPROPERTY()
     USkeletalMesh* TeamSkeletalMesh;*/
 
-    int32 KillsNum = 0;
-    int32 DeathsNum = 0;
+    int32 KillsNum{0};
+    int32 DeathsNum{0};
 };

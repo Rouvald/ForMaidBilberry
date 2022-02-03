@@ -33,7 +33,7 @@ void UFMBMenuWidget::OnSelectLevelGame()
         const auto GameMode = Cast<AFMBMenuGameModeBase>(GetWorld()->GetAuthGameMode());
         if (GameMode)
         {
-            GameMode->SetMenuState(EFMBMenuState::SelectLevel);
+            GameMode->SetMenuState(EMenuState::EMS_SelectLevel);
         }
     }
 }
@@ -50,7 +50,7 @@ void UFMBMenuWidget::OnQuitGame()
         const auto GameMode = Cast<AFMBMenuGameModeBase>(GetWorld()->GetAuthGameMode());
         if (GameMode)
         {
-            GameMode->SetMenuState(EFMBMenuState::ChangeSkin);
+            GameMode->SetMenuState(EMenuState::EMS_ChangeSkin);
         }
     }
 }*/

@@ -14,13 +14,13 @@ AFMBAIBaseCharacter::AFMBAIBaseCharacter(const FObjectInitializer& ObjInit) : Su
     AutoPossessAI = EAutoPossessAI::Disabled;
     AIControllerClass = AFMBAIController::StaticClass();
 
-    HealthBarWidgetComponent = CreateDefaultSubobject<UWidgetComponent>("HealthBarWidgetComponent");
+    HealthBarWidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("HealthBarWidgetComponent"));
     HealthBarWidgetComponent->SetupAttachment(GetRootComponent());
     HealthBarWidgetComponent->SetRelativeLocation(FVector(20.0f, 8.0f, 110.0f));
     HealthBarWidgetComponent->SetWidgetSpace(EWidgetSpace::Screen);
     HealthBarWidgetComponent->SetDrawAtDesiredSize(true);
 
-    EnemySignWidgetComponent = CreateDefaultSubobject<UWidgetComponent>("EnemySignNiagaraComponent");
+    EnemySignWidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("EnemySignNiagaraComponent"));
     EnemySignWidgetComponent->SetupAttachment(GetRootComponent());
     EnemySignWidgetComponent->SetRelativeLocation(FVector(20.0f, 8.0f, 130.0f));
     EnemySignWidgetComponent->SetWidgetSpace(EWidgetSpace::Screen);
@@ -34,17 +34,20 @@ void AFMBAIBaseCharacter::BeginPlay()
     checkf(HealthBarWidgetComponent, TEXT("HealthBarWidgetComponent = nullptr"));
     checkf(EnemySignWidgetComponent, TEXT("EnemySignWidgetComponent = nullptr"));
 
-    GetWorldTimerManager().SetTimer(WidgetsVisibilityTimerHandle, this, &AFMBAIBaseCharacter::UpdateWidgetsVisibility, 0.1f, true);
+    if (GetWorld())
+    {
+        GetWorldTimerManager().SetTimer(WidgetsVisibilityTimerHandle, this, &AFMBAIBaseCharacter::UpdateWidgetsVisibility, 0.1f, true);
+    }
 }
 
 void AFMBAIBaseCharacter::OnHealthChange(float Health, float HealthDelta)
 {
     Super::OnHealthChange(Health, HealthDelta);
 
-    const auto HealthBarWidget = Cast<UFMBHealthBarWidget>(HealthBarWidgetComponent->GetUserWidgetObject());
+    const auto HealthBarWidget{Cast<UFMBHealthBarWidget>(HealthBarWidgetComponent->GetUserWidgetObject())};
     if (!HealthBarWidget) return;
 
-    const auto EnemySignWidget = Cast<UFMBEnemySignWidget>(EnemySignWidgetComponent->GetUserWidgetObject());
+    const auto EnemySignWidget{Cast<UFMBEnemySignWidget>(EnemySignWidgetComponent->GetUserWidgetObject())};
     if (!EnemySignWidget) return;
 
     HealthBarWidget->SetHealthPercent(HealthComponent->GetHealthPercent());
@@ -69,8 +72,8 @@ void AFMBAIBaseCharacter::UpdateWidgetsVisibility() const
         !GetWorld()->GetFirstPlayerController()->GetPawnOrSpectator()) //
         return;
 
-    const auto PlayerLocation = GetWorld()->GetFirstPlayerController()->GetPawnOrSpectator()->GetActorLocation();
-    const auto Distance = FVector::Distance(PlayerLocation, GetActorLocation());
+    const auto PlayerLocation{GetWorld()->GetFirstPlayerController()->GetPawnOrSpectator()->GetActorLocation()};
+    const auto Distance{FVector::Distance(PlayerLocation, GetActorLocation())};
     HealthBarWidgetComponent->SetVisibility(Distance < HealthVisibleDistance, true);
     EnemySignWidgetComponent->SetVisibility(FMath::IsWithinInclusive(Distance, HealthVisibleDistance, EnemySignVisibleDistance), true);
 }

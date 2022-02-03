@@ -21,27 +21,22 @@ public:
     virtual void Tick(float DeltaTick) override;
 
 protected:
-    /*UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
-    UNiagaraComponent* HealthPickupNiagaraComponent;*/
-
     UPROPERTY(VisibleAnywhere, Category = "PickUp")
-    USphereComponent* CollisionComponent;
+    USphereComponent* CollisionComponent{nullptr};
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PickUp")
-    bool WantsToRespawn = false;
+    bool WantsToRespawn{false};
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PickUp")
-    float RespawnTime = 3.0f;
+    float RespawnTime{3.0f};
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sound")
-    USoundCue* TakenPickUpSound;
-
-    virtual void BeginPlay() override;
+    USoundCue* TakenPickUpSound{nullptr};
 
     virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;
 
 private:
-    float RotationYaw = 1.5f;
+    float RotationYaw{1.5f};
 
     virtual bool GivePickUpTo(APawn* Pawn);
 

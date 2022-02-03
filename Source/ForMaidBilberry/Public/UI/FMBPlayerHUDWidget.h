@@ -40,7 +40,7 @@ public:
 
 protected:
     UPROPERTY(meta = (BindWidgetAnim), Transient)
-    UWidgetAnimation* BloodyScreenAnim;
+    UWidgetAnimation* BloodyScreenAnim{nullptr};
 
     virtual void NativeOnInitialized() override;
 

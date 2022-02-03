@@ -23,4 +23,10 @@ public:
 
         return true;
     }
+
+    static bool AreBothBots(AController* Controller1, AController* Controller2)
+    {
+        if (!Controller1 || !Controller2 || Controller1 == Controller2) return false;
+        return !Controller1->IsPlayerController() && !Controller2->IsPlayerController();
+    }
 };

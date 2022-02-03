@@ -28,16 +28,19 @@ protected:
     // FName FPPCameraSocketName = "FPPCameraSocket";
 
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
-    UFMBStaminaComponent* StaminaComponent;
+    UFMBCharacterMovementComponent* CharacterMovementComponent{nullptr};
 
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
-    USpringArmComponent* SpringArmComponent;
+    USpringArmComponent* SpringArmComponent{nullptr};
 
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
-    UCameraComponent* TPPCameraComponent;
+    UCameraComponent* TPPCameraComponent{nullptr};
 
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
-    USphereComponent* CameraCollisionComponent;
+    UFMBStaminaComponent* StaminaComponent{nullptr};
+
+    /*UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+    USphereComponent* CameraCollisionComponent{nullptr};*/
 
     // UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="Components")
     // UCameraComponent* FPPCameraComponent;
@@ -46,24 +49,23 @@ protected:
     virtual void OnDeath() override;
 
 private:
+    /*UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Camera", meta = (AllowPrivateAccess = "true"))
+    float DefaultTurnAroundRate{45.0f};
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Camera", meta = (AllowPrivateAccess = "true"))
+    float DefaultLookUpRate{45.0f};*/
+
     FTimerHandle ReportNoiseTimerHandle;
 
-    bool WantToRun = false;
-    // bool IsMovingForward = false;
-
-    // bool JumpAnimInProgress = false;
-
-    // void SwitchCamera();
+    bool WantToRun{false};
 
     void MoveForward(float Amount);
     void MoveRight(float Amount);
 
     virtual void Jump() override;
-    // bool CanJump() const;
 
-    // void LimitViewPitchRotation ();
-    // void TurnAroundAtRate(float Rate);
-    // void LookUpAtRate(float Rate);
+    /*void TurnAroundAtRate(float Rate);
+    void LookUpAtRate(float Rate);*/
 
     void OnStartRunning();
     void OnStopRunning();

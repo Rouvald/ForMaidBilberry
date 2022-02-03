@@ -19,9 +19,9 @@ void UFMBStaminaComponent::BeginPlay()
     SetStamina(MaxStamina);
     check(MaxStamina > 0);
 
-    StaminaSpends.Add(EStaminaSpend::Rolling, StaminaSpendData.RollingStaminaSpend);
-    StaminaSpends.Add(EStaminaSpend::FastAttack, StaminaSpendData.FastAttackStaminaSpend);
-    StaminaSpends.Add(EStaminaSpend::StrongAttack, StaminaSpendData.StrongAttackStaminaSpend);
+    StaminaSpends.Add(EStaminaSpend::ESS_Rolling, StaminaSpendData.RollingStaminaSpend);
+    StaminaSpends.Add(EStaminaSpend::ESS_FastAttack, StaminaSpendData.FastAttackStaminaSpend);
+    StaminaSpends.Add(EStaminaSpend::ESS_StrongAttack, StaminaSpendData.StrongAttackStaminaSpend);
 }
 
 bool UFMBStaminaComponent::CanSpendStamina(const EStaminaSpend StaminaSpend)

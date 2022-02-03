@@ -6,8 +6,6 @@
 #include "Components/FMBCharacterMovementComponent.h"
 #include "Components/FMBWeaponComponent.h"
 #include "Components/FMBStaminaComponent.h"
-#include "Components/SphereComponent.h"
-#include "Components/CapsuleComponent.h"
 #include "Perception/AISense_Hearing.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogFMBPlayerCharacter, All, All)
@@ -27,15 +25,17 @@ AFMBPlayerCharacter::AFMBPlayerCharacter(const FObjectInitializer& ObjInit) : Su
     SpringArmComponent->TargetArmLength = 500.0f;
     SpringArmComponent->bUsePawnControlRotation = true;
 
-    TPPCameraComponent = CreateDefaultSubobject<UCameraComponent>("TPPCameraComponent");
+    TPPCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("TPPCameraComponent"));
     TPPCameraComponent->SetupAttachment(SpringArmComponent);
     TPPCameraComponent->bUsePawnControlRotation = false;
 
+    /*
     CameraCollisionComponent = CreateDefaultSubobject<USphereComponent>("CameraCollisionComponent");
     CameraCollisionComponent->SetupAttachment(TPPCameraComponent);
     CameraCollisionComponent->SetSphereRadius(10.0f);
     CameraCollisionComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
     CameraCollisionComponent->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+    */
 
     /*
     FPPCameraComponent = CreateDefaultSubobject<UCameraComponent>("FPPCameraComponent");
@@ -45,15 +45,15 @@ AFMBPlayerCharacter::AFMBPlayerCharacter(const FObjectInitializer& ObjInit) : Su
     FPPCameraComponent->bUsePawnControlRotation = true;
     */
 
-    StaminaComponent = CreateDefaultSubobject<UFMBStaminaComponent>("StaminaComponent");
+    StaminaComponent = CreateDefaultSubobject<UFMBStaminaComponent>(TEXT("StaminaComponent"));
 }
 
 void AFMBPlayerCharacter::BeginPlay()
 {
     Super::BeginPlay();
 
-    check(StaminaComponent);
-    check(CameraCollisionComponent);
+    checkf(StaminaComponent, TEXT("StaminaComponent = nullptr"));
+    // check(CameraCollisionComponent);
     GetWorldTimerManager().SetTimer(ReportNoiseTimerHandle, this, &AFMBPlayerCharacter::MakeReportNoise, 0.1f, true);
 
     // CameraCollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AFMBPlayerCharacter::OnCameraCollisionBeginOverlap);
@@ -91,20 +91,19 @@ void AFMBPlayerCharacter::CheckCameraOverlap()
 
 void AFMBPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
-    checkf(PlayerInputComponent, TEXT("PlayerInputComponent = nullptr"));
-
     Super::SetupPlayerInputComponent(PlayerInputComponent);
-
+    checkf(PlayerInputComponent, TEXT("PlayerInputComponent = nullptr"));
     checkf(WeaponComponent, TEXT("WeaponComponent = nullptr"));
+    CharacterMovementComponent = Cast<UFMBCharacterMovementComponent>(GetCharacterMovement());
+    checkf(CharacterMovementComponent, TEXT("CharacterMovementComponent = nullptr"));
 
     PlayerInputComponent->BindAxis("MoveForward", this, &AFMBPlayerCharacter::MoveForward);
     PlayerInputComponent->BindAxis("MoveRight", this, &AFMBPlayerCharacter::MoveRight);
 
-    PlayerInputComponent->BindAxis("LookUp", this, &AFMBPlayerCharacter::AddControllerPitchInput);
-    PlayerInputComponent->BindAxis("TurnAround", this, &AFMBPlayerCharacter::AddControllerYawInput);
-
-    // PlayerInputComponent->BindAxis("LookUpRate", this, &AFMBBaseCharacter::LookUpAtRate);
-    // PlayerInputComponent->BindAxis("TurnAroundRate", this, &AFMBBaseCharacter::TurnAroundAtRate);
+    PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
+    PlayerInputComponent->BindAxis("TurnAround", this, &APawn::AddControllerYawInput);
+    // PlayerInputComponent->BindAxis("LookUpRate", this, &AFMBPlayerCharacter::LookUpAtRate);
+    // PlayerInputComponent->BindAxis("TurnAroundRate", this, &AFMBPlayerCharacter::TurnAroundAtRate);
 
     PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &AFMBPlayerCharacter::Jump);
 
@@ -118,10 +117,7 @@ void AFMBPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 
     PlayerInputComponent->BindAction("NextWeapon", IE_Pressed, WeaponComponent, &UFMBWeaponComponent::NextWeapon);
 
-    if (const auto FMBMovementComponent = Cast<UFMBCharacterMovementComponent>(GetMovementComponent()))
-    {
-        PlayerInputComponent->BindAction("Rolling", IE_Pressed, FMBMovementComponent, &UFMBCharacterMovementComponent::Rolling);
-    }
+    PlayerInputComponent->BindAction("Rolling", IE_Pressed, CharacterMovementComponent, &UFMBCharacterMovementComponent::Rolling);
 }
 
 // Try to switch between 2 cameras
@@ -145,10 +141,10 @@ void AFMBPlayerCharacter::MoveForward(float Amount)
     // IsMovingForward = Amount > 0.0f;
     if (FMath::IsNearlyZero(Amount)) return;
 
-    const FRotator Rotation = Controller->GetControlRotation();
-    const FRotator RotationYaw(0.0f, Rotation.Yaw, 0.0f);
+    const FRotator Rotation{Controller->GetControlRotation()};
+    const FRotator RotationYaw{0.0f, Rotation.Yaw, 0.0f};
 
-    const FVector Direction = FRotationMatrix(RotationYaw).GetUnitAxis(EAxis::X);
+    const FVector Direction{FRotationMatrix(RotationYaw).GetUnitAxis(EAxis::X)};
 
     AddMovementInput(Direction, Amount);
 }
@@ -157,18 +153,31 @@ void AFMBPlayerCharacter::MoveRight(float Amount)
 {
     if (FMath::IsNearlyZero(Amount)) return;
 
-    const FRotator Rotation = Controller->GetControlRotation();
-    const FRotator RotationYaw(0.0f, Rotation.Yaw, 0.0f);
+    const FRotator Rotation{Controller->GetControlRotation()};
+    const FRotator RotationYaw{0.0f, Rotation.Yaw, 0.0f};
 
-    const FVector Direction = FRotationMatrix(RotationYaw).GetUnitAxis(EAxis::Y);
+    const FVector Direction{FRotationMatrix(RotationYaw).GetUnitAxis(EAxis::Y)};
 
     AddMovementInput(Direction, Amount);
 }
 
+/*
+void AFMBPlayerCharacter::TurnAroundAtRate(float Rate)
+{
+    if (!GetWorld()) return;
+    AddControllerYawInput(Rate * DefaultTurnAroundRate * GetWorld()->GetDeltaSeconds());
+}
+
+void AFMBPlayerCharacter::LookUpAtRate(float Rate)
+{
+    if (!GetWorld()) return;
+    AddControllerPitchInput(Rate * DefaultLookUpRate * GetWorld()->GetDeltaSeconds());
+}
+*/
+
 void AFMBPlayerCharacter::Jump()
 {
-    const auto MovementComponent = Cast<UFMBCharacterMovementComponent>(GetMovementComponent());
-    if (!MovementComponent || !(MovementComponent->CanRolling())) return;
+    if (!CharacterMovementComponent || !(CharacterMovementComponent->CanRolling())) return;
 
     if (!WeaponComponent || !(WeaponComponent->CanAttack())) return;
 
@@ -177,8 +186,7 @@ void AFMBPlayerCharacter::Jump()
 
 void AFMBPlayerCharacter::OnStartRunning()
 {
-    const auto MovementComponent = Cast<UFMBCharacterMovementComponent>(GetMovementComponent());
-    if (!MovementComponent || !(MovementComponent->CanRolling()) || MovementComponent->IsFalling()) return;
+    if (!CharacterMovementComponent || !(CharacterMovementComponent->CanRolling()) || CharacterMovementComponent->IsFalling()) return;
 
     if (GetVelocity().IsNearlyZero()) return;
 

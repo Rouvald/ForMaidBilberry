@@ -20,10 +20,10 @@ class FORMAIDBILBERRY_API UFMBGameOverWidget : public UFMBBaseWidget
     GENERATED_BODY()
 protected:
     UPROPERTY(meta = (BindWidget))
-    UVerticalBox* PlayerStatBox;
+    UVerticalBox* PlayerStatBox{nullptr};
 
     UPROPERTY(meta = (BindWidget))
-    UButton* ResetLevelButton;
+    UButton* ResetLevelButton{nullptr};
 
     UPROPERTY(EditDefaultsOnly, Category = "UI")
     TSubclassOf<UUserWidget> PlayerStatRowWidgetClass;
@@ -31,7 +31,7 @@ protected:
     virtual void NativeOnInitialized() override;
 
 private:
-    void OnMatchStateChange(EFMBMatchState State);
+    void OnMatchStateChange(EGameState State);
     void UpdatePlayerStat();
 
     UFUNCTION()

@@ -17,15 +17,6 @@ AFMBBasePickUp::AFMBBasePickUp()
     CollisionComponent->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
     CollisionComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
     SetRootComponent(CollisionComponent);
-
-    /*HealthPickupNiagaraComponent = CreateDefaultSubobject<UNiagaraComponent>("HealthPickupNiagaraComponent");
-    HealthPickupNiagaraComponent->SetupAttachment(GetRootComponent());
-    HealthPickupNiagaraComponent->SetRelativeLocation(FVector(0.0f, 0.0f, 10.0f));*/
-}
-
-void AFMBBasePickUp::BeginPlay()
-{
-    Super::BeginPlay();
 }
 
 void AFMBBasePickUp::Tick(float DeltaTick)

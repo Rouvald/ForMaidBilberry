@@ -31,12 +31,12 @@ protected:
 
 private:
     UPROPERTY()
-    TMap<EFMBMenuState, UFMBBaseWidget*> MenuWidgets;
+    TMap<EMenuState, UFMBBaseWidget*> MenuWidgets;
 
     UPROPERTY()
-    UFMBBaseWidget* CurrentWidget = nullptr;
+    UFMBBaseWidget* CurrentWidget{nullptr};
 
-    void OnMenuStateChanged(EFMBMenuState State);
+    void OnMenuStateChanged(EMenuState State);
 
     // void SetCurrentWidgetVisibility(bool IsVisibility) const;
 };

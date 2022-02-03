@@ -16,28 +16,28 @@ struct FWeaponAnimationsData
     FName WeaponEquipSocketName = "WeaponEquipSocket_R"; // WeaponEquipSocket_R or WeaponEquipSocket_L
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Animation")
-    UAnimSequence* Jump_Start;
+    UAnimSequence* Jump_Start{nullptr};
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Animation")
-    UAnimSequence* Jump_Air;
+    UAnimSequence* Jump_Air{nullptr};
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Animation")
-    UAnimSequence* Jump_End;
+    UAnimSequence* Jump_End{nullptr};
 
     UPROPERTY(EditDefaultsOnly, Category = "Animation")
-    UAnimMontage* Roll;
+    UAnimMontage* Roll{nullptr};
 
     UPROPERTY(EditDefaultsOnly, Category = "Animation")
-    UAnimMontage* GetHit;
+    UAnimMontage* GetHit{nullptr};
 
     UPROPERTY(EditDefaultsOnly, Category = "Animation")
-    UAnimMontage* Equip;
+    UAnimMontage* Equip{nullptr};
 
     UPROPERTY(EditDefaultsOnly, Category = "Animation")
-    UAnimMontage* FastAttack;
+    UAnimMontage* FastAttack{nullptr};
 
     UPROPERTY(EditDefaultsOnly, Category = "Animation")
-    UAnimMontage* StrongAttack;
+    UAnimMontage* StrongAttack{nullptr};
 };
 
 // Weapon
@@ -51,24 +51,28 @@ struct FImpactData
     GENERATED_USTRUCT_BODY()
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
-    UNiagaraSystem* NiagaraEffect;
+    UNiagaraSystem* NiagaraEffect{nullptr};
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sound")
-    USoundCue* ImpactSound;
+    USoundCue* ImpactSound{nullptr};
 };
 
 UENUM(BlueprintType)
 enum class EWeaponType : uint8
 {
-    RedSword = 0,
-    YellowSword
+    EWT_RedSword UMETA(DisplayName = "RedSword"),
+    EWT_YellowSword UMETA(DisplayName = "YellowSword"),
+
+    EWT_Max UMETA(DisplayName = "Max")
 };
 
 UENUM(BlueprintType)
 enum class EChooseAttack : uint8
 {
-    FastAttack = 0,
-    StrongAttack
+    ECA_FastAttack UMETA(DisplayName = "ESS_FastAttack"),
+    ECA_StrongAttack UMETA(DisplayName = "ESS_StrongAttack"),
+
+    ECA_Max UMETA(DisplayName = "Max")
 };
 
 // Stamina
@@ -83,21 +87,23 @@ struct FStaminaSpendData
     // float JumpStaminaSpend = 10.0f;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Spend Stamina")
-    float RollingStaminaSpend = 15.0f;
+    float RollingStaminaSpend{15.0f};
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Spend Stamina")
-    float FastAttackStaminaSpend = 30.0f;
+    float FastAttackStaminaSpend{30.0f};
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Spend Stamina")
-    float StrongAttackStaminaSpend = 50.0f;
+    float StrongAttackStaminaSpend{50.0f};
 };
 
 UENUM(BlueprintType)
 enum class EStaminaSpend : uint8
 {
-    Rolling = 0,
-    FastAttack,
-    StrongAttack
+    ESS_Rolling UMETA(DisplayName = "Rolling"),
+    ESS_FastAttack UMETA(DisplayName = "FastAttack"),
+    ESS_StrongAttack UMETA(DisplayName = "StrongAttack"),
+
+    ESS_Max UMETA(DisplayName = "Max")
 };
 
 // Health
@@ -111,10 +117,10 @@ struct FWeaponUIData
     GENERATED_USTRUCT_BODY()
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
-    UTexture2D* WeaponIcon;
+    UTexture2D* WeaponIcon{nullptr};
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
-    FName WeaponName = NAME_None;
+    FName WeaponName{NAME_None};
 };
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnWeaponSelectedSignature, const FWeaponUIData&);
@@ -131,32 +137,34 @@ struct FGameData
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game",
         meta = (EditCondition = "!bIsWalkAlone", ClampMin = "1", ClampMax = "50", ToolTip = "For normal game need PlayerNum > 1"))
-    int32 PlayerNum = 2;
+    int32 PlayerNum{2};
 
     // For true, need check bWantsPlayerState = true in FMBAIController
     UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Game")
-    bool CanBotsRespawn = false;
+    bool CanBotsRespawn{false};
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game", meta = (ClampMin = "3", ClampMax = "30"))
-    int32 RespawnTime = 10; // in second
+    int32 RespawnTime{5}; // in second
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sky")
     bool bIsDefaultDay{true};
 
     UPROPERTY(EditDefaultsOnly, Category = "Sky", meta = (ClampMin = "0.23", ClampMax = "10", ToolTip = "Minimum value = 0.23"))
-    float TurnRatePitch = 0.25f;
+    float TurnRatePitch{0.23f};
 };
 
 UENUM(BlueprintType)
-enum class EFMBMatchState : uint8
+enum class EGameState : uint8
 {
-    WaitingToStart = 0,
-    InProgress,
-    Pause,
-    GameOver
+    EGS_WaitingToStart UMETA(DisplayName = "WaitingToStart"),
+    EGS_InProgress UMETA(DisplayName = "InProgress"),
+    EGS_Pause UMETA(DisplayName = "Pause"),
+    EGS_GameOver UMETA(DisplayName = "GameOver"),
+
+    EGS_Max UMETA(DisplayName = "Max")
 };
 
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnMatchStateChangeSignature, EFMBMatchState);
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnMatchStateChangeSignature, EGameState);
 
 // Game
 
@@ -168,19 +176,16 @@ struct FLevelData
     int32 LevelID = 0;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game")
-    FName LevelName = NAME_None;
+    FName LevelName{NAME_None};
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game")
-    FName LevelDisplayName = NAME_None;
+    FName LevelDisplayName{NAME_None};
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game")
-    FName LevelDescriptionName = NAME_None;
-
-    /*UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Game")
-    FText LevelDescriptionText;*/
+    FName LevelDescriptionName{NAME_None};
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game")
-    UTexture2D* LevelImage;
+    UTexture2D* LevelImage{nullptr};
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game")
     FGameData GameData;
@@ -191,15 +196,17 @@ DECLARE_MULTICAST_DELEGATE_OneParam(FOnLevelSelectedSignature, const FLevelData&
 // Menu
 
 UENUM(BlueprintType)
-enum class EFMBMenuState : uint8
+enum class EMenuState : uint8
 {
-    WaitingToStart = 0,
-    MainMenu,
-    SelectLevel,
-    ChangeSkin
+    EMS_WaitingToStart UMETA(DisplayName = "WaitingToStart"),
+    EMS_MainMenu UMETA(DisplayName = "MainMenu"),
+    EMS_SelectLevel UMETA(DisplayName = "SelectLevel"),
+    EMS_ChangeSkin UMETA(DisplayName = "ChangeSkin"),
+
+    EMS_Max UMETA(DisplayName = "Max")
 };
 
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnMenuStateChangeSignature, EFMBMenuState);
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnMenuStateChangeSignature, EMenuState);
 
 // change character
 USTRUCT(BlueprintType)
@@ -207,13 +214,13 @@ struct FCharacterData
 {
     GENERATED_USTRUCT_BODY()
 
-    int32 CharacterID = 0;
+    int32 CharacterID{0};
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game")
-    FName CharacterName = NAME_None;
+    FName CharacterName{NAME_None};
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game")
-    USkeletalMesh* CharacterMesh;
+    USkeletalMesh* CharacterMesh{nullptr};
 };
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnCharacterMeshSelectedSignature, const FCharacterData&);

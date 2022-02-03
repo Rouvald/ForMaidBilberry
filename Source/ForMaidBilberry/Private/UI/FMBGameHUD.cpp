@@ -11,9 +11,9 @@ void AFMBGameHUD::BeginPlay()
 {
     Super::BeginPlay();
 
-    GameWidgets.Add(EFMBMatchState::InProgress, CreateWidget<UFMBBaseWidget>(GetWorld(), PLayerHUDWidgetClass));
-    GameWidgets.Add(EFMBMatchState::Pause, CreateWidget<UFMBBaseWidget>(GetWorld(), GamePauseWidgetClass));
-    GameWidgets.Add(EFMBMatchState::GameOver, CreateWidget<UFMBBaseWidget>(GetWorld(), GameOverWidgetClass));
+    GameWidgets.Add(EGameState::EGS_InProgress, CreateWidget<UFMBBaseWidget>(GetWorld(), PLayerHUDWidgetClass));
+    GameWidgets.Add(EGameState::EGS_Pause, CreateWidget<UFMBBaseWidget>(GetWorld(), GamePauseWidgetClass));
+    GameWidgets.Add(EGameState::EGS_GameOver, CreateWidget<UFMBBaseWidget>(GetWorld(), GameOverWidgetClass));
 
     for (const auto GameWidgetPair : GameWidgets)
     {
@@ -26,15 +26,14 @@ void AFMBGameHUD::BeginPlay()
 
     if (GetWorld())
     {
-        const auto GameMode = Cast<AFMBGameModeBase>(GetWorld()->GetAuthGameMode());
-        if (GameMode)
+        if (const auto GameMode = Cast<AFMBGameModeBase>(GetWorld()->GetAuthGameMode()))
         {
             GameMode->OnMatchStateChange.AddUObject(this, &AFMBGameHUD::OnMatchStateChange);
         }
     }
 }
 
-void AFMBGameHUD::OnMatchStateChange(EFMBMatchState State)
+void AFMBGameHUD::OnMatchStateChange(EGameState State)
 {
     if (CurrentWidget)
     {
@@ -49,14 +48,16 @@ void AFMBGameHUD::OnMatchStateChange(EFMBMatchState State)
         CurrentWidget->SetVisibility(ESlateVisibility::Visible);
         CurrentWidget->Show();
     }
-    UE_LOG(LogFMBGameHUD, Display, TEXT("Match State: %s"), *UEnum::GetValueAsString(State));
+    // UE_LOG(LogFMBGameHUD, Display, TEXT("Match State: %s"), *UEnum::GetValueAsString(State));
 }
 
-void AFMBGameHUD::DrawHUD()
+/*void AFMBGameHUD::DrawHUD()
 {
     // DrawTwoLine();
 }
+*/
 
+/*
 void AFMBGameHUD::DrawTwoLine()
 {
     const TInterval<float> Center(Canvas->SizeX * 0.5f, Canvas->SizeY * 0.5f);
@@ -70,3 +71,4 @@ void AFMBGameHUD::DrawTwoLine()
     DrawLine(Center.Min - HalfLineSize, Center.Max + HalfLineSize, Center.Min + HalfLineSize, Center.Max - HalfLineSize, ColorLine,
         LineTHickness);
 }
+*/

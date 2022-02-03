@@ -3,7 +3,7 @@
 #include "UI/FMBHealthBarWidget.h"
 #include "Components/ProgressBar.h"
 
-void UFMBHealthBarWidget::SetHealthPercent(float HealthPercent)
+void UFMBHealthBarWidget::SetHealthPercent(float HealthPercent) const
 {
     if (HealthProgressBar)
     {

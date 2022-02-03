@@ -17,7 +17,7 @@ class FORMAIDBILBERRY_API UFMBGoToMenuButtonWidget : public UUserWidget
 
 protected:
     UPROPERTY(meta = (BindWidget))
-    UButton* BackToMenuButton;
+    UButton* BackToMenuButton{nullptr};
 
     virtual void NativeOnInitialized() override;
 

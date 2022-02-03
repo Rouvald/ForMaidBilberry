@@ -16,7 +16,7 @@ void UFMBWeaponFXComponent::PlayImpactFX(const FHitResult& HitResult)
 
     if (HitResult.PhysMaterial.IsValid())
     {
-        const auto PhysMat = HitResult.PhysMaterial.Get();
+        const auto PhysMat{HitResult.PhysMaterial.Get()};
         if (ImpactDataMap.Contains(PhysMat))
         {
             ImpactData = ImpactDataMap[PhysMat];

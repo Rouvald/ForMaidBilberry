@@ -25,9 +25,9 @@ void AFMBPlayerController::BeginPlay()
     }
 }
 
-void AFMBPlayerController::OnMatchStateChange(EFMBMatchState State)
+void AFMBPlayerController::OnMatchStateChange(EGameState State)
 {
-    if (State == EFMBMatchState::InProgress)
+    if (State == EGameState::EGS_InProgress)
     {
         SetInputMode(FInputModeGameOnly());
         bShowMouseCursor = false;

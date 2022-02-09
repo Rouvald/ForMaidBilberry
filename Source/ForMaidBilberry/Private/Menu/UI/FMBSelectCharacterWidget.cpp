@@ -5,6 +5,7 @@
 #include "Menu/UI/FMBSelectCharacterButtonWidget.h"
 #include "Components/VerticalBox.h"
 
+/*
 void UFMBSelectCharacterWidget::NativeOnInitialized()
 {
     Super::NativeOnInitialized();
@@ -44,7 +45,7 @@ void UFMBSelectCharacterWidget::InitCharacterMesh()
     else
     {
         OnCharacterMeshSelected(GameInstance->GetStartCharacter());
-    }*/
+    }#1#
 }
 
 void UFMBSelectCharacterWidget::OnCharacterMeshSelected(const FCharacterData& Data)
@@ -67,4 +68,4 @@ UFMBGameInstance* UFMBSelectCharacterWidget::GetFMBGameInstance() const
 {
     if (!GetWorld()) return nullptr;
     return GetWorld()->GetGameInstance<UFMBGameInstance>();
-}
+}*/

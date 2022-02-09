@@ -18,6 +18,7 @@ public:
     AFMBGameModeBase();
 
     FOnMatchStateChangeSignature OnMatchStateChange;
+    FOnChangeSunRotationSignature OnChangeSunRotation;
 
     virtual void StartPlay() override;
 
@@ -37,12 +38,10 @@ public:
     void RespawnRequest(AController* Controller);
 
     // bool GetIsDefaultDay() const { return GameData.bIsDefaultDay; }
-    FORCEINLINE float GetTurnRatePitch() const { return GameData.TurnRatePitch; }
+    // FORCEINLINE float GetTurnRatePitch() const { return GameData.TurnRatePitch; }
+    FORCEINLINE float GetDefaultSunRotation() const { return DefaultDayTimeMap[GameData.DefaultDayTime]; }
 
-    FORCEINLINE bool GetDayTime() const { return DayTime; }
-    void SetDayTime(const bool IsDay);
-
-    void DayTimerUpdate(float Time);
+    FORCEINLINE bool GetIsDayTime() const { return bIsDayTime; }
 
 protected:
     UPROPERTY(EditDefaultsOnly, Category = "Game")
@@ -61,18 +60,25 @@ protected:
     FName PlayerStartTagName{"Player"};
 
 private:
+    TMap<EDayTime, float> DefaultDayTimeMap;
     float CurrentDayTime{0};
-    float MaxDayTime{1440}; // 24 minute in second
+    // float MaxDaySecondsTime{0.0f};
+    float DayTimeModifier{0.0f};
+    float SunRotationTimeCounter{0.0f};
+
     FTimerHandle DayTimerHandle;
     FTimerHandle GameOverConditionTimerHandle;
 
     EGameState MatchState{EGameState::EGS_WaitingToStart};
 
-    bool DayTime{true};
+    bool bIsDayTime{true};
 
     void SpawnBots();
     void SetDefaultPlayerName() const;
     void SetStartUpDayTime();
+
+    void DayTimerUpdate();
+    void UpdateIsDayTime();
 
     void ResetPlayers();
     void ResetOnePlayer(AController* Controller);

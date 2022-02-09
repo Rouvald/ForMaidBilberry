@@ -8,6 +8,7 @@
 
 DEFINE_LOG_CATEGORY_STATIC(LogFMBSelectCharacterButtonWidget, All, All)
 
+/*
 void UFMBSelectCharacterButtonWidget::NativeOnInitialized()
 {
     Super::NativeOnInitialized();
@@ -47,5 +48,5 @@ void UFMBSelectCharacterButtonWidget::IsCharacterMeshSelected(bool IsSelected)
     {
     UE_LOG(LogFMBSelectCharacterButtonWidget, Error, TEXT("we have menu gamemode"));
     MenuGameMode->SetCharacterSkeletalMesh(CharacterData.CharacterMesh);
-    }*/
-}
+    }#1#
+}*/

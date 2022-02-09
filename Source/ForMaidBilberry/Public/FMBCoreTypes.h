@@ -127,6 +127,15 @@ DECLARE_MULTICAST_DELEGATE_OneParam(FOnWeaponSelectedSignature, const FWeaponUID
 
 // GameMode
 
+UENUM(BlueprintType)
+enum class EDayTime : uint8
+{
+    EDT_Day UMETA(DisplayName = "Day"),
+    EDT_Night UMETA(DisplayName = "Night"),
+
+    EDT_Max UMETA(DisplayName = "Max")
+};
+
 USTRUCT(BlueprintType)
 struct FGameData
 {
@@ -147,10 +156,10 @@ struct FGameData
     int32 RespawnTime{5}; // in second
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sky")
-    bool bIsDefaultDay{true};
+    EDayTime DefaultDayTime{EDayTime::EDT_Day};
 
-    UPROPERTY(EditDefaultsOnly, Category = "Sky", meta = (ClampMin = "0.23", ClampMax = "10", ToolTip = "Minimum value = 0.23"))
-    float TurnRatePitch{0.23f};
+    UPROPERTY(EditDefaultsOnly, Category = "Sky", meta = (ClampMin = "5", ClampMax = "60", ToolTip = "Day in minutes"))
+    float MaxDayMinuteTime{30.0f}; // in minutes
 };
 
 UENUM(BlueprintType)
@@ -209,7 +218,8 @@ enum class EMenuState : uint8
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnMenuStateChangeSignature, EMenuState);
 
 // change character
-USTRUCT(BlueprintType)
+/*
+ *USTRUCT(BlueprintType)
 struct FCharacterData
 {
     GENERATED_USTRUCT_BODY()
@@ -224,4 +234,9 @@ struct FCharacterData
 };
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnCharacterMeshSelectedSignature, const FCharacterData&);
+*/
 //
+
+// Sky
+
+DECLARE_MULTICAST_DELEGATE(FOnChangeSunRotationSignature);

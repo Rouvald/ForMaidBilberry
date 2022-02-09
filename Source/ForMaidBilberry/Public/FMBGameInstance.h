@@ -24,7 +24,7 @@ public:
     // FORCEINLINE FCharacterData GetStartCharacter() const { return StartCharacter; }
     // FORCEINLINE void SetStartCharacter(const FCharacterData& Data) { StartCharacter = Data; }
 
-    FORCEINLINE const TArray<FCharacterData>& GetCharactersData() const { return CharactersData; }
+    // FORCEINLINE const TArray<FCharacterData>& GetCharactersData() const { return CharactersData; }
 
     FORCEINLINE FName GetMenuLevelName() const { return MenuLevelName; }
 
@@ -37,8 +37,8 @@ protected:
     UPROPERTY(EditDefaultsOnly, Category = "Game")
     FName MenuLevelName{NAME_None};
 
-    UPROPERTY(EditDefaultsOnly, Category = "Game")
-    TArray<FCharacterData> CharactersData;
+    /*UPROPERTY(EditDefaultsOnly, Category = "Game")
+    TArray<FCharacterData> CharactersData;*/
 
     UPROPERTY(EditDefaultsOnly, Category = "Sound")
     USoundClass* MasterSoundClass{nullptr};

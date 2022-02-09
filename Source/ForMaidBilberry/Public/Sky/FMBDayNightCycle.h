@@ -19,10 +19,8 @@ class FORMAIDBILBERRY_API AFMBDayNightCycle : public AActor
 public:
     AFMBDayNightCycle();
 
-    virtual void Tick(float DeltaTime) override;
-
     UFUNCTION(BlueprintCallable)
-    bool GetDayTime() const;
+    bool GetIsDayTime() const;
 
 protected:
     UPROPERTY(EditAnywhere, Category = "Sky")
@@ -37,13 +35,13 @@ private:
     FTimerHandle DayNightCycleTimerHandle;
 
     UPROPERTY()
-    float CountTime{0};
+    AFMBGameModeBase* FMBGameMode;
 
     void SetSkyDefaultRotation() const;
 
-    void UpdateDaytime(const float TurnRateLight);
+    void UpdateSunRotation() const;
 
     AFMBGameModeBase* FMBGetGameMode() const;
 
-    UFMBGameInstance* FMBGetGameInstance() const;
+    // UFMBGameInstance* FMBGetGameInstance() const;
 };

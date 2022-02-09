@@ -13,12 +13,21 @@
 
 DEFINE_LOG_CATEGORY_STATIC(LogFMBGameModeBase, All, All)
 
+constexpr static float WholeDayInSeconds{1440.0f};
+constexpr static float MinuteToSecond{60.0f};
+constexpr static float DayTimeRate{0.01f};
+constexpr static float UpdateSunRotationCounter{0.3f};
+
 AFMBGameModeBase::AFMBGameModeBase()
 {
     DefaultPawnClass = AFMBPlayerCharacter::StaticClass();
     PlayerControllerClass = AFMBPlayerController::StaticClass();
     HUDClass = AFMBGameHUD::StaticClass();
     PlayerStateClass = AFMBPlayerState::StaticClass();
+
+    /* Add default sun position in map */
+    DefaultDayTimeMap.Add(EDayTime::EDT_Day, -90.0f);
+    DefaultDayTimeMap.Add(EDayTime::EDT_Night, 90.0f);
 }
 
 void AFMBGameModeBase::StartPlay()
@@ -56,13 +65,47 @@ void AFMBGameModeBase::SpawnBots()
 
 void AFMBGameModeBase::SetStartUpDayTime()
 {
-    GameData.bIsDefaultDay ? CurrentDayTime = MaxDayTime / 2 : CurrentDayTime = 0.0f;
+    // MaxDaySecondsTime = GameData.MaxDayMinuteTime * MinuteToSecond;
+    DayTimeModifier = WholeDayInSeconds / (GameData.MaxDayMinuteTime * MinuteToSecond);
+
+    switch (GameData.DefaultDayTime)
+    {
+    case EDayTime::EDT_Day:
+        CurrentDayTime = WholeDayInSeconds / 2;
+        break;
+    case EDayTime::EDT_Night:
+        CurrentDayTime = 0.0f;
+        break;
+    case EDayTime::EDT_Max:
+        UE_LOG(LogFMBGameModeBase, Warning, TEXT("Incorrect Day time."));
+        break;
+    }
+    UpdateIsDayTime();
+    GetWorldTimerManager().SetTimer(DayTimerHandle, this, &AFMBGameModeBase::DayTimerUpdate, DayTimeRate, true);
 }
 
-void AFMBGameModeBase::DayTimerUpdate(float Time)
+void AFMBGameModeBase::DayTimerUpdate()
 {
-    const float CurrentDayTimeTEMP = (CurrentDayTime + Time);
-    CurrentDayTime = FMath::Fmod(CurrentDayTimeTEMP, MaxDayTime);
+    const float CurrentDayTimeTEMP = CurrentDayTime + DayTimeRate * DayTimeModifier;
+    CurrentDayTime = FMath::Clamp(FMath::Fmod(CurrentDayTimeTEMP, WholeDayInSeconds), 0.0f, WholeDayInSeconds);
+    UpdateIsDayTime();
+    if (SunRotationTimeCounter >= UpdateSunRotationCounter)
+    {
+        OnChangeSunRotation.Broadcast();
+        SunRotationTimeCounter = 0.0f;
+    }
+    else
+    {
+        SunRotationTimeCounter += DayTimeRate * DayTimeModifier;
+    }
+}
+
+void AFMBGameModeBase::UpdateIsDayTime()
+{
+    const float SixAM = WholeDayInSeconds / 4;
+    const float SixPM = WholeDayInSeconds * 3 / 4;
+    FMath::IsWithin(CurrentDayTime, SixAM, SixPM) ? bIsDayTime = true : bIsDayTime = false;
+    UE_LOG(LogFMBGameModeBase, Display, TEXT("%d ==== %f :::: %f"), bIsDayTime, SixAM, SixPM);
 }
 
 void AFMBGameModeBase::ResetPlayers()
@@ -215,13 +258,6 @@ void AFMBGameModeBase::SetDefaultPlayerName() const
     if (!PlayerState) return;
 
     PlayerState->SetPlayerName(FMBDefaultPlayerName.ToString());
-}
-
-void AFMBGameModeBase::SetDayTime(const bool IsDay)
-{
-    if (DayTime == IsDay) return;
-
-    DayTime = IsDay;
 }
 
 /*void AFMBGameModeBase::CreateTeamsInfo()

@@ -1,10 +1,10 @@
-// For Maid Bilberry Game. All Rights Recerved
+// For Maid Bilberry Game. All Rights Reserved
 
 #include "Sky/FMBDayNightCycle.h"
-#include "FMBGameInstance.h"
 #include "FMBGameModeBase.h"
 #include "Misc/OutputDeviceNull.h"
 #include "Engine/DirectionalLight.h"
+#include "Components/LightComponent.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogFMBDayNightCycle, All, All)
 
@@ -23,6 +23,7 @@ void AFMBDayNightCycle::BeginPlay()
     if (FMBGameMode)
     {
         FMBGameMode->OnChangeSunRotation.AddUObject(this, &AFMBDayNightCycle::UpdateSunRotation);
+        FMBGameMode->OnDayNightChange.AddUObject(this, &AFMBDayNightCycle::InterpSunIntensity);
         SetSkyDefaultRotation();
     }
     else
@@ -35,12 +36,10 @@ void AFMBDayNightCycle::BeginPlay()
 void AFMBDayNightCycle::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
-
-
 }
 */
 
-void AFMBDayNightCycle::SetSkyDefaultRotation() const
+void AFMBDayNightCycle::SetSkyDefaultRotation()
 {
     if (!FMBGameMode) return;
 
@@ -49,6 +48,7 @@ void AFMBDayNightCycle::SetSkyDefaultRotation() const
     if (LightSource)
     {
         LightSource->SetActorRotation(FRotator(DefaultPitch, 0.0f, 0.0f));
+        DayLightIntensity = LightSource->GetLightComponent()->Intensity;
     }
     if (SkySphere)
     {
@@ -63,7 +63,7 @@ void AFMBDayNightCycle::UpdateSunRotation() const
 
     if (LightSource)
     {
-        LightSource->AddActorLocalRotation(FRotator(SunPitchRotation, 0.0f, 0.0f));
+        SunRotation();
         // UE_LOG(LogFMBDayNightCycle, Display, TEXT("%f"), LightSource->GetActorRotation().Pitch);
     }
     if (SkySphere)
@@ -73,11 +73,42 @@ void AFMBDayNightCycle::UpdateSunRotation() const
     }
 }
 
-bool AFMBDayNightCycle::GetIsDayTime() const
+void AFMBDayNightCycle::SunRotation() const
 {
-    if (!FMBGameMode) return false;
+    if (!LightSource) return;
+    /*
+    float LightPitch = LightSource->GetActorRotation().Pitch + SunPitchRotation;
+    LightPitch = FMath::FInterpTo(LightPitch, LightPitch+, GetWorld()->GetDeltaSeconds(), 120.0f);
+    LightSource->SetActorRelativeRotation(FRotator{LightPitch, 0.0f, 0.0f});
+    */
+    LightSource->AddActorLocalRotation(FRotator(SunPitchRotation, 0.0f, 0.0f));
+    // UE_LOG(LogFMBDayNightCycle, Display, TEXT("%s"), *LightSource->GetActorRotation().ToString());
+}
 
-    return FMBGameMode->GetIsDayTime();
+void AFMBDayNightCycle::InterpSunIntensity(const EDayTime NewDayTime)
+{
+    if (!GetWorld() || !LightSource) return;
+    float CurrentLightIntensity{0.0f};
+    switch (NewDayTime)
+    {
+    case EDayTime::EDT_Day:
+        CurrentLightIntensity = FMath::FInterpTo(DayLightIntensity, NightLightIntensity, GetWorld()->GetDeltaSeconds(), 15.0f);
+        break;
+    case EDayTime::EDT_Night:
+        CurrentLightIntensity = FMath::FInterpTo(NightLightIntensity, DayLightIntensity, GetWorld()->GetDeltaSeconds(), 15.0f);
+        break;
+    default:
+        break;
+    }
+    // UE_LOG(LogFMBDayNightCycle, Display, TEXT("Intensity: %f"), CurrentLightIntensity);
+    // UE_LOG(LogFMBDayNightCycle, Display, TEXT("Pitch: %f"), LightSource->GetActorRotation().Pitch);
+    LightSource->GetLightComponent()->SetIntensity(CurrentLightIntensity);
+}
+
+EDayTime AFMBDayNightCycle::GetDayTime() const
+{
+    if (!FMBGameMode) return EDayTime::EDT_Day;
+    return FMBGameMode->GetDayTime();
 }
 
 AFMBGameModeBase* AFMBDayNightCycle::FMBGetGameMode() const

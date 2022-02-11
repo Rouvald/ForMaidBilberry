@@ -19,6 +19,7 @@ public:
 
     FOnMatchStateChangeSignature OnMatchStateChange;
     FOnChangeSunRotationSignature OnChangeSunRotation;
+    FOnDayNightChangeSignature OnDayNightChange;
 
     virtual void StartPlay() override;
 
@@ -33,7 +34,7 @@ public:
     void BotKiller(AController* VictimController);
 
     FORCEINLINE FGameData GetGameData() const { return GameData; }
-    FORCEINLINE float GetGameTimer() const { return CurrentDayTime; }
+    FORCEINLINE float GetGameTimer() const { return CurrentDaySecondTime; }
 
     void RespawnRequest(AController* Controller);
 
@@ -41,7 +42,7 @@ public:
     // FORCEINLINE float GetTurnRatePitch() const { return GameData.TurnRatePitch; }
     FORCEINLINE float GetDefaultSunRotation() const { return DefaultDayTimeMap[GameData.DefaultDayTime]; }
 
-    FORCEINLINE bool GetIsDayTime() const { return bIsDayTime; }
+    FORCEINLINE EDayTime GetDayTime() const { return CurrentDayTime; }
 
 protected:
     UPROPERTY(EditDefaultsOnly, Category = "Game")
@@ -61,7 +62,7 @@ protected:
 
 private:
     TMap<EDayTime, float> DefaultDayTimeMap;
-    float CurrentDayTime{0};
+    float CurrentDaySecondTime{0};
     // float MaxDaySecondsTime{0.0f};
     float DayTimeModifier{0.0f};
     float SunRotationTimeCounter{0.0f};
@@ -71,11 +72,12 @@ private:
 
     EGameState MatchState{EGameState::EGS_WaitingToStart};
 
-    bool bIsDayTime{true};
+    EDayTime CurrentDayTime{EDayTime::EDT_Max};
 
     void SpawnBots();
     void SetDefaultPlayerName() const;
     void SetStartUpDayTime();
+    void SetDayTime(const EDayTime NewDayTime);
 
     void DayTimerUpdate();
     void UpdateIsDayTime();

@@ -127,14 +127,21 @@ DECLARE_MULTICAST_DELEGATE_OneParam(FOnWeaponSelectedSignature, const FWeaponUID
 
 // GameMode
 
+// Sky
+
 UENUM(BlueprintType)
 enum class EDayTime : uint8
 {
     EDT_Day UMETA(DisplayName = "Day"),
+    // EDT_Morning UMETA(DisplayName = "Morning"),
+    // EDT_Evening UMETA(DisplayName = "Evening"),
     EDT_Night UMETA(DisplayName = "Night"),
 
     EDT_Max UMETA(DisplayName = "Max")
 };
+
+DECLARE_MULTICAST_DELEGATE(FOnChangeSunRotationSignature);
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnDayNightChangeSignature, const EDayTime);
 
 USTRUCT(BlueprintType)
 struct FGameData
@@ -236,7 +243,3 @@ struct FCharacterData
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnCharacterMeshSelectedSignature, const FCharacterData&);
 */
 //
-
-// Sky
-
-DECLARE_MULTICAST_DELEGATE(FOnChangeSunRotationSignature);

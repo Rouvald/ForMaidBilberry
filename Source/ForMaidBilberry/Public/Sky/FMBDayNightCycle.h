@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "FMBCoreTypes.h"
 #include "GameFramework/Actor.h"
 #include "FMBDayNightCycle.generated.h"
 
@@ -20,7 +21,7 @@ public:
     AFMBDayNightCycle();
 
     UFUNCTION(BlueprintCallable)
-    bool GetIsDayTime() const;
+    EDayTime GetDayTime() const;
 
 protected:
     UPROPERTY(EditAnywhere, Category = "Sky")
@@ -34,12 +35,17 @@ protected:
 private:
     FTimerHandle DayNightCycleTimerHandle;
 
+    float DayLightIntensity{0.0f};
+    float NightLightIntensity{0.01f};
+
     UPROPERTY()
     AFMBGameModeBase* FMBGameMode;
 
-    void SetSkyDefaultRotation() const;
+    void SetSkyDefaultRotation();
 
     void UpdateSunRotation() const;
+    void SunRotation() const;
+    void InterpSunIntensity(const EDayTime NewDayTime);
 
     AFMBGameModeBase* FMBGetGameMode() const;
 

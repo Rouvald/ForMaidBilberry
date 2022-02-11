@@ -27,6 +27,8 @@ AFMBGameModeBase::AFMBGameModeBase()
 
     /* Add default sun position in map */
     DefaultDayTimeMap.Add(EDayTime::EDT_Day, -90.0f);
+    // DefaultDayTimeMap.Add(EDayTime::EDT_Morning, 0.1f);
+    // DefaultDayTimeMap.Add(EDayTime::EDT_Evening, -0.1f);
     DefaultDayTimeMap.Add(EDayTime::EDT_Night, 90.0f);
 }
 
@@ -65,29 +67,34 @@ void AFMBGameModeBase::SpawnBots()
 
 void AFMBGameModeBase::SetStartUpDayTime()
 {
-    // MaxDaySecondsTime = GameData.MaxDayMinuteTime * MinuteToSecond;
     DayTimeModifier = WholeDayInSeconds / (GameData.MaxDayMinuteTime * MinuteToSecond);
 
     switch (GameData.DefaultDayTime)
     {
     case EDayTime::EDT_Day:
-        CurrentDayTime = WholeDayInSeconds / 2;
+        CurrentDaySecondTime = WholeDayInSeconds / 2;
         break;
+    /*case EDayTime::EDT_Morning:
+        CurrentDaySecondTime = WholeDayInSeconds / 4;
+        break;
+    case EDayTime::EDT_Evening:
+        CurrentDaySecondTime = WholeDayInSeconds * 3 / 4;
+        break;*/
     case EDayTime::EDT_Night:
-        CurrentDayTime = 0.0f;
+        CurrentDaySecondTime = 0.0f;
         break;
-    case EDayTime::EDT_Max:
+    default /*case EDayTime::EDT_Max*/:
         UE_LOG(LogFMBGameModeBase, Warning, TEXT("Incorrect Day time."));
         break;
     }
-    UpdateIsDayTime();
+    SetDayTime(GameData.DefaultDayTime);
     GetWorldTimerManager().SetTimer(DayTimerHandle, this, &AFMBGameModeBase::DayTimerUpdate, DayTimeRate, true);
 }
 
 void AFMBGameModeBase::DayTimerUpdate()
 {
-    const float CurrentDayTimeTEMP = CurrentDayTime + DayTimeRate * DayTimeModifier;
-    CurrentDayTime = FMath::Clamp(FMath::Fmod(CurrentDayTimeTEMP, WholeDayInSeconds), 0.0f, WholeDayInSeconds);
+    const float CurrentDaySecondTimeTEMP = CurrentDaySecondTime + DayTimeRate * DayTimeModifier;
+    CurrentDaySecondTime = FMath::Clamp(FMath::Fmod(CurrentDaySecondTimeTEMP, WholeDayInSeconds), 0.0f, WholeDayInSeconds);
     UpdateIsDayTime();
     if (SunRotationTimeCounter >= UpdateSunRotationCounter)
     {
@@ -104,8 +111,17 @@ void AFMBGameModeBase::UpdateIsDayTime()
 {
     const float SixAM = WholeDayInSeconds / 4;
     const float SixPM = WholeDayInSeconds * 3 / 4;
-    FMath::IsWithin(CurrentDayTime, SixAM, SixPM) ? bIsDayTime = true : bIsDayTime = false;
-    UE_LOG(LogFMBGameModeBase, Display, TEXT("%d ==== %f :::: %f"), bIsDayTime, SixAM, SixPM);
+    FMath::IsWithin(CurrentDaySecondTime, SixAM, SixPM) ? SetDayTime(EDayTime::EDT_Day) : SetDayTime(EDayTime::EDT_Night);
+    // UE_LOG(LogFMBGameModeBase, Display, TEXT("%d ==== %f :::: %f"), CurrentDayTime, SixAM, SixPM);
+}
+
+void AFMBGameModeBase::SetDayTime(const EDayTime NewDayTime)
+{
+    if (CurrentDayTime == NewDayTime) return;
+
+    // UE_LOG(LogFMBGameModeBase, Display, TEXT("%s"), *UEnum::GetValueAsString(NewDayTime));
+    CurrentDayTime = NewDayTime;
+    OnDayNightChange.Broadcast(NewDayTime);
 }
 
 void AFMBGameModeBase::ResetPlayers()
@@ -189,7 +205,7 @@ void AFMBGameModeBase::LogPlayerInfo() const
 
 void AFMBGameModeBase::StartRespawn(AController* Controller)
 {
-    /*const auto IsRespawnAvailable = GameData.IsInfinityGame || CurrentDayTime > MinRoundTimeForRespawn + GameData.RespawnTime;
+    /*const auto IsRespawnAvailable = GameData.IsInfinityGame || CurrentDaySecondTime > MinRoundTimeForRespawn + GameData.RespawnTime;
     if (!IsRespawnAvailable) return;*/
 
     const auto RespawnComponent = FMBUtils::GetFMBPlayerComponent<UFMBRespawnComponent>(Controller);

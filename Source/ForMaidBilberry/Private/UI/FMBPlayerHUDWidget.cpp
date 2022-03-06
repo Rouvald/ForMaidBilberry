@@ -1,6 +1,8 @@
-// For Maid Bilberry Game. All Rights Recerved
+// For Maid Bilberry Game. All Rights Reserved
 
 #include "UI/FMBPlayerHUDWidget.h"
+
+#include "FMBPlayerCharacter.h"
 #include "Components/FMBHealthComponent.h"
 #include "Components/FMBStaminaComponent.h"
 #include "Components/FMBWeaponComponent.h"
@@ -22,7 +24,7 @@ void UFMBPlayerHUDWidget::NativeOnInitialized()
 
 void UFMBPlayerHUDWidget::OnNewPawn(APawn* NewPawn)
 {
-    const auto HealthComponent = FMBUtils::GetFMBPlayerComponent<UFMBHealthComponent>(NewPawn);
+    const auto HealthComponent{FMBUtils::GetFMBPlayerComponent<UFMBHealthComponent>(NewPawn)};
     if (HealthComponent)
     {
         HealthComponent->OnHealthChange.AddUObject(this, &UFMBPlayerHUDWidget::OnHealthChange);
@@ -43,7 +45,7 @@ void UFMBPlayerHUDWidget::OnHealthChange(float Health, float HealthDelta)
 
 float UFMBPlayerHUDWidget::GetHealthPercent() const
 {
-    const auto HealthComponent = FMBUtils::GetFMBPlayerComponent<UFMBHealthComponent>(GetOwningPlayerPawn());
+    const auto HealthComponent{FMBUtils::GetFMBPlayerComponent<UFMBHealthComponent>(GetOwningPlayerPawn())};
     if (!HealthComponent) return 0.0f;
 
     return HealthComponent->GetHealthPercent();
@@ -51,7 +53,7 @@ float UFMBPlayerHUDWidget::GetHealthPercent() const
 
 float UFMBPlayerHUDWidget::GetStaminaPercent() const
 {
-    const auto StaminaComponent = FMBUtils::GetFMBPlayerComponent<UFMBStaminaComponent>(GetOwningPlayerPawn());
+    const auto StaminaComponent{FMBUtils::GetFMBPlayerComponent<UFMBStaminaComponent>(GetOwningPlayerPawn())};
     if (!StaminaComponent) return 0.0f;
 
     return StaminaComponent->GetStaminaPercent();
@@ -59,7 +61,7 @@ float UFMBPlayerHUDWidget::GetStaminaPercent() const
 
 bool UFMBPlayerHUDWidget::GetCurrentWeaponUIData(FWeaponUIData& WeaponUIData) const
 {
-    const auto WeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBWeaponComponent>(GetOwningPlayerPawn());
+    const auto WeaponComponent{FMBUtils::GetFMBPlayerComponent<UFMBWeaponComponent>(GetOwningPlayerPawn())};
     if (!WeaponComponent) return false;
 
     // WeaponUIData.WeaponName = CheckWeaponName(WeaponUIData);
@@ -69,7 +71,7 @@ bool UFMBPlayerHUDWidget::GetCurrentWeaponUIData(FWeaponUIData& WeaponUIData) co
 
 bool UFMBPlayerHUDWidget::GetArmoryWeaponUIData(FWeaponUIData& WeaponUIData) const
 {
-    const auto WeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBWeaponComponent>(GetOwningPlayerPawn());
+    const auto WeaponComponent{FMBUtils::GetFMBPlayerComponent<UFMBWeaponComponent>(GetOwningPlayerPawn())};
     if (!WeaponComponent) return false;
 
     // WeaponUIData.WeaponName = CheckWeaponName(WeaponUIData);
@@ -79,12 +81,24 @@ bool UFMBPlayerHUDWidget::GetArmoryWeaponUIData(FWeaponUIData& WeaponUIData) con
 
 ESlateVisibility UFMBPlayerHUDWidget::IsPlayerAlive() const
 {
-    const auto HealthComponent = FMBUtils::GetFMBPlayerComponent<UFMBHealthComponent>(GetOwningPlayerPawn());
+    const auto HealthComponent{FMBUtils::GetFMBPlayerComponent<UFMBHealthComponent>(GetOwningPlayerPawn())};
     return HealthComponent && !HealthComponent->IsDead() ? ESlateVisibility::Visible : ESlateVisibility::Collapsed;
 }
 
 ESlateVisibility UFMBPlayerHUDWidget::IsPlayerSpectating() const
 {
-    const auto Controller = GetOwningPlayer();
-    return Controller && Controller->GetStateName() == NAME_Spectating ? ESlateVisibility::Visible : ESlateVisibility::Collapsed;
+    return GetOwningPlayer() && GetOwningPlayer()->GetStateName() == NAME_Spectating ? ESlateVisibility::Visible
+                                                                                     : ESlateVisibility::Collapsed;
+}
+
+bool UFMBPlayerHUDWidget::IsFPPCamera() const
+{
+    const auto Character{Cast<AFMBPlayerCharacter>(GetOwningPlayerPawn())};
+    return Character && Character->GetIsFPP() /* ? ESlateVisibility::Visible : ESlateVisibility::Collapsed*/;
+}
+
+ESlateVisibility UFMBPlayerHUDWidget::CrossHairVisibility() const
+{
+    return (GetOwningPlayer() && GetOwningPlayer()->GetStateName() == NAME_Spectating) || IsFPPCamera() ? ESlateVisibility::Visible
+                                                                                                        : ESlateVisibility::Collapsed;
 }

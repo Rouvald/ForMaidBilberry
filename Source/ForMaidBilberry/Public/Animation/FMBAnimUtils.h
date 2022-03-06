@@ -10,10 +10,21 @@ public:
         const auto NotifyEvents = Animation->Notifies;
         for (const auto NotifyEvent : NotifyEvents)
         {
-            const auto AnimNotify = Cast<T>(NotifyEvent.Notify);
-            if (AnimNotify)
+            if (NotifyEvent.Notify)
             {
-                return AnimNotify;
+                const auto AnimNotify = Cast<T>(NotifyEvent.Notify);
+                if (AnimNotify)
+                {
+                    return AnimNotify;
+                }
+            }
+            if (NotifyEvent.NotifyStateClass)
+            {
+                const auto AnimNotifyState = Cast<T>(NotifyEvent.NotifyStateClass);
+                if (AnimNotifyState)
+                {
+                    return AnimNotifyState;
+                }
             }
         }
         return nullptr;

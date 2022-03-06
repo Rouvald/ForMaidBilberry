@@ -35,6 +35,12 @@ public:
     UFUNCTION(BlueprintCallable, Category = "UI")
     ESlateVisibility IsPlayerSpectating() const;
 
+    UFUNCTION(BlueprintCallable, Category = "UI")
+    bool IsFPPCamera() const;
+
+    UFUNCTION(BlueprintCallable, Category = "UI")
+    ESlateVisibility CrossHairVisibility() const;
+
     /*UFUNCTION(BlueprintImplementableEvent, Category = "UI")
     void OnTakeDamage();*/
 

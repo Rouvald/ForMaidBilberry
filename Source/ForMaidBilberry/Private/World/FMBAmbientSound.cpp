@@ -37,7 +37,7 @@ void AFMBAmbientSound::BeginPlay()
 
 void AFMBAmbientSound::SetAmbientSound(const EDayTime NewDayTime) const
 {
-    UE_LOG(LogFMBAmbientSound, Display, TEXT("%s"), *UEnum::GetValueAsString(NewDayTime));
+    // UE_LOG(LogFMBAmbientSound, Display, TEXT("%s"), *UEnum::GetValueAsString(NewDayTime));
     switch (NewDayTime)
     {
     case EDayTime::EDT_Day:

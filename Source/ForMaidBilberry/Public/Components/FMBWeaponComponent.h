@@ -3,15 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "FMBBaseWeapon.h"
-#include "FMBCharacterMovementComponent.h"
 #include "Components/ActorComponent.h"
 #include "FMBCoreTypes.h"
 #include "FMBWeaponComponent.generated.h"
 
-class UStaticMeshComponent;
 class AFMBBaseCharacter;
+class UFMBCharacterMovementComponent;
+class UFMBStaminaComponent;
 class AFMBBaseWeapon;
+class AFMBBaseShield;
 class UAnimMontage;
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
@@ -24,6 +24,9 @@ public:
 
     void FastMeleeAttack();
     void StrongMeleeAttack();
+
+    void OnStartBlock();
+    void OnStopBlock();
 
     void NextWeapon();
 
@@ -49,12 +52,20 @@ public:
 
     FORCEINLINE const TMap<EWeaponType, FWeaponAnimationsData>& GetWeaponAnimationsData() const { return WeaponsAnimationsData; }
 
+    FORCEINLINE bool GetIsBlocking() const { return bIsBlocking; }
+
 protected:
     // UPROPERTY(EditDefaultsOnly, Category="Shield")
     // UStaticMeshComponent* Shield;
 
     UPROPERTY(EditDefaultsOnly, Category = "Weapon")
     TArray<TSubclassOf<AFMBBaseWeapon>> WeaponClasses;
+
+    UPROPERTY(EditDefaultsOnly, Category = "Weapon")
+    TSubclassOf<AFMBBaseShield> ShieldClass;
+
+    UPROPERTY(EditDefaultsOnly, Category = "Weapon")
+    TMap<EWeaponType, FName> WeaponShieldMaps;
 
     UPROPERTY(EditDefaultsOnly, Category = "Weapon")
     FName WeaponArmorySocketName = "WeaponArmorySocket";
@@ -71,11 +82,22 @@ protected:
     // int32 GetCurrentWeaponIndex() const {return CurrentWeaponIndex;}
 
 private:
+    //
     UPROPERTY()
     AFMBBaseCharacter* Character{nullptr};
 
     UPROPERTY()
+    UFMBCharacterMovementComponent* MovementComponent{nullptr};
+
+    UPROPERTY()
+    UFMBStaminaComponent* StaminaComponent{nullptr};
+    //
+
+    UPROPERTY()
     AFMBBaseWeapon* CurrentWeapon{nullptr};
+
+    UPROPERTY()
+    AFMBBaseShield* CurrentShield{nullptr};
 
     UPROPERTY()
     AFMBBaseWeapon* ArmoryWeapon{nullptr};
@@ -90,21 +112,27 @@ private:
     UPROPERTY()
     TArray<AFMBBaseWeapon*> Weapons;
 
+    /*UPROPERTY()
+    TArray<AFMBBaseShield*> Shields;*/
+
+    bool bIsBlocking{false};
     int32 CurrentWeaponIndex{0};
 
+    void SpawnItems();
     void SpawnWeapons();
-    void AttachWeaponToSocket(AFMBBaseWeapon* Weapon, USceneComponent* MeshComp, const FName& WeaponSocket) const;
-    void EquipWeapon(int32 WeaponIndex);
+    void SpawnShields();
+    void EquipWeapon();
 
     void CheckWeaponAnimationsData();
     void InitAnimation(const FWeaponAnimationsData& WeaponAnimationData);
-    void CheckAttackFinishedAnimNotify(UAnimMontage* Animation);
+    void CheckAttackAnimNotifyState(UAnimMontage* Animation);
 
-    void OnAttackFinished(USkeletalMeshComponent* MeshComp);
+    void OnAttackNotifyStateBegin(USkeletalMeshComponent* MeshComp);
+    void OnAttackNotifyStateEnd(USkeletalMeshComponent* MeshComp);
+    void OnAttackNotifyAnimEnd(USkeletalMeshComponent* MeshComp);
     void OnEquipFinished(USkeletalMeshComponent* MeshComp);
     void OnChangeEquipWeapon(USkeletalMeshComponent* MeshComp);
-
-    // void ShieldVisibility(EWeaponType CurrentWeaponType) const;
+    void EquipShield();
 
     bool CanDoAttack(const EStaminaSpend AttackStaminaSpend) const;
     void SpendStamina(const EStaminaSpend StaminaSpend) const;

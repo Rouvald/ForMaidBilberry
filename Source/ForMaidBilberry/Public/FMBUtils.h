@@ -3,6 +3,14 @@
 class FMBUtils
 {
 public:
+    static void AttachItemToSocket(AActor* Item, USceneComponent* MeshComp, const FName& SocketName)
+    {
+        if (!Item || !MeshComp) return;
+
+        const FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, false);
+        Item->AttachToComponent(MeshComp, AttachmentRules, SocketName);
+    }
+
     template <typename T> static T* GetFMBPlayerComponent(AActor* PlayerPawn)
     {
         if (!PlayerPawn) return nullptr;

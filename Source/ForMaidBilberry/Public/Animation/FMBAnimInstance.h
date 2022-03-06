@@ -27,6 +27,9 @@ private:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
     float Velocity{0.0f};
 
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
+    float MovementDirection{0.0f};
+
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
     bool bIsFalling{false};
 
@@ -37,10 +40,15 @@ private:
     bool bIsCurrentWeapon{false};
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
+    bool bIsBlocking{false};
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
     FWeaponAnimationsData CurrentWeaponAnimData;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
     EWeaponType CurrentWeaponType;
 
     void UpdateAnimationProperties(float DeltaSeconds);
+
+    float GetMovementDirection() const;
 };

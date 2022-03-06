@@ -6,6 +6,8 @@
 #include "FMBGameInstance.h"
 #include "UI/FMBKeyboardInfoWidget.h"
 
+DEFINE_LOG_CATEGORY_STATIC(LogFMBPlayerController, All, All)
+
 AFMBPlayerController::AFMBPlayerController()
 {
     RespawnComponent = CreateDefaultSubobject<UFMBRespawnComponent>("RespawnComponent");

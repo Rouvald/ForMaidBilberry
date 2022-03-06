@@ -17,24 +17,16 @@ AFMBBaseWeapon::AFMBBaseWeapon()
 {
     PrimaryActorTick.bCanEverTick = false;
 
-    DefaultRootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("DefaultRootComponent"));
-    RootComponent = DefaultRootComponent;
-
-    WeaponMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("WeaponMesh"));
-    WeaponMesh->SetupAttachment(DefaultRootComponent);
-    WeaponMesh->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
-
     WeaponFXComponent = CreateDefaultSubobject<UFMBWeaponFXComponent>(TEXT("WeaponFXComponent"));
 
     SwordTrailFXComponent = CreateDefaultSubobject<UNiagaraComponent>(TEXT("SwordTrailFXComponent"));
-    SwordTrailFXComponent->SetupAttachment(WeaponMesh, SwordTrailSocketName);
+    SwordTrailFXComponent->SetupAttachment(ItemMesh, SwordTrailSocketName);
 }
 
 void AFMBBaseWeapon::BeginPlay()
 {
     Super::BeginPlay();
-    checkf(WeaponMesh, TEXT("WeaponMesh = nullptr"));
-    checkf(WeaponFXComponent, TEXT("WeaponFxComponent = nullptr"));
+    checkf(WeaponFXComponent, TEXT("WeaponFxComponent == nullptr"));
 
     ChooseDamageAmount.Add(EChooseAttack::ECA_FastAttack, FastAttackDamage);
     ChooseDamageAmount.Add(EChooseAttack::ECA_StrongAttack, StrongAttackDamage);
@@ -70,7 +62,7 @@ void AFMBBaseWeapon::DrawTrace()
 
 FVector AFMBBaseWeapon::FindBladeSocketLocation(const FName BladeTraceSocketName) const
 {
-    const FTransform BladeSocketTransform = WeaponMesh->GetSocketTransform(BladeTraceSocketName);
+    const FTransform BladeSocketTransform = ItemMesh->GetSocketTransform(BladeTraceSocketName);
     const FVector BladeTrace = BladeSocketTransform.GetLocation();
     return BladeTrace;
 }
@@ -144,7 +136,7 @@ void AFMBBaseWeapon::StartDrawTrace()
         HitActors.Empty();
         UE_LOG(LogFMBBaseWeapon, Warning, TEXT("HitActors not empty"));
     }
-    GetWorldTimerManager().SetTimer(DrawTraceTimerHandle, this, &AFMBBaseWeapon::DrawTrace, 0.05f, true);
+    GetWorldTimerManager().SetTimer(DrawTraceTimerHandle, this, &AFMBBaseWeapon::DrawTrace, 0.01f, true);
 }
 
 void AFMBBaseWeapon::StopDrawTrace()
@@ -158,16 +150,10 @@ void AFMBBaseWeapon::StopDrawTrace()
 void AFMBBaseWeapon::SpawnSwordSlashSound() const
 {
     UGameplayStatics::SpawnSoundAttached(SwordSlashSound, //
-        WeaponMesh,                                       //
+        ItemMesh,                                         //
         SwordTrailSocketName,                             //
         FVector::ZeroVector,                              //
         FRotator::ZeroRotator,                            //
         EAttachLocation::SnapToTarget,                    //
         true);
-}
-
-AController* AFMBBaseWeapon::GetController() const
-{
-    const auto OwnerPawn = Cast<APawn>(GetOwner());
-    return OwnerPawn ? OwnerPawn->GetController() : nullptr;
 }

@@ -2,13 +2,15 @@
 
 #include "Player/FMBBaseCharacter.h"
 #include "GameFramework/SpringArmComponent.h"
-#include "Components/FMBHealthComponent.h"
-#include "Components/FMBWeaponComponent.h"
 #include "Components/TextRenderComponent.h"
 #include "GameFramework/Controller.h"
 #include "Components/CapsuleComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Sound/SoundCue.h"
+
+#include "Components/FMBCharacterMovementComponent.h"
+#include "Components/FMBHealthComponent.h"
+#include "Components/FMBWeaponComponent.h"
 
 DECLARE_LOG_CATEGORY_CLASS(BaseCharacterLog, All, All);
 
@@ -22,7 +24,7 @@ AFMBBaseCharacter::AFMBBaseCharacter(const FObjectInitializer& ObjInit)
     GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Camera, ECollisionResponse::ECR_Ignore);
     //
     GetCharacterMovement()->RotationRate = FRotator(0.0f, 700.0f, 0.0f);
-    GetCharacterMovement()->bOrientRotationToMovement = true;
+    GetCharacterMovement()->bOrientRotationToMovement = false;
     GetCharacterMovement()->bUseControllerDesiredRotation = true;
     GetCharacterMovement()->bIgnoreBaseRotation = true;
     //
@@ -61,18 +63,6 @@ bool AFMBBaseCharacter::IsRunning() const
 {
     return false;
 }
-
-/*
-float AFMBBaseCharacter::GetMovementDirection() const
-{
-    if (GetVelocity().IsZero()) return 0.0f;
-    const auto VelosityNormal = GetVelocity().GetSafeNormal();
-    const auto AngleBetween = FMath::Acos(FVector::DotProduct(GetActorForwardVector(), VelosityNormal));
-    const auto CrossProduct = FVector::CrossProduct(GetActorForwardVector(), VelosityNormal);
-    const auto Degrees = FMath::RadiansToDegrees(AngleBetween);
-    return CrossProduct.IsZero() ? Degrees : Degrees * FMath::Sign(CrossProduct.Z);
-}
-*/
 
 void AFMBBaseCharacter::OnDeath()
 {

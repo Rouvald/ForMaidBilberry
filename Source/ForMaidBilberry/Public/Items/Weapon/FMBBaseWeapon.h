@@ -5,8 +5,10 @@
 #include "CoreMinimal.h"
 #include "FMBCoreTypes.h"
 #include "GameFramework/Actor.h"
+#include "Items/FMBBaseItem.h"
 #include "FMBBaseWeapon.generated.h"
 
+class AFMBBaseItem;
 class UStaticMeshComponent;
 class UFMBWeaponFXComponent;
 class UNiagaraSystem;
@@ -14,7 +16,7 @@ class UNiagaraComponent;
 class USoundCue;
 
 UCLASS()
-class FORMAIDBILBERRY_API AFMBBaseWeapon : public AActor
+class FORMAIDBILBERRY_API AFMBBaseWeapon : public AFMBBaseItem
 {
     GENERATED_BODY()
 
@@ -35,12 +37,6 @@ public:
     FORCEINLINE UNiagaraComponent* GetSwordTrailFXComponent() const { return SwordTrailFXComponent; }
 
 protected:
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Component")
-    USceneComponent* DefaultRootComponent{nullptr};
-
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Component")
-    UStaticMeshComponent* WeaponMesh{nullptr};
-
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Component")
     UFMBWeaponFXComponent* WeaponFXComponent{nullptr};
 
@@ -98,6 +94,4 @@ protected:
     void StartDrawTrace();
 
     void SpawnSwordSlashSound() const;
-
-    AController* GetController() const;
 };

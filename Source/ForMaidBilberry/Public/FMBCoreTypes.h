@@ -36,10 +36,12 @@ struct FWeaponAnimationsData
     UPROPERTY(EditDefaultsOnly, Category = "Animation")
     UAnimMontage* FastAttack{nullptr};
 
+    /*UPROPERTY(EditDefaultsOnly, Category = "Animation")
+    UAnimMontage* JumpAttack{nullptr};*/
+
     UPROPERTY(EditDefaultsOnly, Category = "Animation")
     UAnimMontage* StrongAttack{nullptr};
 };
-
 // Weapon
 
 class UNiagaraSystem;

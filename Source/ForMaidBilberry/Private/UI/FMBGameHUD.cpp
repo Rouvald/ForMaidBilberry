@@ -4,6 +4,7 @@
 #include "Engine/Canvas.h"
 #include "FMBGameModeBase.h"
 #include "UI/FMBBaseWidget.h"
+#include "Components/Image.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogFMBGameHUD, All, All)
 
@@ -31,7 +32,19 @@ void AFMBGameHUD::BeginPlay()
             GameMode->OnMatchStateChange.AddUObject(this, &AFMBGameHUD::OnMatchStateChange);
         }
     }
+    // SetCharacter();
 }
+
+/*void AFMBGameHUD::SetCharacter()
+{
+    if (GetOwner())
+    {
+        if(const auto FMBController = Cast<AController>(GetOwner()))
+        {
+            Character = Cast<AFMBPlayerCharacter>(FMBController->GetCharacter());
+        }
+    }
+}*/
 
 void AFMBGameHUD::OnMatchStateChange(EGameState State)
 {
@@ -51,24 +64,32 @@ void AFMBGameHUD::OnMatchStateChange(EGameState State)
     // UE_LOG(LogFMBGameHUD, Display, TEXT("Match State: %s"), *UEnum::GetValueAsString(State));
 }
 
-/*void AFMBGameHUD::DrawHUD()
-{
-    // DrawTwoLine();
-}
-*/
-
 /*
-void AFMBGameHUD::DrawTwoLine()
+ *void AFMBGameHUD::DrawHUD()
 {
-    const TInterval<float> Center(Canvas->SizeX * 0.5f, Canvas->SizeY * 0.5f);
+    if (Character && Character->GetIsFPP())
+    {
+        DrawCrossHair();
+    }
+}
 
-    const float HalfLineSize = 5.0f;
-    const float LineTHickness = 2.0f;
-    const FColor ColorLine = FColor::Purple;
+void AFMBGameHUD::DrawCrossHair()
+{
+    if (!DotCrossHairTexture) return;
+    UImage* DotCrossHair{nullptr};
+    DotCrossHair->SetBrushFromTexture(DotCrossHairTexture);
 
-    DrawLine(Center.Min - HalfLineSize, Center.Max - HalfLineSize, Center.Min + HalfLineSize, Center.Max + HalfLineSize, ColorLine,
-        LineTHickness);
-    DrawLine(Center.Min - HalfLineSize, Center.Max + HalfLineSize, Center.Min + HalfLineSize, Center.Max - HalfLineSize, ColorLine,
-        LineTHickness);
+    const FVector2D ViewportCenterLocation = FVector2D{Canvas->SizeX / 2.0f, Canvas->SizeY / 2.0f};
+
+    const FVector2D TextureCenterLocation = FVector2D{DotCrossHairTexture->GetSizeX() * DotCrossHairTextureScale / 2.0f,
+                                                      DotCrossHairTexture->GetSizeY() * DotCrossHairTextureScale / 2.0f};
+
+    DrawTextureSimple
+        (
+            DotCrossHairTexture,                                //
+            ViewportCenterLocation.X - TextureCenterLocation.X, //
+            ViewportCenterLocation.Y - TextureCenterLocation.Y, //
+            DotCrossHairTextureScale
+            );
 }
 */

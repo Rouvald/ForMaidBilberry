@@ -56,11 +56,11 @@ void UFMBCharacterMovementComponent::Rolling()
         }
     }
     StaminaComponent->SpendStamina(EStaminaSpend::ESS_Rolling);
-    RollingAnimInProgress = true;
     Character->GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Ignore);
 
     if (WeaponComponent->GetCurrentWeapon())
     {
+        RollingAnimInProgress = true;
         WeaponComponent->StopDrawTrace();
         Character->PlayAnimMontage(WeaponComponent->GetCurrentWeaponAnimationsData().Roll);
     }

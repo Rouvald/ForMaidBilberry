@@ -2,12 +2,12 @@
 
 #include "Components/FMBCharacterMovementComponent.h"
 #include "Components/FMBStaminaComponent.h"
-#include "Components//FMBWeaponComponent.h"
+#include "Components//FMBBaseWeaponComponent.h"
 #include "Player/FMBBaseCharacter.h"
 #include "FMBUtils.h"
 #include "Components/CapsuleComponent.h"
 
-DECLARE_LOG_CATEGORY_CLASS(MovementComponentLog, All, All);
+DECLARE_LOG_CATEGORY_CLASS(LogFMBCharacterMovementComponent, All, All);
 
 void UFMBCharacterMovementComponent::BeginPlay()
 {
@@ -31,7 +31,7 @@ void UFMBCharacterMovementComponent::Rolling()
 
     if (!Character) return;
 
-    const auto WeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBWeaponComponent>(Character);
+    const auto WeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBBaseWeaponComponent>(Character);
     if (!WeaponComponent || !(WeaponComponent->CanEquip()) || !(WeaponComponent->CanAttack())) return;
 
     const auto StaminaComponent = FMBUtils::GetFMBPlayerComponent<UFMBStaminaComponent>(Character);

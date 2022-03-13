@@ -6,7 +6,7 @@
 #include "BehaviorTree/BTService.h"
 #include "FMBAttackService.generated.h"
 
-class UFMBWeaponComponent;
+class UFMBBaseWeaponComponent;
 /**
  *
  */

@@ -3,7 +3,7 @@
 #include "AI/Services/FMBAttackService.h"
 #include "AIController.h"
 #include "FMBUtils.h"
-#include "Components/FMBWeaponComponent.h"
+#include "Components/FMBBaseWeaponComponent.h"
 #include "FMBAIPerceptionComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
@@ -22,7 +22,7 @@ void UFMBAttackService::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
         const auto PerceiveComponent = FMBUtils::GetFMBPlayerComponent<UFMBAIPerceptionComponent>(Controller);
         if (PerceiveComponent)
         {
-            const auto WeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBWeaponComponent>(Controller->GetPawn());
+            const auto WeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBBaseWeaponComponent>(Controller->GetPawn());
             const auto PerceiveActor = PerceiveComponent->GetEnemyPlayer();
             if (WeaponComponent && PerceiveActor)
             {

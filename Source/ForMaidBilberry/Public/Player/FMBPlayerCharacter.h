@@ -7,9 +7,11 @@
 #include "Player/FMBBaseCharacter.h"
 #include "FMBPlayerCharacter.generated.h"
 
+class UFMBCharacterMovementComponent;
 class USpringArmComponent;
 class UCameraComponent;
 class UFMBStaminaComponent;
+class UFMBPlayerWeaponComponent;
 class USphereComponent;
 
 /**
@@ -47,6 +49,9 @@ protected:
 
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
     UCameraComponent* FPPCameraComponent{nullptr};
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+    UFMBPlayerWeaponComponent* WeaponComponent{nullptr};
 
     virtual void BeginPlay() override;
     virtual void OnDeath() override;

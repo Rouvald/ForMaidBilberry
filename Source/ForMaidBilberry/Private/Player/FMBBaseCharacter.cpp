@@ -10,7 +10,6 @@
 
 #include "Components/FMBCharacterMovementComponent.h"
 #include "Components/FMBHealthComponent.h"
-#include "Components/FMBWeaponComponent.h"
 
 DECLARE_LOG_CATEGORY_CLASS(BaseCharacterLog, All, All);
 
@@ -31,7 +30,6 @@ AFMBBaseCharacter::AFMBBaseCharacter(const FObjectInitializer& ObjInit)
     GetMesh()->SetRelativeLocationAndRotation(FVector(0.0f, 0.0f, -90.0f), FRotator(0.0f, -90.0f, 0.0f));
 
     HealthComponent = CreateDefaultSubobject<UFMBHealthComponent>(TEXT("HealthComponent"));
-    WeaponComponent = CreateDefaultSubobject<UFMBWeaponComponent>(TEXT("WeaponComponent"));
 
     Backpack = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Backpack"));
     Backpack->SetupAttachment(GetMesh(), BackpackSocketName);
@@ -71,8 +69,6 @@ void AFMBBaseCharacter::OnDeath()
     GetCharacterMovement()->DisableMovement();
     SetLifeSpan(LifeSpanOnDeath);
     GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
-
-    WeaponComponent->StopDrawTrace();
 
     GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
     GetMesh()->SetSimulatePhysics(true);

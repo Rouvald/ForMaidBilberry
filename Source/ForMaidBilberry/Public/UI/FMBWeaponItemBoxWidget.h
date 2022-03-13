@@ -7,7 +7,7 @@
 #include "FMBCoreTypes.h"
 #include "FMBWeaponItemBoxWidget.generated.h"
 
-class UFMBWeaponComponent;
+class UFMBBaseWeaponComponent;
 class UHorizontalBox;
 class UFMBWeaponDataWidget;
 /**
@@ -34,5 +34,5 @@ class FORMAIDBILBERRY_API UFMBWeaponItemBoxWidget : public UUserWidget
         void InitWeaponItem();
         void OnWeaponSelected(const FWeaponUIData& Data);
 
-        UFMBWeaponComponent* GetWeaponComponent() const;*/
+        UFMBBaseWeaponComponent* GetWeaponComponent() const;*/
 };

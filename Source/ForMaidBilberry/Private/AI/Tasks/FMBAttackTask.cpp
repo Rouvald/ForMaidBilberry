@@ -4,7 +4,7 @@
 #include "AIController.h"
 #include "FMBUtils.h"
 #include "FMBAIPerceptionComponent.h"
-#include "FMBWeaponComponent.h"
+#include "FMBBaseWeaponComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
 // DEFINE_LOG_CATEGORY_STATIC(LogFMBAttackTask, All, All)
@@ -26,7 +26,7 @@ EBTNodeResult::Type UFMBAttackTask::ExecuteTask(UBehaviorTreeComponent& OwnerCom
     const auto PerceiveComponent = FMBUtils::GetFMBPlayerComponent<UFMBAIPerceptionComponent>(Controller);
     if (!PerceiveComponent) return EBTNodeResult::Failed;
 
-    const auto WeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBWeaponComponent>(Pawn);
+    const auto WeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBBaseWeaponComponent>(Pawn);
     const auto PerceiveActor = PerceiveComponent->GetEnemyPlayer();
     if (!WeaponComponent || !PerceiveActor) return EBTNodeResult::Failed;
 

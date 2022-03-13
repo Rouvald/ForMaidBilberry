@@ -3,7 +3,7 @@
 #include "AI/Services/FMBChangeWeaponService.h"
 
 #include "AIController.h"
-#include "Components/FMBWeaponComponent.h"
+#include "Components/FMBBaseWeaponComponent.h"
 #include "FMBUtils.h"
 
 UFMBChangeWeaponService::UFMBChangeWeaponService()
@@ -16,10 +16,10 @@ void UFMBChangeWeaponService::TickNode(UBehaviorTreeComponent& OwnerComp, uint8*
     const auto Controller = OwnerComp.GetAIOwner();
     if (Controller)
     {
-        const auto WeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBWeaponComponent>(Controller->GetPawn());
+        const auto WeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBBaseWeaponComponent>(Controller->GetPawn());
         if (WeaponComponent && Probability > 0 && FMath::FRand() >= Probability)
         {
-            WeaponComponent->NextWeapon();
+            // WeaponComponent->NextWeapon();
         }
     }
 

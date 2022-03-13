@@ -3,7 +3,7 @@
 #include "Components/FMBHealthComponent.h"
 #include "FMBBaseCharacter.h"
 #include "Components/FMBCharacterMovementComponent.h"
-#include "Components/FMBWeaponComponent.h"
+#include "Components/FMBBaseWeaponComponent.h"
 #include "FMBUtils.h"
 #include "FMBCoreTypes.h"
 #include "FMBGameModeBase.h"
@@ -104,7 +104,7 @@ bool UFMBHealthComponent::CheckAllAnimInProgress() const
     const auto MovementComponent = FMBUtils::GetFMBPlayerComponent<UFMBCharacterMovementComponent>(Character);
     if (!MovementComponent || !(MovementComponent->CanRolling())) return false;
 
-    const auto WeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBWeaponComponent>(Character);
+    const auto WeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBBaseWeaponComponent>(Character);
     if (!WeaponComponent || !(WeaponComponent->CanAttack()) || !(WeaponComponent->CanEquip())) return false;
     return true;
 }
@@ -113,7 +113,7 @@ void UFMBHealthComponent::PlayHitAnimation() const
 {
     if (Character)
     {
-        const auto WeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBWeaponComponent>(Character);
+        const auto WeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBBaseWeaponComponent>(Character);
         if (WeaponComponent && WeaponComponent->GetCurrentWeapon())
         {
             Character->PlayAnimMontage(WeaponComponent->GetCurrentWeaponAnimationsData().GetHit);

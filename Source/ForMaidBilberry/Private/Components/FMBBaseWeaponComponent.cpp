@@ -1,6 +1,6 @@
 // For Maid Bilberry Game. All Rights Recerved
 
-#include "Components/FMBWeaponComponent.h"
+#include "Components/FMBBaseWeaponComponent.h"
 #include "FMBBaseCharacter.h"
 #include "FMBBaseShield.h"
 #include "Animation/FMBAnimFinishedNotify.h"
@@ -16,17 +16,17 @@
 
 DECLARE_LOG_CATEGORY_CLASS(LogFMBWeaponComponent, All, All);
 
-UFMBWeaponComponent::UFMBWeaponComponent()
+UFMBBaseWeaponComponent::UFMBBaseWeaponComponent()
 {
     PrimaryComponentTick.bCanEverTick = false;
 }
 
-void UFMBWeaponComponent::BeginPlay()
+void UFMBBaseWeaponComponent::BeginPlay()
 {
     Super::BeginPlay();
 
-    checkf(WeaponClasses.Num() > 0, TEXT("Character don't have weapon"));
-    CurrentWeaponIndex = 0;
+    // checkf(WeaponClasses.Num() > 0, TEXT("Character don't have weapon"));
+    // CurrentWeaponIndex = 0;
 
     Character = Cast<AFMBBaseCharacter>(GetOwner());
     if (Character)
@@ -35,73 +35,76 @@ void UFMBWeaponComponent::BeginPlay()
         StaminaComponent = Character->FindComponentByClass<UFMBStaminaComponent>();
         CheckWeaponAnimationsData();
         SpawnItems();
-        EquipWeapon();
+        // EquipWeapon();
     }
 }
 
-void UFMBWeaponComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
+void UFMBBaseWeaponComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
-    CurrentShield->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
-    CurrentShield->Destroy();
+    CurrentWeapon->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+    CurrentWeapon->Destroy();
 
-    CurrentWeapon = nullptr;
+    /*CurrentWeapon = nullptr;
     for (const auto Weapon : Weapons)
     {
-        Weapon->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
-        Weapon->Destroy();
+
     }
-    Weapons.Empty();
+    Weapons.Empty();*/
 
     Super::EndPlay(EndPlayReason);
 }
 
-void UFMBWeaponComponent::SpawnItems()
+void UFMBBaseWeaponComponent::SpawnItems()
 {
     if (!GetWorld()) return;
     if (!Character) return;
 
-    SpawnWeapons();
-    SpawnShields();
+    SpawnWeapon();
 }
 
-void UFMBWeaponComponent::SpawnWeapons()
+void UFMBBaseWeaponComponent::SpawnWeapon()
 {
-    for (auto WeaponClass : WeaponClasses)
+    CurrentWeapon = GetWorld()->SpawnActor<AFMBBaseWeapon>(WeaponClass);
+    if (!CurrentWeapon)
+    {
+        UE_LOG(LogFMBWeaponComponent, Display, TEXT("Error: spawn weapon"));
+        return;
+    }
+
+    CurrentWeapon->SetOwner(Character);
+
+    if (CurrentWeapon->GetRootComponent())
+    {
+        CurrentWeapon->GetRootComponent()->SetVisibility(true, true);
+    }
+    if (WeaponsAnimationsData.Contains(CurrentWeapon->GetWeaponType()))
+    {
+        CurrentWeaponAnimationsData = WeaponsAnimationsData[CurrentWeapon->GetWeaponType()];
+    }
+    UE_LOG(LogFMBWeaponComponent, Display, TEXT("%d"), CurrentWeapon->GetWeaponType() == EWeaponType::EWT_YellowSword);
+    FMBUtils::AttachItemToSocket(CurrentWeapon, Character->GetMesh(), CurrentWeaponAnimationsData.WeaponEquipSocketName);
+    /*for (auto WeaponClass : WeaponClasses)
     {
         auto Weapon = GetWorld()->SpawnActor<AFMBBaseWeapon>(WeaponClass);
         if (!Weapon) continue;
 
         Weapon->SetOwner(Character);
 
-        Weapons.Add(Weapon);
+        //Weapons.Add(Weapon);
 
         if (Weapon->GetRootComponent())
         {
             Weapon->GetRootComponent()->SetVisibility(false, true);
         }
         FMBUtils::AttachItemToSocket(Weapon, Character->GetMesh(), WeaponArmorySocketName);
-    }
+    }*/
 }
 
-void UFMBWeaponComponent::SpawnShields()
-{
-    CurrentShield = GetWorld()->SpawnActor<AFMBBaseShield>(ShieldClass);
-    if (!CurrentShield) return;
-
-    CurrentShield->SetOwner(Character);
-
-    if (CurrentShield->GetRootComponent())
-    {
-        CurrentShield->GetRootComponent()->SetVisibility(false, true);
-    }
-    FMBUtils::AttachItemToSocket(CurrentShield, Character->GetMesh(), WeaponArmorySocketName);
-}
-
-void UFMBWeaponComponent::EquipWeapon()
+/*void UFMBBaseWeaponComponent::EquipWeapon()
 {
     if (!Character) return;
 
-    EquipAnimInProgress = true;
+    bIsEquipAnimInProgress = true;
     if (CurrentWeapon)
     {
         PlayAnimMontage(CurrentWeaponAnimationsData.Equip);
@@ -113,48 +116,48 @@ void UFMBWeaponComponent::EquipWeapon()
     //==================================================
     // UE_LOG(BaseWeaponComponentLog, Display, TEXT("Equip"));
     //==================================================
-}
+}*/
 
-void UFMBWeaponComponent::NextWeapon()
+/*void UFMBBaseWeaponComponent::NextWeapon()
 {
     if (!CanEquip() || !CanAttack()) return;
     int32 CurrentWeaponIndexTemp = CurrentWeaponIndex;
     ++CurrentWeaponIndexTemp;
     CurrentWeaponIndex = (CurrentWeaponIndexTemp) % Weapons.Num();
     EquipWeapon();
-}
+}*/
 
-void UFMBWeaponComponent::FastMeleeAttack()
+void UFMBBaseWeaponComponent::FastMeleeAttack()
 {
     if (!CanDoAttack(EStaminaSpend::ESS_FastAttack)) return;
     SpendStamina(EStaminaSpend::ESS_FastAttack);
 
-    AttackAnimInProgress = true;
+    bIsAttackAnimInProgress = true;
     PlayAnimMontage(CurrentWeaponAnimationsData.FastAttack);
 }
 
-void UFMBWeaponComponent::StrongMeleeAttack()
+void UFMBBaseWeaponComponent::StrongMeleeAttack()
 {
     if (!CanDoAttack(EStaminaSpend::ESS_StrongAttack)) return;
     SpendStamina(EStaminaSpend::ESS_StrongAttack);
 
-    AttackAnimInProgress = true;
+    bIsAttackAnimInProgress = true;
     PlayAnimMontage(CurrentWeaponAnimationsData.StrongAttack);
 }
 
-void UFMBWeaponComponent::SpendStamina(const EStaminaSpend StaminaSpend) const
+void UFMBBaseWeaponComponent::SpendStamina(const EStaminaSpend StaminaSpend) const
 {
     if (!Character || !Character->IsPlayerControlled() || !StaminaComponent) return;
     StaminaComponent->SpendStamina(StaminaSpend);
 }
 
-void UFMBWeaponComponent::PlayAnimMontage(UAnimMontage* Animation) const
+void UFMBBaseWeaponComponent::PlayAnimMontage(UAnimMontage* Animation) const
 {
     if (!Character) return;
     Character->PlayAnimMontage(Animation);
 }
 
-void UFMBWeaponComponent::CheckWeaponAnimationsData()
+void UFMBBaseWeaponComponent::CheckWeaponAnimationsData()
 {
     if (WeaponsAnimationsData.Contains(EWeaponType::EWT_RedSword))
     {
@@ -166,7 +169,7 @@ void UFMBWeaponComponent::CheckWeaponAnimationsData()
     }
 }
 
-void UFMBWeaponComponent::InitAnimation(const FWeaponAnimationsData& WeaponAnimationData)
+void UFMBBaseWeaponComponent::InitAnimation(const FWeaponAnimationsData& WeaponAnimationData)
 {
     if (!Character) return;
 
@@ -180,10 +183,10 @@ void UFMBWeaponComponent::InitAnimation(const FWeaponAnimationsData& WeaponAnima
         UE_LOG(LogFMBWeaponComponent, Error, TEXT("Rolling Finished anim notify don't set"));
         checkNoEntry();
     }
-    const auto ChangeEquipWeapon = FMBAnimUtils::FindNotifyByClass<UFMBChangeEquipWeaponAnimNotify>(WeaponAnimationData.Equip);
+    /*const auto ChangeEquipWeapon = FMBAnimUtils::FindNotifyByClass<UFMBChangeEquipWeaponAnimNotify>(WeaponAnimationData.Equip);
     if (ChangeEquipWeapon)
     {
-        ChangeEquipWeapon->OnNotify.AddUObject(this, &UFMBWeaponComponent::OnChangeEquipWeapon);
+        ChangeEquipWeapon->OnNotify.AddUObject(this, &UFMBBaseWeaponComponent::OnChangeEquipWeapon);
     }
     else
     {
@@ -193,28 +196,28 @@ void UFMBWeaponComponent::InitAnimation(const FWeaponAnimationsData& WeaponAnima
     const auto EquipFinished = FMBAnimUtils::FindNotifyByClass<UFMBAnimFinishedNotify>(WeaponAnimationData.Equip);
     if (EquipFinished)
     {
-        EquipFinished->OnNotify.AddUObject(this, &UFMBWeaponComponent::OnEquipFinished);
+        EquipFinished->OnNotify.AddUObject(this, &UFMBBaseWeaponComponent::OnEquipFinished);
     }
     else
     {
         UE_LOG(LogFMBWeaponComponent, Error, TEXT("Equip weapon anim notify don't set"));
         checkNoEntry();
-    }
+    }*/
 
     CheckAttackAnimNotifyState(WeaponAnimationData.FastAttack);
     CheckAttackAnimNotifyState(WeaponAnimationData.StrongAttack);
 }
 
-void UFMBWeaponComponent::CheckAttackAnimNotifyState(UAnimMontage* Animation)
+void UFMBBaseWeaponComponent::CheckAttackAnimNotifyState(UAnimMontage* Animation)
 {
     const auto AttackEvent = FMBAnimUtils::FindNotifyByClass<UFMBFinishedAnimNotifyState>(Animation);
     const auto AttackAnimEvent = FMBAnimUtils::FindNotifyByClass<UFMBAnimFinishedNotify>(Animation);
     if (AttackEvent && AttackAnimEvent)
     {
-        AttackEvent->OnNotifyStateBegin.AddUObject(this, &UFMBWeaponComponent::OnAttackNotifyStateBegin);
-        AttackEvent->OnNotifyStateEnd.AddUObject(this, &UFMBWeaponComponent::OnAttackNotifyStateEnd);
+        AttackEvent->OnNotifyStateBegin.AddUObject(this, &UFMBBaseWeaponComponent::OnAttackNotifyStateBegin);
+        AttackEvent->OnNotifyStateEnd.AddUObject(this, &UFMBBaseWeaponComponent::OnAttackNotifyStateEnd);
 
-        AttackAnimEvent->OnNotify.AddUObject(this, &UFMBWeaponComponent::OnAttackNotifyAnimEnd);
+        AttackAnimEvent->OnNotify.AddUObject(this, &UFMBBaseWeaponComponent::OnAttackNotifyAnimEnd);
     }
     else
     {
@@ -223,13 +226,13 @@ void UFMBWeaponComponent::CheckAttackAnimNotifyState(UAnimMontage* Animation)
     }
 }
 
-void UFMBWeaponComponent::OnAttackNotifyStateBegin(USkeletalMeshComponent* MeshComp)
+void UFMBBaseWeaponComponent::OnAttackNotifyStateBegin(USkeletalMeshComponent* MeshComp)
 {
     if (!Character || Character->GetMesh() != MeshComp) return;
     CurrentWeapon->MeleeAttack(EChooseAttack::ECA_FastAttack);
 }
 
-void UFMBWeaponComponent::OnAttackNotifyStateEnd(USkeletalMeshComponent* MeshComp)
+void UFMBBaseWeaponComponent::OnAttackNotifyStateEnd(USkeletalMeshComponent* MeshComp)
 {
     if (!Character || Character->GetMesh() != MeshComp) return;
     if (StaminaComponent)
@@ -239,19 +242,19 @@ void UFMBWeaponComponent::OnAttackNotifyStateEnd(USkeletalMeshComponent* MeshCom
     StopDrawTrace();
 }
 
-void UFMBWeaponComponent::OnAttackNotifyAnimEnd(USkeletalMeshComponent* MeshComp)
+void UFMBBaseWeaponComponent::OnAttackNotifyAnimEnd(USkeletalMeshComponent* MeshComp)
 {
     if (!Character || Character->GetMesh() != MeshComp) return;
-    AttackAnimInProgress = false;
+    bIsAttackAnimInProgress = false;
 }
 
-void UFMBWeaponComponent::OnEquipFinished(USkeletalMeshComponent* MeshComp)
+/*void UFMBBaseWeaponComponent::OnEquipFinished(USkeletalMeshComponent* MeshComp)
 {
     if (!Character || Character->GetMesh() != MeshComp) return;
-    EquipAnimInProgress = false;
-}
+    bIsEquipAnimInProgress = false;
+}*/
 
-void UFMBWeaponComponent::OnChangeEquipWeapon(USkeletalMeshComponent* MeshComp)
+/*void UFMBBaseWeaponComponent::OnChangeEquipWeapon(USkeletalMeshComponent* MeshComp)
 {
     if (CurrentWeaponIndex < 0 || CurrentWeaponIndex > Weapons.Num())
     {
@@ -282,15 +285,15 @@ void UFMBWeaponComponent::OnChangeEquipWeapon(USkeletalMeshComponent* MeshComp)
         CurrentWeaponAnimationsData = WeaponsAnimationsData[CurrentWeapon->GetWeaponType()];
     }
     FMBUtils::AttachItemToSocket(CurrentWeapon, Character->GetMesh(), CurrentWeaponAnimationsData.WeaponEquipSocketName);
-}
+}*/
 
-void UFMBWeaponComponent::EquipShield()
+/*void UFMBBaseWeaponComponent::EquipShield()
 {
     if (!CurrentShield) return;
 
     if (!WeaponShieldMaps.Contains(CurrentWeapon->GetWeaponType()))
     {
-        /* @todo: for future. */
+        /* @todo: for future.
         // CurrentShield->StopDrawTrace();
         if (CurrentShield->GetRootComponent())
         {
@@ -306,23 +309,9 @@ void UFMBWeaponComponent::EquipShield()
         }
         FMBUtils::AttachItemToSocket(CurrentShield, Character->GetMesh(), WeaponShieldMaps[CurrentWeapon->GetWeaponType()]);
     }
-}
+}*/
 
-void UFMBWeaponComponent::OnStartBlock()
-{
-    if (!CurrentShield) return;
-
-    // CurrentShield->Startblocking();
-    bIsBlocking = true;
-}
-
-void UFMBWeaponComponent::OnStopBlock()
-{
-    // CurrentShield->StopBlocking();
-    bIsBlocking = false;
-}
-
-void UFMBWeaponComponent::StopDrawTrace()
+void UFMBBaseWeaponComponent::StopDrawTrace()
 {
     if (CurrentWeapon)
     {
@@ -330,7 +319,7 @@ void UFMBWeaponComponent::StopDrawTrace()
     }
 }
 
-bool UFMBWeaponComponent::CanDoAttack(const EStaminaSpend AttackStaminaSpend) const
+bool UFMBBaseWeaponComponent::CanDoAttack(const EStaminaSpend AttackStaminaSpend) const
 {
     if (!CurrentWeapon) return false;
     if (!CanAttack()) return false;
@@ -339,13 +328,12 @@ bool UFMBWeaponComponent::CanDoAttack(const EStaminaSpend AttackStaminaSpend) co
     {
         if (!StaminaComponent || !(StaminaComponent->CanSpendStamina(AttackStaminaSpend))) return false;
     }
-
     return true;
 }
 
-bool UFMBWeaponComponent::CanAttack() const
+bool UFMBBaseWeaponComponent::CanAttack() const
 {
-    if (AttackAnimInProgress) return false;
+    if (bIsAttackAnimInProgress) return false;
 
     if (!CanEquip()) return false;
 
@@ -354,12 +342,12 @@ bool UFMBWeaponComponent::CanAttack() const
     return true;
 }
 
-bool UFMBWeaponComponent::CanEquip() const
+bool UFMBBaseWeaponComponent::CanEquip() const
 {
-    return !EquipAnimInProgress;
+    return !bIsEquipAnimInProgress;
 }
 
-bool UFMBWeaponComponent::GetCurrentWeaponUIData(FWeaponUIData& WeaponUIData) const
+bool UFMBBaseWeaponComponent::GetCurrentWeaponUIData(FWeaponUIData& WeaponUIData) const
 {
     if (CurrentWeapon)
     {
@@ -370,7 +358,7 @@ bool UFMBWeaponComponent::GetCurrentWeaponUIData(FWeaponUIData& WeaponUIData) co
 }
 
 // work if u have only 2 weapons //
-bool UFMBWeaponComponent::GetArmoryWeaponUIData(FWeaponUIData& WeaponUIData) const
+/*bool UFMBBaseWeaponComponent::GetArmoryWeaponUIData(FWeaponUIData& WeaponUIData) const
 {
     if (ArmoryWeapon)
     {
@@ -378,4 +366,4 @@ bool UFMBWeaponComponent::GetArmoryWeaponUIData(FWeaponUIData& WeaponUIData) con
         return true;
     }
     return false;
-}
+}*/

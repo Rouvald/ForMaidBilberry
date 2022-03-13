@@ -1,14 +1,16 @@
 // For Maid Bilberry Game. All Rights Recerved
 
 #include "Player/FMBPlayerCharacter.h"
+
+#include "FMBPlayerWeaponComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/SphereComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
 #include "Perception/AISense_Hearing.h"
+#include "GameFramework/SpringArmComponent.h"
 
 #include "Components/FMBCharacterMovementComponent.h"
-#include "Components/FMBWeaponComponent.h"
 #include "Components/FMBStaminaComponent.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogFMBPlayerCharacter, All, All)
@@ -49,6 +51,7 @@ AFMBPlayerCharacter::AFMBPlayerCharacter(const FObjectInitializer& ObjInit) : Su
     FPPCameraComponent->SetAutoActivate(true);
 
     StaminaComponent = CreateDefaultSubobject<UFMBStaminaComponent>(TEXT("StaminaComponent"));
+    WeaponComponent = CreateDefaultSubobject<UFMBPlayerWeaponComponent>(TEXT("WeaponComponent"));
 }
 
 void AFMBPlayerCharacter::BeginPlay()
@@ -117,15 +120,15 @@ void AFMBPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
     PlayerInputComponent->BindAction("Run", IE_Pressed, this, &AFMBPlayerCharacter::OnStartRunning);
     PlayerInputComponent->BindAction("Run", IE_Released, this, &AFMBPlayerCharacter::OnStopRunning);
 
-    PlayerInputComponent->BindAction("FastAttack", IE_Pressed, WeaponComponent, &UFMBWeaponComponent::FastMeleeAttack);
-    PlayerInputComponent->BindAction("StrongAttack", IE_Pressed, WeaponComponent, &UFMBWeaponComponent::StrongMeleeAttack);
+    PlayerInputComponent->BindAction("FastAttack", IE_Pressed, WeaponComponent, &UFMBBaseWeaponComponent::FastMeleeAttack);
+    PlayerInputComponent->BindAction("StrongAttack", IE_Pressed, WeaponComponent, &UFMBBaseWeaponComponent::StrongMeleeAttack);
 
-    PlayerInputComponent->BindAction("NextWeapon", IE_Pressed, WeaponComponent, &UFMBWeaponComponent::NextWeapon);
+    // PlayerInputComponent->BindAction("NextWeapon", IE_Pressed, WeaponComponent, &UFMBBaseWeaponComponent::NextWeapon);
 
     PlayerInputComponent->BindAction("Rolling", IE_Pressed, CharacterMovementComponent, &UFMBCharacterMovementComponent::Rolling);
 
-    PlayerInputComponent->BindAction("Block", IE_Pressed, WeaponComponent, &UFMBWeaponComponent::OnStartBlock);
-    PlayerInputComponent->BindAction("Block", IE_Released, WeaponComponent, &UFMBWeaponComponent::OnStopBlock);
+    PlayerInputComponent->BindAction("Block", IE_Pressed, WeaponComponent, &UFMBPlayerWeaponComponent::OnStartBlock);
+    PlayerInputComponent->BindAction("Block", IE_Released, WeaponComponent, &UFMBPlayerWeaponComponent::OnStopBlock);
 
     /*
      PlayerInputComponent->BindAction("ReturnSpringArm", IE_Pressed, this, &AFMBPlayerCharacter::ReturnDefaultSpringArm);
@@ -248,6 +251,7 @@ void AFMBPlayerCharacter::OnDeath()
         Controller->ChangeState(NAME_Spectating);
     }
 
+    WeaponComponent->StopDrawTrace();
     StaminaComponent->StopHealStamina();
     StaminaComponent->StopStaminaRunning();
 }

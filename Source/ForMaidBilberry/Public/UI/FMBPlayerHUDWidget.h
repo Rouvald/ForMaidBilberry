@@ -26,8 +26,8 @@ public:
     UFUNCTION(BlueprintCallable, Category = "UI")
     bool GetCurrentWeaponUIData(FWeaponUIData& WeaponUIData) const;
 
-    UFUNCTION(BlueprintCallable, Category = "UI")
-    bool GetArmoryWeaponUIData(FWeaponUIData& WeaponUIData) const;
+    // UFUNCTION(BlueprintCallable, Category = "UI")
+    // bool GetArmoryWeaponUIData(FWeaponUIData& WeaponUIData) const;
 
     UFUNCTION(BlueprintCallable, Category = "UI")
     ESlateVisibility IsPlayerAlive() const;

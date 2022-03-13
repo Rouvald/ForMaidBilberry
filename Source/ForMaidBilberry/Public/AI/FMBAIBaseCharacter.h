@@ -8,6 +8,7 @@
 
 class UBehaviorTree;
 class UWidgetComponent;
+class UFMBBaseWeaponComponent;
 /**
  *
  */
@@ -23,6 +24,9 @@ public:
     UBehaviorTree* BehaviorTreeAsset{nullptr};
 
 protected:
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+    UFMBBaseWeaponComponent* WeaponComponent{nullptr};
+
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Component")
     UWidgetComponent* HealthBarWidgetComponent{nullptr};
 

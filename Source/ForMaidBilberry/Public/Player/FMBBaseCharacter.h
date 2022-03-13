@@ -3,15 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "FMBBaseWeapon.h"
 #include "GameFramework/Character.h"
-#include "GameFramework/SpringArmComponent.h"
 #include "FMBCoreTypes.h"
 #include "FMBBaseCharacter.generated.h"
 
 class UFMBHealthComponent;
-class UFMBWeaponComponent;
-class UFMBCharacterMovementComponent;
 class USoundCue;
 
 UCLASS()
@@ -41,9 +37,6 @@ protected:
 
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
     UFMBHealthComponent* HealthComponent{nullptr};
-
-    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
-    UFMBWeaponComponent* WeaponComponent{nullptr};
 
     UPROPERTY(EditDefaultsOnly, Category = "Damage")
     float LifeSpanOnDeath{5.0f};

@@ -9,6 +9,8 @@
 #include "Components/WidgetComponent.h"
 #include "UI/FMBEnemySignWidget.h"
 
+#include "Components/FMBBaseWeaponComponent.h"
+
 AFMBAIBaseCharacter::AFMBAIBaseCharacter(const FObjectInitializer& ObjInit) : Super(ObjInit)
 {
     AutoPossessAI = EAutoPossessAI::Disabled;
@@ -25,6 +27,8 @@ AFMBAIBaseCharacter::AFMBAIBaseCharacter(const FObjectInitializer& ObjInit) : Su
     EnemySignWidgetComponent->SetRelativeLocation(FVector(20.0f, 8.0f, 130.0f));
     EnemySignWidgetComponent->SetWidgetSpace(EWidgetSpace::Screen);
     EnemySignWidgetComponent->SetDrawAtDesiredSize(true);
+
+    WeaponComponent = CreateDefaultSubobject<UFMBBaseWeaponComponent>(TEXT("WeaponComponent"));
 }
 
 void AFMBAIBaseCharacter::BeginPlay()
@@ -57,6 +61,8 @@ void AFMBAIBaseCharacter::OnHealthChange(float Health, float HealthDelta)
 void AFMBAIBaseCharacter::OnDeath()
 {
     Super::OnDeath();
+
+    WeaponComponent->StopDrawTrace();
 
     const auto FMBController = Cast<AAIController>(Controller);
     if (FMBController && FMBController->BrainComponent)

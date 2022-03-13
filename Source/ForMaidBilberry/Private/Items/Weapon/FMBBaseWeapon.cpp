@@ -20,7 +20,8 @@ AFMBBaseWeapon::AFMBBaseWeapon()
     WeaponFXComponent = CreateDefaultSubobject<UFMBWeaponFXComponent>(TEXT("WeaponFXComponent"));
 
     SwordTrailFXComponent = CreateDefaultSubobject<UNiagaraComponent>(TEXT("SwordTrailFXComponent"));
-    SwordTrailFXComponent->SetupAttachment(ItemMesh, SwordTrailSocketName);
+    SwordTrailFXComponent->SetupAttachment(ItemMesh);
+    SwordTrailFXComponent->SetRelativeLocation(FVector{0.0f, 125.0f, 0.0f});
 }
 
 void AFMBBaseWeapon::BeginPlay()

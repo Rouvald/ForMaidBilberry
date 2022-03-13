@@ -2,8 +2,9 @@
 
 #include "Animation/FMBAnimInstance.h"
 #include "FMBBaseCharacter.h"
-#include "FMBWeaponComponent.h"
+#include "FMBPlayerWeaponComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Items/Weapon/FMBBaseWeapon.h"
 
 void UFMBAnimInstance::NativeInitializeAnimation()
 {
@@ -33,10 +34,13 @@ void UFMBAnimInstance::UpdateAnimationProperties(float DeltaSeconds)
         bIsFalling = BaseCharacter->GetCharacterMovement()->IsFalling();
         bIsRunning = BaseCharacter->IsRunning();
 
-        const auto WeaponComponent = BaseCharacter->FindComponentByClass<UFMBWeaponComponent>();
+        const auto WeaponComponent = BaseCharacter->FindComponentByClass<UFMBBaseWeaponComponent>();
         if (WeaponComponent)
         {
-            bIsBlocking = WeaponComponent->GetIsBlocking();
+            if (const auto PlayerWeaponComponent{Cast<UFMBPlayerWeaponComponent>(WeaponComponent)})
+            {
+                bIsBlocking = PlayerWeaponComponent->GetIsBlocking();
+            }
             bIsCurrentWeapon = WeaponComponent->GetCurrentWeapon() ? true : false;
             CurrentWeaponAnimData = WeaponComponent->GetCurrentWeaponAnimationsData();
             if (WeaponComponent->GetCurrentWeapon())

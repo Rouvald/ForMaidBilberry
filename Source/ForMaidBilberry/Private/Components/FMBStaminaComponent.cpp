@@ -1,7 +1,7 @@
 // For Maid Bilberry Game. All Rights Recerved
 
 #include "Components/FMBStaminaComponent.h"
-#include "Components/FMBWeaponComponent.h"
+#include "Components/FMBBaseWeaponComponent.h"
 #include "FMBUtils.h"
 #include "FMBCoreTypes.h"
 

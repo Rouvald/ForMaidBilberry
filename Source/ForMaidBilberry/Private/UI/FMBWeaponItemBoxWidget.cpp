@@ -3,7 +3,7 @@
 #include "UI/FMBWeaponItemBoxWidget.h"
 #include "FMBUtils.h"
 #include "Weapon/FMBBaseWeapon.h"
-#include "Components/FMBWeaponComponent.h"
+#include "Components/FMBBaseWeaponComponent.h"
 #include "Components/HorizontalBox.h"
 #include "UI/FMBWeaponDataWidget.h"
 
@@ -51,8 +51,8 @@ void UFMBWeaponItemBoxWidget::OnWeaponSelected(const FWeaponUIData& Data)
     }
 }
 
-UFMBWeaponComponent* UFMBWeaponItemBoxWidget::GetWeaponComponent() const
+UFMBBaseWeaponComponent* UFMBWeaponItemBoxWidget::GetWeaponComponent() const
 {
-    const auto WeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBWeaponComponent>(GetOwningPlayerPawn());
+    const auto WeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBBaseWeaponComponent>(GetOwningPlayerPawn());
     return WeaponComponent;
 }*/

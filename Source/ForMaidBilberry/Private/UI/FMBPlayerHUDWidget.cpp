@@ -5,7 +5,7 @@
 #include "FMBPlayerCharacter.h"
 #include "Components/FMBHealthComponent.h"
 #include "Components/FMBStaminaComponent.h"
-#include "Components/FMBWeaponComponent.h"
+#include "Components/FMBBaseWeaponComponent.h"
 #include "FMBUtils.h"
 #include "FMBWeaponDataWidget.h"
 
@@ -61,7 +61,7 @@ float UFMBPlayerHUDWidget::GetStaminaPercent() const
 
 bool UFMBPlayerHUDWidget::GetCurrentWeaponUIData(FWeaponUIData& WeaponUIData) const
 {
-    const auto WeaponComponent{FMBUtils::GetFMBPlayerComponent<UFMBWeaponComponent>(GetOwningPlayerPawn())};
+    const auto WeaponComponent{FMBUtils::GetFMBPlayerComponent<UFMBBaseWeaponComponent>(GetOwningPlayerPawn())};
     if (!WeaponComponent) return false;
 
     // WeaponUIData.WeaponName = CheckWeaponName(WeaponUIData);
@@ -69,15 +69,15 @@ bool UFMBPlayerHUDWidget::GetCurrentWeaponUIData(FWeaponUIData& WeaponUIData) co
     return WeaponComponent->GetCurrentWeaponUIData(WeaponUIData);
 }
 
-bool UFMBPlayerHUDWidget::GetArmoryWeaponUIData(FWeaponUIData& WeaponUIData) const
+/*bool UFMBPlayerHUDWidget::GetArmoryWeaponUIData(FWeaponUIData& WeaponUIData) const
 {
-    const auto WeaponComponent{FMBUtils::GetFMBPlayerComponent<UFMBWeaponComponent>(GetOwningPlayerPawn())};
+    const auto WeaponComponent{FMBUtils::GetFMBPlayerComponent<UFMBBaseWeaponComponent>(GetOwningPlayerPawn())};
     if (!WeaponComponent) return false;
 
     // WeaponUIData.WeaponName = CheckWeaponName(WeaponUIData);
 
     return WeaponComponent->GetArmoryWeaponUIData(WeaponUIData);
-}
+}*/
 
 ESlateVisibility UFMBPlayerHUDWidget::IsPlayerAlive() const
 {

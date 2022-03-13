@@ -4,7 +4,7 @@
 #include "AIController.h"
 #include "FMBUtils.h"
 #include "FMBAIPerceptionComponent.h"
-#include "FMBWeaponComponent.h"
+#include "FMBBaseWeaponComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
 
 UFMBRotationTask::UFMBRotationTask()

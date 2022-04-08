@@ -29,8 +29,6 @@ protected:
 
     virtual void BeginPlay() override;
 
-    void PlayAnimMontage(UAnimMontage* Animation) const;
-
     virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
     virtual void SpawnItems() override;

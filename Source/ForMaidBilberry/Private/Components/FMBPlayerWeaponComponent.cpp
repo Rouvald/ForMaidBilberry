@@ -57,5 +57,3 @@ void UFMBPlayerWeaponComponent::OnStopBlock()
     // CurrentShield->StopBlocking();
     bIsShieldBlocking = false;
 }
-
-void UFMBPlayerWeaponComponent::PlayAnimMontage(UAnimMontage* Animation) const {}

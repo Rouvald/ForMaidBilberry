@@ -42,6 +42,13 @@ struct FWeaponAnimationsData
     UPROPERTY(EditDefaultsOnly, Category = "Animation")
     UAnimMontage* StrongAttack{nullptr};
 };
+
+// Item
+
+class AFMBBaseItem;
+
+DECLARE_MULTICAST_DELEGATE_TwoParams(FOnItemAreaOverlapSignature, const AFMBBaseItem*, bool);
+
 // Weapon
 
 class UNiagaraSystem;

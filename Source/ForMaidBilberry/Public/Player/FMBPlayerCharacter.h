@@ -13,6 +13,7 @@ class UCameraComponent;
 class UFMBStaminaComponent;
 class UFMBPlayerWeaponComponent;
 class USphereComponent;
+class UFMBItemInteractionComponent;
 
 /**
  *
@@ -35,23 +36,26 @@ protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
     UFMBCharacterMovementComponent* CharacterMovementComponent{nullptr};
 
-    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+    /*UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
     USpringArmComponent* SpringArmComponent{nullptr};
 
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
-    UCameraComponent* TPPCameraComponent{nullptr};
+    UCameraComponent* TPPCameraComponent{nullptr};*/
 
-    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
-    UFMBStaminaComponent* StaminaComponent{nullptr};
-
-    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
-    USphereComponent* TPPCameraCollisionComponent{nullptr};
+    /*UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+    USphereComponent* TPPCameraCollisionComponent{nullptr};*/
 
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
     UCameraComponent* FPPCameraComponent{nullptr};
 
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
     UFMBPlayerWeaponComponent* WeaponComponent{nullptr};
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+    UFMBStaminaComponent* StaminaComponent{nullptr};
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+    UFMBItemInteractionComponent* ItemInteractionComponent{nullptr};
 
     virtual void BeginPlay() override;
     virtual void OnDeath() override;
@@ -83,7 +87,7 @@ private:
     void OnStartRunning();
     void OnStopRunning();
 
-    UFUNCTION()
+    /*UFUNCTION()
     void OnCameraCollisionBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
         int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
@@ -91,10 +95,10 @@ private:
     void OnCameraCollisionEndOverlap(
         UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
-    void CheckCameraOverlap() const;
+    void CheckCameraOverlap() const;*/
 
     void MakeReportNoise();
-    void SwitchCamera();
+    // void SwitchCamera();
 
     // void ReturnDefaultSpringArm();
     // void ChangeSpringArm(bool bIsDistance);

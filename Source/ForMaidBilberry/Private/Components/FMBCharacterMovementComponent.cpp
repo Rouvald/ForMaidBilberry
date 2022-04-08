@@ -48,12 +48,12 @@ void UFMBCharacterMovementComponent::Rolling()
     }
     else
     {
-        FVector ViewLocation;
+        /*FVector ViewLocation;
         FRotator ViewRotation;
         if (FMBUtils::GetTraceData(Character, ViewLocation, ViewRotation))
         {
             Character->SetActorRotation(FRotator{0.0f, ViewRotation.Yaw, 0.0f});
-        }
+        }*/
     }
     StaminaComponent->SpendStamina(EStaminaSpend::ESS_Rolling);
     Character->GetMesh()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Ignore);

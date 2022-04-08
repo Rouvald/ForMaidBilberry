@@ -8,6 +8,7 @@
 
 class UBoxComponent;
 class USphereComponent;
+class UWidgetComponent;
 
 UCLASS()
 class FORMAIDBILBERRY_API AFMBBaseItem : public AActor
@@ -16,6 +17,8 @@ class FORMAIDBILBERRY_API AFMBBaseItem : public AActor
 
 public:
     AFMBBaseItem();
+
+    FORCEINLINE UStaticMeshComponent* GetItemMesh() const { return ItemMesh; }
 
 protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Component")
@@ -28,6 +31,9 @@ protected:
     USphereComponent* AreaCollision{nullptr};
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Component")
+    UWidgetComponent* ItemInfoWidgetComponent{nullptr};
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Component")
     UStaticMeshComponent* ItemMesh{nullptr};
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Properties")
@@ -35,5 +41,16 @@ protected:
 
     virtual void BeginPlay() override;
 
+    void SetItemInfo();
+
     AController* GetController() const;
+
+private:
+    UFUNCTION()
+    void OnAreaBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+        int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+    UFUNCTION()
+    void OnAreaEndOverlap(
+        UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 };

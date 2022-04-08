@@ -14,7 +14,7 @@
 #include "FMBUtils.h"
 #include "Animation/FMBFinishedAnimNotifyState.h"
 
-DECLARE_LOG_CATEGORY_CLASS(LogFMBWeaponComponent, All, All);
+DECLARE_LOG_CATEGORY_CLASS(LogFMBBaseWeaponComponent, All, All);
 
 UFMBBaseWeaponComponent::UFMBBaseWeaponComponent()
 {
@@ -67,7 +67,7 @@ void UFMBBaseWeaponComponent::SpawnWeapon()
     CurrentWeapon = GetWorld()->SpawnActor<AFMBBaseWeapon>(WeaponClass);
     if (!CurrentWeapon)
     {
-        UE_LOG(LogFMBWeaponComponent, Display, TEXT("Error: spawn weapon"));
+        UE_LOG(LogFMBBaseWeaponComponent, Display, TEXT("Error: spawn weapon"));
         return;
     }
 
@@ -81,7 +81,9 @@ void UFMBBaseWeaponComponent::SpawnWeapon()
     {
         CurrentWeaponAnimationsData = WeaponsAnimationsData[CurrentWeapon->GetWeaponType()];
     }
-    UE_LOG(LogFMBWeaponComponent, Display, TEXT("%d"), CurrentWeapon->GetWeaponType() == EWeaponType::EWT_YellowSword);
+    CurrentWeapon->GetItemMesh()->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
+    CurrentWeapon->GetItemMesh()->SetSimulatePhysics(false);
+    // UE_LOG(LogFMBBaseWeaponComponent, Display, TEXT("%d"), CurrentWeapon->GetWeaponType() == EWeaponType::EWT_YellowSword);
     FMBUtils::AttachItemToSocket(CurrentWeapon, Character->GetMesh(), CurrentWeaponAnimationsData.WeaponEquipSocketName);
     /*for (auto WeaponClass : WeaponClasses)
     {
@@ -180,7 +182,7 @@ void UFMBBaseWeaponComponent::InitAnimation(const FWeaponAnimationsData& WeaponA
     }
     else
     {
-        UE_LOG(LogFMBWeaponComponent, Error, TEXT("Rolling Finished anim notify don't set"));
+        UE_LOG(LogFMBBaseWeaponComponent, Error, TEXT("Rolling Finished anim notify don't set"));
         checkNoEntry();
     }
     /*const auto ChangeEquipWeapon = FMBAnimUtils::FindNotifyByClass<UFMBChangeEquipWeaponAnimNotify>(WeaponAnimationData.Equip);
@@ -190,7 +192,7 @@ void UFMBBaseWeaponComponent::InitAnimation(const FWeaponAnimationsData& WeaponA
     }
     else
     {
-        UE_LOG(LogFMBWeaponComponent, Error, TEXT("Change weapon anim notify don't set"));
+        UE_LOG(LogFMBBaseWeaponComponent, Error, TEXT("Change weapon anim notify don't set"));
         checkNoEntry();
     }
     const auto EquipFinished = FMBAnimUtils::FindNotifyByClass<UFMBAnimFinishedNotify>(WeaponAnimationData.Equip);
@@ -200,7 +202,7 @@ void UFMBBaseWeaponComponent::InitAnimation(const FWeaponAnimationsData& WeaponA
     }
     else
     {
-        UE_LOG(LogFMBWeaponComponent, Error, TEXT("Equip weapon anim notify don't set"));
+        UE_LOG(LogFMBBaseWeaponComponent, Error, TEXT("Equip weapon anim notify don't set"));
         checkNoEntry();
     }*/
 
@@ -221,7 +223,7 @@ void UFMBBaseWeaponComponent::CheckAttackAnimNotifyState(UAnimMontage* Animation
     }
     else
     {
-        UE_LOG(LogFMBWeaponComponent, Error, TEXT("Attack finished weapon anim notifies don't set"));
+        UE_LOG(LogFMBBaseWeaponComponent, Error, TEXT("Attack finished weapon anim notifies don't set"));
         checkNoEntry();
     }
 }
@@ -258,7 +260,7 @@ void UFMBBaseWeaponComponent::OnAttackNotifyAnimEnd(USkeletalMeshComponent* Mesh
 {
     if (CurrentWeaponIndex < 0 || CurrentWeaponIndex > Weapons.Num())
     {
-        UE_LOG(LogFMBWeaponComponent, Display, TEXT("Incorrect Weapon Index"));
+        UE_LOG(LogFMBBaseWeaponComponent, Display, TEXT("Incorrect Weapon Index"));
         return;
     }
     if (!Character || Character->GetMesh() != MeshComp) return;

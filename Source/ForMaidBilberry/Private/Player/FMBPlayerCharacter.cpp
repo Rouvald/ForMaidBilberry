@@ -1,7 +1,8 @@
-// For Maid Bilberry Game. All Rights Recerved
+// For Maid Bilberry Game. All Rights Reserved
 
 #include "Player/FMBPlayerCharacter.h"
 
+#include "FMBItemInteractionComponent.h"
 #include "FMBPlayerWeaponComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/SphereComponent.h"
@@ -21,11 +22,14 @@ AFMBPlayerCharacter::AFMBPlayerCharacter(const FObjectInitializer& ObjInit) : Su
 {
     PrimaryActorTick.bCanEverTick = true;
 
+    GetCapsuleComponent()->SetCapsuleRadius(55.0f);
+    GetMesh()->SetRelativeLocation(FVector{-16.0f, 0.0f, -87.0f});
+
     bUseControllerRotationPitch = false;
     bUseControllerRotationYaw = true;
     bUseControllerRotationRoll = false;
 
-    SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>("SpringArmComponent");
+    /*SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>("SpringArmComponent");
     SpringArmComponent->SetupAttachment(GetRootComponent());
     SpringArmComponent->SocketOffset = FVector(0.0f, 0.0f, 50.0f);
     SpringArmComponent->TargetArmLength = DefaultTargetArmLength;
@@ -40,18 +44,19 @@ AFMBPlayerCharacter::AFMBPlayerCharacter(const FObjectInitializer& ObjInit) : Su
     TPPCameraCollisionComponent->SetupAttachment(TPPCameraComponent);
     TPPCameraCollisionComponent->SetSphereRadius(10.0f);
     TPPCameraCollisionComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
-    TPPCameraCollisionComponent->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+    TPPCameraCollisionComponent->SetCollisionEnabled(ECollisionEnabled::QueryOnly);*/
 
     FPPCameraComponent = CreateDefaultSubobject<UCameraComponent>("FPPCameraComponent");
     FPPCameraComponent->SetupAttachment(GetMesh(), FPPCameraSocketName);
-    FPPCameraComponent->SetRelativeLocation(FVector(-3.0f, 30.0f, 1.0f));
-    FPPCameraComponent->SetRelativeRotation(FRotator(-90.0f, 0.0f, 90.0f));
+    FPPCameraComponent->SetRelativeLocation(FVector(2.0f, 37.0f, 0.0f));
+    FPPCameraComponent->SetRelativeRotation(FRotator(90.0f, 180.0f, -90.0f));
     FPPCameraComponent->bUsePawnControlRotation = true;
     FPPCameraComponent->SetFieldOfView(100.0f);
     FPPCameraComponent->SetAutoActivate(true);
 
     StaminaComponent = CreateDefaultSubobject<UFMBStaminaComponent>(TEXT("StaminaComponent"));
     WeaponComponent = CreateDefaultSubobject<UFMBPlayerWeaponComponent>(TEXT("WeaponComponent"));
+    ItemInteractionComponent = CreateDefaultSubobject<UFMBItemInteractionComponent>(TEXT("UFMBItemInteractionComponent"));
 }
 
 void AFMBPlayerCharacter::BeginPlay()
@@ -59,15 +64,15 @@ void AFMBPlayerCharacter::BeginPlay()
     Super::BeginPlay();
 
     checkf(StaminaComponent, TEXT("StaminaComponent == nullptr"));
-    checkf(SpringArmComponent, TEXT("SpringArmComponent == nullptr"));
-    checkf(TPPCameraCollisionComponent, TEXT("TPPCameraCollisionComponent == nullptr"));
+    /*checkf(SpringArmComponent, TEXT("SpringArmComponent == nullptr"));
+    checkf(TPPCameraCollisionComponent, TEXT("TPPCameraCollisionComponent == nullptr"));*/
     GetWorldTimerManager().SetTimer(ReportNoiseTimerHandle, this, &AFMBPlayerCharacter::MakeReportNoise, 0.1f, true);
 
-    TPPCameraCollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AFMBPlayerCharacter::OnCameraCollisionBeginOverlap);
-    TPPCameraCollisionComponent->OnComponentEndOverlap.AddDynamic(this, &AFMBPlayerCharacter::OnCameraCollisionEndOverlap);
+    /*TPPCameraCollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AFMBPlayerCharacter::OnCameraCollisionBeginOverlap);
+    TPPCameraCollisionComponent->OnComponentEndOverlap.AddDynamic(this, &AFMBPlayerCharacter::OnCameraCollisionEndOverlap);*/
 }
 
-void AFMBPlayerCharacter::OnCameraCollisionBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+/*void AFMBPlayerCharacter::OnCameraCollisionBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
     UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
     CheckCameraOverlap();
@@ -95,7 +100,7 @@ void AFMBPlayerCharacter::CheckCameraOverlap() const
             MeshChildPrimitive->SetOwnerNoSee(HideMesh);
         }
     }
-}
+}*/
 
 void AFMBPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -115,7 +120,7 @@ void AFMBPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 
     PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &AFMBPlayerCharacter::Jump);
 
-    PlayerInputComponent->BindAction("SwitchCamera", IE_Pressed, this, &AFMBPlayerCharacter::SwitchCamera);
+    // PlayerInputComponent->BindAction("SwitchCamera", IE_Pressed, this, &AFMBPlayerCharacter::SwitchCamera);
 
     PlayerInputComponent->BindAction("Run", IE_Pressed, this, &AFMBPlayerCharacter::OnStartRunning);
     PlayerInputComponent->BindAction("Run", IE_Released, this, &AFMBPlayerCharacter::OnStopRunning);
@@ -152,7 +157,7 @@ void AFMBPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
     }
 }*/
 
-void AFMBPlayerCharacter::SwitchCamera()
+/*void AFMBPlayerCharacter::SwitchCamera()
 {
     if (FPPCameraComponent->IsActive())
     {
@@ -166,7 +171,7 @@ void AFMBPlayerCharacter::SwitchCamera()
         TPPCameraComponent->SetActive(false);
         TPPCameraCollisionComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
     }
-}
+}*/
 
 void AFMBPlayerCharacter::MoveForward(float Amount)
 {
@@ -250,7 +255,6 @@ void AFMBPlayerCharacter::OnDeath()
     {
         Controller->ChangeState(NAME_Spectating);
     }
-
     WeaponComponent->StopDrawTrace();
     StaminaComponent->StopHealStamina();
     StaminaComponent->StopStaminaRunning();

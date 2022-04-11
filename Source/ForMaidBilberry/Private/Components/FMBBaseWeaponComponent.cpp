@@ -72,6 +72,7 @@ void UFMBBaseWeaponComponent::SpawnWeapon()
     }
 
     CurrentWeapon->SetOwner(Character);
+    // CurrentWeapon->SetIsRotateYaw(false);
 
     if (CurrentWeapon->GetRootComponent())
     {
@@ -349,14 +350,13 @@ bool UFMBBaseWeaponComponent::CanEquip() const
     return !bIsEquipAnimInProgress;
 }
 
-bool UFMBBaseWeaponComponent::GetCurrentWeaponUIData(FWeaponUIData& WeaponUIData) const
+UTexture2D* UFMBBaseWeaponComponent::GetCurrentWeaponUIImage() const
 {
     if (CurrentWeapon)
     {
-        WeaponUIData = CurrentWeapon->GetWeaponUIData();
-        return true;
+        return CurrentWeapon->GetWeaponUIData().WeaponIcon;
     }
-    return false;
+    return nullptr;
 }
 
 // work if u have only 2 weapons //

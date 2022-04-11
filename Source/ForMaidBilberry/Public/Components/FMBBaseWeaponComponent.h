@@ -34,7 +34,7 @@ public:
     bool CanAttack() const;
     bool CanEquip() const;
 
-    bool GetCurrentWeaponUIData(FWeaponUIData& WeaponUIData) const;
+    UTexture2D* GetCurrentWeaponUIImage() const;
     // bool GetArmoryWeaponUIData(FWeaponUIData& WeaponUIData) const;
 
     /*UFUNCTION(BlueprintCallable)
@@ -68,6 +68,15 @@ protected:
     UPROPERTY(EditDefaultsOnly, Category = "Weapon")
     TSubclassOf<AFMBBaseWeapon> WeaponClass;
 
+    UPROPERTY()
+    AFMBBaseWeapon* CurrentWeapon{nullptr};
+
+    /*UPROPERTY()
+    AFMBBaseWeapon* ArmoryWeapon{nullptr};*/
+
+    UPROPERTY()
+    FWeaponAnimationsData CurrentWeaponAnimationsData;
+
     UPROPERTY(EditDefaultsOnly, Category = "Weapon")
     FName WeaponArmorySocketName = "WeaponArmorySocket";
 
@@ -85,15 +94,6 @@ protected:
     virtual void SpawnItems();
 
 private:
-    UPROPERTY()
-    AFMBBaseWeapon* CurrentWeapon{nullptr};
-
-    /*UPROPERTY()
-    AFMBBaseWeapon* ArmoryWeapon{nullptr};*/
-
-    UPROPERTY()
-    FWeaponAnimationsData CurrentWeaponAnimationsData;
-
     bool bIsAttackAnimInProgress{false};
     bool bIsEquipAnimInProgress{false};
 

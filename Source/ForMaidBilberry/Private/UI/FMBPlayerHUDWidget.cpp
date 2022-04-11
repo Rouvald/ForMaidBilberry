@@ -59,14 +59,14 @@ float UFMBPlayerHUDWidget::GetStaminaPercent() const
     return StaminaComponent->GetStaminaPercent();
 }
 
-bool UFMBPlayerHUDWidget::GetCurrentWeaponUIData(FWeaponUIData& WeaponUIData) const
+UTexture2D* UFMBPlayerHUDWidget::GetCurrentWeaponUIImage() const
 {
     const auto WeaponComponent{FMBUtils::GetFMBPlayerComponent<UFMBBaseWeaponComponent>(GetOwningPlayerPawn())};
-    if (!WeaponComponent) return false;
+    if (!WeaponComponent) return nullptr;
 
     // WeaponUIData.WeaponName = CheckWeaponName(WeaponUIData);
 
-    return WeaponComponent->GetCurrentWeaponUIData(WeaponUIData);
+    return WeaponComponent->GetCurrentWeaponUIImage();
 }
 
 /*bool UFMBPlayerHUDWidget::GetArmoryWeaponUIData(FWeaponUIData& WeaponUIData) const
@@ -91,14 +91,14 @@ ESlateVisibility UFMBPlayerHUDWidget::IsPlayerSpectating() const
                                                                                      : ESlateVisibility::Collapsed;
 }
 
-bool UFMBPlayerHUDWidget::IsFPPCamera() const
+/*bool UFMBPlayerHUDWidget::IsFPPCamera() const
 {
     const auto Character{Cast<AFMBPlayerCharacter>(GetOwningPlayerPawn())};
-    return Character && Character->GetIsFPP() /* ? ESlateVisibility::Visible : ESlateVisibility::Collapsed*/;
-}
+    return Character && Character->GetIsFPP() /* ? ESlateVisibility::Visible : ESlateVisibility::Collapsed#1#;
+}*/
 
-ESlateVisibility UFMBPlayerHUDWidget::CrossHairVisibility() const
+/*ESlateVisibility UFMBPlayerHUDWidget::CrossHairVisibility() const
 {
     return (GetOwningPlayer() && GetOwningPlayer()->GetStateName() == NAME_Spectating) || IsFPPCamera() ? ESlateVisibility::Visible
                                                                                                         : ESlateVisibility::Collapsed;
-}
+}*/

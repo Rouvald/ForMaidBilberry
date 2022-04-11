@@ -17,29 +17,29 @@ class FORMAIDBILBERRY_API UFMBPlayerHUDWidget : public UFMBBaseWidget
     GENERATED_BODY()
 
 public:
-    UFUNCTION(BlueprintCallable, Category = "UI")
+    UFUNCTION(Category = "UI")
     float GetHealthPercent() const;
 
-    UFUNCTION(BlueprintCallable, Category = "UI")
+    UFUNCTION(Category = "UI")
     float GetStaminaPercent() const;
 
-    UFUNCTION(BlueprintCallable, Category = "UI")
-    bool GetCurrentWeaponUIData(FWeaponUIData& WeaponUIData) const;
+    UFUNCTION(Category = "UI")
+    UTexture2D* GetCurrentWeaponUIImage() const;
 
     // UFUNCTION(BlueprintCallable, Category = "UI")
     // bool GetArmoryWeaponUIData(FWeaponUIData& WeaponUIData) const;
 
-    UFUNCTION(BlueprintCallable, Category = "UI")
+    UFUNCTION(Category = "UI")
     ESlateVisibility IsPlayerAlive() const;
 
-    UFUNCTION(BlueprintCallable, Category = "UI")
+    UFUNCTION(Category = "UI")
     ESlateVisibility IsPlayerSpectating() const;
 
-    UFUNCTION(BlueprintCallable, Category = "UI")
-    bool IsFPPCamera() const;
+    /*UFUNCTION(BlueprintCallable, Category = "UI")
+    bool IsFPPCamera() const;*/
 
-    UFUNCTION(BlueprintCallable, Category = "UI")
-    ESlateVisibility CrossHairVisibility() const;
+    /*UFUNCTION(BlueprintCallable, Category = "UI")
+    ESlateVisibility CrossHairVisibility() const;*/
 
     /*UFUNCTION(BlueprintImplementableEvent, Category = "UI")
     void OnTakeDamage();*/

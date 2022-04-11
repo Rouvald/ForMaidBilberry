@@ -13,13 +13,14 @@ DEFINE_LOG_CATEGORY_STATIC(LogFMBBaseItem, All, All)
 
 AFMBBaseItem::AFMBBaseItem()
 {
-    PrimaryActorTick.bCanEverTick = false;
+    PrimaryActorTick.bCanEverTick = true;
 
-    DefaultRootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("DefaultRootComponent"));
-    RootComponent = DefaultRootComponent;
+    /*DefaultRootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("DefaultRootComponent"));
+    RootComponent = DefaultRootComponent;*/
 
     ItemMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ItemMesh"));
-    ItemMesh->SetupAttachment(DefaultRootComponent);
+    SetRootComponent(ItemMesh);
+    // ItemMesh->SetupAttachment(DefaultRootComponent);
     // ItemMesh->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 
     BoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollision"));
@@ -50,9 +51,40 @@ void AFMBBaseItem::BeginPlay()
 
     AreaCollision->OnComponentBeginOverlap.AddDynamic(this, &AFMBBaseItem::OnAreaBeginOverlap);
     AreaCollision->OnComponentEndOverlap.AddDynamic(this, &AFMBBaseItem::OnAreaEndOverlap);
+    OnItemStateChanged.AddUObject(this, &AFMBBaseItem::SetItemState);
 
     SetItemInfo();
+    FillItemPropertiesMap();
 }
+
+void AFMBBaseItem::Tick(float DeltaSeconds)
+{
+    Super::Tick(DeltaSeconds);
+
+    /*if(bIsRotateYaw)
+    {
+        UE_LOG(LogFMBBaseItem, Display, TEXT("%s, bIsRotateYaw == true, %f"), *this->GetName(), this->GetActorRotation().Yaw);
+        AddActorWorldRotation(FRotator(0.0f, RotationYaw, 0.0f));
+    }*/
+}
+
+/*void AFMBBaseItem::StartItemInterping()
+{
+    if (!Character) return;
+    BaseCharacter = Character;
+    ItemBaseLocation = GetActorLocation();
+    bIsItemInterping = true;
+    SetItemState(EItemState::EIS_EquipInProgress);
+
+    GetWorldTimerManager().SetTimer(ItemInterpingTimerHandle, this, &AWFBaseItem::FinishItemInterping, ItemZCurveTime);
+
+    /*if (BaseCharacter->GetFollowCamera())
+    {
+        const float CameraRotationYaw{BaseCharacter->GetFollowCamera()->GetComponentRotation().Yaw};
+        const float ItemRotationYaw{GetActorRotation().Yaw};
+        DefaultRotationYawOffset = ItemRotationYaw - CameraRotationYaw;
+    }#1#
+}*/
 
 void AFMBBaseItem::OnAreaBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
     int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -78,10 +110,10 @@ void AFMBBaseItem::OnAreaEndOverlap(
     if (!ItemInteractionComponent) return;
 
     ItemInteractionComponent->OnItemAreaOverlap.Broadcast(this, false);
-    // ItemInfoWidgetComponent->SetVisibility(false);
+    ItemInfoWidgetComponent->SetVisibility(false);
 }
 
-void AFMBBaseItem::SetItemInfo()
+void AFMBBaseItem::SetItemInfo() const
 {
     const auto ItemInfoWidget{Cast<UFMBItemInfoWidget>(ItemInfoWidgetComponent->GetWidget())};
     if (ItemInfoWidget)
@@ -89,6 +121,88 @@ void AFMBBaseItem::SetItemInfo()
         ItemInfoWidget->SetItemName(ItemName);
     }
     // OnItemStateChanged.Broadcast(EItemState::EIS_Pickup);
+}
+
+void AFMBBaseItem::SetItemState(const EItemState NewItemState)
+{
+    if (CurrentItemState == NewItemState) return;
+
+    CurrentItemState = NewItemState;
+    SetItemProperties(NewItemState);
+    UE_LOG(LogFMBBaseItem, Display, TEXT("%s: CurrentItemState: %s"), *GetName(), *UEnum::GetValueAsString(CurrentItemState));
+}
+
+void AFMBBaseItem::FillItemPropertiesMap()
+{
+    /* @todo: Future refactoring */
+    ItemPropertiesMap.Add(EItemState::EIS_Pickup, FItemProperties{
+                                                      false,
+                                                      false,
+                                                      true,
+                                                      ECollisionResponse::ECR_Ignore,
+                                                      ECollisionChannel::ECC_WorldStatic,
+                                                      ECollisionResponse::ECR_Ignore,
+                                                      ECollisionEnabled::NoCollision,
+                                                      ECollisionResponse::ECR_Overlap,
+                                                      ECollisionEnabled::QueryOnly,
+                                                      ECollisionResponse::ECR_Ignore,
+                                                      ECollisionEnabled::QueryAndPhysics,
+                                                      ECollisionChannel::ECC_Visibility,
+                                                      ECollisionResponse::ECR_Block,
+                                                  });
+
+    ItemPropertiesMap.Add(
+        EItemState::EIS_Equipped, FItemProperties{false, false, true, ECollisionResponse::ECR_Ignore, ECollisionChannel::ECC_WorldStatic,
+                                      ECollisionResponse::ECR_Ignore, ECollisionEnabled::NoCollision, ECollisionResponse::ECR_Ignore,
+                                      ECollisionEnabled::NoCollision, ECollisionResponse::ECR_Ignore, ECollisionEnabled::NoCollision,
+                                      ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Ignore});
+
+    ItemPropertiesMap.Add(
+        EItemState::EIS_Falling, FItemProperties{true, true, true, ECollisionResponse::ECR_Ignore, ECollisionChannel::ECC_WorldStatic,
+                                     ECollisionResponse::ECR_Block, ECollisionEnabled::QueryAndPhysics, ECollisionResponse::ECR_Ignore,
+                                     ECollisionEnabled::NoCollision, ECollisionResponse::ECR_Ignore, ECollisionEnabled::NoCollision,
+                                     ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Ignore});
+
+    ItemPropertiesMap.Add(EItemState::EIS_EquipInProgress, FItemProperties{
+                                                               false,
+                                                               false,
+                                                               true,
+                                                               ECollisionResponse::ECR_Ignore,
+                                                               ECollisionChannel::ECC_WorldStatic,
+                                                               ECollisionResponse::ECR_Ignore,
+                                                               ECollisionEnabled::NoCollision,
+                                                               ECollisionResponse::ECR_Overlap,
+                                                               ECollisionEnabled::NoCollision,
+                                                               ECollisionResponse::ECR_Ignore,
+                                                               ECollisionEnabled::NoCollision,
+                                                               ECollisionChannel::ECC_Visibility,
+                                                               ECollisionResponse::ECR_Ignore,
+                                                           });
+}
+
+void AFMBBaseItem::SetItemProperties(const EItemState NewItemState) const
+{
+    if (!ItemPropertiesMap.Contains(NewItemState)) return;
+
+    // Item Mesh
+    ItemMesh->SetSimulatePhysics(ItemPropertiesMap[NewItemState].bIsSimulatedPhysics);
+    ItemMesh->SetEnableGravity(ItemPropertiesMap[NewItemState].bIsGravityEnable);
+    ItemMesh->SetVisibility(ItemPropertiesMap[NewItemState].bIsVisible);
+    ItemMesh->SetCollisionResponseToAllChannels(ItemPropertiesMap[NewItemState].ItemMeshCollisionResponseToAllChannels);
+    ItemMesh->SetCollisionResponseToChannel(
+        ItemPropertiesMap[NewItemState].ItemMeshCollisionChannel, ItemPropertiesMap[NewItemState].ItemMeshCollisionResponseToChannel);
+    ItemMesh->SetCollisionEnabled(ItemPropertiesMap[NewItemState].ItemMeshCollisionEnabled);
+    //
+    // Area Collision
+    AreaCollision->SetCollisionResponseToAllChannels(ItemPropertiesMap[NewItemState].AreaCollisionResponseToAllChannels);
+    AreaCollision->SetCollisionEnabled(ItemPropertiesMap[NewItemState].AreaCollisionEnabled);
+    //
+    // Box Collision
+    BoxCollision->SetCollisionResponseToAllChannels(ItemPropertiesMap[NewItemState].BoxCollisionResponseToAllChannels);
+    BoxCollision->SetCollisionResponseToChannel(
+        ItemPropertiesMap[NewItemState].BoxCollisionChannel, ItemPropertiesMap[NewItemState].BoxCollisionResponseToChannel);
+    BoxCollision->SetCollisionEnabled(ItemPropertiesMap[NewItemState].BoxCollisionEnabled);
+    //
 }
 
 AController* AFMBBaseItem::GetController() const

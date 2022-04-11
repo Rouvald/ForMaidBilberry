@@ -46,13 +46,70 @@ struct FWeaponAnimationsData
 // Item
 
 class AFMBBaseItem;
+class UNiagaraSystem;
+class USoundCue;
 
 DECLARE_MULTICAST_DELEGATE_TwoParams(FOnItemAreaOverlapSignature, const AFMBBaseItem*, bool);
 
-// Weapon
+UENUM(BlueprintType)
+enum class EItemState : uint8
+{
+    EIS_Pickup,
+    // UMETA(DisplayName="Pickup"),
+    EIS_EquipInProgress,
+    // UMETA(DisplayName="EquipInProgress"),
+    EIS_PickedUp,
+    // UMETA(DisplayName="PikcedUp"),
+    EIS_Equipped,
+    // UMETA(DisplayName="Equipped"),
+    EIS_Falling,
+    // UMETA(DisplayName="Falling"),
 
-class UNiagaraSystem;
-class USoundCue;
+    EIS_MAX // UMETA(DisplayName = "MAX")
+};
+
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnItemStateChangedSignature, EItemState);
+
+enum ECollisionResponse;
+
+USTRUCT(BlueprintType)
+struct FItemProperties
+{
+    GENERATED_USTRUCT_BODY()
+
+    // Item Mesh
+    UPROPERTY()
+    bool bIsSimulatedPhysics;
+
+    UPROPERTY()
+    bool bIsGravityEnable;
+
+    UPROPERTY()
+    bool bIsVisible;
+
+    ECollisionResponse ItemMeshCollisionResponseToAllChannels;
+
+    ECollisionChannel ItemMeshCollisionChannel;
+    ECollisionResponse ItemMeshCollisionResponseToChannel;
+
+    ECollisionEnabled::Type ItemMeshCollisionEnabled;
+    //
+    // Area Collision
+    ECollisionResponse AreaCollisionResponseToAllChannels;
+
+    ECollisionEnabled::Type AreaCollisionEnabled;
+    //
+    // Box Collision
+    ECollisionResponse BoxCollisionResponseToAllChannels;
+
+    ECollisionEnabled::Type BoxCollisionEnabled;
+
+    ECollisionChannel BoxCollisionChannel;
+    ECollisionResponse BoxCollisionResponseToChannel;
+    //
+};
+
+// Weapon
 
 USTRUCT(BlueprintType)
 struct FImpactData

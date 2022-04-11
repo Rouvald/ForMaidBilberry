@@ -36,8 +36,6 @@ protected:
     virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;
 
 private:
-    float RotationYaw{1.5f};
-
     virtual bool GivePickUpTo(APawn* Pawn);
 
     /*void PickUpWasTaken();

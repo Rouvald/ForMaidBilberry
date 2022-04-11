@@ -5,6 +5,7 @@
 #include "DrawDebugHelpers.h"
 #include "FMBBaseItem.h"
 #include "FMBPlayerCharacter.h"
+#include "FMBPlayerWeaponComponent.h"
 #include "FMBUtils.h"
 #include "Components/WidgetComponent.h"
 
@@ -19,14 +20,33 @@ void UFMBItemInteractionComponent::BeginPlay()
 {
     Super::BeginPlay();
     PlayerCharacter = GetPlayerCharacter();
+    if (PlayerCharacter)
+    {
+        PlayerWeaponComponent = PlayerCharacter->FindComponentByClass<UFMBPlayerWeaponComponent>();
+    }
 
     OnItemAreaOverlap.AddUObject(this, &UFMBItemInteractionComponent::ItemInfoVisibilityTimer);
 }
 
-void UFMBItemInteractionComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void UFMBItemInteractionComponent::TakeItemButtonPressed()
 {
-    Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+    if (!PlayerCharacter || !HitItem) return;
+
+    const auto Item = Cast<AFMBBaseItem>(HitItem);
+    if (Item)
+    {
+        PlayerWeaponComponent->GetPickupItem(Item);
+        // Weapon->StartItemInterping(PlayerCharacter);
+    }
+
+    /*if(Character->GetHitItem()->GetPickupSound())
+    {
+        UGameplayStatics::SpawnSoundAtLocation(GetWorld(), Character->GetHitItem()->GetPickupSound(),
+    Character->GetHitItem()->GetActorLocation());
+    }*/
 }
+
+void UFMBItemInteractionComponent::TakeItemButtonReleased() {}
 
 void UFMBItemInteractionComponent::ItemInfoVisibilityTimer(const AFMBBaseItem* Item, bool bIsOverlap)
 {

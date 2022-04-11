@@ -28,7 +28,7 @@ public:
     virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
     virtual bool IsRunning() const override;
 
-    FORCEINLINE bool GetIsFPP() const { return FPPCameraComponent->IsActive(); }
+    // FORCEINLINE bool GetIsFPP() const { return FPPCameraComponent->IsActive(); }
 
 protected:
     FName FPPCameraSocketName = "FPPCameraSocket";

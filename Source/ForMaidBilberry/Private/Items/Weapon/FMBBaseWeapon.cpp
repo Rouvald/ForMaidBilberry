@@ -15,8 +15,6 @@ DECLARE_LOG_CATEGORY_CLASS(LogFMBBaseWeapon, All, All);
 
 AFMBBaseWeapon::AFMBBaseWeapon()
 {
-    PrimaryActorTick.bCanEverTick = false;
-
     WeaponFXComponent = CreateDefaultSubobject<UFMBWeaponFXComponent>(TEXT("WeaponFXComponent"));
 
     SwordTrailFXComponent = CreateDefaultSubobject<UNiagaraComponent>(TEXT("SwordTrailFXComponent"));

@@ -23,7 +23,7 @@ void AFMBBasePickUp::Tick(float DeltaTick)
 {
     Super::Tick(DeltaTick);
 
-    AddActorWorldRotation(FRotator(0.0f, RotationYaw, 0.0f));
+    // AddActorWorldRotation(FRotator(0.0f, RotationYaw, 0.0f));
 }
 
 void AFMBBasePickUp::NotifyActorBeginOverlap(AActor* OtherActor)

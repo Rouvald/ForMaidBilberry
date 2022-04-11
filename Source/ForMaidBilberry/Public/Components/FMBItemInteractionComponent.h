@@ -9,6 +9,7 @@
 
 class AFMBBaseItem;
 class AFMBPlayerCharacter;
+class UFMBPlayerWeaponComponent;
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class FORMAIDBILBERRY_API UFMBItemInteractionComponent : public UActorComponent
@@ -20,7 +21,8 @@ public:
 
     UFMBItemInteractionComponent();
 
-    virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+    void TakeItemButtonPressed();
+    void TakeItemButtonReleased();
 
     FORCEINLINE AFMBBaseItem* GetHitItem() const { return HitItem; }
     /* @note: Not good decision, but OK, i think.*/
@@ -32,6 +34,9 @@ protected:
 private:
     UPROPERTY()
     AFMBPlayerCharacter* PlayerCharacter{nullptr};
+
+    UPROPERTY()
+    UFMBPlayerWeaponComponent* PlayerWeaponComponent{nullptr};
 
     /* Interaction with Items*/
     FTimerHandle ItemInfoVisibilityTimerHandle;
@@ -50,6 +55,10 @@ private:
     void UpdateItemInfoVisibility();
     bool MakeHitItemVisibility(FHitResult& HitResult) const;
     void HideAllHittedItems() const;
+
+    void EquipItem(AFMBBaseItem* EquippedItem);
+    void SwapWeapon(AFMBBaseItem* NewItem);
+    void DropItem() const;
 
     AFMBPlayerCharacter* GetPlayerCharacter() const;
 };

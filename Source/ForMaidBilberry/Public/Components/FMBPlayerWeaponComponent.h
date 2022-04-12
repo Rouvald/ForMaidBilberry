@@ -33,8 +33,11 @@ protected:
     UPROPERTY(EditDefaultsOnly, Category = "Weapon")
     TMap<EWeaponType, FName> WeaponShieldMaps;
 
+    UPROPERTY(EditDefaultsOnly, Category = "Weapon")
+    FName ShieldEquipSocketName{"WeaponEquipSocket_L"};
+
     UPROPERTY(EditDefaultsOnly, Category = "PickUp")
-    FName PickUpEquipSocketName = "PickUpEquipSocket";
+    FName PickUpEquipSocketName{"PickUpEquipSocket"};
 
     virtual void BeginPlay() override;
 
@@ -67,10 +70,9 @@ private:
     void EquipPickUp(AFMBBasePickUp* EquippedPickUp);
     void SwapPickUp(AFMBBasePickUp* EquippedPickUp);
 
-    void EquipWeapon(AFMBBaseWeapon* EquippedWeapon);
     void SwapWeapon(AFMBBaseWeapon* EquippedWeapon);
 
-    void DropItem(const AFMBBaseItem* DropItem) const;
+    void DropItem(AFMBBaseItem* DropItem) const;
 
     AFMBPlayerCharacter* GetPlayerCharacter() const;
 };

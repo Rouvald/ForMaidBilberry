@@ -25,16 +25,23 @@ void UFMBPlayerWeaponComponent::BeginPlay()
 
 void UFMBPlayerWeaponComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
-    CurrentShield->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
-    CurrentShield->Destroy();
-
+    if (CurrentShield)
+    {
+        CurrentShield->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+        CurrentShield->Destroy();
+    }
+    if (CurrentPickUp)
+    {
+        CurrentPickUp->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+        CurrentPickUp->Destroy();
+    }
     Super::EndPlay(EndPlayReason);
 }
 
 void UFMBPlayerWeaponComponent::SpawnItems()
 {
     Super::SpawnItems();
-    SpawnShields();
+    // SpawnShields();
 }
 
 void UFMBPlayerWeaponComponent::SpawnShields()
@@ -52,7 +59,7 @@ void UFMBPlayerWeaponComponent::SpawnShields()
     {
         CurrentShield->GetRootComponent()->SetVisibility(true, true);
     }
-    FMBUtils::AttachItemToSocket(CurrentShield, Character->GetMesh(), TEXT("WeaponEquipSocket_L"));
+    FMBUtils::AttachItemToSocket(CurrentShield, Character->GetMesh(), ShieldEquipSocketName);
 }
 
 void UFMBPlayerWeaponComponent::OnStartBlock()
@@ -87,43 +94,18 @@ void UFMBPlayerWeaponComponent::GetPickupItem(AFMBBaseItem* Item)
 
 void UFMBPlayerWeaponComponent::EquipPickUp(AFMBBasePickUp* EquippedPickUp)
 {
-    if (!EquippedPickUp) return;
-    if (!PlayerCharacter) return;
+    if (!EquippedPickUp || !PlayerCharacter) return;
 
     EquippedPickUp->SetOwner(PlayerCharacter);
-    /*if (WeaponDataMap.Contains(EquippedWeapon->GetWeaponType()))
-    {
-        CurrentWeaponData = WeaponDataMap[EquippedWeapon->GetWeaponType()];
-    }*/
-
     FMBUtils::AttachItemToSocket(EquippedPickUp, Character->GetMesh(), PickUpEquipSocketName);
 
     CurrentPickUp = EquippedPickUp;
     CurrentPickUp->OnItemStateChanged.Broadcast(EItemState::EIS_Equipped);
 }
 
-void UFMBPlayerWeaponComponent::EquipWeapon(AFMBBaseWeapon* EquippedWeapon)
-{
-    if (!EquippedWeapon) return;
-    if (!PlayerCharacter) return;
-
-    EquippedWeapon->SetOwner(PlayerCharacter);
-    if (WeaponsAnimationsData.Contains(EquippedWeapon->GetWeaponType()))
-    {
-        CurrentWeaponAnimationsData = WeaponsAnimationsData[EquippedWeapon->GetWeaponType()];
-    }
-
-    FMBUtils::AttachItemToSocket(EquippedWeapon, Character->GetMesh(), CurrentWeaponAnimationsData.WeaponEquipSocketName);
-
-    CurrentWeapon = EquippedWeapon;
-    CurrentWeapon->OnItemStateChanged.Broadcast(EItemState::EIS_Equipped);
-    // CurrentWeapon->GetItemMesh()->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
-    // CurrentWeapon->GetItemMesh()->SetSimulatePhysics(false);
-}
-
 void UFMBPlayerWeaponComponent::SwapPickUp(AFMBBasePickUp* EquippedPickUp)
 {
-    if (!PlayerCharacter && !ItemInteractionComponent) return;
+    if (!PlayerCharacter || !ItemInteractionComponent) return;
 
     DropItem(CurrentPickUp);
     EquipPickUp(EquippedPickUp);
@@ -132,14 +114,14 @@ void UFMBPlayerWeaponComponent::SwapPickUp(AFMBBasePickUp* EquippedPickUp)
 
 void UFMBPlayerWeaponComponent::SwapWeapon(AFMBBaseWeapon* EquippedWeapon)
 {
-    if (!PlayerCharacter && !ItemInteractionComponent) return;
+    if (!PlayerCharacter || !ItemInteractionComponent) return;
 
     DropItem(CurrentWeapon);
     EquipWeapon(EquippedWeapon);
     ItemInteractionComponent->ClearHitItem();
 }
 
-void UFMBPlayerWeaponComponent::DropItem(const AFMBBaseItem* DropItem) const
+void UFMBPlayerWeaponComponent::DropItem(AFMBBaseItem* DropItem) const
 {
     if (!DropItem) return;
 
@@ -150,7 +132,7 @@ void UFMBPlayerWeaponComponent::DropItem(const AFMBBaseItem* DropItem) const
     ItemMesh->DetachFromComponent(DetachmentTransformRules);
 
     DropItem->OnItemStateChanged.Broadcast(EItemState::EIS_Falling);
-    // DropItem->ThrowWeapon();
+    DropItem->ThrowWeapon();
 }
 
 AFMBPlayerCharacter* UFMBPlayerWeaponComponent::GetPlayerCharacter() const

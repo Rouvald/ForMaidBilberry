@@ -26,6 +26,8 @@ public:
 
     FORCEINLINE UStaticMeshComponent* GetItemMesh() const { return ItemMesh; }
 
+    void ThrowWeapon();
+
     // void StartItemInterping();
 
     // FORCEINLINE void SetIsRotateYaw (bool IsEnable) {bIsRotateYaw = IsEnable;}
@@ -49,14 +51,14 @@ protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Properties")
     FName ItemName{"BaseItem"};
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Item", meta = (AllowPrivateAccess = "true"))
+    /*UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Item", meta = (AllowPrivateAccess = "true"))
     UCurveFloat* ItemZCurve;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Item", meta = (AllowPrivateAccess = "true"))
     float ItemZCurveTime{0.7f};
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Item", meta = (AllowPrivateAccess = "true"))
-    UCurveFloat* ItemScaleCurve;
+    UCurveFloat* ItemScaleCurve;*/
 
     FTimerHandle ItemInterpingTimerHandle;
     bool bIsItemInterping{false};
@@ -87,6 +89,10 @@ private:
     /*bool bIsRotateYaw{true};
     float RotationYaw{1.0f};*/
 
+    FTimerHandle ThrowingTimerHandle;
+    float WeaponFallingTime{0.3f};
+    bool bIsWeaponFalling{false};
+
     UFUNCTION()
     void OnAreaBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
         int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
@@ -94,4 +100,9 @@ private:
     UFUNCTION()
     void OnAreaEndOverlap(
         UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
+    // UFUNCTION()
+    void StopFalling() /*(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse,
+                          const FHitResult& Hit )*/
+        ;
 };

@@ -41,8 +41,11 @@ void UFMBBaseWeaponComponent::BeginPlay()
 
 void UFMBBaseWeaponComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
-    CurrentWeapon->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
-    CurrentWeapon->Destroy();
+    if (CurrentWeapon)
+    {
+        CurrentWeapon->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+        CurrentWeapon->Destroy();
+    }
 
     /*CurrentWeapon = nullptr;
     for (const auto Weapon : Weapons)
@@ -59,33 +62,23 @@ void UFMBBaseWeaponComponent::SpawnItems()
     if (!GetWorld()) return;
     if (!Character) return;
 
-    SpawnWeapon();
+    EquipWeapon(SpawnWeapon());
 }
 
-void UFMBBaseWeaponComponent::SpawnWeapon()
+AFMBBaseWeapon* UFMBBaseWeaponComponent::SpawnWeapon() const
 {
-    CurrentWeapon = GetWorld()->SpawnActor<AFMBBaseWeapon>(WeaponClass);
-    if (!CurrentWeapon)
+    if (!GetWorld() || !Character || !WeaponClass) return nullptr;
+
+    const auto DefaultWeapon{GetWorld()->SpawnActor<AFMBBaseWeapon>(WeaponClass)};
+    if (!DefaultWeapon)
     {
         UE_LOG(LogFMBBaseWeaponComponent, Display, TEXT("Error: spawn weapon"));
-        return;
+        return nullptr;
     }
-
-    CurrentWeapon->SetOwner(Character);
+    DefaultWeapon->SetOwner(Character);
     // CurrentWeapon->SetIsRotateYaw(false);
-
-    if (CurrentWeapon->GetRootComponent())
-    {
-        CurrentWeapon->GetRootComponent()->SetVisibility(true, true);
-    }
-    if (WeaponsAnimationsData.Contains(CurrentWeapon->GetWeaponType()))
-    {
-        CurrentWeaponAnimationsData = WeaponsAnimationsData[CurrentWeapon->GetWeaponType()];
-    }
-    CurrentWeapon->GetItemMesh()->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
-    CurrentWeapon->GetItemMesh()->SetSimulatePhysics(false);
     // UE_LOG(LogFMBBaseWeaponComponent, Display, TEXT("%d"), CurrentWeapon->GetWeaponType() == EWeaponType::EWT_YellowSword);
-    FMBUtils::AttachItemToSocket(CurrentWeapon, Character->GetMesh(), CurrentWeaponAnimationsData.WeaponEquipSocketName);
+    return DefaultWeapon;
     /*for (auto WeaponClass : WeaponClasses)
     {
         auto Weapon = GetWorld()->SpawnActor<AFMBBaseWeapon>(WeaponClass);
@@ -101,6 +94,25 @@ void UFMBBaseWeaponComponent::SpawnWeapon()
         }
         FMBUtils::AttachItemToSocket(Weapon, Character->GetMesh(), WeaponArmorySocketName);
     }*/
+}
+
+void UFMBBaseWeaponComponent::EquipWeapon(AFMBBaseWeapon* EquippedWeapon)
+{
+    if (!EquippedWeapon || !Character) return;
+
+    EquippedWeapon->SetOwner(Character);
+    if (WeaponsAnimationsData.Contains(EquippedWeapon->GetWeaponType()))
+    {
+        CurrentWeaponAnimationsData = WeaponsAnimationsData[EquippedWeapon->GetWeaponType()];
+    }
+    if (WeaponsAnimationsData.Contains(EquippedWeapon->GetWeaponType()))
+    {
+        CurrentWeaponAnimationsData = WeaponsAnimationsData[EquippedWeapon->GetWeaponType()];
+    }
+    FMBUtils::AttachItemToSocket(EquippedWeapon, Character->GetMesh(), CurrentWeaponAnimationsData.WeaponEquipSocketName);
+
+    CurrentWeapon = EquippedWeapon;
+    CurrentWeapon->OnItemStateChanged.Broadcast(EItemState::EIS_Equipped);
 }
 
 /*void UFMBBaseWeaponComponent::EquipWeapon()

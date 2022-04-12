@@ -93,6 +93,9 @@ protected:
 
     virtual void SpawnItems();
 
+    AFMBBaseWeapon* SpawnWeapon() const;
+    void EquipWeapon(AFMBBaseWeapon* EquippedWeapon);
+
 private:
     bool bIsAttackAnimInProgress{false};
     bool bIsEquipAnimInProgress{false};
@@ -105,7 +108,6 @@ private:
 
     // int32 CurrentWeaponIndex{0};
 
-    void SpawnWeapon();
     // void EquipWeapon();
 
     void CheckWeaponAnimationsData();

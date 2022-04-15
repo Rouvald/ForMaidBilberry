@@ -2,9 +2,11 @@
 
 #include "Items/FMBBaseItem.h"
 
+#include "DrawDebugHelpers.h"
 #include "FMBItemInfoWidget.h"
 #include "FMBItemInteractionComponent.h"
 #include "FMBPlayerCharacter.h"
+#include "FMBUtils.h"
 #include "Components/BoxComponent.h"
 #include "Components/SphereComponent.h"
 #include "Components/WidgetComponent.h"
@@ -20,6 +22,8 @@ AFMBBaseItem::AFMBBaseItem()
 
     ItemMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ItemMesh"));
     SetRootComponent(ItemMesh);
+    // ItemMesh->SetMassOverrideInKg(NAME_None, 50.0f);
+    // ItemMesh->SetRelativeLocation(FVector{0.0f, 0.0f,0.0f});
     // ItemMesh->SetupAttachment(DefaultRootComponent);
     // ItemMesh->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 
@@ -53,10 +57,12 @@ void AFMBBaseItem::BeginPlay()
     AreaCollision->OnComponentEndOverlap.AddDynamic(this, &AFMBBaseItem::OnAreaEndOverlap);
     OnItemStateChanged.AddUObject(this, &AFMBBaseItem::SetItemState);
 
-    // BoxCollision->OnComponentHit.AddDynamic(this, &AFMBBaseItem::StopFalling);
+    ItemMesh->OnComponentHit.AddDynamic(this, &AFMBBaseItem::StopFalling);
+    ItemMesh->SetMassOverrideInKg(NAME_None, 50.0f);
 
     SetItemInfo();
     FillItemPropertiesMap();
+    // UE_LOG(LogFMBBaseItem, Display, TEXT("%s: CurrentItemState: %s"), *GetName(), *UEnum::GetValueAsString(CurrentItemState));
 }
 
 void AFMBBaseItem::Tick(float DeltaSeconds)
@@ -139,15 +145,16 @@ void AFMBBaseItem::FillItemPropertiesMap()
     /* @todo: Future refactoring */
 
     ItemPropertiesMap.Add(
-        EItemState::EIS_Equipped, FItemProperties{false, false, true, ECollisionResponse::ECR_Ignore, ECollisionChannel::ECC_WorldStatic,
+        EItemState::EIS_Equipped, FItemProperties{false, false, true, false, ECollisionResponse::ECR_Ignore,
+                                      ECollisionChannel::ECC_WorldStatic, ECollisionResponse::ECR_Ignore, ECollisionEnabled::NoCollision,
                                       ECollisionResponse::ECR_Ignore, ECollisionEnabled::NoCollision, ECollisionResponse::ECR_Ignore,
-                                      ECollisionEnabled::NoCollision, ECollisionResponse::ECR_Ignore, ECollisionEnabled::NoCollision,
-                                      ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Ignore});
+                                      ECollisionEnabled::NoCollision, ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Ignore});
 
     ItemPropertiesMap.Add(EItemState::EIS_Pickup, FItemProperties{
                                                       false,
                                                       false,
                                                       true,
+                                                      false,
                                                       ECollisionResponse::ECR_Ignore,
                                                       ECollisionChannel::ECC_WorldStatic,
                                                       ECollisionResponse::ECR_Ignore,
@@ -160,8 +167,25 @@ void AFMBBaseItem::FillItemPropertiesMap()
                                                       ECollisionResponse::ECR_Block,
                                                   });
 
+    ItemPropertiesMap.Add(EItemState::EIS_PickedUp, FItemProperties{
+                                                        false,
+                                                        false,
+                                                        false,
+                                                        false,
+                                                        ECollisionResponse::ECR_Ignore,
+                                                        ECollisionChannel::ECC_WorldStatic,
+                                                        ECollisionResponse::ECR_Ignore,
+                                                        ECollisionEnabled::NoCollision,
+                                                        ECollisionResponse::ECR_Ignore,
+                                                        ECollisionEnabled::NoCollision,
+                                                        ECollisionResponse::ECR_Ignore,
+                                                        ECollisionEnabled::NoCollision,
+                                                        ECollisionChannel::ECC_Visibility,
+                                                        ECollisionResponse::ECR_Ignore,
+                                                    });
+
     ItemPropertiesMap.Add(
-        EItemState::EIS_Falling, FItemProperties{true, true, true, ECollisionResponse::ECR_Ignore, ECollisionChannel::ECC_WorldStatic,
+        EItemState::EIS_Falling, FItemProperties{true, true, true, true, ECollisionResponse::ECR_Ignore, ECollisionChannel::ECC_WorldStatic,
                                      ECollisionResponse::ECR_Block, ECollisionEnabled::QueryAndPhysics, ECollisionResponse::ECR_Ignore,
                                      ECollisionEnabled::NoCollision, ECollisionResponse::ECR_Ignore, ECollisionEnabled::NoCollision,
                                      ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Ignore});
@@ -191,6 +215,7 @@ void AFMBBaseItem::SetItemProperties(const EItemState NewItemState) const
     ItemMesh->SetSimulatePhysics(ItemPropertiesMap[NewItemState].bIsSimulatedPhysics);
     ItemMesh->SetEnableGravity(ItemPropertiesMap[NewItemState].bIsGravityEnable);
     ItemMesh->SetVisibility(ItemPropertiesMap[NewItemState].bIsVisible);
+    ItemMesh->SetNotifyRigidBodyCollision(ItemPropertiesMap[NewItemState].bIsSimulationHitEvents);
     ItemMesh->SetCollisionResponseToAllChannels(ItemPropertiesMap[NewItemState].ItemMeshCollisionResponseToAllChannels);
     ItemMesh->SetCollisionResponseToChannel(
         ItemPropertiesMap[NewItemState].ItemMeshCollisionChannel, ItemPropertiesMap[NewItemState].ItemMeshCollisionResponseToChannel);
@@ -210,33 +235,53 @@ void AFMBBaseItem::SetItemProperties(const EItemState NewItemState) const
 
 void AFMBBaseItem::ThrowWeapon()
 {
-    const FRotator MeshRotation{0.0f, ItemMesh->GetComponentRotation().Yaw, 1.0f};
+    const auto PlayerCharacter{GetPlayerCharacter()};
+    if (!PlayerCharacter) return;
+
+    const FRotator MeshRotation{0.0f, ItemMesh->GetComponentRotation().Yaw, 0.0f};
     ItemMesh->SetWorldRotation(MeshRotation, false, nullptr, ETeleportType::TeleportPhysics);
 
-    const auto MeshForwardVector{ItemMesh->GetForwardVector()};
-    const auto MeshRightVector{ItemMesh->GetRightVector()};
-    auto ThrowingDirection{MeshRightVector.RotateAngleAxis(-20.f, MeshForwardVector)};
+    FVector TraceStart{}, TraceEnd{};
+    if (!FMBUtils::GetTraceData(PlayerCharacter, TraceStart, TraceEnd, 50.0f)) return;
 
-    const float RandomRotation{FMath::FRandRange(25.0f, 35.0f)};
-    ThrowingDirection = ThrowingDirection.RotateAngleAxis(RandomRotation, FVector{0.0f, 0.0f, 1.0f});
-    ThrowingDirection *= 5000.0f;
+    SetActorLocation(TraceEnd);
+
+    auto ThrowingDirection{PlayerCharacter->GetActorForwardVector()};
+    ThrowingDirection *= 20000.0f;
 
     ItemMesh->AddImpulse(ThrowingDirection);
 
+    /*FVector TraceStart{}, TraceEnd{};
+    if (!FMBUtils::GetTraceData(GetPlayerCharacter(), TraceStart, TraceEnd, 200.0f)) return;
+
+    UE_LOG(LogFMBBaseItem, Display, TEXT("TraceStart: %f, %f, %f ==== TraceEnd: %f, %f, %f"), TraceStart.X, TraceStart.Y, TraceStart.Z,
+    TraceEnd.X, TraceEnd.Y, TraceEnd.Z);
+
+    const auto Pawn{Cast<APawn>(GetOwner())};
+    if (!Pawn) return;
+
+    SetActorLocation(TraceEnd);
+    ItemMesh->AddImpulse(Pawn->GetActorForwardVector()*100.0f);*/
+
     bIsWeaponFalling = true;
-    GetWorldTimerManager().SetTimer(ThrowingTimerHandle, this, &AFMBBaseItem::StopFalling, WeaponFallingTime, false);
 }
 
-void AFMBBaseItem::StopFalling() /*(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector
-                                    NormalImpulse, const FHitResult& Hit )*/
+void AFMBBaseItem::StopFalling /*()*/ (
+    UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
+    if (CurrentItemState != EItemState::EIS_Falling) return;
+
     bIsWeaponFalling = false;
-    if (CurrentItemState == EItemState::EIS_Falling)
-    {
-        const FRotator MeshRotation{0.0f, ItemMesh->GetComponentRotation().Yaw, 1.0f};
-        ItemMesh->SetWorldRotation(MeshRotation, false, nullptr, ETeleportType::TeleportPhysics);
-    }
+
+    const FRotator MeshRotation{0.0f, ItemMesh->GetComponentRotation().Yaw, 1.0f};
+    ItemMesh->SetWorldRotation(MeshRotation, false, nullptr, ETeleportType::TeleportPhysics);
+
     OnItemStateChanged.Broadcast(EItemState::EIS_Pickup);
+}
+
+AFMBPlayerCharacter* AFMBBaseItem::GetPlayerCharacter() const
+{
+    return Cast<AFMBPlayerCharacter>(GetOwner());
 }
 
 AController* AFMBBaseItem::GetController() const

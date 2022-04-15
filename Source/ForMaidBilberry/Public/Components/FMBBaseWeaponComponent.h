@@ -71,6 +71,12 @@ protected:
     UPROPERTY()
     AFMBBaseWeapon* CurrentWeapon{nullptr};
 
+    UPROPERTY()
+    TArray<const AFMBBaseWeapon*> Weapons;
+
+    /* Max Weapons that player can hold. */
+    int8 MaxWeapons{5};
+
     /*UPROPERTY()
     AFMBBaseWeapon* ArmoryWeapon{nullptr};*/
 

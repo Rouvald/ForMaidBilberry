@@ -51,24 +51,6 @@ protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Properties")
     FName ItemName{"BaseItem"};
 
-    /*UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Item", meta = (AllowPrivateAccess = "true"))
-    UCurveFloat* ItemZCurve;
-
-    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Item", meta = (AllowPrivateAccess = "true"))
-    float ItemZCurveTime{0.7f};
-
-    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Item", meta = (AllowPrivateAccess = "true"))
-    UCurveFloat* ItemScaleCurve;*/
-
-    FTimerHandle ItemInterpingTimerHandle;
-    bool bIsItemInterping{false};
-    //
-
-    UPROPERTY()
-    FVector ItemBaseLocation{FVector::ZeroVector};
-    float ItemInterpSpeed{30.0f};
-    // float DefaultRotationYawOffset{0.0f};
-
     EItemState CurrentItemState{EItemState::EIS_Pickup};
 
     UPROPERTY()
@@ -83,6 +65,7 @@ protected:
     void FillItemPropertiesMap();
     void SetItemProperties(const EItemState NewItemState) const;
 
+    AFMBPlayerCharacter* GetPlayerCharacter() const;
     AController* GetController() const;
 
 private:
@@ -101,8 +84,7 @@ private:
     void OnAreaEndOverlap(
         UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
-    // UFUNCTION()
-    void StopFalling() /*(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse,
-                          const FHitResult& Hit )*/
-        ;
+    UFUNCTION()
+    void StopFalling /*()*/ (UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse,
+        const FHitResult& Hit);
 };

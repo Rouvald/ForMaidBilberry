@@ -5,12 +5,18 @@
 #include "Kismet/GameplayStatics.h"
 #include "Sound/SoundCue.h"
 #include "NiagaraComponent.h"
+#include "Components/BoxComponent.h"
 
 DEFINE_LOG_CATEGORY_STATIC(PickUpLog, All, All)
 
 AFMBBasePickUp::AFMBBasePickUp()
 {
     PrimaryActorTick.bCanEverTick = true;
+
+    BoxCollision->SetRelativeLocation(FVector{0.0f, 0.0f, 12.0f});
+    BoxCollision->SetBoxExtent(FVector{11.0f, 11.0f, 13.0f});
+
+    AreaCollision->SetRelativeLocation(BoxCollision->GetRelativeLocation());
 
     /*CollisionComponent = CreateDefaultSubobject<USphereComponent>("CollisionComponent");
     CollisionComponent->InitSphereRadius(40.0f);

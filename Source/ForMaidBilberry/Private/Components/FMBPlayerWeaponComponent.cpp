@@ -16,10 +16,9 @@ void UFMBPlayerWeaponComponent::BeginPlay()
 {
     Super::BeginPlay();
 
-    PlayerCharacter = GetPlayerCharacter();
-    if (PlayerCharacter)
+    if (Character && Character->IsPlayerControlled())
     {
-        ItemInteractionComponent = PlayerCharacter->FindComponentByClass<UFMBItemInteractionComponent>();
+        ItemInteractionComponent = Character->FindComponentByClass<UFMBItemInteractionComponent>();
     }
 }
 
@@ -94,9 +93,9 @@ void UFMBPlayerWeaponComponent::GetPickupItem(AFMBBaseItem* Item)
 
 void UFMBPlayerWeaponComponent::EquipPickUp(AFMBBasePickUp* EquippedPickUp)
 {
-    if (!EquippedPickUp || !PlayerCharacter) return;
+    if (!EquippedPickUp || !Character) return;
 
-    EquippedPickUp->SetOwner(PlayerCharacter);
+    EquippedPickUp->SetOwner(Character);
     FMBUtils::AttachItemToSocket(EquippedPickUp, Character->GetMesh(), PickUpEquipSocketName);
 
     CurrentPickUp = EquippedPickUp;
@@ -105,7 +104,7 @@ void UFMBPlayerWeaponComponent::EquipPickUp(AFMBBasePickUp* EquippedPickUp)
 
 void UFMBPlayerWeaponComponent::SwapPickUp(AFMBBasePickUp* EquippedPickUp)
 {
-    if (!PlayerCharacter || !ItemInteractionComponent) return;
+    if (!Character || !ItemInteractionComponent) return;
 
     DropItem(CurrentPickUp);
     EquipPickUp(EquippedPickUp);
@@ -114,9 +113,12 @@ void UFMBPlayerWeaponComponent::SwapPickUp(AFMBBasePickUp* EquippedPickUp)
 
 void UFMBPlayerWeaponComponent::SwapWeapon(AFMBBaseWeapon* EquippedWeapon)
 {
-    if (!PlayerCharacter || !ItemInteractionComponent) return;
+    if (!Character || !ItemInteractionComponent) return;
 
-    DropItem(CurrentWeapon);
+    if (Weapons.Num() > MaxWeapons)
+    {
+        DropItem(CurrentWeapon);
+    }
     EquipWeapon(EquippedWeapon);
     ItemInteractionComponent->ClearHitItem();
 }

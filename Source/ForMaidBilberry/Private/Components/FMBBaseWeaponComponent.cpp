@@ -76,7 +76,6 @@ AFMBBaseWeapon* UFMBBaseWeaponComponent::SpawnWeapon() const
         return nullptr;
     }
     DefaultWeapon->SetOwner(Character);
-    // CurrentWeapon->SetIsRotateYaw(false);
     // UE_LOG(LogFMBBaseWeaponComponent, Display, TEXT("%d"), CurrentWeapon->GetWeaponType() == EWeaponType::EWT_YellowSword);
     return DefaultWeapon;
     /*for (auto WeaponClass : WeaponClasses)
@@ -101,18 +100,22 @@ void UFMBBaseWeaponComponent::EquipWeapon(AFMBBaseWeapon* EquippedWeapon)
     if (!EquippedWeapon || !Character) return;
 
     EquippedWeapon->SetOwner(Character);
-    if (WeaponsAnimationsData.Contains(EquippedWeapon->GetWeaponType()))
+    if (CurrentWeapon)
     {
-        CurrentWeaponAnimationsData = WeaponsAnimationsData[EquippedWeapon->GetWeaponType()];
+        FMBUtils::AttachItemToSocket(EquippedWeapon, Character->GetMesh(), WeaponArmorySocketName);
+        EquippedWeapon->OnItemStateChanged.Broadcast(EItemState::EIS_PickedUp);
     }
-    if (WeaponsAnimationsData.Contains(EquippedWeapon->GetWeaponType()))
+    else
     {
-        CurrentWeaponAnimationsData = WeaponsAnimationsData[EquippedWeapon->GetWeaponType()];
+        if (WeaponsAnimationsData.Contains(EquippedWeapon->GetWeaponType()))
+        {
+            CurrentWeaponAnimationsData = WeaponsAnimationsData[EquippedWeapon->GetWeaponType()];
+        }
+        FMBUtils::AttachItemToSocket(EquippedWeapon, Character->GetMesh(), CurrentWeaponAnimationsData.WeaponEquipSocketName);
+        CurrentWeapon = EquippedWeapon;
+        CurrentWeapon->OnItemStateChanged.Broadcast(EItemState::EIS_Equipped);
     }
-    FMBUtils::AttachItemToSocket(EquippedWeapon, Character->GetMesh(), CurrentWeaponAnimationsData.WeaponEquipSocketName);
-
-    CurrentWeapon = EquippedWeapon;
-    CurrentWeapon->OnItemStateChanged.Broadcast(EItemState::EIS_Equipped);
+    Weapons.AddUnique(EquippedWeapon);
 }
 
 /*void UFMBBaseWeaponComponent::EquipWeapon()

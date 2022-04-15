@@ -9,12 +9,19 @@
 #include "NiagaraComponent.h"
 #include "FMBCoreTypes.h"
 #include "FMBUtils.h"
+#include "Components/BoxComponent.h"
+#include "Components/SphereComponent.h"
 #include "Sound/SoundCue.h"
 
 DECLARE_LOG_CATEGORY_CLASS(LogFMBBaseWeapon, All, All);
 
 AFMBBaseWeapon::AFMBBaseWeapon()
 {
+    BoxCollision->SetRelativeLocation(FVector{0.0f, 70.0f, 0.0f});
+    BoxCollision->SetBoxExtent(FVector{30.0f, 95.0f, 6.0f});
+
+    AreaCollision->SetRelativeLocation(BoxCollision->GetRelativeLocation());
+
     WeaponFXComponent = CreateDefaultSubobject<UFMBWeaponFXComponent>(TEXT("WeaponFXComponent"));
 
     SwordTrailFXComponent = CreateDefaultSubobject<UNiagaraComponent>(TEXT("SwordTrailFXComponent"));

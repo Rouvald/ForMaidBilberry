@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "FMBPlayerHUDWidget.h"
+#include "FMBPlayerWidget.h"
 #include "GameFramework/HUD.h"
 #include "FMBCoreTypes.h"
 #include "FMBGameHUD.generated.h"

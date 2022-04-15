@@ -47,17 +47,11 @@ protected:
 
 private:
     UPROPERTY()
-    AFMBPlayerCharacter* PlayerCharacter{nullptr};
-
-    UPROPERTY()
     UFMBItemInteractionComponent* ItemInteractionComponent{nullptr};
 
     /* Taken Items */
     UPROPERTY()
     AFMBBaseShield* CurrentShield{nullptr};
-
-    UPROPERTY()
-    TArray<const AFMBBaseWeapon*> Weapons;
 
     UPROPERTY()
     AFMBBasePickUp* CurrentPickUp{nullptr};

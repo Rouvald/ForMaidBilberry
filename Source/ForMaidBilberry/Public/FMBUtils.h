@@ -19,13 +19,11 @@ public:
         return Cast<T>(Component);
     }
 
-    static FText TextFromInt(int32 Number) { return FText::FromString(FString::FromInt(Number)); }
+    static FText TextFromInt(const int32 Number) { return FText::FromString(FString::FromInt(Number)); }
 
-    static bool GetTraceData(APawn* PlayerPawn, FVector& TraceStart, FVector& TraceEnd, const float TraceDistance)
+    static bool GetTraceData(const APawn* PlayerPawn, FVector& TraceStart, FVector& TraceEnd, const float TraceDistance)
     {
-        if (!PlayerPawn) return false;
-
-        if (!PlayerPawn->GetController()) return false;
+        if (!PlayerPawn || !PlayerPawn->GetController()) return false;
 
         FVector ViewLocation;
         FRotator ViewRotation;

@@ -87,6 +87,9 @@ struct FItemProperties
     UPROPERTY()
     bool bIsVisible;
 
+    UPROPERTY()
+    bool bIsSimulationHitEvents;
+
     ECollisionResponse ItemMeshCollisionResponseToAllChannels;
 
     ECollisionChannel ItemMeshCollisionChannel;

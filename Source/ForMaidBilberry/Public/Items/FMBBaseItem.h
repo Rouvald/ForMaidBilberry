@@ -25,6 +25,7 @@ public:
     virtual void Tick(float DeltaSeconds) override;
 
     FORCEINLINE UStaticMeshComponent* GetItemMesh() const { return ItemMesh; }
+    FORCEINLINE const FItemData& GetItemData() const { return ItemData; }
 
     void ThrowWeapon();
 
@@ -49,12 +50,12 @@ protected:
     UStaticMeshComponent* ItemMesh{nullptr};
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Properties")
-    FName ItemName{"BaseItem"};
+    FItemData ItemData;
 
     EItemState CurrentItemState{EItemState::EIS_Pickup};
 
     UPROPERTY()
-    TMap<EItemState, FItemProperties> ItemPropertiesMap;
+    TMap<EItemState, FItemStateProperties> ItemStatePropertiesMap;
 
     virtual void BeginPlay() override;
 

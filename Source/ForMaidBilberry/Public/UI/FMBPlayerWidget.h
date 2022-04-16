@@ -8,7 +8,6 @@
 #include "UI/FMBBaseWidget.h"
 #include "FMBPlayerWidget.generated.h"
 
-class UHorizontalBox;
 /**
  *
  */
@@ -24,11 +23,11 @@ public:
     UFUNCTION(Category = "UI")
     float GetStaminaPercent() const;
 
-    UFUNCTION(Category = "UI")
-    UTexture2D* GetCurrentWeaponUIImage() const;
+    /*UFUNCTION(Category = "UI")
+    UTexture2D* GetCurrentWeaponUIImage() const;*/
 
     // UFUNCTION(BlueprintCallable, Category = "UI")
-    // bool GetArmoryWeaponUIData(FWeaponUIData& WeaponUIData) const;
+    // bool GetArmoryWeaponUIData(FItemData& WeaponUIData) const;
 
     UFUNCTION(Category = "UI")
     ESlateVisibility IsPlayerAlive() const;
@@ -48,9 +47,6 @@ public:
 protected:
     UPROPERTY(meta = (BindWidgetAnim), Transient)
     UWidgetAnimation* BloodyScreenAnim{nullptr};
-
-    UPROPERTY(meta = (BindWidget))
-    UHorizontalBox* WeaponsHorizontalBox{nullptr};
 
     virtual void NativeOnInitialized() override;
 

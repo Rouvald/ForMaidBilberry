@@ -102,6 +102,8 @@ void AFMBBaseWeapon::SortEqualCharacter(const FHitResult& HitResult)
     const auto OwnerPawn = Cast<APawn>(GetOwner());
     const auto HittedActor = Cast<APawn>(HitResult.GetActor());
 
+    if (!OwnerPawn) return;
+
     /* @note: in future we can add AActor that can be broke ( like wooden chest ) */
     if (!HittedActor)
     {

@@ -20,15 +20,23 @@ public:
 
     virtual void Tick(float DeltaTick) override;
 
-protected:
-    /*UPROPERTY(VisibleAnywhere, Category = "PickUp")
-    USphereComponent* CollisionComponent{nullptr};*/
+    FORCEINLINE EPickUpType GetPickUpType() const { return PickupType; }
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PickUp")
+    FORCEINLINE int32 GetItemCount() const { return ItemCount; }
+    FORCEINLINE void ChangeItemCount(const bool bIsIncrease) { bIsIncrease ? ++ItemCount : ItemCount = FMath::Max(0, --ItemCount); };
+
+protected:
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "PickUp")
+    EPickUpType PickupType{EPickUpType::EPT_HealthFlask};
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "PickUp")
+    int32 ItemCount{1};
+
+    /*UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "PickUp")
     bool WantsToRespawn{false};
 
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PickUp")
-    float RespawnTime{3.0f};
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "PickUp")
+    float RespawnTime{5.0f};*/
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sound")
     USoundCue* TakenPickUpSound{nullptr};

@@ -25,7 +25,7 @@ void AFMBGameHUD::BeginPlay()
         GameWidget->SetVisibility(ESlateVisibility::Hidden);
     }
 
-    if (GetWorld())
+    if (GetWorld() && GetWorld()->GetAuthGameMode())
     {
         if (const auto GameMode = Cast<AFMBGameModeBase>(GetWorld()->GetAuthGameMode()))
         {

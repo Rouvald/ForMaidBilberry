@@ -33,7 +33,6 @@ public:
 
     void StopDrawTrace();
 
-    FORCEINLINE const FWeaponUIData& GetWeaponUIData() const { return WeaponUIData; }
     FORCEINLINE UNiagaraComponent* GetSwordTrailFXComponent() const { return SwordTrailFXComponent; }
 
 protected:
@@ -44,7 +43,7 @@ protected:
     UNiagaraComponent* SwordTrailFXComponent{nullptr};
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
-    EWeaponType WeaponType{EWeaponType::EWT_RedSword};
+    EWeaponType WeaponType{EWeaponType::EWT_SwordShield};
 
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
     FName StartBladeTraceSocketName{"StartBladeTraceSocket"};
@@ -66,9 +65,6 @@ protected:
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
     float StrongAttackDamage{30.0f};
-
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
-    FWeaponUIData WeaponUIData;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sound")
     USoundCue* SwordSlashSound{nullptr};

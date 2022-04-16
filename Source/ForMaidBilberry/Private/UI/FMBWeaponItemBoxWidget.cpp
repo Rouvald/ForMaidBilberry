@@ -3,11 +3,11 @@
 #include "UI/FMBWeaponItemBoxWidget.h"
 #include "FMBUtils.h"
 #include "Weapon/FMBBaseWeapon.h"
-#include "Components/FMBBaseWeaponComponent.h"
+#include "Components/FMBPlayerWeaponComponent.h"
 #include "Components/HorizontalBox.h"
-#include "UI/FMBWeaponDataWidget.h"
+#include "UI/FMBItemIconWidget.h"
 
-/*DEFINE_LOG_CATEGORY_STATIC(LogFMBWeaponItemBoxWidget, All, All)
+DEFINE_LOG_CATEGORY_STATIC(LogFMBWeaponItemBoxWidget, All, All)
 
 void UFMBWeaponItemBoxWidget::NativeOnInitialized()
 {
@@ -18,41 +18,46 @@ void UFMBWeaponItemBoxWidget::NativeOnInitialized()
 
 void UFMBWeaponItemBoxWidget::InitWeaponItem()
 {
-    const auto WeaponComponent = GetWeaponComponent();
-    if (!WeaponComponent) return;
+    PlayerWeaponComponent = GetWeaponComponent();
+    if (!PlayerWeaponComponent) return;
 
-    if (!WeaponUIItemsBox) return;
-    WeaponUIItemsBox->ClearChildren();
+    if (!WeaponIconBox) return;
+    WeaponIconBox->ClearChildren();
 
-    for (const auto WeaponClass : WeaponComponent->GetWeaponClasses())
+    for (int8 Index = 0; Index < PlayerWeaponComponent->GetMaxWeapons(); ++Index)
     {
-        const auto Weapon = Cast<AFMBBaseWeapon>(WeaponClass->GetDefaultObject());
-        const auto WeaponUIDataWidget = CreateWidget<UFMBWeaponDataWidget>(GetWorld(), WeaponUIDataWidgetClass);
-        if (!WeaponUIDataWidget || !Weapon) continue;
+        const auto WeaponIconWidget = CreateWidget<UFMBItemIconWidget>(GetWorld(), WeaponIconWidgetClass);
+        if (!WeaponIconWidget) continue;
 
-        //WeaponUIDataWidget->SetWeaponUIData(Weapon->GetWeaponUIData());
-        //WeaponUIDataWidget->OnWeaponSelected.AddUObject(this, &UFMBWeaponItemBoxWidget::OnWeaponSelected);
+        // WeaponUIDataWidget->SetWeaponUIData(Weapon->GetWeaponUIData());
+        PlayerWeaponComponent->OnWeaponSelected.AddUObject(this, &UFMBWeaponItemBoxWidget::OnWeaponSelected);
+        PlayerWeaponComponent->OnWeaponPickedUp.AddUObject(this, &UFMBWeaponItemBoxWidget::OnWeaponPickedUp);
+        WeaponIconWidget->SetVisibleItemImage(false);
 
-        WeaponUIItemsBox->AddChild(WeaponUIDataWidget);
-        //WeaponUIDataWidgets.Add(WeaponUIDataWidget);
+        WeaponIconBox->AddChild(WeaponIconWidget);
+        WeaponIconWidgets.Add(WeaponIconWidget);
     }
-    //UE_LOG(LogFMBWeaponItemBoxWidget, Error, TEXT("%i"), WeaponUIItemsBox->HasAnyChildren()) ;
+    // UE_LOG(LogFMBWeaponItemBoxWidget, Error, TEXT("%i"), WeaponIconBox->HasAnyChildren()) ;
 }
 
-void UFMBWeaponItemBoxWidget::OnWeaponSelected(const FWeaponUIData& Data)
+void UFMBWeaponItemBoxWidget::OnWeaponSelected(int8 WeaponIndex)
 {
-    for (const auto WeaponUIDataWidget : WeaponUIDataWidgets)
+    if (WeaponIndex < WeaponIconWidgets.Num())
     {
-        if (WeaponUIDataWidget)
-        {
-            const auto IsSelected = Data.WeaponName == WeaponUIDataWidget->GetWeaponUIData().WeaponName;
-            WeaponUIDataWidget->WeaponIsSelected(IsSelected);
-        }
+        WeaponIconWidgets[WeaponIndex]->ItemIsSelected(true);
     }
 }
 
-UFMBBaseWeaponComponent* UFMBWeaponItemBoxWidget::GetWeaponComponent() const
+void UFMBWeaponItemBoxWidget::OnWeaponPickedUp(int8 WeaponIndex, const FItemData& Data)
 {
-    const auto WeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBBaseWeaponComponent>(GetOwningPlayerPawn());
-    return WeaponComponent;
-}*/
+    if (WeaponIconWidgets[WeaponIndex])
+    {
+        WeaponIconWidgets[WeaponIndex]->SetVisibleItemImage(true);
+        WeaponIconWidgets[WeaponIndex]->SetItemImage(Data.ItemIcon);
+    }
+}
+
+UFMBPlayerWeaponComponent* UFMBWeaponItemBoxWidget::GetWeaponComponent() const
+{
+    return FMBUtils::GetFMBPlayerComponent<UFMBPlayerWeaponComponent>(GetOwningPlayerPawn());
+}

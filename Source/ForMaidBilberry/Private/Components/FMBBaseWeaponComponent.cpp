@@ -41,18 +41,13 @@ void UFMBBaseWeaponComponent::BeginPlay()
 
 void UFMBBaseWeaponComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
-    if (CurrentWeapon)
-    {
-        CurrentWeapon->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
-        CurrentWeapon->Destroy();
-    }
-
-    /*CurrentWeapon = nullptr;
+    CurrentWeapon = nullptr;
     for (const auto Weapon : Weapons)
     {
-
+        Weapon->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+        Weapon->Destroy();
     }
-    Weapons.Empty();*/
+    Weapons.Empty();
 
     Super::EndPlay(EndPlayReason);
 }
@@ -104,6 +99,8 @@ void UFMBBaseWeaponComponent::EquipWeapon(AFMBBaseWeapon* EquippedWeapon)
     {
         FMBUtils::AttachItemToSocket(EquippedWeapon, Character->GetMesh(), WeaponArmorySocketName);
         EquippedWeapon->OnItemStateChanged.Broadcast(EItemState::EIS_PickedUp);
+        Weapons.AddUnique(EquippedWeapon);
+        OnWeaponPickedUp.Broadcast((Weapons.Num() - 1), EquippedWeapon->GetItemData());
     }
     else
     {
@@ -114,8 +111,18 @@ void UFMBBaseWeaponComponent::EquipWeapon(AFMBBaseWeapon* EquippedWeapon)
         FMBUtils::AttachItemToSocket(EquippedWeapon, Character->GetMesh(), CurrentWeaponAnimationsData.WeaponEquipSocketName);
         CurrentWeapon = EquippedWeapon;
         CurrentWeapon->OnItemStateChanged.Broadcast(EItemState::EIS_Equipped);
+        OnWeaponSelected.Broadcast(CurrentWeaponIndex);
+        if (Weapons.Num() == 0)
+        {
+            Weapons.AddUnique(EquippedWeapon);
+        }
+        else
+        {
+            Weapons[CurrentWeaponIndex] = EquippedWeapon;
+        }
+        OnWeaponPickedUp.Broadcast(CurrentWeaponIndex, EquippedWeapon->GetItemData());
     }
-    Weapons.AddUnique(EquippedWeapon);
+    // UE_LOG(LogFMBBaseWeaponComponent, Warning, TEXT("Weapons num: %d"), Weapons.Num());
 }
 
 /*void UFMBBaseWeaponComponent::EquipWeapon()
@@ -177,13 +184,13 @@ void UFMBBaseWeaponComponent::PlayAnimMontage(UAnimMontage* Animation) const
 
 void UFMBBaseWeaponComponent::CheckWeaponAnimationsData()
 {
-    if (WeaponsAnimationsData.Contains(EWeaponType::EWT_RedSword))
+    if (WeaponsAnimationsData.Contains(EWeaponType::EWT_SwordShield))
     {
-        InitAnimation(WeaponsAnimationsData[EWeaponType::EWT_RedSword]);
+        InitAnimation(WeaponsAnimationsData[EWeaponType::EWT_SwordShield]);
     }
-    if (WeaponsAnimationsData.Contains(EWeaponType::EWT_YellowSword))
+    if (WeaponsAnimationsData.Contains(EWeaponType::EWT_TwoHandSword))
     {
-        InitAnimation(WeaponsAnimationsData[EWeaponType::EWT_YellowSword]);
+        InitAnimation(WeaponsAnimationsData[EWeaponType::EWT_TwoHandSword]);
     }
 }
 
@@ -365,17 +372,17 @@ bool UFMBBaseWeaponComponent::CanEquip() const
     return !bIsEquipAnimInProgress;
 }
 
-UTexture2D* UFMBBaseWeaponComponent::GetCurrentWeaponUIImage() const
+/*UTexture2D* UFMBBaseWeaponComponent::GetCurrentWeaponUIImage() const
 {
     if (CurrentWeapon)
     {
-        return CurrentWeapon->GetWeaponUIData().WeaponIcon;
+        return CurrentWeapon->GetItemData().ItemIcon;
     }
     return nullptr;
-}
+}*/
 
 // work if u have only 2 weapons //
-/*bool UFMBBaseWeaponComponent::GetArmoryWeaponUIData(FWeaponUIData& WeaponUIData) const
+/*bool UFMBBaseWeaponComponent::GetArmoryWeaponUIData(FItemData& WeaponUIData) const
 {
     if (ArmoryWeapon)
     {

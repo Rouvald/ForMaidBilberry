@@ -19,6 +19,9 @@ class FORMAIDBILBERRY_API UFMBPlayerWeaponComponent : public UFMBBaseWeaponCompo
 {
     GENERATED_BODY()
 public:
+    FOnPickUpPickedUpSignature OnPickUpPickedUp;
+    FOnPickUpCountChangeSignature OnPickUpCountChange;
+
     void OnStartBlock();
     void OnStopBlock();
 
@@ -67,6 +70,11 @@ private:
     void SwapWeapon(AFMBBaseWeapon* EquippedWeapon);
 
     void DropItem(AFMBBaseItem* DropItem) const;
+
+    void ClearCurrentWeapon();
+
+    void DestroyCurrentShield() const;
+    void DestroyCurrentPickUp() const;
 
     AFMBPlayerCharacter* GetPlayerCharacter() const;
 };

@@ -71,16 +71,14 @@ void UFMBItemInteractionComponent::ItemInfoVisibilityTimer(const AFMBBaseItem* I
 }
 void UFMBItemInteractionComponent::UpdateItemInfoVisibility()
 {
+    HideAllHittedItems();
+
     FHitResult HitItemResult;
 
     if (!MakeHitItemVisibility(HitItemResult)) return;
 
     HitItem = Cast<AFMBBaseItem>(HitItemResult.GetActor());
-    if (!HitItem)
-    {
-        HideAllHittedItems();
-        return;
-    }
+    if (!HitItem) return;
 
     const auto bIsContains = HittedItems.Contains(HitItem);
 

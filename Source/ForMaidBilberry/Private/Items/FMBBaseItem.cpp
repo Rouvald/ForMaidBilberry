@@ -126,7 +126,7 @@ void AFMBBaseItem::SetItemInfo() const
     const auto ItemInfoWidget{Cast<UFMBItemInfoWidget>(ItemInfoWidgetComponent->GetWidget())};
     if (ItemInfoWidget)
     {
-        ItemInfoWidget->SetItemName(ItemName);
+        ItemInfoWidget->SetItemName(ItemData.ItemName);
     }
     // OnItemStateChanged.Broadcast(EItemState::EIS_Pickup);
 }
@@ -144,51 +144,51 @@ void AFMBBaseItem::FillItemPropertiesMap()
 {
     /* @todo: Future refactoring */
 
-    ItemPropertiesMap.Add(
-        EItemState::EIS_Equipped, FItemProperties{false, false, true, false, ECollisionResponse::ECR_Ignore,
+    ItemStatePropertiesMap.Add(
+        EItemState::EIS_Equipped, FItemStateProperties{false, false, true, false, ECollisionResponse::ECR_Ignore,
                                       ECollisionChannel::ECC_WorldStatic, ECollisionResponse::ECR_Ignore, ECollisionEnabled::NoCollision,
                                       ECollisionResponse::ECR_Ignore, ECollisionEnabled::NoCollision, ECollisionResponse::ECR_Ignore,
                                       ECollisionEnabled::NoCollision, ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Ignore});
 
-    ItemPropertiesMap.Add(EItemState::EIS_Pickup, FItemProperties{
-                                                      false,
-                                                      false,
-                                                      true,
-                                                      false,
-                                                      ECollisionResponse::ECR_Ignore,
-                                                      ECollisionChannel::ECC_WorldStatic,
-                                                      ECollisionResponse::ECR_Ignore,
-                                                      ECollisionEnabled::NoCollision,
-                                                      ECollisionResponse::ECR_Overlap,
-                                                      ECollisionEnabled::QueryOnly,
-                                                      ECollisionResponse::ECR_Ignore,
-                                                      ECollisionEnabled::QueryAndPhysics,
-                                                      ECollisionChannel::ECC_Visibility,
-                                                      ECollisionResponse::ECR_Block,
-                                                  });
+    ItemStatePropertiesMap.Add(EItemState::EIS_Pickup, FItemStateProperties{
+                                                           false,
+                                                           false,
+                                                           true,
+                                                           false,
+                                                           ECollisionResponse::ECR_Ignore,
+                                                           ECollisionChannel::ECC_WorldStatic,
+                                                           ECollisionResponse::ECR_Ignore,
+                                                           ECollisionEnabled::NoCollision,
+                                                           ECollisionResponse::ECR_Overlap,
+                                                           ECollisionEnabled::QueryOnly,
+                                                           ECollisionResponse::ECR_Ignore,
+                                                           ECollisionEnabled::QueryAndPhysics,
+                                                           ECollisionChannel::ECC_Visibility,
+                                                           ECollisionResponse::ECR_Block,
+                                                       });
 
-    ItemPropertiesMap.Add(EItemState::EIS_PickedUp, FItemProperties{
-                                                        false,
-                                                        false,
-                                                        false,
-                                                        false,
-                                                        ECollisionResponse::ECR_Ignore,
-                                                        ECollisionChannel::ECC_WorldStatic,
-                                                        ECollisionResponse::ECR_Ignore,
-                                                        ECollisionEnabled::NoCollision,
-                                                        ECollisionResponse::ECR_Ignore,
-                                                        ECollisionEnabled::NoCollision,
-                                                        ECollisionResponse::ECR_Ignore,
-                                                        ECollisionEnabled::NoCollision,
-                                                        ECollisionChannel::ECC_Visibility,
-                                                        ECollisionResponse::ECR_Ignore,
-                                                    });
+    ItemStatePropertiesMap.Add(EItemState::EIS_PickedUp, FItemStateProperties{
+                                                             false,
+                                                             false,
+                                                             true,
+                                                             false,
+                                                             ECollisionResponse::ECR_Ignore,
+                                                             ECollisionChannel::ECC_WorldStatic,
+                                                             ECollisionResponse::ECR_Ignore,
+                                                             ECollisionEnabled::NoCollision,
+                                                             ECollisionResponse::ECR_Ignore,
+                                                             ECollisionEnabled::NoCollision,
+                                                             ECollisionResponse::ECR_Ignore,
+                                                             ECollisionEnabled::NoCollision,
+                                                             ECollisionChannel::ECC_Visibility,
+                                                             ECollisionResponse::ECR_Ignore,
+                                                         });
 
-    ItemPropertiesMap.Add(
-        EItemState::EIS_Falling, FItemProperties{true, true, true, true, ECollisionResponse::ECR_Ignore, ECollisionChannel::ECC_WorldStatic,
-                                     ECollisionResponse::ECR_Block, ECollisionEnabled::QueryAndPhysics, ECollisionResponse::ECR_Ignore,
-                                     ECollisionEnabled::NoCollision, ECollisionResponse::ECR_Ignore, ECollisionEnabled::NoCollision,
-                                     ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Ignore});
+    ItemStatePropertiesMap.Add(
+        EItemState::EIS_Falling, FItemStateProperties{true, true, true, true, ECollisionResponse::ECR_Ignore,
+                                     ECollisionChannel::ECC_WorldStatic, ECollisionResponse::ECR_Block, ECollisionEnabled::QueryAndPhysics,
+                                     ECollisionResponse::ECR_Ignore, ECollisionEnabled::NoCollision, ECollisionResponse::ECR_Ignore,
+                                     ECollisionEnabled::NoCollision, ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Ignore});
 
     /*ItemPropertiesMap.Add(EItemState::EIS_EquipInProgress,
         FItemProperties{false,
@@ -209,27 +209,27 @@ void AFMBBaseItem::FillItemPropertiesMap()
 
 void AFMBBaseItem::SetItemProperties(const EItemState NewItemState) const
 {
-    if (!ItemPropertiesMap.Contains(NewItemState)) return;
+    if (!ItemStatePropertiesMap.Contains(NewItemState)) return;
 
     // Item Mesh
-    ItemMesh->SetSimulatePhysics(ItemPropertiesMap[NewItemState].bIsSimulatedPhysics);
-    ItemMesh->SetEnableGravity(ItemPropertiesMap[NewItemState].bIsGravityEnable);
-    ItemMesh->SetVisibility(ItemPropertiesMap[NewItemState].bIsVisible);
-    ItemMesh->SetNotifyRigidBodyCollision(ItemPropertiesMap[NewItemState].bIsSimulationHitEvents);
-    ItemMesh->SetCollisionResponseToAllChannels(ItemPropertiesMap[NewItemState].ItemMeshCollisionResponseToAllChannels);
-    ItemMesh->SetCollisionResponseToChannel(
-        ItemPropertiesMap[NewItemState].ItemMeshCollisionChannel, ItemPropertiesMap[NewItemState].ItemMeshCollisionResponseToChannel);
-    ItemMesh->SetCollisionEnabled(ItemPropertiesMap[NewItemState].ItemMeshCollisionEnabled);
+    ItemMesh->SetSimulatePhysics(ItemStatePropertiesMap[NewItemState].bIsSimulatedPhysics);
+    ItemMesh->SetEnableGravity(ItemStatePropertiesMap[NewItemState].bIsGravityEnable);
+    ItemMesh->SetVisibility(ItemStatePropertiesMap[NewItemState].bIsVisible);
+    ItemMesh->SetNotifyRigidBodyCollision(ItemStatePropertiesMap[NewItemState].bIsSimulationHitEvents);
+    ItemMesh->SetCollisionResponseToAllChannels(ItemStatePropertiesMap[NewItemState].ItemMeshCollisionResponseToAllChannels);
+    ItemMesh->SetCollisionResponseToChannel(ItemStatePropertiesMap[NewItemState].ItemMeshCollisionChannel,
+        ItemStatePropertiesMap[NewItemState].ItemMeshCollisionResponseToChannel);
+    ItemMesh->SetCollisionEnabled(ItemStatePropertiesMap[NewItemState].ItemMeshCollisionEnabled);
     //
     // Area Collision
-    AreaCollision->SetCollisionResponseToAllChannels(ItemPropertiesMap[NewItemState].AreaCollisionResponseToAllChannels);
-    AreaCollision->SetCollisionEnabled(ItemPropertiesMap[NewItemState].AreaCollisionEnabled);
+    AreaCollision->SetCollisionResponseToAllChannels(ItemStatePropertiesMap[NewItemState].AreaCollisionResponseToAllChannels);
+    AreaCollision->SetCollisionEnabled(ItemStatePropertiesMap[NewItemState].AreaCollisionEnabled);
     //
     // Box Collision
-    BoxCollision->SetCollisionResponseToAllChannels(ItemPropertiesMap[NewItemState].BoxCollisionResponseToAllChannels);
+    BoxCollision->SetCollisionResponseToAllChannels(ItemStatePropertiesMap[NewItemState].BoxCollisionResponseToAllChannels);
     BoxCollision->SetCollisionResponseToChannel(
-        ItemPropertiesMap[NewItemState].BoxCollisionChannel, ItemPropertiesMap[NewItemState].BoxCollisionResponseToChannel);
-    BoxCollision->SetCollisionEnabled(ItemPropertiesMap[NewItemState].BoxCollisionEnabled);
+        ItemStatePropertiesMap[NewItemState].BoxCollisionChannel, ItemStatePropertiesMap[NewItemState].BoxCollisionResponseToChannel);
+    BoxCollision->SetCollisionEnabled(ItemStatePropertiesMap[NewItemState].BoxCollisionEnabled);
     //
 }
 

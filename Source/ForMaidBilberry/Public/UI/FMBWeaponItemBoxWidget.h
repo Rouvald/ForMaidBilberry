@@ -7,9 +7,9 @@
 #include "FMBCoreTypes.h"
 #include "FMBWeaponItemBoxWidget.generated.h"
 
-class UFMBBaseWeaponComponent;
+class UFMBPlayerWeaponComponent;
 class UHorizontalBox;
-class UFMBWeaponDataWidget;
+class UFMBItemIconWidget;
 /**
  *
  */
@@ -17,22 +17,25 @@ UCLASS()
 class FORMAIDBILBERRY_API UFMBWeaponItemBoxWidget : public UUserWidget
 {
     GENERATED_BODY()
+protected:
+    UPROPERTY(meta = (BindWidget))
+    UHorizontalBox* WeaponIconBox;
 
-    /*protected:
-        UPROPERTY(meta = (BindWidget))
-        UHorizontalBox* WeaponUIItemsBox;
+    UPROPERTY(EditDefaultsOnly, Category = "UI")
+    TSubclassOf<UUserWidget> WeaponIconWidgetClass;
 
-        UPROPERTY(EditDefaultsOnly, Category = "UI")
-        TSubclassOf<UUserWidget> WeaponUIDataWidgetClass;
+    virtual void NativeOnInitialized() override;
 
-        virtual void NativeOnInitialized() override;
+private:
+    UPROPERTY()
+    UFMBPlayerWeaponComponent* PlayerWeaponComponent{nullptr};
 
-    private:
-        UPROPERTY()
-        TArray<UFMBWeaponDataWidget*> WeaponUIDataWidgets;
+    UPROPERTY()
+    TArray<UFMBItemIconWidget*> WeaponIconWidgets;
 
-        void InitWeaponItem();
-        void OnWeaponSelected(const FWeaponUIData& Data);
+    void InitWeaponItem();
+    void OnWeaponSelected(int8 WeaponIndex);
+    void OnWeaponPickedUp(int8 WeaponIndex, const FItemData& Data);
 
-        UFMBBaseWeaponComponent* GetWeaponComponent() const;*/
+    UFMBPlayerWeaponComponent* GetWeaponComponent() const;
 };

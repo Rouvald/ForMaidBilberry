@@ -73,7 +73,7 @@ DECLARE_MULTICAST_DELEGATE_OneParam(FOnItemStateChangedSignature, EItemState);
 enum ECollisionResponse;
 
 USTRUCT(BlueprintType)
-struct FItemProperties
+struct FItemStateProperties
 {
     GENERATED_USTRUCT_BODY()
 
@@ -129,8 +129,8 @@ struct FImpactData
 UENUM(BlueprintType)
 enum class EWeaponType : uint8
 {
-    EWT_RedSword UMETA(DisplayName = "RedSword"),
-    EWT_YellowSword UMETA(DisplayName = "YellowSword"),
+    EWT_SwordShield UMETA(DisplayName = "SwordShield"),
+    EWT_TwoHandSword UMETA(DisplayName = "TwoHandSword"),
 
     EWT_Max UMETA(DisplayName = "Max")
 };
@@ -142,6 +142,17 @@ enum class EChooseAttack : uint8
     ECA_StrongAttack UMETA(DisplayName = "ESS_StrongAttack"),
 
     ECA_Max UMETA(DisplayName = "Max")
+};
+
+// Pickup
+
+UENUM(BlueprintType)
+enum class EPickUpType : uint8
+{
+    EPT_HealthFlask UMETA(DisplayName = "HealthFlask"),
+    EPT_Poison UMETA(DisplayName = "EWT_Poison"),
+
+    EPT_Max UMETA(DisplayName = "Max")
 };
 
 // Stamina
@@ -181,20 +192,24 @@ DECLARE_MULTICAST_DELEGATE_TwoParams(FOnHealthChangeSignature, float, float);
 
 // UI
 USTRUCT(BlueprintType)
-struct FWeaponUIData
+struct FItemData
 {
     GENERATED_USTRUCT_BODY()
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
-    UTexture2D* WeaponIcon{nullptr};
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Properties")
+    UTexture2D* ItemIcon{nullptr};
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
-    FName WeaponName{NAME_None};
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Properties")
+    FName ItemName{"BaseItem"};
 };
 
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnWeaponSelectedSignature, const FWeaponUIData&);
+DECLARE_EVENT_OneParam(UFMBBaseWeaponComponent, FOnWeaponSelectedSignature, int8);
+DECLARE_EVENT_TwoParams(UFMBBaseWeaponComponent, FOnWeaponPickedUpSignature, int8, const FItemData&);
 
-// GameMode
+DECLARE_EVENT_OneParam(UFMBPlayerWeaponComponent, FOnPickUpCountChangeSignature, int32);
+DECLARE_EVENT_OneParam(UFMBPlayerWeaponComponent, FOnPickUpPickedUpSignature, const FItemData&);
+
+/*GameMode*/
 
 // Sky
 

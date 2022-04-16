@@ -19,6 +19,9 @@ class FORMAIDBILBERRY_API UFMBBaseWeaponComponent : public UActorComponent
     GENERATED_BODY()
 
 public:
+    FOnWeaponSelectedSignature OnWeaponSelected;
+    FOnWeaponPickedUpSignature OnWeaponPickedUp;
+
     UFMBBaseWeaponComponent();
 
     void FastMeleeAttack();
@@ -34,8 +37,8 @@ public:
     bool CanAttack() const;
     bool CanEquip() const;
 
-    UTexture2D* GetCurrentWeaponUIImage() const;
-    // bool GetArmoryWeaponUIData(FWeaponUIData& WeaponUIData) const;
+    // UTexture2D* GetCurrentWeaponUIImage() const;
+    // bool GetArmoryWeaponUIData(FItemData& WeaponUIData) const;
 
     /*UFUNCTION(BlueprintCallable)
     const TArray<AFMBBaseWeapon*>& GetWeapons() const { return Weapons.Num() ? nullptr : Weapons; }*/
@@ -47,6 +50,8 @@ public:
     // FORCEINLINE int32 GetCurrentWeaponIndex() const { return CurrentWeaponIndex; }
 
     FORCEINLINE const TMap<EWeaponType, FWeaponAnimationsData>& GetWeaponAnimationsData() const { return WeaponsAnimationsData; }
+
+    FORCEINLINE int8 GetMaxWeapons() const { return MaxWeapons; }
 
 protected:
     // UPROPERTY(EditDefaultsOnly, Category="Shield")
@@ -72,10 +77,12 @@ protected:
     AFMBBaseWeapon* CurrentWeapon{nullptr};
 
     UPROPERTY()
-    TArray<const AFMBBaseWeapon*> Weapons;
+    TArray<AFMBBaseWeapon*> Weapons;
 
     /* Max Weapons that player can hold. */
     int8 MaxWeapons{5};
+
+    int8 CurrentWeaponIndex{0};
 
     /*UPROPERTY()
     AFMBBaseWeapon* ArmoryWeapon{nullptr};*/

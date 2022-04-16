@@ -7,7 +7,6 @@
 #include "Components/FMBStaminaComponent.h"
 #include "Components/FMBBaseWeaponComponent.h"
 #include "FMBUtils.h"
-#include "FMBWeaponDataWidget.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogFMBPlayerHUDWidget, All, All)
 
@@ -59,7 +58,7 @@ float UFMBPlayerWidget::GetStaminaPercent() const
     return StaminaComponent->GetStaminaPercent();
 }
 
-UTexture2D* UFMBPlayerWidget::GetCurrentWeaponUIImage() const
+/*UTexture2D* UFMBPlayerWidget::GetCurrentWeaponUIImage() const
 {
     const auto WeaponComponent{FMBUtils::GetFMBPlayerComponent<UFMBBaseWeaponComponent>(GetOwningPlayerPawn())};
     if (!WeaponComponent) return nullptr;
@@ -67,9 +66,9 @@ UTexture2D* UFMBPlayerWidget::GetCurrentWeaponUIImage() const
     // WeaponUIData.WeaponName = CheckWeaponName(WeaponUIData);
 
     return WeaponComponent->GetCurrentWeaponUIImage();
-}
+}*/
 
-/*bool UFMBPlayerWidget::GetArmoryWeaponUIData(FWeaponUIData& WeaponUIData) const
+/*bool UFMBPlayerWidget::GetArmoryWeaponUIData(FItemData& WeaponUIData) const
 {
     const auto WeaponComponent{FMBUtils::GetFMBPlayerComponent<UFMBBaseWeaponComponent>(GetOwningPlayerPawn())};
     if (!WeaponComponent) return false;

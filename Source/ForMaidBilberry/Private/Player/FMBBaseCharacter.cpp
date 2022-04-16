@@ -57,7 +57,7 @@ void AFMBBaseCharacter::Tick(float DeltaTime)
     Super::Tick(DeltaTime);
 }
 
-bool AFMBBaseCharacter::IsRunning() const
+bool AFMBBaseCharacter::IsRunning()
 {
     return false;
 }

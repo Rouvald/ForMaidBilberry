@@ -115,6 +115,14 @@ void UFMBItemInteractionComponent::HideAllHittedItems() const
     }
 }
 
+void UFMBItemInteractionComponent::StopItemInfoVisibility()
+{
+    if (GetWorld())
+    {
+        GetWorld()->GetTimerManager().ClearTimer(ItemInfoVisibilityTimerHandle);
+    }
+}
+
 AFMBPlayerCharacter* UFMBItemInteractionComponent::GetPlayerCharacter() const
 {
     return Cast<AFMBPlayerCharacter>(GetOwner());

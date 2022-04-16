@@ -2,6 +2,7 @@
 
 #include "UI/FMBItemIconWidget.h"
 #include "FMBUtils.h"
+#include "Components/SizeBox.h"
 #include "Components/TextBlock.h"
 
 void UFMBItemIconWidget::NativeOnInitialized()
@@ -16,20 +17,21 @@ void UFMBItemIconWidget::NativeOnInitialized()
     {
         ItemImage->SetVisibility(ESlateVisibility::Collapsed);
     }
-    if (ItemCount)
+    if (ItemCountTextBlock)
     {
-        ItemCount->SetVisibility(ESlateVisibility::Collapsed);
+        ItemCountTextBlock->SetVisibility(ESlateVisibility::Collapsed);
     }
+    SetBigItemIconSize();
 }
 
-void UFMBItemIconWidget::SetItemImage(UTexture2D* WeaponImage) const
+void UFMBItemIconWidget::SetItemImage(UTexture2D* ItemTexture2D) const
 {
     if (ItemImage)
     {
-        if (WeaponImage)
+        if (ItemTexture2D)
         {
             ItemImage->SetVisibility(ESlateVisibility::Visible);
-            ItemImage->SetBrushFromTexture(WeaponImage);
+            ItemImage->SetBrushFromTexture(ItemTexture2D);
         }
         else
         {
@@ -40,17 +42,35 @@ void UFMBItemIconWidget::SetItemImage(UTexture2D* WeaponImage) const
 
 void UFMBItemIconWidget::SetItemCount(const int32 NewItemCount) const
 {
-    if (ItemCount)
+    if (ItemCountTextBlock)
     {
         if (NewItemCount > 1)
         {
-            ItemCount->SetVisibility(ESlateVisibility::Visible);
-            ItemCount->SetText(FMBUtils::TextFromInt(NewItemCount));
+            ItemCountTextBlock->SetVisibility(ESlateVisibility::Visible);
+            ItemCountTextBlock->SetText(FMBUtils::TextFromInt(NewItemCount));
         }
         else
         {
-            ItemCount->SetVisibility(ESlateVisibility::Collapsed);
+            ItemCountTextBlock->SetVisibility(ESlateVisibility::Collapsed);
         }
+    }
+}
+
+void UFMBItemIconWidget::SetBigItemIconSize() const
+{
+    if (ItemIconSize)
+    {
+        ItemIconSize->SetWidthOverride(BigItemIconSize.X);
+        ItemIconSize->SetHeightOverride(BigItemIconSize.Y);
+    }
+}
+
+void UFMBItemIconWidget::SetSmallItemIconSize() const
+{
+    if (ItemIconSize)
+    {
+        ItemIconSize->SetWidthOverride(SmallItemIconSize.X);
+        ItemIconSize->SetHeightOverride(SmallItemIconSize.Y);
     }
 }
 

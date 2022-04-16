@@ -7,6 +7,8 @@
 #include "FMBCoreTypes.h"
 #include "FMBStaminaComponent.generated.h"
 
+class AFMBPlayerCharacter;
+
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class FORMAIDBILBERRY_API UFMBStaminaComponent : public UActorComponent
 {
@@ -53,6 +55,9 @@ protected:
     virtual void BeginPlay() override;
 
 private:
+    UPROPERTY()
+    AFMBPlayerCharacter* PlayerCharacter{nullptr};
+
     FTimerHandle StaminaRunningTimerHandle;
     FTimerHandle StaminaAutoHealTimerHandle;
     float Stamina{0.0f};
@@ -66,4 +71,6 @@ private:
 
     bool IsStaminaFull() const;
     bool IsStaminaZero() const;
+
+    AFMBPlayerCharacter* GetPlayerCharacter() const;
 };

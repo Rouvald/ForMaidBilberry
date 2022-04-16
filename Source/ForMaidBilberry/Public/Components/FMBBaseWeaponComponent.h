@@ -51,8 +51,6 @@ public:
 
     FORCEINLINE const TMap<EWeaponType, FWeaponAnimationsData>& GetWeaponAnimationsData() const { return WeaponsAnimationsData; }
 
-    FORCEINLINE int8 GetMaxWeapons() const { return MaxWeapons; }
-
 protected:
     // UPROPERTY(EditDefaultsOnly, Category="Shield")
     // UStaticMeshComponent* Shield;
@@ -75,14 +73,6 @@ protected:
 
     UPROPERTY()
     AFMBBaseWeapon* CurrentWeapon{nullptr};
-
-    UPROPERTY()
-    TArray<AFMBBaseWeapon*> Weapons;
-
-    /* Max Weapons that player can hold. */
-    int8 MaxWeapons{5};
-
-    int8 CurrentWeaponIndex{0};
 
     /*UPROPERTY()
     AFMBBaseWeapon* ArmoryWeapon{nullptr};*/
@@ -107,7 +97,7 @@ protected:
     virtual void SpawnItems();
 
     AFMBBaseWeapon* SpawnWeapon() const;
-    void EquipWeapon(AFMBBaseWeapon* EquippedWeapon);
+    virtual void EquipWeapon(AFMBBaseWeapon* EquippedWeapon);
 
 private:
     bool bIsAttackAnimInProgress{false};

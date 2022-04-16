@@ -21,7 +21,7 @@ public:
     virtual void Tick(float DeltaTime) override;
 
     // UFUNCTION(BlueprintCallable, Category = "Movement")
-    virtual bool IsRunning() const;
+    virtual bool IsRunning();
 
     // UFUNCTION(BlueprintCallable, Category="Movement")
     // float GetMovementDirection() const;

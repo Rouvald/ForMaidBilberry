@@ -1,9 +1,9 @@
 // For Maid Bilberry Game. All Rights Recerved
 
 #include "Components/FMBStaminaComponent.h"
-#include "Components/FMBBaseWeaponComponent.h"
-#include "FMBUtils.h"
+#include "FMBCharacterMovementComponent.h"
 #include "FMBCoreTypes.h"
+#include "FMBPlayerCharacter.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogFMBStaminaComponent, All, All)
 
@@ -22,6 +22,8 @@ void UFMBStaminaComponent::BeginPlay()
     StaminaSpends.Add(EStaminaSpend::ESS_Rolling, StaminaSpendData.RollingStaminaSpend);
     StaminaSpends.Add(EStaminaSpend::ESS_FastAttack, StaminaSpendData.FastAttackStaminaSpend);
     StaminaSpends.Add(EStaminaSpend::ESS_StrongAttack, StaminaSpendData.StrongAttackStaminaSpend);
+
+    PlayerCharacter = GetPlayerCharacter();
 }
 
 bool UFMBStaminaComponent::CanSpendStamina(const EStaminaSpend StaminaSpend)
@@ -47,7 +49,12 @@ void UFMBStaminaComponent::SetStamina(float NewStamina)
 
 void UFMBStaminaComponent::DecreaseRunningStamina()
 {
-    if (!GetWorld()) return;
+    if (!GetWorld() || !PlayerCharacter) return;
+    if (!PlayerCharacter->IsRunning())
+    {
+        StopStaminaRunning();
+        return;
+    }
 
     SetStamina(Stamina - StaminaModifier);
 
@@ -63,7 +70,7 @@ void UFMBStaminaComponent::AutoHealStamina()
 
     SetStamina(Stamina + StaminaModifier * StaminaHealModifier);
 
-    if (IsStaminaFull() && GetWorld())
+    if (IsStaminaFull())
     {
         StopHealStamina();
     }
@@ -71,8 +78,7 @@ void UFMBStaminaComponent::AutoHealStamina()
 
 void UFMBStaminaComponent::StartHealStamina()
 {
-    if (!GetWorld()) return;
-    if (GetWorld()->GetTimerManager().IsTimerActive(StaminaRunningTimerHandle)) return;
+    if (!GetWorld() || GetWorld()->GetTimerManager().IsTimerActive(StaminaRunningTimerHandle)) return;
 
     if (!IsStaminaFull())
     {
@@ -83,14 +89,17 @@ void UFMBStaminaComponent::StartHealStamina()
 
 void UFMBStaminaComponent::StopHealStamina()
 {
-    GetWorld()->GetTimerManager().ClearTimer(StaminaAutoHealTimerHandle);
+    if (GetWorld())
+    {
+        GetWorld()->GetTimerManager().ClearTimer(StaminaAutoHealTimerHandle);
+    }
 }
 
 void UFMBStaminaComponent::StartStaminaRunning()
 {
-    StopHealStamina();
-
     if (IsStaminaZero()) return;
+
+    StopHealStamina();
 
     GetWorld()->GetTimerManager().SetTimer(
         StaminaRunningTimerHandle, this, &UFMBStaminaComponent::DecreaseRunningStamina, StaminaUpdateTime, true);
@@ -98,7 +107,11 @@ void UFMBStaminaComponent::StartStaminaRunning()
 
 void UFMBStaminaComponent::StopStaminaRunning()
 {
-    GetWorld()->GetTimerManager().ClearTimer(StaminaRunningTimerHandle);
+    if (GetWorld())
+    {
+        GetWorld()->GetTimerManager().ClearTimer(StaminaRunningTimerHandle);
+        StartHealStamina();
+    }
 }
 
 bool UFMBStaminaComponent::IsStaminaFull() const
@@ -109,4 +122,9 @@ bool UFMBStaminaComponent::IsStaminaFull() const
 bool UFMBStaminaComponent::IsStaminaZero() const
 {
     return FMath::IsNearlyZero(GetStamina());
+}
+
+AFMBPlayerCharacter* UFMBStaminaComponent::GetPlayerCharacter() const
+{
+    return Cast<AFMBPlayerCharacter>(GetOwner());
 }

@@ -127,6 +127,7 @@ void AFMBBaseItem::SetItemInfo() const
     if (ItemInfoWidget)
     {
         ItemInfoWidget->SetItemName(ItemData.ItemName);
+        ItemInfoWidget->SetItemImage(ItemData.ItemIcon);
     }
     // OnItemStateChanged.Broadcast(EItemState::EIS_Pickup);
 }
@@ -170,7 +171,7 @@ void AFMBBaseItem::FillItemPropertiesMap()
     ItemStatePropertiesMap.Add(EItemState::EIS_PickedUp, FItemStateProperties{
                                                              false,
                                                              false,
-                                                             true,
+                                                             false,
                                                              false,
                                                              ECollisionResponse::ECR_Ignore,
                                                              ECollisionChannel::ECC_WorldStatic,

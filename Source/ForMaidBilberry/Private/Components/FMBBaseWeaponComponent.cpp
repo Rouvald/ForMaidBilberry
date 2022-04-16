@@ -41,13 +41,13 @@ void UFMBBaseWeaponComponent::BeginPlay()
 
 void UFMBBaseWeaponComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
-    CurrentWeapon = nullptr;
-    for (const auto Weapon : Weapons)
+    if (CurrentWeapon)
     {
-        Weapon->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
-        Weapon->Destroy();
+        CurrentWeapon->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+        CurrentWeapon->Destroy();
     }
-    Weapons.Empty();
+    /*if(!CurrentWeapon)
+    UE_LOG(LogFMBBaseWeaponComponent, Display, TEXT("currentweapon == nullptr"));*/
 
     Super::EndPlay(EndPlayReason);
 }
@@ -92,36 +92,7 @@ AFMBBaseWeapon* UFMBBaseWeaponComponent::SpawnWeapon() const
 
 void UFMBBaseWeaponComponent::EquipWeapon(AFMBBaseWeapon* EquippedWeapon)
 {
-    if (!EquippedWeapon || !Character) return;
 
-    EquippedWeapon->SetOwner(Character);
-    if (CurrentWeapon)
-    {
-        FMBUtils::AttachItemToSocket(EquippedWeapon, Character->GetMesh(), WeaponArmorySocketName);
-        EquippedWeapon->OnItemStateChanged.Broadcast(EItemState::EIS_PickedUp);
-        Weapons.AddUnique(EquippedWeapon);
-        OnWeaponPickedUp.Broadcast((Weapons.Num() - 1), EquippedWeapon->GetItemData());
-    }
-    else
-    {
-        if (WeaponsAnimationsData.Contains(EquippedWeapon->GetWeaponType()))
-        {
-            CurrentWeaponAnimationsData = WeaponsAnimationsData[EquippedWeapon->GetWeaponType()];
-        }
-        FMBUtils::AttachItemToSocket(EquippedWeapon, Character->GetMesh(), CurrentWeaponAnimationsData.WeaponEquipSocketName);
-        CurrentWeapon = EquippedWeapon;
-        CurrentWeapon->OnItemStateChanged.Broadcast(EItemState::EIS_Equipped);
-        OnWeaponSelected.Broadcast(CurrentWeaponIndex);
-        if (Weapons.Num() == 0)
-        {
-            Weapons.AddUnique(EquippedWeapon);
-        }
-        else
-        {
-            Weapons[CurrentWeaponIndex] = EquippedWeapon;
-        }
-        OnWeaponPickedUp.Broadcast(CurrentWeaponIndex, EquippedWeapon->GetItemData());
-    }
     // UE_LOG(LogFMBBaseWeaponComponent, Warning, TEXT("Weapons num: %d"), Weapons.Num());
 }
 

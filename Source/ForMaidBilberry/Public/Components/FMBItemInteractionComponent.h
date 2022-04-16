@@ -21,6 +21,8 @@ public:
 
     UFMBItemInteractionComponent();
 
+    void StopItemInfoVisibility();
+
     void TakeItemButtonPressed();
     void TakeItemButtonReleased();
 

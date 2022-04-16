@@ -10,6 +10,7 @@
 
 class UImage;
 class UTextBlock;
+class USizeBox;
 class UFMBPlayerWeaponComponent;
 /**
  *
@@ -19,8 +20,10 @@ class FORMAIDBILBERRY_API UFMBItemIconWidget : public UUserWidget
 {
     GENERATED_BODY()
 public:
-    void SetItemImage(UTexture2D* WeaponImage) const;
+    void SetItemImage(UTexture2D* ItemImage) const;
     void SetItemCount(const int32 NewItemCount) const;
+    void SetBigItemIconSize() const;
+    void SetSmallItemIconSize() const;
 
     void SetVisibleItemImage(const bool bIsVisible) const;
 
@@ -32,13 +35,22 @@ protected:
     FItemData ItemData;
 
     UPROPERTY(meta = (BindWidget))
+    USizeBox* ItemIconSize{nullptr};
+
+    UPROPERTY(meta = (BindWidget))
     UImage* ItemImage{nullptr};
 
     UPROPERTY(meta = (BindWidget))
     UImage* SelectedItemFrame{nullptr};
 
     UPROPERTY(meta = (BindWidget))
-    UTextBlock* ItemCount{nullptr};
+    UTextBlock* ItemCountTextBlock{nullptr};
+
+    UPROPERTY(EditDefaultsOnly, Category = "UI", meta = (ClampMin = "50.0", ClampMax = "150.0"))
+    FVector2D BigItemIconSize{130.0f, 130.0f};
+
+    UPROPERTY(EditDefaultsOnly, Category = "UI", meta = (ClampMin = "50.0", ClampMax = "150.0"))
+    FVector2D SmallItemIconSize{80.0f, 80.0f};
 
     virtual void NativeOnInitialized() override;
 };

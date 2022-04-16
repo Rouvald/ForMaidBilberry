@@ -26,7 +26,7 @@ public:
     AFMBPlayerCharacter(const FObjectInitializer& ObjInit);
 
     virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
-    virtual bool IsRunning() const override;
+    virtual bool IsRunning() override;
 
     // FORCEINLINE bool GetIsFPP() const { return FPPCameraComponent->IsActive(); }
 
@@ -74,7 +74,8 @@ private:
 
     FTimerHandle ReportNoiseTimerHandle;
 
-    bool WantToRun{false};
+    bool bWantToRun{false};
+    bool bIsMovingForward{false};
 
     void MoveForward(float Amount);
     void MoveRight(float Amount);

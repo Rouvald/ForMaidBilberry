@@ -64,6 +64,7 @@ void AFMBPlayerCharacter::BeginPlay()
     Super::BeginPlay();
 
     checkf(StaminaComponent, TEXT("StaminaComponent == nullptr"));
+    checkf(ItemInteractionComponent, TEXT("ItemInteractionComponent == nullptr"));
     /*checkf(SpringArmComponent, TEXT("SpringArmComponent == nullptr"));
     checkf(TPPCameraCollisionComponent, TEXT("TPPCameraCollisionComponent == nullptr"));*/
     GetWorldTimerManager().SetTimer(ReportNoiseTimerHandle, this, &AFMBPlayerCharacter::MakeReportNoise, 0.1f, true);
@@ -132,7 +133,7 @@ void AFMBPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 
     // PlayerInputComponent->BindAction("NextWeapon", IE_Pressed, WeaponComponent, &UFMBBaseWeaponComponent::NextWeapon);
 
-    PlayerInputComponent->BindAction("Rolling", IE_Pressed, CharacterMovementComponent, &UFMBCharacterMovementComponent::Rolling);
+    // PlayerInputComponent->BindAction("Rolling", IE_Pressed, CharacterMovementComponent, &UFMBCharacterMovementComponent::Rolling);
 
     PlayerInputComponent->BindAction("Block", IE_Pressed, WeaponComponent, &UFMBPlayerWeaponComponent::OnStartBlock);
     PlayerInputComponent->BindAction("Block", IE_Released, WeaponComponent, &UFMBPlayerWeaponComponent::OnStopBlock);
@@ -182,7 +183,7 @@ void AFMBPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 
 void AFMBPlayerCharacter::MoveForward(float Amount)
 {
-    // IsMovingForward = Amount > 0.0f;
+    bIsMovingForward = Amount > 0.0f;
     if (FMath::IsNearlyZero(Amount)) return;
 
     const FRotator Rotation{Controller->GetControlRotation()};
@@ -237,7 +238,7 @@ void AFMBPlayerCharacter::OnStartRunning()
     if (!StaminaComponent) return;
     StaminaComponent->StartStaminaRunning();
 
-    WantToRun = true;
+    bWantToRun = true;
 }
 
 void AFMBPlayerCharacter::OnStopRunning()
@@ -245,14 +246,18 @@ void AFMBPlayerCharacter::OnStopRunning()
     if (!StaminaComponent) return;
     StaminaComponent->StopStaminaRunning();
 
-    WantToRun = false;
-
-    StaminaComponent->StartHealStamina();
+    bWantToRun = false;
 }
 
-bool AFMBPlayerCharacter::IsRunning() const
+bool AFMBPlayerCharacter::IsRunning()
 {
-    return WantToRun && !(FMath::IsNearlyZero(StaminaComponent->GetStamina())) && !GetVelocity().IsZero();
+    /*const auto bIsRunning {};
+    if(!bIsRunning)
+    {
+        OnStopRunning();
+        UE_LOG(LogFMBPlayerCharacter, Display, TEXT("!bIsRunning"));
+    }*/
+    return bWantToRun && bIsMovingForward && !(FMath::IsNearlyZero(StaminaComponent->GetStamina())) && !GetVelocity().IsZero();
 }
 
 void AFMBPlayerCharacter::OnDeath()
@@ -265,6 +270,7 @@ void AFMBPlayerCharacter::OnDeath()
     WeaponComponent->StopDrawTrace();
     StaminaComponent->StopHealStamina();
     StaminaComponent->StopStaminaRunning();
+    ItemInteractionComponent->StopItemInfoVisibility();
 }
 
 void AFMBPlayerCharacter::MakeReportNoise()

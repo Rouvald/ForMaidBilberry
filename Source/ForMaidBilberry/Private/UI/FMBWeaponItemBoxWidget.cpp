@@ -40,20 +40,20 @@ void UFMBWeaponItemBoxWidget::InitWeaponItem()
     // UE_LOG(LogFMBWeaponItemBoxWidget, Error, TEXT("%i"), WeaponIconBox->HasAnyChildren()) ;
 }
 
-void UFMBWeaponItemBoxWidget::OnWeaponSelected(int8 WeaponIndex)
-{
-    if (WeaponIndex < WeaponIconWidgets.Num())
-    {
-        WeaponIconWidgets[WeaponIndex]->ItemIsSelected(true);
-    }
-}
-
 void UFMBWeaponItemBoxWidget::OnWeaponPickedUp(int8 WeaponIndex, const FItemData& Data)
 {
     if (WeaponIconWidgets[WeaponIndex])
     {
         WeaponIconWidgets[WeaponIndex]->SetVisibleItemImage(true);
         WeaponIconWidgets[WeaponIndex]->SetItemImage(Data.ItemIcon);
+    }
+}
+
+void UFMBWeaponItemBoxWidget::OnWeaponSelected(int8 WeaponIndex)
+{
+    if (WeaponIndex < WeaponIconWidgets.Num())
+    {
+        WeaponIconWidgets[WeaponIndex]->ItemIsSelected(true);
     }
 }
 

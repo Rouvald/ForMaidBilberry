@@ -29,6 +29,8 @@ public:
 
     FORCEINLINE bool GetIsBlocking() const { return bIsShieldBlocking; }
 
+    FORCEINLINE int8 GetMaxWeapons() const { return MaxWeapons; }
+
 protected:
     UPROPERTY(EditDefaultsOnly, Category = "Weapon")
     TSubclassOf<AFMBBaseShield> ShieldClass;
@@ -48,9 +50,19 @@ protected:
 
     virtual void SpawnItems() override;
 
+    virtual void EquipWeapon(AFMBBaseWeapon* EquippedWeapon) override;
+
 private:
     UPROPERTY()
     UFMBItemInteractionComponent* ItemInteractionComponent{nullptr};
+
+    UPROPERTY()
+    TArray<AFMBBaseWeapon*> Weapons;
+
+    /* Max Weapons that player can hold. */
+    int8 MaxWeapons{5};
+
+    int8 CurrentWeaponIndex{0};
 
     /* Taken Items */
     UPROPERTY()
@@ -75,6 +87,7 @@ private:
 
     void DestroyCurrentShield() const;
     void DestroyCurrentPickUp() const;
+    void DestroyWeapons();
 
     AFMBPlayerCharacter* GetPlayerCharacter() const;
 };

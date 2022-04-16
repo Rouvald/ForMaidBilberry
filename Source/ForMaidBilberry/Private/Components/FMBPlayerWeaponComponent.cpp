@@ -24,10 +24,22 @@ void UFMBPlayerWeaponComponent::BeginPlay()
 
 void UFMBPlayerWeaponComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
+    DestroyWeapons();
     DestroyCurrentShield();
     DestroyCurrentPickUp();
 
     Super::EndPlay(EndPlayReason);
+}
+
+void UFMBPlayerWeaponComponent::DestroyWeapons()
+{
+    CurrentWeapon = nullptr;
+    for (const auto Weapon : Weapons)
+    {
+        Weapon->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+        Weapon->Destroy();
+    }
+    Weapons.Empty();
 }
 
 void UFMBPlayerWeaponComponent::DestroyCurrentShield() const
@@ -102,11 +114,45 @@ void UFMBPlayerWeaponComponent::GetPickupItem(AFMBBaseItem* Item)
     }
 }
 
+void UFMBPlayerWeaponComponent::EquipWeapon(AFMBBaseWeapon* EquippedWeapon)
+{
+    if (!EquippedWeapon || !Character) return;
+
+    EquippedWeapon->SetOwner(Character);
+    if (CurrentWeapon)
+    {
+        FMBUtils::AttachItemToSocket(EquippedWeapon, Character->GetMesh(), WeaponArmorySocketName);
+        EquippedWeapon->OnItemStateChanged.Broadcast(EItemState::EIS_PickedUp);
+        Weapons.AddUnique(EquippedWeapon);
+        OnWeaponPickedUp.Broadcast((Weapons.Num() - 1), EquippedWeapon->GetItemData());
+    }
+    else
+    {
+        if (WeaponsAnimationsData.Contains(EquippedWeapon->GetWeaponType()))
+        {
+            CurrentWeaponAnimationsData = WeaponsAnimationsData[EquippedWeapon->GetWeaponType()];
+        }
+        FMBUtils::AttachItemToSocket(EquippedWeapon, Character->GetMesh(), CurrentWeaponAnimationsData.WeaponEquipSocketName);
+        CurrentWeapon = EquippedWeapon;
+        CurrentWeapon->OnItemStateChanged.Broadcast(EItemState::EIS_Equipped);
+        OnWeaponSelected.Broadcast(CurrentWeaponIndex);
+        if (Weapons.Num() == 0)
+        {
+            Weapons.AddUnique(EquippedWeapon);
+        }
+        else
+        {
+            Weapons[CurrentWeaponIndex] = EquippedWeapon;
+        }
+        OnWeaponPickedUp.Broadcast(CurrentWeaponIndex, EquippedWeapon->GetItemData());
+    }
+}
+
 void UFMBPlayerWeaponComponent::EquipPickUp(AFMBBasePickUp* EquippedPickUp)
 {
     if (!EquippedPickUp || !Character) return;
 
-    if (CurrentPickUp->GetPickUpType() == EquippedPickUp->GetPickUpType())
+    if (CurrentPickUp && (CurrentPickUp->GetPickUpType() == EquippedPickUp->GetPickUpType()))
     {
         EquippedPickUp->Destroy();
         CurrentPickUp->ChangeItemCount(true);
@@ -127,7 +173,7 @@ void UFMBPlayerWeaponComponent::SwapPickUp(AFMBBasePickUp* EquippedPickUp)
 {
     if (!Character || !ItemInteractionComponent) return;
 
-    if (CurrentPickUp->GetPickUpType() != EquippedPickUp->GetPickUpType())
+    if (CurrentPickUp && (CurrentPickUp->GetPickUpType() != EquippedPickUp->GetPickUpType()))
     {
         DropItem(CurrentPickUp);
     }

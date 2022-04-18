@@ -19,11 +19,16 @@ class FORMAIDBILBERRY_API UFMBPlayerWeaponComponent : public UFMBBaseWeaponCompo
 {
     GENERATED_BODY()
 public:
-    FOnPickUpPickedUpSignature OnPickUpPickedUp;
-    FOnPickUpCountChangeSignature OnPickUpCountChange;
+    FOnItemPickedUpSignature OnItemPickedUp;
+    FOnItemThrowSignature OnItemThrow;
+    FOnItemSelectedSignature OnItemSelected;
+    FOnItemCountChangeSignature OnItemCountChange;
 
     void OnStartBlock();
     void OnStopBlock();
+
+    void UsePickUp();
+    void PickUpWasUsed();
 
     void GetPickupItem(AFMBBaseItem* Item);
 
@@ -48,7 +53,7 @@ protected:
 
     virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
-    virtual void SpawnItems() override;
+    virtual void EquipItems() override;
 
     virtual void EquipWeapon(AFMBBaseWeapon* EquippedWeapon) override;
 
@@ -63,6 +68,7 @@ private:
     int8 MaxWeapons{5};
 
     int8 CurrentWeaponIndex{0};
+    int8 CurrentPickUpIndex{0};
 
     /* Taken Items */
     UPROPERTY()
@@ -74,7 +80,7 @@ private:
 
     bool bIsShieldBlocking{false};
 
-    void SpawnShields();
+    void SpawnEquipShields();
 
     void EquipPickUp(AFMBBasePickUp* EquippedPickUp);
     void SwapPickUp(AFMBBasePickUp* EquippedPickUp);
@@ -85,8 +91,8 @@ private:
 
     void ClearCurrentWeapon();
 
-    void DestroyCurrentShield() const;
-    void DestroyCurrentPickUp() const;
+    void DestroyCurrentShield();
+    void DestroyCurrentPickUp();
     void DestroyWeapons();
 
     AFMBPlayerCharacter* GetPlayerCharacter() const;

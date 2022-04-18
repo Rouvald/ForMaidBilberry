@@ -26,8 +26,10 @@ void UFMBPickUpItemBoxWidget::InitPickUpItem()
     const auto ItemIconWidget = CreateWidget<UFMBItemIconWidget>(GetWorld(), PickUpIconWidgetClass);
     if (!ItemIconWidget) return;
 
-    PlayerWeaponComponent->OnPickUpPickedUp.AddUObject(this, &UFMBPickUpItemBoxWidget::OnPickUpPickedUp);
-    PlayerWeaponComponent->OnPickUpCountChange.AddUObject(this, &UFMBPickUpItemBoxWidget::OnPickUpCountChange);
+    PlayerWeaponComponent->OnItemPickedUp.AddUObject(this, &UFMBPickUpItemBoxWidget::OnPickUpPickedUp);
+    PlayerWeaponComponent->OnItemSelected.AddUObject(this, &UFMBPickUpItemBoxWidget::OnPickUpSelected);
+    PlayerWeaponComponent->OnItemCountChange.AddUObject(this, &UFMBPickUpItemBoxWidget::OnPickUpCountChange);
+    PlayerWeaponComponent->OnItemThrow.AddUObject(this, &UFMBPickUpItemBoxWidget::OnPickUpThrow);
     ItemIconWidget->SetVisibleItemImage(false);
     ItemIconWidget->SetSmallItemIconSize();
 
@@ -37,22 +39,45 @@ void UFMBPickUpItemBoxWidget::InitPickUpItem()
     // UE_LOG(LogFMBWeaponItemBoxWidget, Error, TEXT("%i"), WeaponIconBox->HasAnyChildren()) ;
 }
 
-void UFMBPickUpItemBoxWidget::OnPickUpPickedUp(const FItemData& Data)
+void UFMBPickUpItemBoxWidget::OnPickUpPickedUp(int8 PickUpIndex, const FItemData& Data)
 {
-    /* todo: in future rework for many PickUps. WeaponItemBox has same logic*/
-    if (PickUpIconWidgets.Num() != 0 && PickUpIconWidgets[0])
+    if (Data.ItemType != EItemType::EIT_PickUp) return;
+
+    if (PickUpIconWidgets[PickUpIndex] && PickUpIconWidgets.Num() > PickUpIndex)
     {
-        PickUpIconWidgets[0]->ItemIsSelected(true);
-        PickUpIconWidgets[0]->SetVisibleItemImage(true);
-        PickUpIconWidgets[0]->SetItemImage(Data.ItemIcon);
+        PickUpIconWidgets[PickUpIndex]->SetVisibleItemImage(true);
+        PickUpIconWidgets[PickUpIndex]->SetItemImage(Data.ItemIcon);
     }
 }
 
-void UFMBPickUpItemBoxWidget::OnPickUpCountChange(int32 PickUpCount)
+void UFMBPickUpItemBoxWidget::OnPickUpSelected(int8 PickUpIndex, const FItemData& Data)
 {
-    if (PickUpIconWidgets[0] && PickUpCount > 1)
+    if (Data.ItemType != EItemType::EIT_PickUp) return;
+
+    if (PickUpIconWidgets[PickUpIndex] && PickUpIconWidgets.Num() > PickUpIndex)
     {
-        PickUpIconWidgets[0]->SetItemCount(PickUpCount);
+        PickUpIconWidgets[PickUpIndex]->ItemIsSelected(true);
+    }
+}
+
+void UFMBPickUpItemBoxWidget::OnPickUpCountChange(int8 PickUpIndex, const FItemData& Data)
+{
+    if (Data.ItemType != EItemType::EIT_PickUp) return;
+
+    if (PickUpIconWidgets[PickUpIndex] && PickUpIconWidgets.Num() > PickUpIndex)
+    {
+        PickUpIconWidgets[PickUpIndex]->SetItemCount(Data.ItemCount);
+    }
+}
+
+void UFMBPickUpItemBoxWidget::OnPickUpThrow(int8 PickUpIndex, const FItemData& Data)
+{
+    if (Data.ItemType != EItemType::EIT_PickUp) return;
+
+    if (PickUpIconWidgets[PickUpIndex] && PickUpIconWidgets.Num() > PickUpIndex)
+    {
+        // PickUpIconWidgets[PickUpIndex]->ItemIsSelected(true);
+        PickUpIconWidgets[PickUpIndex]->SetVisibleItemImage(false);
     }
 }
 

@@ -112,6 +112,38 @@ struct FItemStateProperties
     //
 };
 
+UENUM(BlueprintType)
+enum class EItemType : uint8
+{
+    EIT_Weapon UMETA(DisplayName = "Weapon"),
+    EIT_PickUp UMETA(DisplayName = "PickUp"),
+
+    EIT_Max UMETA(DisplayName = "Max")
+};
+
+USTRUCT(BlueprintType)
+struct FItemData
+{
+    GENERATED_USTRUCT_BODY()
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Properties")
+    EItemType ItemType{EItemType::EIT_Max};
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "PickUp")
+    int32 ItemCount{1};
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Properties")
+    UTexture2D* ItemIcon{nullptr};
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Properties")
+    FName ItemName{"BaseItem"};
+};
+
+DECLARE_EVENT_TwoParams(UFMBPlayerWeaponComponent, FOnItemPickedUpSignature, int8, const FItemData&);
+DECLARE_EVENT_TwoParams(UFMBPlayerWeaponComponent, FOnItemThrowSignature, int8, const FItemData&);
+DECLARE_EVENT_TwoParams(UFMBPlayerWeaponComponent, FOnItemSelectedSignature, int8, const FItemData&);
+DECLARE_EVENT_TwoParams(UFMBPlayerWeaponComponent, FOnItemCountChangeSignature, int8, const FItemData&);
+
 // Weapon
 
 USTRUCT(BlueprintType)
@@ -191,23 +223,6 @@ DECLARE_MULTICAST_DELEGATE(FOnDeathSignature);
 DECLARE_MULTICAST_DELEGATE_TwoParams(FOnHealthChangeSignature, float, float);
 
 // UI
-USTRUCT(BlueprintType)
-struct FItemData
-{
-    GENERATED_USTRUCT_BODY()
-
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Properties")
-    UTexture2D* ItemIcon{nullptr};
-
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Properties")
-    FName ItemName{"BaseItem"};
-};
-
-DECLARE_EVENT_OneParam(UFMBBaseWeaponComponent, FOnWeaponSelectedSignature, int8);
-DECLARE_EVENT_TwoParams(UFMBBaseWeaponComponent, FOnWeaponPickedUpSignature, int8, const FItemData&);
-
-DECLARE_EVENT_OneParam(UFMBPlayerWeaponComponent, FOnPickUpCountChangeSignature, int32);
-DECLARE_EVENT_OneParam(UFMBPlayerWeaponComponent, FOnPickUpPickedUpSignature, const FItemData&);
 
 /*GameMode*/
 

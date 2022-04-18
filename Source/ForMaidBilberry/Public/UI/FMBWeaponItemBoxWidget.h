@@ -34,8 +34,9 @@ private:
     TArray<UFMBItemIconWidget*> WeaponIconWidgets;
 
     void InitWeaponItem();
-    void OnWeaponSelected(int8 WeaponIndex);
     void OnWeaponPickedUp(int8 WeaponIndex, const FItemData& Data);
+    void OnWeaponSelected(int8 WeaponIndex, const FItemData& Data);
+    void OnWeaponThrow(int8 WeaponIndex, const FItemData& Data);
 
     UFMBPlayerWeaponComponent* GetWeaponComponent() const;
 };

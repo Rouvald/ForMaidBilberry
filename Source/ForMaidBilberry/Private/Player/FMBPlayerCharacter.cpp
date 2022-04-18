@@ -143,6 +143,8 @@ void AFMBPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
     PlayerInputComponent->BindAction(
         "Interact", IE_Released, ItemInteractionComponent, &UFMBItemInteractionComponent::TakeItemButtonReleased);
 
+    PlayerInputComponent->BindAction("UsePickUp", IE_Pressed, WeaponComponent, &UFMBPlayerWeaponComponent::UsePickUp);
+
     /*
      PlayerInputComponent->BindAction("ReturnSpringArm", IE_Pressed, this, &AFMBPlayerCharacter::ReturnDefaultSpringArm);
 

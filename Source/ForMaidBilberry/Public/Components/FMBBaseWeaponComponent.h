@@ -19,9 +19,6 @@ class FORMAIDBILBERRY_API UFMBBaseWeaponComponent : public UActorComponent
     GENERATED_BODY()
 
 public:
-    FOnWeaponSelectedSignature OnWeaponSelected;
-    FOnWeaponPickedUpSignature OnWeaponPickedUp;
-
     UFMBBaseWeaponComponent();
 
     void FastMeleeAttack();
@@ -94,7 +91,7 @@ protected:
 
     // int32 GetCurrentWeaponIndex() const {return CurrentWeaponIndex;}
 
-    virtual void SpawnItems();
+    virtual void EquipItems();
 
     AFMBBaseWeapon* SpawnWeapon() const;
     virtual void EquipWeapon(AFMBBaseWeapon* EquippedWeapon);

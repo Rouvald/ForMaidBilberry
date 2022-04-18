@@ -17,6 +17,5 @@ protected:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PickUp", meta = (ClampMin = "10.0", ClampMax = "100.0"))
     float HealthAmount{50.0f};
 
-private:
-    virtual bool GivePickUpTo(APawn* Pawn) override;
+    virtual bool CanUsePickUp(APawn* Pawn) override;
 };

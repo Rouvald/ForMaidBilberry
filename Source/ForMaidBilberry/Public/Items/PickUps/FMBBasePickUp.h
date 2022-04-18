@@ -6,7 +6,7 @@
 #include "FMBBaseItem.h"
 #include "FMBBasePickUp.generated.h"
 
-class USphereComponent;
+// class USphereComponent;
 class USoundCue;
 // class UNiagaraComponent;
 
@@ -20,17 +20,13 @@ public:
 
     virtual void Tick(float DeltaTick) override;
 
-    FORCEINLINE EPickUpType GetPickUpType() const { return PickupType; }
+    void UsePickUp();
 
-    FORCEINLINE int32 GetItemCount() const { return ItemCount; }
-    FORCEINLINE void ChangeItemCount(const bool bIsIncrease) { bIsIncrease ? ++ItemCount : ItemCount = FMath::Max(0, --ItemCount); };
+    FORCEINLINE EPickUpType GetPickUpType() const { return PickUpType; }
 
 protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "PickUp")
-    EPickUpType PickupType{EPickUpType::EPT_HealthFlask};
-
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "PickUp")
-    int32 ItemCount{1};
+    EPickUpType PickUpType{EPickUpType::EPT_HealthFlask};
 
     /*UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "PickUp")
     bool WantsToRespawn{false};
@@ -41,10 +37,12 @@ protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sound")
     USoundCue* TakenPickUpSound{nullptr};
 
-    virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;
+    virtual bool CanUsePickUp(APawn* Pawn);
+    virtual void PickUpWasUsed();
+    // virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;
 
-private:
-    virtual bool GivePickUpTo(APawn* Pawn);
+    // private:
+    // virtual bool GivePickUpTo(APawn* Pawn);
 
     /*void PickUpWasTaken();
     void Respawn();*/

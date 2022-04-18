@@ -76,6 +76,13 @@ void AFMBBaseItem::Tick(float DeltaSeconds)
     }*/
 }
 
+void AFMBBaseItem::ChangeItemCount(const bool bIsIncrease)
+{
+    if (ItemData.ItemCount < 1) return;
+
+    bIsIncrease ? ++ItemData.ItemCount : --ItemData.ItemCount;
+}
+
 /*void AFMBBaseItem::StartItemInterping()
 {
     if (!Character) return;
@@ -138,7 +145,7 @@ void AFMBBaseItem::SetItemState(const EItemState NewItemState)
 
     CurrentItemState = NewItemState;
     SetItemProperties(NewItemState);
-    UE_LOG(LogFMBBaseItem, Display, TEXT("%s: CurrentItemState: %s"), *GetName(), *UEnum::GetValueAsString(CurrentItemState));
+    // UE_LOG(LogFMBBaseItem, Display, TEXT("%s: CurrentItemState: %s"), *GetName(), *UEnum::GetValueAsString(CurrentItemState));
 }
 
 void AFMBBaseItem::FillItemPropertiesMap()

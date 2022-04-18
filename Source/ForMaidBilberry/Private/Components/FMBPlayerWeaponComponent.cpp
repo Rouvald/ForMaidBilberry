@@ -34,39 +34,55 @@ void UFMBPlayerWeaponComponent::EndPlay(const EEndPlayReason::Type EndPlayReason
 void UFMBPlayerWeaponComponent::DestroyWeapons()
 {
     CurrentWeapon = nullptr;
-    for (const auto Weapon : Weapons)
+    for (int8 Index = 0; Index < Weapons.Num(); ++Index)
+    {
+        if (Weapons[Index])
+        {
+            OnItemThrow.Broadcast(Index, Weapons[Index]->GetItemData());
+            Weapons[Index]->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+            Weapons[Index]->Destroy();
+        }
+    }
+    /*for (const auto Weapon : Weapons)
     {
         Weapon->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
         Weapon->Destroy();
-    }
+    }*/
     Weapons.Empty();
 }
 
-void UFMBPlayerWeaponComponent::DestroyCurrentShield() const
+void UFMBPlayerWeaponComponent::DestroyCurrentShield()
 {
     if (CurrentShield)
     {
         CurrentShield->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
-        CurrentShield->Destroy();
+        if (CurrentShield->Destroy())
+        {
+            CurrentShield = nullptr;
+        }
     }
 }
 
-void UFMBPlayerWeaponComponent::DestroyCurrentPickUp() const
+void UFMBPlayerWeaponComponent::DestroyCurrentPickUp()
 {
     if (CurrentPickUp)
     {
+        OnItemThrow.Broadcast(CurrentPickUpIndex, CurrentPickUp->GetItemData());
         CurrentPickUp->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
-        CurrentPickUp->Destroy();
+        if (CurrentPickUp->Destroy())
+        {
+            CurrentPickUp = nullptr;
+        }
     }
 }
 
-void UFMBPlayerWeaponComponent::SpawnItems()
+void UFMBPlayerWeaponComponent::EquipItems()
 {
-    Super::SpawnItems();
+    Super::EquipItems();
     // SpawnShields();
 }
 
-void UFMBPlayerWeaponComponent::SpawnShields()
+void UFMBPlayerWeaponComponent::SpawnEquipShields()
 {
     CurrentShield = GetWorld()->SpawnActor<AFMBBaseShield>(ShieldClass);
     if (!CurrentShield)
@@ -98,6 +114,27 @@ void UFMBPlayerWeaponComponent::OnStopBlock()
     bIsShieldBlocking = false;
 }
 
+void UFMBPlayerWeaponComponent::UsePickUp()
+{
+    if (!Character || !CurrentPickUp) return;
+
+    CurrentPickUp->UsePickUp();
+}
+
+void UFMBPlayerWeaponComponent::PickUpWasUsed()
+{
+    if (!Character || !CurrentPickUp) return;
+
+    CurrentPickUp->ChangeItemCount(false);
+    OnItemCountChange.Broadcast(CurrentPickUpIndex, CurrentPickUp->GetItemData());
+
+    if (CurrentPickUp->GetItemCount() < 1)
+    {
+        OnItemThrow.Broadcast(CurrentPickUpIndex, CurrentPickUp->GetItemData());
+        DestroyCurrentPickUp();
+    }
+}
+
 void UFMBPlayerWeaponComponent::GetPickupItem(AFMBBaseItem* Item)
 {
     const auto Weapon = Cast<AFMBBaseWeapon>(Item);
@@ -124,7 +161,7 @@ void UFMBPlayerWeaponComponent::EquipWeapon(AFMBBaseWeapon* EquippedWeapon)
         FMBUtils::AttachItemToSocket(EquippedWeapon, Character->GetMesh(), WeaponArmorySocketName);
         EquippedWeapon->OnItemStateChanged.Broadcast(EItemState::EIS_PickedUp);
         Weapons.AddUnique(EquippedWeapon);
-        OnWeaponPickedUp.Broadcast((Weapons.Num() - 1), EquippedWeapon->GetItemData());
+        OnItemPickedUp.Broadcast((Weapons.Num() - 1), EquippedWeapon->GetItemData());
     }
     else
     {
@@ -135,7 +172,6 @@ void UFMBPlayerWeaponComponent::EquipWeapon(AFMBBaseWeapon* EquippedWeapon)
         FMBUtils::AttachItemToSocket(EquippedWeapon, Character->GetMesh(), CurrentWeaponAnimationsData.WeaponEquipSocketName);
         CurrentWeapon = EquippedWeapon;
         CurrentWeapon->OnItemStateChanged.Broadcast(EItemState::EIS_Equipped);
-        OnWeaponSelected.Broadcast(CurrentWeaponIndex);
         if (Weapons.Num() == 0)
         {
             Weapons.AddUnique(EquippedWeapon);
@@ -144,7 +180,8 @@ void UFMBPlayerWeaponComponent::EquipWeapon(AFMBBaseWeapon* EquippedWeapon)
         {
             Weapons[CurrentWeaponIndex] = EquippedWeapon;
         }
-        OnWeaponPickedUp.Broadcast(CurrentWeaponIndex, EquippedWeapon->GetItemData());
+        OnItemPickedUp.Broadcast(CurrentWeaponIndex, EquippedWeapon->GetItemData());
+        OnItemSelected.Broadcast(CurrentWeaponIndex, CurrentWeapon->GetItemData());
     }
 }
 
@@ -161,12 +198,12 @@ void UFMBPlayerWeaponComponent::EquipPickUp(AFMBBasePickUp* EquippedPickUp)
     {
         EquippedPickUp->SetOwner(Character);
         FMBUtils::AttachItemToSocket(EquippedPickUp, Character->GetMesh(), PickUpEquipSocketName);
-
         CurrentPickUp = EquippedPickUp;
         CurrentPickUp->OnItemStateChanged.Broadcast(EItemState::EIS_Equipped);
-        OnPickUpPickedUp.Broadcast(CurrentPickUp->GetItemData());
+        OnItemPickedUp.Broadcast(CurrentPickUpIndex, CurrentPickUp->GetItemData());
+        OnItemSelected.Broadcast(CurrentPickUpIndex, CurrentPickUp->GetItemData());
     }
-    OnPickUpCountChange.Broadcast(CurrentPickUp->GetItemCount());
+    OnItemCountChange.Broadcast(CurrentPickUpIndex, CurrentPickUp->GetItemData());
 }
 
 void UFMBPlayerWeaponComponent::SwapPickUp(AFMBBasePickUp* EquippedPickUp)
@@ -211,6 +248,8 @@ void UFMBPlayerWeaponComponent::DropItem(AFMBBaseItem* DropItem) const
     ItemMesh->DetachFromComponent(DetachmentTransformRules);
 
     DropItem->OnItemStateChanged.Broadcast(EItemState::EIS_Falling);
+    /* todo:*/
+    // OnItemThrow.Broadcast(?Index?, DropItem);
     DropItem->ThrowWeapon();
 }
 

@@ -1,13 +1,16 @@
 // For Maid Bilberry Game. All Rights Recerved
 
 #include "PickUps/FMBBasePickUp.h"
+
+#include "FMBPlayerCharacter.h"
+#include "FMBPlayerWeaponComponent.h"
 #include "Components/SphereComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Sound/SoundCue.h"
 #include "NiagaraComponent.h"
 #include "Components/BoxComponent.h"
 
-DEFINE_LOG_CATEGORY_STATIC(PickUpLog, All, All)
+DEFINE_LOG_CATEGORY_STATIC(LogFMBBasePickUp, All, All)
 
 AFMBBasePickUp::AFMBBasePickUp()
 {
@@ -32,7 +35,35 @@ void AFMBBasePickUp::Tick(float DeltaTick)
     // AddActorWorldRotation(FRotator(0.0f, RotationYaw, 0.0f));
 }
 
-void AFMBBasePickUp::NotifyActorBeginOverlap(AActor* OtherActor)
+void AFMBBasePickUp::UsePickUp()
+{
+    const auto Pawn{Cast<APawn>(GetOwner())};
+    if (CanUsePickUp(Pawn))
+    {
+        PickUpWasUsed();
+    }
+}
+
+bool AFMBBasePickUp::CanUsePickUp(APawn* Pawn)
+{
+    UE_LOG(LogFMBBasePickUp, Warning, TEXT("Did you see the cartoon? Then pay money!"));
+    return false;
+}
+
+void AFMBBasePickUp::PickUpWasUsed()
+{
+    const auto PLayerCharacter{GetPlayerCharacter()};
+    if (PLayerCharacter)
+    {
+        const auto WeaponComponent{PLayerCharacter->FindComponentByClass<UFMBPlayerWeaponComponent>()};
+        if (WeaponComponent)
+        {
+            WeaponComponent->PickUpWasUsed();
+        }
+    }
+}
+
+/*void AFMBBasePickUp::NotifyActorBeginOverlap(AActor* OtherActor)
 {
     Super::NotifyActorBeginOverlap(OtherActor);
 
@@ -40,13 +71,13 @@ void AFMBBasePickUp::NotifyActorBeginOverlap(AActor* OtherActor)
     if (GivePickUpTo(Pawn))
     {
         PickUpWasTaken();
-    }*/
-}
+    }#1#
+}*/
 
-bool AFMBBasePickUp::GivePickUpTo(APawn* Pawn)
+/*bool AFMBBasePickUp::GivePickUpTo(APawn* Pawn)
 {
     return false;
-}
+}*/
 
 /*void AFMBBasePickUp::PickUpWasTaken()
 {

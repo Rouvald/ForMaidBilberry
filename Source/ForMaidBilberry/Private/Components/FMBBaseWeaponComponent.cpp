@@ -33,8 +33,9 @@ void UFMBBaseWeaponComponent::BeginPlay()
     {
         MovementComponent = Character->FindComponentByClass<UFMBCharacterMovementComponent>();
         StaminaComponent = Character->FindComponentByClass<UFMBStaminaComponent>();
+        /* todo: Player must spawn without weapons.*/
         CheckWeaponAnimationsData();
-        SpawnItems();
+        EquipItems();
         // EquipWeapon();
     }
 }
@@ -52,7 +53,7 @@ void UFMBBaseWeaponComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
     Super::EndPlay(EndPlayReason);
 }
 
-void UFMBBaseWeaponComponent::SpawnItems()
+void UFMBBaseWeaponComponent::EquipItems()
 {
     if (!GetWorld()) return;
     if (!Character) return;
@@ -92,6 +93,16 @@ AFMBBaseWeapon* UFMBBaseWeaponComponent::SpawnWeapon() const
 
 void UFMBBaseWeaponComponent::EquipWeapon(AFMBBaseWeapon* EquippedWeapon)
 {
+    if (!EquippedWeapon || !Character) return;
+    EquippedWeapon->SetOwner(Character);
+
+    if (WeaponsAnimationsData.Contains(EquippedWeapon->GetWeaponType()))
+    {
+        CurrentWeaponAnimationsData = WeaponsAnimationsData[EquippedWeapon->GetWeaponType()];
+    }
+    FMBUtils::AttachItemToSocket(EquippedWeapon, Character->GetMesh(), CurrentWeaponAnimationsData.WeaponEquipSocketName);
+    CurrentWeapon = EquippedWeapon;
+    CurrentWeapon->OnItemStateChanged.Broadcast(EItemState::EIS_Equipped);
 
     // UE_LOG(LogFMBBaseWeaponComponent, Warning, TEXT("Weapons num: %d"), Weapons.Num());
 }

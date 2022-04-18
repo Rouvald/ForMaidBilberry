@@ -34,8 +34,10 @@ private:
     TArray<UFMBItemIconWidget*> PickUpIconWidgets;
 
     void InitPickUpItem();
-    void OnPickUpPickedUp(const FItemData& Data);
-    void OnPickUpCountChange(int32 PickUpCount);
+    void OnPickUpPickedUp(int8 PickUpIndex, const FItemData& Data);
+    void OnPickUpSelected(int8 PickUpIndex, const FItemData& Data);
+    void OnPickUpCountChange(int8 PickUpIndex, const FItemData& Data);
+    void OnPickUpThrow(int8 PickUpIndex, const FItemData& Data);
 
     UFMBPlayerWeaponComponent* GetWeaponComponent() const;
 };

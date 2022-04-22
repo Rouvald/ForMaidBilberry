@@ -32,7 +32,8 @@ public:
     // bool GetEquipAnimInProgress() const { return bIsEquipAnimInProgress;}
 
     bool CanAttack() const;
-    bool CanEquip() const;
+
+    FORCEINLINE bool CanEquip() const { return !bIsEquipAnimInProgress; }
 
     // UTexture2D* GetCurrentWeaponUIImage() const;
     // bool GetArmoryWeaponUIData(FItemData& WeaponUIData) const;
@@ -84,6 +85,8 @@ protected:
     TMap<EWeaponType, FWeaponAnimationsData> WeaponsAnimationsData;
 
     virtual void BeginPlay() override;
+
+    virtual void InitWeaponComponent();
 
     void PlayAnimMontage(UAnimMontage* Animation) const;
 

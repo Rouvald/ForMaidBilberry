@@ -42,7 +42,7 @@ void UFMBAnimInstance::UpdateAnimationProperties(float DeltaSeconds)
                 bIsBlocking = PlayerWeaponComponent->GetIsBlocking();
             }
             bIsCurrentWeapon = WeaponComponent->GetCurrentWeapon() ? true : false;
-            CurrentWeaponAnimData = WeaponComponent->GetCurrentWeaponAnimationsData();
+            // CurrentWeaponAnimData = WeaponComponent->GetCurrentWeaponAnimationsData();
             if (WeaponComponent->GetCurrentWeapon())
             {
                 CurrentWeaponType = WeaponComponent->GetCurrentWeapon()->GetWeaponType();

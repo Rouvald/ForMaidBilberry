@@ -42,8 +42,8 @@ private:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
     bool bIsBlocking{false};
 
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
-    FWeaponAnimationsData CurrentWeaponAnimData;
+    /*UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
+    FWeaponAnimationsData CurrentWeaponAnimData;*/
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
     EWeaponType CurrentWeaponType;

@@ -20,12 +20,13 @@ class FORMAIDBILBERRY_API UFMBPlayerWeaponComponent : public UFMBBaseWeaponCompo
     GENERATED_BODY()
 public:
     FOnItemPickedUpSignature OnItemPickedUp;
-    FOnItemThrowSignature OnItemThrow;
+    FOnItemIconVisiblitySignature OnItemIconVisibility;
     FOnItemSelectedSignature OnItemSelected;
     FOnItemCountChangeSignature OnItemCountChange;
+    FOnItemCountVisibilitySignature OnItemCountVisible;
 
-    void OnStartBlock();
-    void OnStopBlock();
+    // void OnStartBlock();
+    // void OnStopBlock();
 
     void UsePickUp();
     void PickUpWasUsed();
@@ -35,6 +36,7 @@ public:
     FORCEINLINE bool GetIsBlocking() const { return bIsShieldBlocking; }
 
     FORCEINLINE int8 GetMaxWeapons() const { return MaxWeapons; }
+    FORCEINLINE int8 GetMaxPickUps() const { return MaxPickUps; }
 
 protected:
     UPROPERTY(EditDefaultsOnly, Category = "Weapon")
@@ -50,10 +52,11 @@ protected:
     FName PickUpEquipSocketName{"PickUpEquipSocket"};
 
     virtual void BeginPlay() override;
+    virtual void InitWeaponComponent() override;
 
     virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
-    virtual void EquipItems() override;
+    // virtual void EquipItems() override;
 
     virtual void EquipWeapon(AFMBBaseWeapon* EquippedWeapon) override;
 
@@ -64,15 +67,20 @@ private:
     UPROPERTY()
     TArray<AFMBBaseWeapon*> Weapons;
 
+    UPROPERTY()
+    TArray<AFMBBasePickUp*> PickUps;
+
     /* Max Weapons that player can hold. */
-    int8 MaxWeapons{5};
+    int8 MaxWeapons{4};
+    /* Max PickUps that player can hold. */
+    int8 MaxPickUps{2};
 
     int8 CurrentWeaponIndex{0};
     int8 CurrentPickUpIndex{0};
 
     /* Taken Items */
-    UPROPERTY()
-    AFMBBaseShield* CurrentShield{nullptr};
+    /*UPROPERTY()
+    AFMBBaseShield* CurrentShield{nullptr};*/
 
     UPROPERTY()
     AFMBBasePickUp* CurrentPickUp{nullptr};
@@ -80,7 +88,7 @@ private:
 
     bool bIsShieldBlocking{false};
 
-    void SpawnEquipShields();
+    // void SpawnEquipShields();
 
     void EquipPickUp(AFMBBasePickUp* EquippedPickUp);
     void SwapPickUp(AFMBBasePickUp* EquippedPickUp);
@@ -91,9 +99,11 @@ private:
 
     void ClearCurrentWeapon();
 
-    void DestroyCurrentShield();
-    void DestroyCurrentPickUp();
+    // void DestroyCurrentShield();
+    void DestroyPickUps();
     void DestroyWeapons();
 
     AFMBPlayerCharacter* GetPlayerCharacter() const;
+
+    void TestLogs();
 };

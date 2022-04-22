@@ -26,15 +26,17 @@ void UFMBWeaponItemBoxWidget::InitWeaponItem()
 
     WeaponIconWidgets.Init(nullptr, PlayerWeaponComponent->GetMaxWeapons());
 
+    PlayerWeaponComponent->OnItemPickedUp.AddUObject(this, &UFMBWeaponItemBoxWidget::OnWeaponPickedUp);
+    PlayerWeaponComponent->OnItemSelected.AddUObject(this, &UFMBWeaponItemBoxWidget::OnWeaponSelected);
+    PlayerWeaponComponent->OnItemIconVisibility.AddUObject(this, &UFMBWeaponItemBoxWidget::OnWeaponIconVisibility);
+
     for (int8 Index = 0; Index < PlayerWeaponComponent->GetMaxWeapons(); ++Index)
     {
         const auto WeaponIconWidget = CreateWidget<UFMBItemIconWidget>(GetWorld(), WeaponIconWidgetClass);
         if (!WeaponIconWidget) continue;
 
-        PlayerWeaponComponent->OnItemPickedUp.AddUObject(this, &UFMBWeaponItemBoxWidget::OnWeaponPickedUp);
-        PlayerWeaponComponent->OnItemSelected.AddUObject(this, &UFMBWeaponItemBoxWidget::OnWeaponSelected);
-        PlayerWeaponComponent->OnItemThrow.AddUObject(this, &UFMBWeaponItemBoxWidget::OnWeaponThrow);
         WeaponIconWidget->SetVisibleItemImage(false);
+        WeaponIconWidget->SetItemIconSize(EItemType::EIT_Weapon);
 
         WeaponIconBox->AddChild(WeaponIconWidget);
         WeaponIconWidgets[Index] = WeaponIconWidget;
@@ -50,26 +52,27 @@ void UFMBWeaponItemBoxWidget::OnWeaponPickedUp(int8 WeaponIndex, const FItemData
     {
         WeaponIconWidgets[WeaponIndex]->SetVisibleItemImage(true);
         WeaponIconWidgets[WeaponIndex]->SetItemImage(Data.ItemIcon);
+        UE_LOG(LogFMBWeaponItemBoxWidget, Error, TEXT("On Weapon PickedUp"));
     }
 }
 
-void UFMBWeaponItemBoxWidget::OnWeaponSelected(int8 WeaponIndex, const FItemData& Data)
+void UFMBWeaponItemBoxWidget::OnWeaponSelected(int8 WeaponIndex, const FItemData& Data, bool bIsVisible)
 {
     if (Data.ItemType != EItemType::EIT_Weapon) return;
 
     if (WeaponIconWidgets[WeaponIndex] && WeaponIconWidgets.Num() > WeaponIndex)
     {
-        WeaponIconWidgets[WeaponIndex]->ItemIsSelected(true);
+        WeaponIconWidgets[WeaponIndex]->SetItemIsSelected(bIsVisible);
     }
 }
 
-void UFMBWeaponItemBoxWidget::OnWeaponThrow(int8 WeaponIndex, const FItemData& Data)
+void UFMBWeaponItemBoxWidget::OnWeaponIconVisibility(int8 WeaponIndex, const FItemData& Data, bool bIsVisible)
 {
     if (Data.ItemType != EItemType::EIT_Weapon) return;
 
     if (WeaponIconWidgets[WeaponIndex] && WeaponIconWidgets.Num() > WeaponIndex)
     {
-        WeaponIconWidgets[WeaponIndex]->SetVisibleItemImage(false);
+        WeaponIconWidgets[WeaponIndex]->SetVisibleItemImage(bIsVisible);
     }
 }
 

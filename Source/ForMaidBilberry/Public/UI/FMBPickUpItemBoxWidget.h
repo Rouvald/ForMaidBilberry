@@ -35,9 +35,10 @@ private:
 
     void InitPickUpItem();
     void OnPickUpPickedUp(int8 PickUpIndex, const FItemData& Data);
-    void OnPickUpSelected(int8 PickUpIndex, const FItemData& Data);
+    void OnPickUpSelected(int8 PickUpIndex, const FItemData& Data, bool bIsVisible);
     void OnPickUpCountChange(int8 PickUpIndex, const FItemData& Data);
-    void OnPickUpThrow(int8 PickUpIndex, const FItemData& Data);
+    void OnPickUpCountVisible(int8 PickUpIndex, const FItemData& Data, bool bIsVisible);
+    void OnPickUpIconVisibility(int8 PickUpIndex, const FItemData& Data, bool bIsVisible);
 
     UFMBPlayerWeaponComponent* GetWeaponComponent() const;
 };

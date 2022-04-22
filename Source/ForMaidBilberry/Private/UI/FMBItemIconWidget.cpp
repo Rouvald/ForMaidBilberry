@@ -5,6 +5,8 @@
 #include "Components/SizeBox.h"
 #include "Components/TextBlock.h"
 
+DEFINE_LOG_CATEGORY_STATIC(LogFMBItemIconWidget, All, All);
+
 void UFMBItemIconWidget::NativeOnInitialized()
 {
     Super::NativeOnInitialized();
@@ -21,7 +23,9 @@ void UFMBItemIconWidget::NativeOnInitialized()
     {
         ItemCountTextBlock->SetVisibility(ESlateVisibility::Collapsed);
     }
-    SetBigItemIconSize();
+
+    ItemIconSizeMap.Add(EItemType::EIT_Weapon, WeaponItemIconSize);
+    ItemIconSizeMap.Add(EItemType::EIT_PickUp, PickUpItemIconSize);
 }
 
 void UFMBItemIconWidget::SetItemImage(UTexture2D* ItemTexture2D) const
@@ -56,21 +60,15 @@ void UFMBItemIconWidget::SetItemCount(const int32 NewItemCount) const
     }
 }
 
-void UFMBItemIconWidget::SetBigItemIconSize() const
+void UFMBItemIconWidget::SetItemIconSize(EItemType ItemType) const
 {
     if (ItemIconSize)
     {
-        ItemIconSize->SetWidthOverride(BigItemIconSize.X);
-        ItemIconSize->SetHeightOverride(BigItemIconSize.Y);
-    }
-}
-
-void UFMBItemIconWidget::SetSmallItemIconSize() const
-{
-    if (ItemIconSize)
-    {
-        ItemIconSize->SetWidthOverride(SmallItemIconSize.X);
-        ItemIconSize->SetHeightOverride(SmallItemIconSize.Y);
+        if (ItemIconSizeMap.Contains(ItemType))
+        {
+            ItemIconSize->SetWidthOverride(ItemIconSizeMap[ItemType]);
+            ItemIconSize->SetHeightOverride(ItemIconSizeMap[ItemType]);
+        }
     }
 }
 
@@ -79,13 +77,22 @@ void UFMBItemIconWidget::SetVisibleItemImage(const bool bIsVisible) const
     if (ItemImage)
     {
         ItemImage->SetVisibility(bIsVisible ? ESlateVisibility::Visible : ESlateVisibility::Collapsed);
+        // UE_LOG(LogFMBItemIconWidget, Error, TEXT("Name: %s, %s"), *GetName(), *UEnum::GetValueAsString(ItemImage->GetVisibility()));
     }
 }
 
-void UFMBItemIconWidget::ItemIsSelected(const bool bIsSelected) const
+void UFMBItemIconWidget::SetItemIsSelected(const bool bIsVisible) const
 {
     if (SelectedItemFrame)
     {
-        SelectedItemFrame->SetVisibility(bIsSelected ? ESlateVisibility::Visible : ESlateVisibility::Collapsed);
+        SelectedItemFrame->SetVisibility(bIsVisible ? ESlateVisibility::Visible : ESlateVisibility::Collapsed);
+    }
+}
+
+void UFMBItemIconWidget::SetItemCountVisible(const bool bIsVisible) const
+{
+    if (ItemCountTextBlock)
+    {
+        ItemCountTextBlock->SetVisibility(bIsVisible ? ESlateVisibility::Visible : ESlateVisibility::Collapsed);
     }
 }

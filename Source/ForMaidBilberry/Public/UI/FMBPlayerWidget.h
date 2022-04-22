@@ -8,6 +8,7 @@
 #include "UI/FMBBaseWidget.h"
 #include "FMBPlayerWidget.generated.h"
 
+class UVerticalBox;
 /**
  *
  */

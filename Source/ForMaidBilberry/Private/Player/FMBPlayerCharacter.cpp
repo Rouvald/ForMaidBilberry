@@ -135,8 +135,8 @@ void AFMBPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 
     // PlayerInputComponent->BindAction("Rolling", IE_Pressed, CharacterMovementComponent, &UFMBCharacterMovementComponent::Rolling);
 
-    PlayerInputComponent->BindAction("Block", IE_Pressed, WeaponComponent, &UFMBPlayerWeaponComponent::OnStartBlock);
-    PlayerInputComponent->BindAction("Block", IE_Released, WeaponComponent, &UFMBPlayerWeaponComponent::OnStopBlock);
+    // PlayerInputComponent->BindAction("Block", IE_Pressed, WeaponComponent, &UFMBPlayerWeaponComponent::OnStartBlock);
+    // PlayerInputComponent->BindAction("Block", IE_Released, WeaponComponent, &UFMBPlayerWeaponComponent::OnStopBlock);
 
     PlayerInputComponent->BindAction(
         "Interact", IE_Pressed, ItemInteractionComponent, &UFMBItemInteractionComponent::TakeItemButtonPressed);
@@ -224,8 +224,6 @@ void AFMBPlayerCharacter::LookUpAtRate(float Rate)
 
 void AFMBPlayerCharacter::Jump()
 {
-    if (!CharacterMovementComponent || !(CharacterMovementComponent->CanRolling())) return;
-
     if (!WeaponComponent || !(WeaponComponent->CanAttack())) return;
 
     Super::Jump();

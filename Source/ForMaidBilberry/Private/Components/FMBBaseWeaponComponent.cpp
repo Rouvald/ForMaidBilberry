@@ -33,10 +33,16 @@ void UFMBBaseWeaponComponent::BeginPlay()
     {
         MovementComponent = Character->FindComponentByClass<UFMBCharacterMovementComponent>();
         StaminaComponent = Character->FindComponentByClass<UFMBStaminaComponent>();
-        /* todo: Player must spawn without weapons.*/
         CheckWeaponAnimationsData();
+    }
+    InitWeaponComponent();
+}
+
+void UFMBBaseWeaponComponent::InitWeaponComponent()
+{
+    if (Character)
+    {
         EquipItems();
-        // EquipWeapon();
     }
 }
 
@@ -46,6 +52,7 @@ void UFMBBaseWeaponComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
     {
         CurrentWeapon->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
         CurrentWeapon->Destroy();
+        CurrentWeapon = nullptr;
     }
     /*if(!CurrentWeapon)
     UE_LOG(LogFMBBaseWeaponComponent, Display, TEXT("currentweapon == nullptr"));*/
@@ -166,6 +173,10 @@ void UFMBBaseWeaponComponent::PlayAnimMontage(UAnimMontage* Animation) const
 
 void UFMBBaseWeaponComponent::CheckWeaponAnimationsData()
 {
+    if (WeaponsAnimationsData.Contains(EWeaponType::EWT_NoWeapon))
+    {
+        InitAnimation(WeaponsAnimationsData[EWeaponType::EWT_NoWeapon]);
+    }
     if (WeaponsAnimationsData.Contains(EWeaponType::EWT_SwordShield))
     {
         InitAnimation(WeaponsAnimationsData[EWeaponType::EWT_SwordShield]);
@@ -180,16 +191,20 @@ void UFMBBaseWeaponComponent::InitAnimation(const FWeaponAnimationsData& WeaponA
 {
     if (!Character) return;
 
-    const auto RollingEvent = FMBAnimUtils::FindNotifyByClass<UFMBAnimFinishedNotify>(WeaponAnimationData.Roll);
-    if (MovementComponent && RollingEvent)
+    if (WeaponAnimationData.Roll)
     {
-        RollingEvent->OnNotify.AddUObject(MovementComponent, &UFMBCharacterMovementComponent::OnRollingFinished);
+        const auto RollingEvent = FMBAnimUtils::FindNotifyByClass<UFMBAnimFinishedNotify>(WeaponAnimationData.Roll);
+        if (MovementComponent && RollingEvent)
+        {
+            RollingEvent->OnNotify.AddUObject(MovementComponent, &UFMBCharacterMovementComponent::OnRollingFinished);
+        }
+        else
+        {
+            UE_LOG(LogFMBBaseWeaponComponent, Error, TEXT("Rolling Finished anim notify don't set"));
+            checkNoEntry();
+        }
     }
-    else
-    {
-        UE_LOG(LogFMBBaseWeaponComponent, Error, TEXT("Rolling Finished anim notify don't set"));
-        checkNoEntry();
-    }
+
     /*const auto ChangeEquipWeapon = FMBAnimUtils::FindNotifyByClass<UFMBChangeEquipWeaponAnimNotify>(WeaponAnimationData.Equip);
     if (ChangeEquipWeapon)
     {
@@ -211,8 +226,14 @@ void UFMBBaseWeaponComponent::InitAnimation(const FWeaponAnimationsData& WeaponA
         checkNoEntry();
     }*/
 
-    CheckAttackAnimNotifyState(WeaponAnimationData.FastAttack);
-    CheckAttackAnimNotifyState(WeaponAnimationData.StrongAttack);
+    if (WeaponAnimationData.FastAttack)
+    {
+        CheckAttackAnimNotifyState(WeaponAnimationData.FastAttack);
+    }
+    if (WeaponAnimationData.StrongAttack)
+    {
+        CheckAttackAnimNotifyState(WeaponAnimationData.StrongAttack);
+    }
 }
 
 void UFMBBaseWeaponComponent::CheckAttackAnimNotifyState(UAnimMontage* Animation)
@@ -347,11 +368,6 @@ bool UFMBBaseWeaponComponent::CanAttack() const
     if (!MovementComponent /*|| MovementComponent->IsFalling()*/ || !(MovementComponent->CanRolling())) return false;
 
     return true;
-}
-
-bool UFMBBaseWeaponComponent::CanEquip() const
-{
-    return !bIsEquipAnimInProgress;
 }
 
 /*UTexture2D* UFMBBaseWeaponComponent::GetCurrentWeaponUIImage() const

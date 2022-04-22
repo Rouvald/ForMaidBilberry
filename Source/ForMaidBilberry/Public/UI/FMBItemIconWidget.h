@@ -22,12 +22,12 @@ class FORMAIDBILBERRY_API UFMBItemIconWidget : public UUserWidget
 public:
     void SetItemImage(UTexture2D* ItemImage) const;
     void SetItemCount(const int32 NewItemCount) const;
-    void SetBigItemIconSize() const;
-    void SetSmallItemIconSize() const;
+    void SetItemIconSize(EItemType ItemType) const;
 
     void SetVisibleItemImage(const bool bIsVisible) const;
 
-    void ItemIsSelected(const bool bIsSelected) const;
+    void SetItemIsSelected(const bool bIsVisible) const;
+    void SetItemCountVisible(const bool bIsVisible) const;
 
     FORCEINLINE const FItemData& GetItemData() const { return ItemData; }
 
@@ -46,11 +46,14 @@ protected:
     UPROPERTY(meta = (BindWidget))
     UTextBlock* ItemCountTextBlock{nullptr};
 
-    UPROPERTY(EditDefaultsOnly, Category = "UI", meta = (ClampMin = "50.0", ClampMax = "150.0"))
-    FVector2D BigItemIconSize{130.0f, 130.0f};
+    UPROPERTY(EditDefaultsOnly, Category = "UI", meta = (ClampMin = "50.0", ClampMax = "150.0", ToolTip = "Nornal weapon icon size: 130."))
+    float WeaponItemIconSize{130.0f};
 
-    UPROPERTY(EditDefaultsOnly, Category = "UI", meta = (ClampMin = "50.0", ClampMax = "150.0"))
-    FVector2D SmallItemIconSize{80.0f, 80.0f};
+    UPROPERTY(EditDefaultsOnly, Category = "UI", meta = (ClampMin = "50.0", ClampMax = "150.0", ToolTip = "Normal pickUp icon size: 80"))
+    float PickUpItemIconSize{80.0f};
+
+    UPROPERTY()
+    TMap<EItemType, float> ItemIconSizeMap;
 
     virtual void NativeOnInitialized() override;
 };

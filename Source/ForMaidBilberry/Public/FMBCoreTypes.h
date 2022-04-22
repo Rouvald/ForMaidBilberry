@@ -15,14 +15,14 @@ struct FWeaponAnimationsData
     UPROPERTY(EditDefaultsOnly, Category = "Weapon", meta = (ToolTip = "2 sockets: WeaponEquipSocket_R or WeaponEquipSocket_L"))
     FName WeaponEquipSocketName = "WeaponEquipSocket_R"; // WeaponEquipSocket_R or WeaponEquipSocket_L
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Animation")
+    /*UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Animation")
     UAnimSequence* Jump_Start{nullptr};
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Animation")
     UAnimSequence* Jump_Air{nullptr};
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Animation")
-    UAnimSequence* Jump_End{nullptr};
+    UAnimSequence* Jump_End{nullptr};*/
 
     UPROPERTY(EditDefaultsOnly, Category = "Animation")
     UAnimMontage* Roll{nullptr};
@@ -140,9 +140,10 @@ struct FItemData
 };
 
 DECLARE_EVENT_TwoParams(UFMBPlayerWeaponComponent, FOnItemPickedUpSignature, int8, const FItemData&);
-DECLARE_EVENT_TwoParams(UFMBPlayerWeaponComponent, FOnItemThrowSignature, int8, const FItemData&);
-DECLARE_EVENT_TwoParams(UFMBPlayerWeaponComponent, FOnItemSelectedSignature, int8, const FItemData&);
+DECLARE_EVENT_ThreeParams(UFMBPlayerWeaponComponent, FOnItemIconVisiblitySignature, int8, const FItemData&, bool bIsVisible);
+DECLARE_EVENT_ThreeParams(UFMBPlayerWeaponComponent, FOnItemSelectedSignature, int8, const FItemData&, bool bIsVisible);
 DECLARE_EVENT_TwoParams(UFMBPlayerWeaponComponent, FOnItemCountChangeSignature, int8, const FItemData&);
+DECLARE_EVENT_ThreeParams(UFMBPlayerWeaponComponent, FOnItemCountVisibilitySignature, int8, const FItemData&, bool bIsVisible);
 
 // Weapon
 
@@ -161,6 +162,7 @@ struct FImpactData
 UENUM(BlueprintType)
 enum class EWeaponType : uint8
 {
+    EWT_NoWeapon UMETA(DisplayName = "NoWeapon"),
     EWT_SwordShield UMETA(DisplayName = "SwordShield"),
     EWT_TwoHandSword UMETA(DisplayName = "TwoHandSword"),
 

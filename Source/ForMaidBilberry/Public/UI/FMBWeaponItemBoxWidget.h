@@ -35,8 +35,8 @@ private:
 
     void InitWeaponItem();
     void OnWeaponPickedUp(int8 WeaponIndex, const FItemData& Data);
-    void OnWeaponSelected(int8 WeaponIndex, const FItemData& Data);
-    void OnWeaponThrow(int8 WeaponIndex, const FItemData& Data);
+    void OnWeaponSelected(int8 WeaponIndex, const FItemData& Data, bool bIsVisible);
+    void OnWeaponIconVisibility(int8 WeaponIndex, const FItemData& Data, bool bIsVisible);
 
     UFMBPlayerWeaponComponent* GetWeaponComponent() const;
 };

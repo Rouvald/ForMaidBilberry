@@ -11,7 +11,7 @@
 #include "Components/FMBCharacterMovementComponent.h"
 #include "Components/FMBHealthComponent.h"
 
-DECLARE_LOG_CATEGORY_CLASS(BaseCharacterLog, All, All);
+DECLARE_LOG_CATEGORY_CLASS(LogFMBBaseCharacter, All, All);
 
 AFMBBaseCharacter::AFMBBaseCharacter(const FObjectInitializer& ObjInit)
     : Super(ObjInit.SetDefaultSubobjectClass<UFMBCharacterMovementComponent>(ACharacter::CharacterMovementComponentName))
@@ -64,7 +64,7 @@ bool AFMBBaseCharacter::IsRunning()
 
 void AFMBBaseCharacter::OnDeath()
 {
-    UE_LOG(BaseCharacterLog, Display, TEXT("Player %s is dead"), *GetName());
+    UE_LOG(LogFMBBaseCharacter, Display, TEXT("Player %s is dead"), *GetName());
 
     GetCharacterMovement()->DisableMovement();
     SetLifeSpan(LifeSpanOnDeath);

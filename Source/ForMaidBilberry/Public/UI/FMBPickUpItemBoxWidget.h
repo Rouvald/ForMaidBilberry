@@ -40,5 +40,7 @@ private:
     void OnPickUpCountVisible(int8 PickUpIndex, const FItemData& Data, bool bIsVisible);
     void OnPickUpIconVisibility(int8 PickUpIndex, const FItemData& Data, bool bIsVisible);
 
-    UFMBPlayerWeaponComponent* GetWeaponComponent() const;
+    void OnNewPawn(APawn* Pawn);
+
+    // UFMBPlayerWeaponComponent* GetWeaponComponent() const;
 };

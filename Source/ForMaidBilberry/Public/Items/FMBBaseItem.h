@@ -27,7 +27,7 @@ public:
     FORCEINLINE UStaticMeshComponent* GetItemMesh() const { return ItemMesh; }
     FORCEINLINE const FItemData& GetItemData() const { return ItemData; }
 
-    FORCEINLINE int32 GetItemCount() const { return ItemData.ItemCount; }
+    // FORCEINLINE int32 GetItemCount() const { return ItemData.ItemCount; }
     void ChangeItemCount(const bool bIsIncrease);
 
     void ThrowWeapon();

@@ -13,22 +13,34 @@ void UFMBWeaponItemBoxWidget::NativeOnInitialized()
 {
     Super::NativeOnInitialized();
 
+    if (GetOwningPlayer())
+    {
+        GetOwningPlayer()->GetOnNewPawnNotifier().AddUObject(this, &UFMBWeaponItemBoxWidget::OnNewPawn);
+        OnNewPawn(GetOwningPlayerPawn());
+    }
     InitWeaponItem();
+}
+
+void UFMBWeaponItemBoxWidget::OnNewPawn(APawn* Pawn)
+{
+    PlayerWeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBPlayerWeaponComponent>(Pawn);
+    if (PlayerWeaponComponent)
+    {
+        PlayerWeaponComponent->OnItemPickedUp.AddUObject(this, &UFMBWeaponItemBoxWidget::OnWeaponPickedUp);
+        PlayerWeaponComponent->OnItemSelected.AddUObject(this, &UFMBWeaponItemBoxWidget::OnWeaponSelected);
+        PlayerWeaponComponent->OnItemIconVisibility.AddUObject(this, &UFMBWeaponItemBoxWidget::OnWeaponIconVisibility);
+        /*UE_LOG(LogFMBWeaponItemBoxWidget, Error, TEXT("On New Pawn"));*/
+    }
 }
 
 void UFMBWeaponItemBoxWidget::InitWeaponItem()
 {
-    PlayerWeaponComponent = GetWeaponComponent();
     if (!PlayerWeaponComponent) return;
 
     if (!WeaponIconBox) return;
     WeaponIconBox->ClearChildren();
 
     WeaponIconWidgets.Init(nullptr, PlayerWeaponComponent->GetMaxWeapons());
-
-    PlayerWeaponComponent->OnItemPickedUp.AddUObject(this, &UFMBWeaponItemBoxWidget::OnWeaponPickedUp);
-    PlayerWeaponComponent->OnItemSelected.AddUObject(this, &UFMBWeaponItemBoxWidget::OnWeaponSelected);
-    PlayerWeaponComponent->OnItemIconVisibility.AddUObject(this, &UFMBWeaponItemBoxWidget::OnWeaponIconVisibility);
 
     for (int8 Index = 0; Index < PlayerWeaponComponent->GetMaxWeapons(); ++Index)
     {
@@ -52,7 +64,7 @@ void UFMBWeaponItemBoxWidget::OnWeaponPickedUp(int8 WeaponIndex, const FItemData
     {
         WeaponIconWidgets[WeaponIndex]->SetVisibleItemImage(true);
         WeaponIconWidgets[WeaponIndex]->SetItemImage(Data.ItemIcon);
-        UE_LOG(LogFMBWeaponItemBoxWidget, Error, TEXT("On Weapon PickedUp"));
+        /*UE_LOG(LogFMBWeaponItemBoxWidget, Error, TEXT("On Weapon PickedUp"));*/
     }
 }
 
@@ -76,7 +88,7 @@ void UFMBWeaponItemBoxWidget::OnWeaponIconVisibility(int8 WeaponIndex, const FIt
     }
 }
 
-UFMBPlayerWeaponComponent* UFMBWeaponItemBoxWidget::GetWeaponComponent() const
+/*UFMBPlayerWeaponComponent* UFMBWeaponItemBoxWidget::GetWeaponComponent() const
 {
     return FMBUtils::GetFMBPlayerComponent<UFMBPlayerWeaponComponent>(GetOwningPlayerPawn());
-}
+}*/

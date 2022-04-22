@@ -60,10 +60,24 @@ void UFMBPlayerWeaponComponent::DestroyWeapons()
         {
             OnItemIconVisibility.Broadcast(Index, Weapons[Index]->GetItemData(), false);
             Weapons[Index]->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
-            Weapons[Index]->Destroy();
+            if (Weapons[Index]->Destroy())
+            {
+                Weapons[Index] = nullptr;
+            }
         }
     }
-    Weapons.Empty();
+}
+
+void UFMBPlayerWeaponComponent::DestroyCurrentWeapon()
+{
+    OnItemSelected.Broadcast(CurrentWeaponIndex, CurrentWeapon->GetItemData(), false);
+    OnItemIconVisibility.Broadcast(CurrentWeaponIndex, CurrentWeapon->GetItemData(), false);
+    OnItemCountVisible.Broadcast(CurrentWeaponIndex, CurrentWeapon->GetItemData(), false);
+    CurrentWeapon->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+    if (CurrentWeapon->Destroy())
+    {
+        CurrentWeapon = nullptr;
+    }
 }
 
 /*void UFMBPlayerWeaponComponent::DestroyCurrentShield()
@@ -92,10 +106,24 @@ void UFMBPlayerWeaponComponent::DestroyPickUps()
             OnItemIconVisibility.Broadcast(Index, PickUps[Index]->GetItemData(), false);
             OnItemCountVisible.Broadcast(Index, PickUps[Index]->GetItemData(), false);
             PickUps[Index]->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
-            PickUps[Index]->Destroy();
+            if (PickUps[Index]->Destroy())
+            {
+                PickUps[Index] = nullptr;
+            }
         }
     }
-    PickUps.Empty();
+}
+
+void UFMBPlayerWeaponComponent::DestroyCurrentPickUp()
+{
+    OnItemSelected.Broadcast(CurrentPickUpIndex, CurrentPickUp->GetItemData(), false);
+    OnItemIconVisibility.Broadcast(CurrentPickUpIndex, CurrentPickUp->GetItemData(), false);
+    OnItemCountVisible.Broadcast(CurrentPickUpIndex, CurrentPickUp->GetItemData(), false);
+    CurrentPickUp->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+    if (CurrentPickUp->Destroy())
+    {
+        CurrentPickUp = nullptr;
+    }
 }
 
 /*void UFMBPlayerWeaponComponent::EquipItems()
@@ -150,10 +178,11 @@ void UFMBPlayerWeaponComponent::PickUpWasUsed()
     CurrentPickUp->ChangeItemCount(false);
     OnItemCountChange.Broadcast(CurrentPickUpIndex, CurrentPickUp->GetItemData());
 
-    if (CurrentPickUp->GetItemCount() < 1)
+    if (CurrentPickUp->GetItemData().ItemCount < 1)
     {
-        DestroyPickUps();
+        DestroyCurrentPickUp();
     }
+    TestLogs();
 }
 
 void UFMBPlayerWeaponComponent::GetPickupItem(AFMBBaseItem* Item)
@@ -215,11 +244,12 @@ void UFMBPlayerWeaponComponent::EquipPickUp(AFMBBasePickUp* EquippedPickUp)
 
     if (CurrentPickUp)
     {
-        if (CurrentPickUp->GetPickUpType() == EquippedPickUp->GetPickUpType())
+        const auto SimilarPickUpTypeIndex{FindSimilarPickUpType(EquippedPickUp)};
+        if (SimilarPickUpTypeIndex > -1)
         {
             EquippedPickUp->Destroy();
-            CurrentPickUp->ChangeItemCount(true);
-            OnItemCountChange.Broadcast(CurrentPickUpIndex, CurrentPickUp->GetItemData());
+            PickUps[SimilarPickUpTypeIndex]->ChangeItemCount(true);
+            OnItemCountChange.Broadcast(SimilarPickUpTypeIndex, PickUps[SimilarPickUpTypeIndex]->GetItemData());
         }
         else
         {
@@ -229,8 +259,8 @@ void UFMBPlayerWeaponComponent::EquipPickUp(AFMBBasePickUp* EquippedPickUp)
                 {
                     PickUps[Index] = EquippedPickUp;
                     EquippedPickUp->SetOwner(Character);
-                    FMBUtils::AttachItemToSocket(EquippedPickUp, Character->GetMesh(), PickUpEquipSocketName);
-                    EquippedPickUp->OnItemStateChanged.Broadcast(EItemState::EIS_Equipped);
+                    FMBUtils::AttachItemToSocket(EquippedPickUp, Character->GetMesh(), WeaponArmorySocketName);
+                    EquippedPickUp->OnItemStateChanged.Broadcast(EItemState::EIS_PickedUp);
                     OnItemPickedUp.Broadcast(Index, EquippedPickUp->GetItemData());
                     OnItemCountChange.Broadcast(Index, EquippedPickUp->GetItemData());
                     break;
@@ -243,24 +273,13 @@ void UFMBPlayerWeaponComponent::EquipPickUp(AFMBBasePickUp* EquippedPickUp)
         EquippedPickUp->SetOwner(Character);
         FMBUtils::AttachItemToSocket(EquippedPickUp, Character->GetMesh(), PickUpEquipSocketName);
         CurrentPickUp = EquippedPickUp;
+        PickUps[CurrentPickUpIndex] = EquippedPickUp;
         EquippedPickUp->OnItemStateChanged.Broadcast(EItemState::EIS_Equipped);
         OnItemPickedUp.Broadcast(CurrentPickUpIndex, EquippedPickUp->GetItemData());
         OnItemSelected.Broadcast(CurrentPickUpIndex, EquippedPickUp->GetItemData(), true);
         OnItemCountChange.Broadcast(CurrentPickUpIndex, EquippedPickUp->GetItemData());
     }
-    if (CurrentPickUp) UE_LOG(LogFMBPlayerWeaponComponent, Warning, TEXT("CurrentPickUp, PickUps.Num == %d"), PickUps.Num());
-}
-
-void UFMBPlayerWeaponComponent::SwapPickUp(AFMBBasePickUp* EquippedPickUp)
-{
-    if (!Character || !ItemInteractionComponent) return;
-
-    if (CurrentPickUp && (CurrentPickUp->GetPickUpType() != EquippedPickUp->GetPickUpType()))
-    {
-        DropItem(CurrentPickUp);
-    }
-    EquipPickUp(EquippedPickUp);
-    ItemInteractionComponent->ClearHitItem();
+    TestLogs();
 }
 
 void UFMBPlayerWeaponComponent::SwapWeapon(AFMBBaseWeapon* EquippedWeapon)
@@ -276,10 +295,32 @@ void UFMBPlayerWeaponComponent::SwapWeapon(AFMBBaseWeapon* EquippedWeapon)
     ItemInteractionComponent->ClearHitItem();
 }
 
+void UFMBPlayerWeaponComponent::SwapPickUp(AFMBBasePickUp* EquippedPickUp)
+{
+    if (!Character || !ItemInteractionComponent) return;
+
+    if (PickUps.Find(nullptr) == INDEX_NONE)
+    {
+        if (FindSimilarPickUpType(EquippedPickUp) == -1)
+        {
+            DropItem(CurrentPickUp);
+            ClearCurrentPickUp();
+        }
+    }
+    EquipPickUp(EquippedPickUp);
+    ItemInteractionComponent->ClearHitItem();
+}
+
 void UFMBPlayerWeaponComponent::ClearCurrentWeapon()
 {
     CurrentWeapon = nullptr;
     Weapons[CurrentWeaponIndex] = nullptr;
+}
+
+void UFMBPlayerWeaponComponent::ClearCurrentPickUp()
+{
+    CurrentPickUp = nullptr;
+    PickUps[CurrentPickUpIndex] = nullptr;
 }
 
 void UFMBPlayerWeaponComponent::DropItem(AFMBBaseItem* DropItem) const
@@ -298,6 +339,18 @@ void UFMBPlayerWeaponComponent::DropItem(AFMBBaseItem* DropItem) const
     DropItem->ThrowWeapon();
 }
 
+int8 UFMBPlayerWeaponComponent::FindSimilarPickUpType(const AFMBBasePickUp* EquippedPickUp) const
+{
+    for (int8 Index = 0; Index < MaxPickUps; ++Index)
+    {
+        if (PickUps[Index] && PickUps[Index]->GetPickUpType() == EquippedPickUp->GetPickUpType())
+        {
+            return Index;
+        }
+    }
+    return -1;
+}
+
 AFMBPlayerCharacter* UFMBPlayerWeaponComponent::GetPlayerCharacter() const
 {
     return Cast<AFMBPlayerCharacter>(GetOwner());
@@ -305,7 +358,7 @@ AFMBPlayerCharacter* UFMBPlayerWeaponComponent::GetPlayerCharacter() const
 
 void UFMBPlayerWeaponComponent::TestLogs()
 {
-    UE_LOG(LogFMBPlayerWeaponComponent, Warning, TEXT("Weapons.Num = %d"), Weapons.Num());
+    // UE_LOG(LogFMBPlayerWeaponComponent, Warning, TEXT("Weapons.Num = %d"), Weapons.Num());
     for (const auto Weapon : Weapons)
     {
         if (Weapon)
@@ -315,6 +368,18 @@ void UFMBPlayerWeaponComponent::TestLogs()
         else
         {
             UE_LOG(LogFMBPlayerWeaponComponent, Warning, TEXT("Weapon == nullptr"));
+        }
+    }
+    for (const auto PickUp : PickUps)
+    {
+        if (PickUp)
+        {
+            UE_LOG(
+                LogFMBPlayerWeaponComponent, Warning, TEXT("PickUp = %s, Count = %d"), *PickUp->GetName(), PickUp->GetItemData().ItemCount);
+        }
+        else
+        {
+            UE_LOG(LogFMBPlayerWeaponComponent, Warning, TEXT("PickUp == nullptr"));
         }
     }
 }

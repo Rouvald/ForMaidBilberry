@@ -97,11 +97,16 @@ private:
 
     void DropItem(AFMBBaseItem* DropItem) const;
 
+    int8 FindSimilarPickUpType(const AFMBBasePickUp* EquippedPickUp) const;
+
     void ClearCurrentWeapon();
+    void ClearCurrentPickUp();
 
     // void DestroyCurrentShield();
-    void DestroyPickUps();
     void DestroyWeapons();
+    void DestroyCurrentWeapon();
+    void DestroyPickUps();
+    void DestroyCurrentPickUp();
 
     AFMBPlayerCharacter* GetPlayerCharacter() const;
 

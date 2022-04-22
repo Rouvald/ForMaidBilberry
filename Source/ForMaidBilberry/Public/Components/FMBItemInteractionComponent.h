@@ -24,7 +24,7 @@ public:
     void StopItemInfoVisibility();
 
     void TakeItemButtonPressed();
-    void TakeItemButtonReleased();
+    // void TakeItemButtonReleased();
 
     FORCEINLINE AFMBBaseItem* GetHitItem() const { return HitItem; }
     /* @note: Not good decision, but OK, i think.*/

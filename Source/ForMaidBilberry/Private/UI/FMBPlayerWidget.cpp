@@ -5,7 +5,6 @@
 #include "FMBPlayerCharacter.h"
 #include "Components/FMBHealthComponent.h"
 #include "Components/FMBStaminaComponent.h"
-#include "Components/FMBBaseWeaponComponent.h"
 #include "FMBUtils.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogFMBPlayerHUDWidget, All, All)

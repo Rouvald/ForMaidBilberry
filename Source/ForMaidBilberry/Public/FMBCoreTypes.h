@@ -184,7 +184,7 @@ UENUM(BlueprintType)
 enum class EPickUpType : uint8
 {
     EPT_HealthFlask UMETA(DisplayName = "HealthFlask"),
-    EPT_Poison UMETA(DisplayName = "EWT_Poison"),
+    EPT_Poison UMETA(DisplayName = "Poison"),
 
     EPT_Max UMETA(DisplayName = "Max")
 };

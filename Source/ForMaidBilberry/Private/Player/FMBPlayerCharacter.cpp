@@ -140,8 +140,10 @@ void AFMBPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 
     PlayerInputComponent->BindAction(
         "Interact", IE_Pressed, ItemInteractionComponent, &UFMBItemInteractionComponent::TakeItemButtonPressed);
-    PlayerInputComponent->BindAction(
-        "Interact", IE_Released, ItemInteractionComponent, &UFMBItemInteractionComponent::TakeItemButtonReleased);
+    // PlayerInputComponent->BindAction(
+    //    "Interact", IE_Released, ItemInteractionComponent, &UFMBItemInteractionComponent::TakeItemButtonReleased);
+
+    // PlayerInputComponent->BindAction("Throw", IE_Pressed, ItemInteractionComponent, &UFMBItemInteractionComponent::Throw);
 
     PlayerInputComponent->BindAction("UsePickUp", IE_Pressed, WeaponComponent, &UFMBPlayerWeaponComponent::UsePickUp);
 

@@ -365,7 +365,7 @@ bool UFMBBaseWeaponComponent::CanAttack() const
 
     if (!CanEquip()) return false;
 
-    if (!MovementComponent /*|| MovementComponent->IsFalling()*/ || !(MovementComponent->CanRolling())) return false;
+    // if (!MovementComponent /*|| MovementComponent->IsFalling()*/ || !(MovementComponent->CanRolling())) return false;
 
     return true;
 }

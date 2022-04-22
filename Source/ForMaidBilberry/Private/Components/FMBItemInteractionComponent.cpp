@@ -31,6 +31,7 @@ void UFMBItemInteractionComponent::BeginPlay()
 void UFMBItemInteractionComponent::TakeItemButtonPressed()
 {
     if (!PlayerCharacter || !HitItem) return;
+    if (!PlayerWeaponComponent || !PlayerWeaponComponent->CanAttack()) return;
 
     const auto Item = Cast<AFMBBaseItem>(HitItem);
     if (Item)
@@ -46,7 +47,7 @@ void UFMBItemInteractionComponent::TakeItemButtonPressed()
     }*/
 }
 
-void UFMBItemInteractionComponent::TakeItemButtonReleased() {}
+// void UFMBItemInteractionComponent::TakeItemButtonReleased() {}
 
 void UFMBItemInteractionComponent::ItemInfoVisibilityTimer(const AFMBBaseItem* Item, bool bIsOverlap)
 {

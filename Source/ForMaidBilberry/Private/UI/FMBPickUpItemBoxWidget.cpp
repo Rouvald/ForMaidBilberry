@@ -12,24 +12,35 @@ void UFMBPickUpItemBoxWidget::NativeOnInitialized()
 {
     Super::NativeOnInitialized();
 
+    if (GetOwningPlayer())
+    {
+        GetOwningPlayer()->GetOnNewPawnNotifier().AddUObject(this, &UFMBPickUpItemBoxWidget::OnNewPawn);
+        OnNewPawn(GetOwningPlayerPawn());
+    }
     InitPickUpItem();
+}
+
+void UFMBPickUpItemBoxWidget::OnNewPawn(APawn* Pawn)
+{
+    PlayerWeaponComponent = FMBUtils::GetFMBPlayerComponent<UFMBPlayerWeaponComponent>(Pawn);
+    if (PlayerWeaponComponent)
+    {
+        PlayerWeaponComponent->OnItemPickedUp.AddUObject(this, &UFMBPickUpItemBoxWidget::OnPickUpPickedUp);
+        PlayerWeaponComponent->OnItemSelected.AddUObject(this, &UFMBPickUpItemBoxWidget::OnPickUpSelected);
+        PlayerWeaponComponent->OnItemCountChange.AddUObject(this, &UFMBPickUpItemBoxWidget::OnPickUpCountChange);
+        PlayerWeaponComponent->OnItemCountVisible.AddUObject(this, &UFMBPickUpItemBoxWidget::OnPickUpCountVisible);
+        PlayerWeaponComponent->OnItemIconVisibility.AddUObject(this, &UFMBPickUpItemBoxWidget::OnPickUpIconVisibility);
+    }
 }
 
 void UFMBPickUpItemBoxWidget::InitPickUpItem()
 {
-    PlayerWeaponComponent = GetWeaponComponent();
     if (!PlayerWeaponComponent) return;
 
     if (!PickUpIconBox) return;
     PickUpIconBox->ClearChildren();
 
     PickUpIconWidgets.Init(nullptr, PlayerWeaponComponent->GetMaxPickUps());
-
-    PlayerWeaponComponent->OnItemPickedUp.AddUObject(this, &UFMBPickUpItemBoxWidget::OnPickUpPickedUp);
-    PlayerWeaponComponent->OnItemSelected.AddUObject(this, &UFMBPickUpItemBoxWidget::OnPickUpSelected);
-    PlayerWeaponComponent->OnItemCountChange.AddUObject(this, &UFMBPickUpItemBoxWidget::OnPickUpCountChange);
-    PlayerWeaponComponent->OnItemCountVisible.AddUObject(this, &UFMBPickUpItemBoxWidget::OnPickUpCountVisible);
-    PlayerWeaponComponent->OnItemIconVisibility.AddUObject(this, &UFMBPickUpItemBoxWidget::OnPickUpIconVisibility);
 
     for (int8 Index = 0; Index < PlayerWeaponComponent->GetMaxPickUps(); ++Index)
     {
@@ -98,7 +109,7 @@ void UFMBPickUpItemBoxWidget::OnPickUpIconVisibility(int8 PickUpIndex, const FIt
     }
 }
 
-UFMBPlayerWeaponComponent* UFMBPickUpItemBoxWidget::GetWeaponComponent() const
+/*UFMBPlayerWeaponComponent* UFMBPickUpItemBoxWidget::GetWeaponComponent() const
 {
     return FMBUtils::GetFMBPlayerComponent<UFMBPlayerWeaponComponent>(GetOwningPlayerPawn());
-}
+}*/

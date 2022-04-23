@@ -35,8 +35,10 @@ private:
 
     void InitWeaponItem();
     void OnWeaponPickedUp(int8 WeaponIndex, const FItemData& Data);
-    void OnWeaponSelected(int8 WeaponIndex, const FItemData& Data, bool bIsVisible);
-    void OnWeaponIconVisibility(int8 WeaponIndex, const FItemData& Data, bool bIsVisible);
+    void OnWeaponSelected(int8 WeaponIndex, const EItemType ItemType, bool bIsVisible);
+    /*void OnWeaponCountChange(int8 WeaponIndex, const FItemData& Data);
+    void OnWeaponCountVisible(int8 WeaponIndex, const FItemData& Data, bool bIsVisible);*/
+    void OnWeaponIconVisibility(int8 WeaponIndex, const EItemType ItemType, bool bIsVisible);
 
     void OnNewPawn(APawn* Pawn);
 

@@ -29,7 +29,8 @@ void UFMBWeaponItemBoxWidget::OnNewPawn(APawn* Pawn)
         PlayerWeaponComponent->OnItemPickedUp.AddUObject(this, &UFMBWeaponItemBoxWidget::OnWeaponPickedUp);
         PlayerWeaponComponent->OnItemSelected.AddUObject(this, &UFMBWeaponItemBoxWidget::OnWeaponSelected);
         PlayerWeaponComponent->OnItemIconVisibility.AddUObject(this, &UFMBWeaponItemBoxWidget::OnWeaponIconVisibility);
-        /*UE_LOG(LogFMBWeaponItemBoxWidget, Error, TEXT("On New Pawn"));*/
+        /*PlayerWeaponComponent->OnItemCountChange.AddUObject(this, &UFMBWeaponItemBoxWidget::OnWeaponCountChange);
+        PlayerWeaponComponent->OnItemCountVisible.AddUObject(this, &UFMBWeaponItemBoxWidget::OnWeaponCountVisible);*/
     }
 }
 
@@ -53,6 +54,10 @@ void UFMBWeaponItemBoxWidget::InitWeaponItem()
         WeaponIconBox->AddChild(WeaponIconWidget);
         WeaponIconWidgets[Index] = WeaponIconWidget;
     }
+    if (WeaponIconWidgets[0])
+    {
+        WeaponIconWidgets[0]->SetItemIsSelected(true);
+    }
     // UE_LOG(LogFMBWeaponItemBoxWidget, Error, TEXT("%i"), WeaponIconBox->HasAnyChildren()) ;
 }
 
@@ -68,9 +73,9 @@ void UFMBWeaponItemBoxWidget::OnWeaponPickedUp(int8 WeaponIndex, const FItemData
     }
 }
 
-void UFMBWeaponItemBoxWidget::OnWeaponSelected(int8 WeaponIndex, const FItemData& Data, bool bIsVisible)
+void UFMBWeaponItemBoxWidget::OnWeaponSelected(int8 WeaponIndex, const EItemType ItemType, bool bIsVisible)
 {
-    if (Data.ItemType != EItemType::EIT_Weapon) return;
+    if (ItemType != EItemType::EIT_Weapon) return;
 
     if (WeaponIconWidgets[WeaponIndex] && WeaponIconWidgets.Num() > WeaponIndex)
     {
@@ -78,15 +83,35 @@ void UFMBWeaponItemBoxWidget::OnWeaponSelected(int8 WeaponIndex, const FItemData
     }
 }
 
-void UFMBWeaponItemBoxWidget::OnWeaponIconVisibility(int8 WeaponIndex, const FItemData& Data, bool bIsVisible)
+void UFMBWeaponItemBoxWidget::OnWeaponIconVisibility(int8 WeaponIndex, const EItemType ItemType, bool bIsVisible)
 {
-    if (Data.ItemType != EItemType::EIT_Weapon) return;
+    if (ItemType != EItemType::EIT_Weapon) return;
 
     if (WeaponIconWidgets[WeaponIndex] && WeaponIconWidgets.Num() > WeaponIndex)
     {
         WeaponIconWidgets[WeaponIndex]->SetVisibleItemImage(bIsVisible);
     }
 }
+
+/*void UFMBWeaponItemBoxWidget::OnWeaponCountChange(int8 WeaponIndex, const FItemData& Data)
+{
+    if (Data.ItemType != EItemType::EIT_PickUp) return;
+
+    if (WeaponIconWidgets[WeaponIndex] && WeaponIconWidgets.Num() > WeaponIndex)
+    {
+        WeaponIconWidgets[WeaponIndex]->SetItemCount(Data.ItemCount);
+    }
+}
+
+void UFMBWeaponItemBoxWidget::OnWeaponCountVisible(int8 WeaponIndex, const FItemData& Data, bool bIsVisible)
+{
+    if (Data.ItemType != EItemType::EIT_PickUp) return;
+
+    if (WeaponIconWidgets[WeaponIndex] && WeaponIconWidgets.Num() > WeaponIndex)
+    {
+        WeaponIconWidgets[WeaponIndex]->SetItemCountVisible(bIsVisible);
+    }
+}*/
 
 /*UFMBPlayerWeaponComponent* UFMBWeaponItemBoxWidget::GetWeaponComponent() const
 {

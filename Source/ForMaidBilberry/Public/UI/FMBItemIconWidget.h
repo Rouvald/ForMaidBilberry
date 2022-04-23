@@ -35,6 +35,9 @@ protected:
     FItemData ItemData;
 
     UPROPERTY(meta = (BindWidget))
+    USizeBox* ItemFrameSize{nullptr};
+
+    UPROPERTY(meta = (BindWidget))
     USizeBox* ItemIconSize{nullptr};
 
     UPROPERTY(meta = (BindWidget))
@@ -54,6 +57,8 @@ protected:
 
     UPROPERTY()
     TMap<EItemType, float> ItemIconSizeMap;
+
+    float FrameSize{5.0f};
 
     virtual void NativeOnInitialized() override;
 };

@@ -62,12 +62,17 @@ void UFMBItemIconWidget::SetItemCount(const int32 NewItemCount) const
 
 void UFMBItemIconWidget::SetItemIconSize(EItemType ItemType) const
 {
-    if (ItemIconSize)
+    if (ItemIconSizeMap.Contains(ItemType))
     {
-        if (ItemIconSizeMap.Contains(ItemType))
+        if (ItemFrameSize)
         {
-            ItemIconSize->SetWidthOverride(ItemIconSizeMap[ItemType]);
-            ItemIconSize->SetHeightOverride(ItemIconSizeMap[ItemType]);
+            ItemFrameSize->SetWidthOverride(ItemIconSizeMap[ItemType]);
+            ItemFrameSize->SetHeightOverride(ItemIconSizeMap[ItemType]);
+        }
+        if (ItemIconSize)
+        {
+            ItemIconSize->SetWidthOverride(ItemIconSizeMap[ItemType] - FrameSize * ItemIconSizeMap[ItemType] / WeaponItemIconSize);
+            ItemIconSize->SetHeightOverride(ItemIconSizeMap[ItemType] - FrameSize * ItemIconSizeMap[ItemType] / WeaponItemIconSize);
         }
     }
 }

@@ -25,6 +25,8 @@ public:
     FOnItemCountChangeSignature OnItemCountChange;
     FOnItemCountVisibilitySignature OnItemCountVisible;
 
+    void NextWeapon(bool bIsWheelDown);
+    void ChooseWeapon(int8 NewWeaponIndex);
     // void OnStartBlock();
     // void OnStopBlock();
 
@@ -60,6 +62,8 @@ protected:
 
     virtual void EquipWeapon(AFMBBaseWeapon* EquippedWeapon) override;
 
+    virtual void InitAnimation(const FWeaponAnimationsData& WeaponAnimationData) override;
+
 private:
     UPROPERTY()
     UFMBItemInteractionComponent* ItemInteractionComponent{nullptr};
@@ -73,9 +77,10 @@ private:
     /* Max Weapons that player can hold. */
     int8 MaxWeapons{4};
     /* Max PickUps that player can hold. */
-    int8 MaxPickUps{2};
+    int8 MaxPickUps{1};
 
     int8 CurrentWeaponIndex{0};
+    int8 LastCurrentWeaponIndex{0};
     int8 CurrentPickUpIndex{0};
 
     /* Taken Items */
@@ -107,6 +112,9 @@ private:
     void DestroyCurrentWeapon();
     void DestroyPickUps();
     void DestroyCurrentPickUp();
+
+    void EquipNextWeapon();
+    void OnChangeEquipWeapon();
 
     AFMBPlayerCharacter* GetPlayerCharacter() const;
 

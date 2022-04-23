@@ -2,12 +2,9 @@
 
 #include "Components/FMBBaseWeaponComponent.h"
 #include "FMBBaseCharacter.h"
-#include "FMBBaseShield.h"
 #include "Animation/FMBAnimFinishedNotify.h"
-#include "GameFramework/Character.h"
 #include "Weapon/FMBBaseWeapon.h"
 #include "Animation/FMBAnimUtils.h"
-#include "Animation/FMBChangeEquipWeaponAnimNotify.h"
 #include "Components/FMBCharacterMovementComponent.h"
 #include "Components/FMBStaminaComponent.h"
 #include "FMBCoreTypes.h"
@@ -79,23 +76,7 @@ AFMBBaseWeapon* UFMBBaseWeaponComponent::SpawnWeapon() const
         return nullptr;
     }
     DefaultWeapon->SetOwner(Character);
-    // UE_LOG(LogFMBBaseWeaponComponent, Display, TEXT("%d"), CurrentWeapon->GetWeaponType() == EWeaponType::EWT_YellowSword);
     return DefaultWeapon;
-    /*for (auto WeaponClass : WeaponClasses)
-    {
-        auto Weapon = GetWorld()->SpawnActor<AFMBBaseWeapon>(WeaponClass);
-        if (!Weapon) continue;
-
-        Weapon->SetOwner(Character);
-
-        //Weapons.Add(Weapon);
-
-        if (Weapon->GetRootComponent())
-        {
-            Weapon->GetRootComponent()->SetVisibility(false, true);
-        }
-        FMBUtils::AttachItemToSocket(Weapon, Character->GetMesh(), WeaponArmorySocketName);
-    }*/
 }
 
 void UFMBBaseWeaponComponent::EquipWeapon(AFMBBaseWeapon* EquippedWeapon)
@@ -110,36 +91,7 @@ void UFMBBaseWeaponComponent::EquipWeapon(AFMBBaseWeapon* EquippedWeapon)
     FMBUtils::AttachItemToSocket(EquippedWeapon, Character->GetMesh(), CurrentWeaponAnimationsData.WeaponEquipSocketName);
     CurrentWeapon = EquippedWeapon;
     CurrentWeapon->OnItemStateChanged.Broadcast(EItemState::EIS_Equipped);
-
-    // UE_LOG(LogFMBBaseWeaponComponent, Warning, TEXT("Weapons num: %d"), Weapons.Num());
 }
-
-/*void UFMBBaseWeaponComponent::EquipWeapon()
-{
-    if (!Character) return;
-
-    bIsEquipAnimInProgress = true;
-    if (CurrentWeapon)
-    {
-        PlayAnimMontage(CurrentWeaponAnimationsData.Equip);
-    }
-    else
-    {
-        PlayAnimMontage(WeaponsAnimationsData[EWeaponType::EWT_RedSword].Equip);
-    }
-    //==================================================
-    // UE_LOG(BaseWeaponComponentLog, Display, TEXT("Equip"));
-    //==================================================
-}*/
-
-/*void UFMBBaseWeaponComponent::NextWeapon()
-{
-    if (!CanEquip() || !CanAttack()) return;
-    int32 CurrentWeaponIndexTemp = CurrentWeaponIndex;
-    ++CurrentWeaponIndexTemp;
-    CurrentWeaponIndex = (CurrentWeaponIndexTemp) % Weapons.Num();
-    EquipWeapon();
-}*/
 
 void UFMBBaseWeaponComponent::FastMeleeAttack()
 {
@@ -191,31 +143,17 @@ void UFMBBaseWeaponComponent::InitAnimation(const FWeaponAnimationsData& WeaponA
 {
     if (!Character) return;
 
-    if (WeaponAnimationData.Roll)
+    const auto RollingEvent = FMBAnimUtils::FindNotifyByClass<UFMBAnimFinishedNotify>(WeaponAnimationData.Roll);
+    if (MovementComponent && RollingEvent)
     {
-        const auto RollingEvent = FMBAnimUtils::FindNotifyByClass<UFMBAnimFinishedNotify>(WeaponAnimationData.Roll);
-        if (MovementComponent && RollingEvent)
-        {
-            RollingEvent->OnNotify.AddUObject(MovementComponent, &UFMBCharacterMovementComponent::OnRollingFinished);
-        }
-        else
-        {
-            UE_LOG(LogFMBBaseWeaponComponent, Error, TEXT("Rolling Finished anim notify don't set"));
-            checkNoEntry();
-        }
-    }
-
-    /*const auto ChangeEquipWeapon = FMBAnimUtils::FindNotifyByClass<UFMBChangeEquipWeaponAnimNotify>(WeaponAnimationData.Equip);
-    if (ChangeEquipWeapon)
-    {
-        ChangeEquipWeapon->OnNotify.AddUObject(this, &UFMBBaseWeaponComponent::OnChangeEquipWeapon);
+        RollingEvent->OnNotify.AddUObject(MovementComponent, &UFMBCharacterMovementComponent::OnRollingFinished);
     }
     else
     {
-        UE_LOG(LogFMBBaseWeaponComponent, Error, TEXT("Change weapon anim notify don't set"));
+        UE_LOG(LogFMBBaseWeaponComponent, Error, TEXT("Rolling Finished anim notify don't set"));
         checkNoEntry();
     }
-    const auto EquipFinished = FMBAnimUtils::FindNotifyByClass<UFMBAnimFinishedNotify>(WeaponAnimationData.Equip);
+    /*const auto EquipFinished = FMBAnimUtils::FindNotifyByClass<UFMBAnimFinishedNotify>(WeaponAnimationData.Equip);
     if (EquipFinished)
     {
         EquipFinished->OnNotify.AddUObject(this, &UFMBBaseWeaponComponent::OnEquipFinished);
@@ -225,7 +163,6 @@ void UFMBBaseWeaponComponent::InitAnimation(const FWeaponAnimationsData& WeaponA
         UE_LOG(LogFMBBaseWeaponComponent, Error, TEXT("Equip weapon anim notify don't set"));
         checkNoEntry();
     }*/
-
     if (WeaponAnimationData.FastAttack)
     {
         CheckAttackAnimNotifyState(WeaponAnimationData.FastAttack);
@@ -238,18 +175,25 @@ void UFMBBaseWeaponComponent::InitAnimation(const FWeaponAnimationsData& WeaponA
 
 void UFMBBaseWeaponComponent::CheckAttackAnimNotifyState(UAnimMontage* Animation)
 {
-    const auto AttackEvent = FMBAnimUtils::FindNotifyByClass<UFMBFinishedAnimNotifyState>(Animation);
-    const auto AttackAnimEvent = FMBAnimUtils::FindNotifyByClass<UFMBAnimFinishedNotify>(Animation);
-    if (AttackEvent && AttackAnimEvent)
+    const auto AttackEventNotify = FMBAnimUtils::FindNotifyByClass<UFMBAnimFinishedNotify>(Animation);
+    const auto AttackEventNotifyState = FMBAnimUtils::FindNotifyByClass<UFMBFinishedAnimNotifyState>(Animation);
+    if (AttackEventNotify)
     {
-        AttackEvent->OnNotifyStateBegin.AddUObject(this, &UFMBBaseWeaponComponent::OnAttackNotifyStateBegin);
-        AttackEvent->OnNotifyStateEnd.AddUObject(this, &UFMBBaseWeaponComponent::OnAttackNotifyStateEnd);
-
-        AttackAnimEvent->OnNotify.AddUObject(this, &UFMBBaseWeaponComponent::OnAttackNotifyAnimEnd);
+        AttackEventNotify->OnNotify.AddUObject(this, &UFMBBaseWeaponComponent::OnAttackNotifyAnimEnd);
     }
     else
     {
-        UE_LOG(LogFMBBaseWeaponComponent, Error, TEXT("Attack finished weapon anim notifies don't set"));
+        UE_LOG(LogFMBBaseWeaponComponent, Error, TEXT("Attack finished weapon anim notify don't set"));
+        checkNoEntry();
+    }
+    if (AttackEventNotifyState)
+    {
+        AttackEventNotifyState->OnNotifyStateBegin.AddUObject(this, &UFMBBaseWeaponComponent::OnAttackNotifyStateBegin);
+        AttackEventNotifyState->OnNotifyStateEnd.AddUObject(this, &UFMBBaseWeaponComponent::OnAttackNotifyStateEnd);
+    }
+    else
+    {
+        UE_LOG(LogFMBBaseWeaponComponent, Error, TEXT("Attack finished weapon anim notify state don't set"));
         checkNoEntry();
     }
 }
@@ -276,44 +220,11 @@ void UFMBBaseWeaponComponent::OnAttackNotifyAnimEnd(USkeletalMeshComponent* Mesh
     bIsAttackAnimInProgress = false;
 }
 
-/*void UFMBBaseWeaponComponent::OnEquipFinished(USkeletalMeshComponent* MeshComp)
+void UFMBBaseWeaponComponent::OnEquipFinished(USkeletalMeshComponent* MeshComp)
 {
     if (!Character || Character->GetMesh() != MeshComp) return;
     bIsEquipAnimInProgress = false;
-}*/
-
-/*void UFMBBaseWeaponComponent::OnChangeEquipWeapon(USkeletalMeshComponent* MeshComp)
-{
-    if (CurrentWeaponIndex < 0 || CurrentWeaponIndex > Weapons.Num())
-    {
-        UE_LOG(LogFMBBaseWeaponComponent, Display, TEXT("Incorrect Weapon Index"));
-        return;
-    }
-    if (!Character || Character->GetMesh() != MeshComp) return;
-
-    if (CurrentWeapon)
-    {
-        CurrentWeapon->StopDrawTrace();
-        if (CurrentWeapon->GetRootComponent())
-        {
-            CurrentWeapon->GetRootComponent()->SetVisibility(false, true);
-        }
-        FMBUtils::AttachItemToSocket(CurrentWeapon, Character->GetMesh(), WeaponArmorySocketName);
-    }
-    CurrentWeapon = Weapons[CurrentWeaponIndex];
-    EquipShield();
-    // only for 2 weapons
-    ArmoryWeapon = Weapons[(CurrentWeaponIndex + 1) % Weapons.Num()];
-    if (CurrentWeapon->GetRootComponent())
-    {
-        CurrentWeapon->GetRootComponent()->SetVisibility(true, true);
-    }
-    if (WeaponsAnimationsData.Contains(CurrentWeapon->GetWeaponType()))
-    {
-        CurrentWeaponAnimationsData = WeaponsAnimationsData[CurrentWeapon->GetWeaponType()];
-    }
-    FMBUtils::AttachItemToSocket(CurrentWeapon, Character->GetMesh(), CurrentWeaponAnimationsData.WeaponEquipSocketName);
-}*/
+}
 
 /*void UFMBBaseWeaponComponent::EquipShield()
 {

@@ -68,9 +68,9 @@ void UFMBPickUpItemBoxWidget::OnPickUpPickedUp(int8 PickUpIndex, const FItemData
     }
 }
 
-void UFMBPickUpItemBoxWidget::OnPickUpSelected(int8 PickUpIndex, const FItemData& Data, bool bIsVisible)
+void UFMBPickUpItemBoxWidget::OnPickUpSelected(int8 PickUpIndex, const EItemType ItemType, bool bIsVisible)
 {
-    if (Data.ItemType != EItemType::EIT_PickUp) return;
+    if (ItemType != EItemType::EIT_PickUp) return;
 
     if (PickUpIconWidgets[PickUpIndex] && PickUpIconWidgets.Num() > PickUpIndex)
     {
@@ -88,9 +88,9 @@ void UFMBPickUpItemBoxWidget::OnPickUpCountChange(int8 PickUpIndex, const FItemD
     }
 }
 
-void UFMBPickUpItemBoxWidget::OnPickUpCountVisible(int8 PickUpIndex, const FItemData& Data, bool bIsVisible)
+void UFMBPickUpItemBoxWidget::OnPickUpCountVisible(int8 PickUpIndex, const EItemType ItemType, bool bIsVisible)
 {
-    if (Data.ItemType != EItemType::EIT_PickUp) return;
+    if (ItemType != EItemType::EIT_PickUp) return;
 
     if (PickUpIconWidgets[PickUpIndex] && PickUpIconWidgets.Num() > PickUpIndex)
     {
@@ -98,9 +98,9 @@ void UFMBPickUpItemBoxWidget::OnPickUpCountVisible(int8 PickUpIndex, const FItem
     }
 }
 
-void UFMBPickUpItemBoxWidget::OnPickUpIconVisibility(int8 PickUpIndex, const FItemData& Data, bool bIsVisible)
+void UFMBPickUpItemBoxWidget::OnPickUpIconVisibility(int8 PickUpIndex, const EItemType ItemType, bool bIsVisible)
 {
-    if (Data.ItemType != EItemType::EIT_PickUp) return;
+    if (ItemType != EItemType::EIT_PickUp) return;
 
     if (PickUpIconWidgets[PickUpIndex] && PickUpIconWidgets.Num() > PickUpIndex)
     {

@@ -11,7 +11,6 @@ class AFMBBaseCharacter;
 class UFMBCharacterMovementComponent;
 class UFMBStaminaComponent;
 class AFMBBaseWeapon;
-class UAnimMontage;
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class FORMAIDBILBERRY_API UFMBBaseWeaponComponent : public UActorComponent
@@ -23,8 +22,6 @@ public:
 
     void FastMeleeAttack();
     void StrongMeleeAttack();
-
-    // void NextWeapon();
 
     void StopDrawTrace();
 
@@ -99,6 +96,8 @@ protected:
     AFMBBaseWeapon* SpawnWeapon() const;
     virtual void EquipWeapon(AFMBBaseWeapon* EquippedWeapon);
 
+    virtual void InitAnimation(const FWeaponAnimationsData& WeaponAnimationData);
+
 private:
     bool bIsAttackAnimInProgress{false};
     bool bIsEquipAnimInProgress{false};
@@ -111,17 +110,14 @@ private:
 
     // int32 CurrentWeaponIndex{0};
 
-    // void EquipWeapon();
-
     void CheckWeaponAnimationsData();
-    void InitAnimation(const FWeaponAnimationsData& WeaponAnimationData);
     void CheckAttackAnimNotifyState(UAnimMontage* Animation);
 
     void OnAttackNotifyStateBegin(USkeletalMeshComponent* MeshComp);
     void OnAttackNotifyStateEnd(USkeletalMeshComponent* MeshComp);
     void OnAttackNotifyAnimEnd(USkeletalMeshComponent* MeshComp);
-    // void OnEquipFinished(USkeletalMeshComponent* MeshComp);
-    // void OnChangeEquipWeapon(USkeletalMeshComponent* MeshComp);
+    void OnEquipFinished(USkeletalMeshComponent* MeshComp);
+
     // void EquipShield();
 
     bool CanDoAttack(const EStaminaSpend AttackStaminaSpend) const;

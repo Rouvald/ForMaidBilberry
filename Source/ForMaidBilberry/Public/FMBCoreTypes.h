@@ -140,10 +140,10 @@ struct FItemData
 };
 
 DECLARE_EVENT_TwoParams(UFMBPlayerWeaponComponent, FOnItemPickedUpSignature, int8, const FItemData&);
-DECLARE_EVENT_ThreeParams(UFMBPlayerWeaponComponent, FOnItemIconVisiblitySignature, int8, const FItemData&, bool bIsVisible);
-DECLARE_EVENT_ThreeParams(UFMBPlayerWeaponComponent, FOnItemSelectedSignature, int8, const FItemData&, bool bIsVisible);
+DECLARE_EVENT_ThreeParams(UFMBPlayerWeaponComponent, FOnItemIconVisiblitySignature, int8, const EItemType, bool bIsVisible);
+DECLARE_EVENT_ThreeParams(UFMBPlayerWeaponComponent, FOnItemSelectedSignature, int8, const EItemType, bool bIsVisible);
 DECLARE_EVENT_TwoParams(UFMBPlayerWeaponComponent, FOnItemCountChangeSignature, int8, const FItemData&);
-DECLARE_EVENT_ThreeParams(UFMBPlayerWeaponComponent, FOnItemCountVisibilitySignature, int8, const FItemData&, bool bIsVisible);
+DECLARE_EVENT_ThreeParams(UFMBPlayerWeaponComponent, FOnItemCountVisibilitySignature, int8, const EItemType, bool bIsVisible);
 
 // Weapon
 

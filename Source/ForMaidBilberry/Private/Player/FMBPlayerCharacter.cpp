@@ -131,8 +131,18 @@ void AFMBPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 
     // PlayerInputComponent->BindAction("UsePickUp", IE_Pressed, WeaponComponent, &UFMBBaseWeaponComponent::UsePickUp);
 
-    // PlayerInputComponent->BindAction("NextWeapon", IE_Pressed, WeaponComponent, &UFMBBaseWeaponComponent::NextWeapon);
+    DECLARE_DELEGATE_OneParam(FOnWeaponChangeSignature, bool);
+    PlayerInputComponent->BindAction<FOnWeaponChangeSignature>(
+        "NextWeaponWheelDown", IE_Pressed, WeaponComponent, &UFMBPlayerWeaponComponent::NextWeapon, true);
+    PlayerInputComponent->BindAction<FOnWeaponChangeSignature>(
+        "NextWeaponWheelUp", IE_Pressed, WeaponComponent, &UFMBPlayerWeaponComponent::NextWeapon, false);
 
+    /*DECLARE_DELEGATE_OneParam(FOnWeaponChangeIndexSignature, int8);
+    for (int8 Index = 0 ; Index < WeaponComponent->GetMaxWeapons(); ++Index)
+    {
+        PlayerInputComponent->BindAction<FOnWeaponChangeIndexSignature>("ChooseWeapon", IE_Pressed, WeaponComponent,
+            &UFMBPlayerWeaponComponent::ChooseWeapon, Index);
+    }*/
     // PlayerInputComponent->BindAction("Rolling", IE_Pressed, CharacterMovementComponent, &UFMBCharacterMovementComponent::Rolling);
 
     // PlayerInputComponent->BindAction("Block", IE_Pressed, WeaponComponent, &UFMBPlayerWeaponComponent::OnStartBlock);

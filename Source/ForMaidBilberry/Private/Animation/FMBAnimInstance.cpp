@@ -47,6 +47,10 @@ void UFMBAnimInstance::UpdateAnimationProperties(float DeltaSeconds)
             {
                 CurrentWeaponType = WeaponComponent->GetCurrentWeapon()->GetWeaponType();
             }
+            else
+            {
+                CurrentWeaponType = EWeaponType::EWT_NoWeapon;
+            }
         }
     }
 }

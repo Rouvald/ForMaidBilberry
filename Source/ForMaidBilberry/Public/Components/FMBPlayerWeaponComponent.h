@@ -27,6 +27,8 @@ public:
 
     void NextWeapon(bool bIsWheelDown);
     void ChooseWeapon(int8 NewWeaponIndex);
+    void ThrowWeapon();
+    void ThrowPickUp();
     // void OnStartBlock();
     // void OnStopBlock();
 
@@ -75,9 +77,9 @@ private:
     TArray<AFMBBasePickUp*> PickUps;
 
     /* Max Weapons that player can hold. */
-    int8 MaxWeapons{4};
+    const int8 MaxWeapons{4};
     /* Max PickUps that player can hold. */
-    int8 MaxPickUps{1};
+    const int8 MaxPickUps{1};
 
     int8 CurrentWeaponIndex{0};
     int8 LastCurrentWeaponIndex{0};

@@ -34,6 +34,7 @@ public:
     void StopDrawTrace();
 
     FORCEINLINE UNiagaraComponent* GetSwordTrailFXComponent() const { return SwordTrailFXComponent; }
+    FORCEINLINE const FWeaponDamageData& GetWeaponDamageData() const { return WeaponDamageData; }
 
 protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Component")
@@ -61,10 +62,7 @@ protected:
     float DamageAmount{0};
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
-    float FastAttackDamage{10.0f};
-
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
-    float StrongAttackDamage{30.0f};
+    FWeaponDamageData WeaponDamageData;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sound")
     USoundCue* SwordSlashSound{nullptr};
@@ -77,6 +75,8 @@ protected:
     TMap<EChooseAttack, float> ChooseDamageAmount;
 
     virtual void BeginPlay() override;
+
+    virtual void SetItemInfo() const override;
 
     void DrawTrace();
 

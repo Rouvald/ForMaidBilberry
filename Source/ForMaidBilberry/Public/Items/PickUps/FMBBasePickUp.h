@@ -18,8 +18,6 @@ class FORMAIDBILBERRY_API AFMBBasePickUp : public AFMBBaseItem
 public:
     AFMBBasePickUp();
 
-    virtual void Tick(float DeltaTick) override;
-
     void UsePickUp();
 
     FORCEINLINE EPickUpType GetPickUpType() const { return PickUpType; }

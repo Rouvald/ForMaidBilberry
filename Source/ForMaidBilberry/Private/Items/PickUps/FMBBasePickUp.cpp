@@ -6,33 +6,24 @@
 #include "FMBPlayerWeaponComponent.h"
 #include "Components/SphereComponent.h"
 #include "Kismet/GameplayStatics.h"
-#include "Sound/SoundCue.h"
 #include "NiagaraComponent.h"
-#include "Components/BoxComponent.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogFMBBasePickUp, All, All)
 
 AFMBBasePickUp::AFMBBasePickUp()
 {
-    PrimaryActorTick.bCanEverTick = true;
+    PrimaryActorTick.bCanEverTick = false;
 
-    BoxCollision->SetRelativeLocation(FVector{0.0f, 0.0f, 12.0f});
-    BoxCollision->SetBoxExtent(FVector{11.0f, 11.0f, 13.0f});
+    /*BoxCollision->SetRelativeLocation(FVector{0.0f, 0.0f, 12.0f});
+    BoxCollision->SetBoxExtent(FVector{11.0f, 11.0f, 13.0f});*/
 
-    AreaCollision->SetRelativeLocation(BoxCollision->GetRelativeLocation());
+    AreaCollision->SetRelativeLocation(ItemMesh->GetRelativeLocation());
 
     /*CollisionComponent = CreateDefaultSubobject<USphereComponent>("CollisionComponent");
     CollisionComponent->InitSphereRadius(40.0f);
     CollisionComponent->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
     CollisionComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
     SetRootComponent(CollisionComponent);*/
-}
-
-void AFMBBasePickUp::Tick(float DeltaTick)
-{
-    Super::Tick(DeltaTick);
-
-    // AddActorWorldRotation(FRotator(0.0f, RotationYaw, 0.0f));
 }
 
 void AFMBBasePickUp::UsePickUp()

@@ -29,7 +29,7 @@ AFMBPlayerCharacter::AFMBPlayerCharacter(const FObjectInitializer& ObjInit) : Su
     bUseControllerRotationYaw = true;
     bUseControllerRotationRoll = false;
 
-    /*SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>("SpringArmComponent");
+    SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>("SpringArmComponent");
     SpringArmComponent->SetupAttachment(GetRootComponent());
     SpringArmComponent->SocketOffset = FVector(0.0f, 0.0f, 50.0f);
     SpringArmComponent->TargetArmLength = DefaultTargetArmLength;
@@ -40,7 +40,7 @@ AFMBPlayerCharacter::AFMBPlayerCharacter(const FObjectInitializer& ObjInit) : Su
     TPPCameraComponent->bUsePawnControlRotation = false;
     TPPCameraComponent->SetAutoActivate(false);
 
-    TPPCameraCollisionComponent = CreateDefaultSubobject<USphereComponent>("TPPCameraCollisionComponent");
+    /*TPPCameraCollisionComponent = CreateDefaultSubobject<USphereComponent>("TPPCameraCollisionComponent");
     TPPCameraCollisionComponent->SetupAttachment(TPPCameraComponent);
     TPPCameraCollisionComponent->SetSphereRadius(10.0f);
     TPPCameraCollisionComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
@@ -137,12 +137,16 @@ void AFMBPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
     PlayerInputComponent->BindAction<FOnWeaponChangeSignature>(
         "NextWeaponWheelUp", IE_Pressed, WeaponComponent, &UFMBPlayerWeaponComponent::NextWeapon, false);
 
-    /*DECLARE_DELEGATE_OneParam(FOnWeaponChangeIndexSignature, int8);
-    for (int8 Index = 0 ; Index < WeaponComponent->GetMaxWeapons(); ++Index)
-    {
-        PlayerInputComponent->BindAction<FOnWeaponChangeIndexSignature>("ChooseWeapon", IE_Pressed, WeaponComponent,
-            &UFMBPlayerWeaponComponent::ChooseWeapon, Index);
-    }*/
+    DECLARE_DELEGATE_OneParam(FOnWeaponChangeIndexSignature, int8);
+    PlayerInputComponent->BindAction<FOnWeaponChangeIndexSignature>(
+        "ChooseWeapon1", IE_Pressed, WeaponComponent, &UFMBPlayerWeaponComponent::ChooseWeapon, static_cast<int8>(0));
+    PlayerInputComponent->BindAction<FOnWeaponChangeIndexSignature>(
+        "ChooseWeapon2", IE_Pressed, WeaponComponent, &UFMBPlayerWeaponComponent::ChooseWeapon, static_cast<int8>(1));
+    PlayerInputComponent->BindAction<FOnWeaponChangeIndexSignature>(
+        "ChooseWeapon3", IE_Pressed, WeaponComponent, &UFMBPlayerWeaponComponent::ChooseWeapon, static_cast<int8>(2));
+    PlayerInputComponent->BindAction<FOnWeaponChangeIndexSignature>(
+        "ChooseWeapon4", IE_Pressed, WeaponComponent, &UFMBPlayerWeaponComponent::ChooseWeapon, static_cast<int8>(3));
+
     // PlayerInputComponent->BindAction("Rolling", IE_Pressed, CharacterMovementComponent, &UFMBCharacterMovementComponent::Rolling);
 
     // PlayerInputComponent->BindAction("Block", IE_Pressed, WeaponComponent, &UFMBPlayerWeaponComponent::OnStartBlock);
@@ -150,10 +154,12 @@ void AFMBPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 
     PlayerInputComponent->BindAction(
         "Interact", IE_Pressed, ItemInteractionComponent, &UFMBItemInteractionComponent::TakeItemButtonPressed);
+
     // PlayerInputComponent->BindAction(
     //    "Interact", IE_Released, ItemInteractionComponent, &UFMBItemInteractionComponent::TakeItemButtonReleased);
 
-    // PlayerInputComponent->BindAction("Throw", IE_Pressed, ItemInteractionComponent, &UFMBItemInteractionComponent::Throw);
+    PlayerInputComponent->BindAction("ThrowWeapon", IE_Pressed, WeaponComponent, &UFMBPlayerWeaponComponent::ThrowWeapon);
+    PlayerInputComponent->BindAction("ThrowPickUp", IE_Pressed, WeaponComponent, &UFMBPlayerWeaponComponent::ThrowPickUp);
 
     PlayerInputComponent->BindAction("UsePickUp", IE_Pressed, WeaponComponent, &UFMBPlayerWeaponComponent::UsePickUp);
 

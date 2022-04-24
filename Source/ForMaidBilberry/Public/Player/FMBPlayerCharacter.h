@@ -36,11 +36,11 @@ protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
     UFMBCharacterMovementComponent* CharacterMovementComponent{nullptr};
 
-    /*UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
     USpringArmComponent* SpringArmComponent{nullptr};
 
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
-    UCameraComponent* TPPCameraComponent{nullptr};*/
+    UCameraComponent* TPPCameraComponent{nullptr};
 
     /*UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
     USphereComponent* TPPCameraCollisionComponent{nullptr};*/

@@ -102,14 +102,6 @@ struct FItemStateProperties
 
     ECollisionEnabled::Type AreaCollisionEnabled;
     //
-    // Box Collision
-    ECollisionResponse BoxCollisionResponseToAllChannels;
-
-    ECollisionEnabled::Type BoxCollisionEnabled;
-
-    ECollisionChannel BoxCollisionChannel;
-    ECollisionResponse BoxCollisionResponseToChannel;
-    //
 };
 
 UENUM(BlueprintType)
@@ -176,6 +168,18 @@ enum class EChooseAttack : uint8
     ECA_StrongAttack UMETA(DisplayName = "ESS_StrongAttack"),
 
     ECA_Max UMETA(DisplayName = "Max")
+};
+
+USTRUCT(BlueprintType)
+struct FWeaponDamageData
+{
+    GENERATED_USTRUCT_BODY()
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
+    float FastAttackDamage{10.0f};
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
+    float StrongAttackDamage{30.0f};
 };
 
 // Pickup

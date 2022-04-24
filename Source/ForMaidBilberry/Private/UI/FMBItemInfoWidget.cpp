@@ -14,10 +14,6 @@ void UFMBItemInfoWidget::NativeOnInitialized()
     {
         ItemName->SetVisibility(ESlateVisibility::Visible);
     }
-    if (ItemDamage)
-    {
-        ItemDamage->SetVisibility(ESlateVisibility::Visible);
-    }
 }
 
 void UFMBItemInfoWidget::SetItemName(const FName& Name) const
@@ -28,13 +24,38 @@ void UFMBItemInfoWidget::SetItemName(const FName& Name) const
     }
 }
 
-void UFMBItemInfoWidget::SetItemDamage(float Damage) const
+/* Fast Attack damage */
+void UFMBItemInfoWidget::SetItemFastAttackDamage(float NewFastAttackDamage)
 {
-    if (ItemDamage)
-    {
-        ItemDamage->SetText(FText::FromString(FString::SanitizeFloat(Damage, 2)));
-    }
+    FastAttackDamage = NewFastAttackDamage;
 }
+FText UFMBItemInfoWidget::GetItemFastAttackDamage() const
+{
+    return FText::FromString(FString::SanitizeFloat(FastAttackDamage, 2));
+}
+//
+
+/* Strong Attack damage */
+void UFMBItemInfoWidget::SetItemStrongAttackDamage(float NewStrongAttackDamage)
+{
+    StrongAttackDamage = NewStrongAttackDamage;
+}
+FText UFMBItemInfoWidget::GetItemStrongAttackDamage() const
+{
+    return FText::FromString(FString::SanitizeFloat(StrongAttackDamage, 2));
+}
+//
+
+/* Health amount */
+void UFMBItemInfoWidget::SetItemHealthAmount(float NewHealthAmount)
+{
+    HealthAmount = NewHealthAmount;
+}
+FText UFMBItemInfoWidget::GetItemHealthAmount() const
+{
+    return FText::FromString("+" + (FString::SanitizeFloat(HealthAmount, 2)));
+}
+//
 
 void UFMBItemInfoWidget::SetItemImage(UTexture2D* ItemTexture2D) const
 {

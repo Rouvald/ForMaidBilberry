@@ -34,15 +34,7 @@ public:
 
     // void StartItemInterping();
 
-    // FORCEINLINE void SetIsRotateYaw (bool IsEnable) {bIsRotateYaw = IsEnable;}
-
 protected:
-    /*UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Component")
-    USceneComponent* DefaultRootComponent{nullptr};*/
-
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-    UBoxComponent* BoxCollision{nullptr};
-
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
     USphereComponent* AreaCollision{nullptr};
 

@@ -9,18 +9,19 @@
 #include "NiagaraComponent.h"
 #include "FMBCoreTypes.h"
 #include "FMBUtils.h"
-#include "Components/BoxComponent.h"
 #include "Components/SphereComponent.h"
+#include "Components/WidgetComponent.h"
+#include "UI/FMBItemInfoWidget.h"
 #include "Sound/SoundCue.h"
 
 DECLARE_LOG_CATEGORY_CLASS(LogFMBBaseWeapon, All, All);
 
 AFMBBaseWeapon::AFMBBaseWeapon()
 {
-    BoxCollision->SetRelativeLocation(FVector{0.0f, 70.0f, 0.0f});
-    BoxCollision->SetBoxExtent(FVector{30.0f, 95.0f, 6.0f});
+    /*BoxCollision->SetRelativeLocation(FVector{0.0f, 70.0f, 0.0f});
+    BoxCollision->SetBoxExtent(FVector{30.0f, 95.0f, 6.0f});*/
 
-    AreaCollision->SetRelativeLocation(BoxCollision->GetRelativeLocation());
+    AreaCollision->SetRelativeLocation(ItemMesh->GetRelativeLocation());
 
     WeaponFXComponent = CreateDefaultSubobject<UFMBWeaponFXComponent>(TEXT("WeaponFXComponent"));
 
@@ -34,10 +35,22 @@ void AFMBBaseWeapon::BeginPlay()
     Super::BeginPlay();
     checkf(WeaponFXComponent, TEXT("WeaponFxComponent == nullptr"));
 
-    ChooseDamageAmount.Add(EChooseAttack::ECA_FastAttack, FastAttackDamage);
-    ChooseDamageAmount.Add(EChooseAttack::ECA_StrongAttack, StrongAttackDamage);
+    ChooseDamageAmount.Add(EChooseAttack::ECA_FastAttack, WeaponDamageData.FastAttackDamage);
+    ChooseDamageAmount.Add(EChooseAttack::ECA_StrongAttack, WeaponDamageData.StrongAttackDamage);
 
     SwordTrailFXComponent->Deactivate();
+}
+
+void AFMBBaseWeapon::SetItemInfo() const
+{
+    Super::SetItemInfo();
+
+    const auto ItemInfoWidget{Cast<UFMBItemInfoWidget>(ItemInfoWidgetComponent->GetWidget())};
+    if (ItemInfoWidget)
+    {
+        ItemInfoWidget->SetItemFastAttackDamage(WeaponDamageData.FastAttackDamage);
+        ItemInfoWidget->SetItemStrongAttackDamage(WeaponDamageData.StrongAttackDamage);
+    }
 }
 
 void AFMBBaseWeapon::MeleeAttack(const EChooseAttack ChooseAttack)

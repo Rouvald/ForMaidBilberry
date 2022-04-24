@@ -4,6 +4,7 @@
 #include "FMBCharacterMovementComponent.h"
 #include "FMBCoreTypes.h"
 #include "FMBPlayerCharacter.h"
+#include "FMBUtils.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogFMBStaminaComponent, All, All)
 
@@ -66,7 +67,11 @@ void UFMBStaminaComponent::DecreaseRunningStamina()
 
 void UFMBStaminaComponent::AutoHealStamina()
 {
-    if (!GetWorld()) return;
+    if (!PlayerCharacter || PlayerCharacter->IsRunning())
+    {
+        StartStaminaRunning();
+        return;
+    }
 
     SetStamina(Stamina + StaminaModifier * StaminaHealModifier);
 
@@ -110,7 +115,11 @@ void UFMBStaminaComponent::StopStaminaRunning()
     if (GetWorld())
     {
         GetWorld()->GetTimerManager().ClearTimer(StaminaRunningTimerHandle);
-        StartHealStamina();
+
+        if (!GetWorld()->GetTimerManager().IsTimerActive(StaminaAutoHealTimerHandle))
+        {
+            StartHealStamina();
+        }
     }
 }
 

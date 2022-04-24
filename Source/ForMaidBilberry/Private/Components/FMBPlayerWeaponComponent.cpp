@@ -236,7 +236,7 @@ void UFMBPlayerWeaponComponent::NextWeapon(bool bIsWheelDown)
 
 void UFMBPlayerWeaponComponent::ChooseWeapon(int8 NewWeaponIndex)
 {
-    if (!CanEquip() || !CanAttack()) return;
+    if (!CanEquip() || !CanAttack() || CurrentWeaponIndex == NewWeaponIndex) return;
     if (FMath::IsWithin(NewWeaponIndex, static_cast<int8>(0), MaxWeapons))
     {
         LastCurrentWeaponIndex = CurrentWeaponIndex;
@@ -255,6 +255,20 @@ void UFMBPlayerWeaponComponent::EquipNextWeapon()
     {
         PlayAnimMontage(CurrentWeaponAnimationsData.Equip);
     }*/
+}
+
+void UFMBPlayerWeaponComponent::ThrowWeapon()
+{
+    if (!CanEquip() || !CanAttack()) return;
+    DropItem(CurrentWeapon);
+    ClearCurrentWeapon();
+}
+
+void UFMBPlayerWeaponComponent::ThrowPickUp()
+{
+    if (!CanEquip() || !CanAttack()) return;
+    DropItem(CurrentPickUp);
+    ClearCurrentPickUp();
 }
 
 void UFMBPlayerWeaponComponent::UsePickUp()
@@ -434,12 +448,27 @@ void UFMBPlayerWeaponComponent::DropItem(AFMBBaseItem* DropItem) const
     const auto ItemMesh = DropItem->GetItemMesh();
     if (!ItemMesh) return;
 
+    switch (DropItem->GetItemData().ItemType)
+    {
+    case EItemType::EIT_Weapon:
+    {
+        OnItemIconVisibility.Broadcast(CurrentWeaponIndex, CurrentWeapon->GetItemData().ItemType, false);
+        break;
+    }
+    case EItemType::EIT_PickUp:
+    {
+        OnItemSelected.Broadcast(CurrentPickUpIndex, CurrentPickUp->GetItemData().ItemType, false);
+        OnItemIconVisibility.Broadcast(CurrentPickUpIndex, CurrentPickUp->GetItemData().ItemType, false);
+        OnItemCountVisible.Broadcast(CurrentPickUpIndex, CurrentPickUp->GetItemData().ItemType, false);
+        break;
+    }
+    default:
+        break;
+    }
     const FDetachmentTransformRules DetachmentTransformRules{EDetachmentRule::KeepWorld, true};
     ItemMesh->DetachFromComponent(DetachmentTransformRules);
 
     DropItem->OnItemStateChanged.Broadcast(EItemState::EIS_Falling);
-    /* todo:*/
-    // OnItemThrow.Broadcast(?Index?, DropItem);
     DropItem->ThrowWeapon();
 }
 

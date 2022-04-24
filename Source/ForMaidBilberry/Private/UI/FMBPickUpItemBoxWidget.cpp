@@ -53,7 +53,6 @@ void UFMBPickUpItemBoxWidget::InitPickUpItem()
         PickUpIconBox->AddChild(PickUpIconWidget);
         PickUpIconWidgets[Index] = PickUpIconWidget;
     }
-
     // UE_LOG(LogFMBWeaponItemBoxWidget, Error, TEXT("%i"), WeaponIconBox->HasAnyChildren()) ;
 }
 

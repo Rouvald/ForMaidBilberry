@@ -76,7 +76,7 @@ void UFMBWeaponItemBoxWidget::OnWeaponPickedUp(int8 WeaponIndex, const FItemData
 void UFMBWeaponItemBoxWidget::OnWeaponSelected(int8 WeaponIndex, const EItemType ItemType, bool bIsVisible)
 {
     if (ItemType != EItemType::EIT_Weapon) return;
-    UE_LOG(LogFMBWeaponItemBoxWidget, Error, TEXT("UFMBWeaponItemBoxWidget::OnWeaponSelected"));
+    // UE_LOG(LogFMBWeaponItemBoxWidget, Error, TEXT("UFMBWeaponItemBoxWidget::OnWeaponSelected"));
     if (WeaponIconWidgets[WeaponIndex] && WeaponIconWidgets.Num() > WeaponIndex)
     {
         WeaponIconWidgets[WeaponIndex]->SetItemIsSelected(bIsVisible);

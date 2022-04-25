@@ -11,6 +11,7 @@ class AFMBPlayerCharacter;
 class AFMBBaseShield;
 class AFMBBasePickUp;
 class UFMBItemInteractionComponent;
+class USoundCue;
 /**
  *
  */
@@ -54,6 +55,9 @@ protected:
 
     UPROPERTY(EditDefaultsOnly, Category = "PickUp")
     FName PickUpEquipSocketName{"PickUpEquipSocket"};
+
+    UPROPERTY(EditDefaultsOnly, Category = "PickUp")
+    USoundCue* PickedUpSound{nullptr};
 
     virtual void BeginPlay() override;
     virtual void InitWeaponComponent() override;
@@ -116,7 +120,9 @@ private:
     void DestroyCurrentPickUp();
 
     void EquipNextWeapon();
-    void OnChangeEquipWeapon();
+
+    void OnChangeEquipWeapon(USkeletalMeshComponent* MeshComp);
+    void OnEquipFinished(USkeletalMeshComponent* MeshComp);
 
     AFMBPlayerCharacter* GetPlayerCharacter() const;
 

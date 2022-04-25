@@ -6,6 +6,11 @@
 #include "FMBBaseWeapon.h"
 #include "FMBItemInteractionComponent.h"
 #include "FMBUtils.h"
+#include "Animation/FMBAnimUtils.h"
+#include "Animation/FMBChangeEquipWeaponAnimNotify.h"
+#include "Animation/FMBAnimFinishedNotify.h"
+#include "Kismet/GameplayStatics.h"
+#include "Sound/SoundCue.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogFMBPlayerWeaponComponent, All, All)
 
@@ -21,7 +26,7 @@ void UFMBPlayerWeaponComponent::BeginPlay()
     Weapons.Init(nullptr, MaxWeapons);
     PickUps.Init(nullptr, MaxPickUps);
 
-    TestLogs();
+    // TestLogs();
 }
 
 void UFMBPlayerWeaponComponent::InitWeaponComponent()
@@ -40,7 +45,7 @@ void UFMBPlayerWeaponComponent::InitAnimation(const FWeaponAnimationsData& Weapo
 {
     Super::InitAnimation(WeaponAnimationData);
 
-    /*if(!Character) return;
+    if (!Character) return;
 
     const auto ChangeEquipWeapon = FMBAnimUtils::FindNotifyByClass<UFMBChangeEquipWeaponAnimNotify>(WeaponAnimationData.Equip);
     if (ChangeEquipWeapon)
@@ -51,17 +56,27 @@ void UFMBPlayerWeaponComponent::InitAnimation(const FWeaponAnimationsData& Weapo
     {
         UE_LOG(LogFMBPlayerWeaponComponent, Error, TEXT("Change weapon anim notify don't set"));
         checkNoEntry();
-    }*/
+    }
+    const auto EquipFinished = FMBAnimUtils::FindNotifyByClass<UFMBAnimFinishedNotify>(WeaponAnimationData.Equip);
+    if (EquipFinished)
+    {
+        EquipFinished->OnNotify.AddUObject(this, &UFMBPlayerWeaponComponent::OnEquipFinished);
+    }
+    else
+    {
+        UE_LOG(LogFMBPlayerWeaponComponent, Error, TEXT("Equip weapon anim notify don't set"));
+        checkNoEntry();
+    }
 }
 
-void UFMBPlayerWeaponComponent::OnChangeEquipWeapon()
+void UFMBPlayerWeaponComponent::OnChangeEquipWeapon(USkeletalMeshComponent* MeshComp)
 {
     if (CurrentWeaponIndex < 0 || CurrentWeaponIndex > Weapons.Num())
     {
         UE_LOG(LogFMBPlayerWeaponComponent, Warning, TEXT("Incorrect Weapon Index"));
         return;
     }
-    // if (!Character || Character->GetMesh() != MeshComp) return;
+    if (!Character || Character->GetMesh() != MeshComp) return;
 
     if (CurrentWeapon)
     {
@@ -91,13 +106,19 @@ void UFMBPlayerWeaponComponent::OnChangeEquipWeapon()
     }
 }
 
+void UFMBPlayerWeaponComponent::OnEquipFinished(USkeletalMeshComponent* MeshComp)
+{
+    if (!Character || Character->GetMesh() != MeshComp) return;
+    bIsEquipAnimInProgress = false;
+}
+
 void UFMBPlayerWeaponComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
     DestroyWeapons();
     // DestroyCurrentShield();
     DestroyPickUps();
 
-    TestLogs();
+    // TestLogs();
 }
 
 void UFMBPlayerWeaponComponent::DestroyWeapons()
@@ -251,12 +272,8 @@ void UFMBPlayerWeaponComponent::EquipNextWeapon()
 {
     if (!Character) return;
 
-    OnChangeEquipWeapon();
-    /*bIsEquipAnimInProgress = true;
-    if (CurrentWeapon)
-    {
-        PlayAnimMontage(CurrentWeaponAnimationsData.Equip);
-    }*/
+    bIsEquipAnimInProgress = true;
+    PlayAnimMontage(CurrentWeaponAnimationsData.Equip);
 }
 
 void UFMBPlayerWeaponComponent::ThrowWeapon()
@@ -291,7 +308,7 @@ void UFMBPlayerWeaponComponent::PickUpWasUsed()
     {
         DestroyCurrentPickUp();
     }
-    TestLogs();
+    // TestLogs();
 }
 
 void UFMBPlayerWeaponComponent::GetPickupItem(AFMBBaseItem* Item)
@@ -355,7 +372,8 @@ void UFMBPlayerWeaponComponent::EquipWeapon(AFMBBaseWeapon* EquippedWeapon)
         // OnItemIconVisibility.Broadcast(CurrentWeaponIndex, EquippedWeapon->GetItemData(), true);
         OnItemSelected.Broadcast(CurrentWeaponIndex, EquippedWeapon->GetItemData().ItemType, true);
     }
-    TestLogs();
+    UGameplayStatics::PlaySoundAtLocation(GetWorld(), PickedUpSound, Character->GetActorLocation());
+    // TestLogs();
 }
 
 void UFMBPlayerWeaponComponent::EquipPickUp(AFMBBasePickUp* EquippedPickUp)
@@ -399,7 +417,8 @@ void UFMBPlayerWeaponComponent::EquipPickUp(AFMBBasePickUp* EquippedPickUp)
         OnItemSelected.Broadcast(CurrentPickUpIndex, EquippedPickUp->GetItemData().ItemType, true);
         OnItemCountChange.Broadcast(CurrentPickUpIndex, EquippedPickUp->GetItemData());
     }
-    TestLogs();
+    UGameplayStatics::PlaySoundAtLocation(GetWorld(), PickedUpSound, Character->GetActorLocation());
+    // TestLogs();
 }
 
 void UFMBPlayerWeaponComponent::SwapWeapon(AFMBBaseWeapon* EquippedWeapon)

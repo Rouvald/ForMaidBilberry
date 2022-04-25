@@ -8,6 +8,8 @@
 #include "Weapon/Components/FMBWeaponFXComponent.h"
 #include "NiagaraComponent.h"
 #include "FMBCoreTypes.h"
+#include "FMBPlayerCharacter.h"
+#include "FMBPlayerWeaponComponent.h"
 #include "FMBUtils.h"
 #include "Components/SphereComponent.h"
 #include "Components/WidgetComponent.h"
@@ -22,6 +24,7 @@ AFMBBaseWeapon::AFMBBaseWeapon()
     BoxCollision->SetBoxExtent(FVector{30.0f, 95.0f, 6.0f});*/
 
     AreaCollision->SetRelativeLocation(ItemMesh->GetRelativeLocation());
+    ItemInfoWidgetComponent->SetRelativeLocation(FVector{0.0f, 70.0f, 0.0f});
 
     WeaponFXComponent = CreateDefaultSubobject<UFMBWeaponFXComponent>(TEXT("WeaponFXComponent"));
 
@@ -35,8 +38,8 @@ void AFMBBaseWeapon::BeginPlay()
     Super::BeginPlay();
     checkf(WeaponFXComponent, TEXT("WeaponFxComponent == nullptr"));
 
-    ChooseDamageAmount.Add(EChooseAttack::ECA_FastAttack, WeaponDamageData.FastAttackDamage);
-    ChooseDamageAmount.Add(EChooseAttack::ECA_StrongAttack, WeaponDamageData.StrongAttackDamage);
+    ChooseDamageAmount.Add(EChooseAttack::ECA_FastAttack, WeaponDamageData.DefaultDamage);
+    ChooseDamageAmount.Add(EChooseAttack::ECA_StrongAttack, WeaponDamageData.DefaultDamage * WeaponDamageData.StrongAttackModifier);
 
     SwordTrailFXComponent->Deactivate();
 }
@@ -48,10 +51,33 @@ void AFMBBaseWeapon::SetItemInfo() const
     const auto ItemInfoWidget{Cast<UFMBItemInfoWidget>(ItemInfoWidgetComponent->GetWidget())};
     if (ItemInfoWidget)
     {
-        ItemInfoWidget->SetItemFastAttackDamage(WeaponDamageData.FastAttackDamage);
-        ItemInfoWidget->SetItemStrongAttackDamage(WeaponDamageData.StrongAttackDamage);
+        ItemInfoWidget->SetItemDamage(WeaponDamageData.DefaultDamage);
+        // ItemInfoWidget->SetItemStrongAttackDamage(WeaponDamageData.DefaultDamage*WeaponDamageData.StrongAttackModifier);
     }
 }
+
+/*void AFMBBaseWeapon::SetItemInfoWidgetVisibility(bool bIsVisible) const
+{
+    Super::SetItemInfoWidgetVisibility(bIsVisible);
+    const auto ItemInfoWidget{Cast<UFMBItemInfoWidget>(ItemInfoWidgetComponent->GetWidget())};
+    if (ItemInfoWidget)
+    {
+        ItemInfoWidget->SetItemDamage(UpdateItemInfoProperties());
+    }
+}
+
+float AFMBBaseWeapon::UpdateItemInfoProperties() const
+{
+    const auto PlayerCharacter{GetPlayerCharacter()};
+    if (!PlayerCharacter) return 0.0f;
+
+    const auto WeaponComponent{PlayerCharacter->FindComponentByClass<UFMBPlayerWeaponComponent>()};
+    if (!WeaponComponent) return 0.0f;
+
+    return WeaponComponent->GetCurrentWeapon()
+               ? WeaponDamageData.DefaultDamage - WeaponComponent->GetCurrentWeapon()->GetWeaponDamageData().DefaultDamage
+               : WeaponDamageData.DefaultDamage;
+}*/
 
 void AFMBBaseWeapon::MeleeAttack(const EChooseAttack ChooseAttack)
 {

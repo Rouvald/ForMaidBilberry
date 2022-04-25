@@ -27,7 +27,8 @@ public:
     FORCEINLINE UStaticMeshComponent* GetItemMesh() const { return ItemMesh; }
     FORCEINLINE const FItemData& GetItemData() const { return ItemData; }
 
-    // FORCEINLINE int32 GetItemCount() const { return ItemData.ItemCount; }
+    virtual void SetItemInfoWidgetVisibility(bool bIsVisible) const;
+
     void ChangeItemCount(const bool bIsIncrease);
 
     void ThrowWeapon();
@@ -44,10 +45,13 @@ protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Component")
     UStaticMeshComponent* ItemMesh{nullptr};
 
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Component")
+    USoundCue* FallingHitSound{nullptr};
+
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Properties")
     FItemData ItemData;
 
-    EItemState CurrentItemState{EItemState::EIS_Pickup};
+    EItemState CurrentItemState{EItemState::EIS_PickUp};
 
     UPROPERTY()
     TMap<EItemState, FItemStateProperties> ItemStatePropertiesMap;
@@ -60,6 +64,8 @@ protected:
 
     void FillItemPropertiesMap();
     void SetItemProperties(const EItemState NewItemState) const;
+
+    // virtual float UpdateItemInfoProperties() const;
 
     AFMBPlayerCharacter* GetPlayerCharacter() const;
     AController* GetController() const;

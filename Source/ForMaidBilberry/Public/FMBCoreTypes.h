@@ -49,12 +49,13 @@ class AFMBBaseItem;
 class UNiagaraSystem;
 class USoundCue;
 
+/* todo: can add Player to compare weapon damage and show in Item info widget damage difference */
 DECLARE_MULTICAST_DELEGATE_TwoParams(FOnItemAreaOverlapSignature, const AFMBBaseItem*, bool);
 
 UENUM(BlueprintType)
 enum class EItemState : uint8
 {
-    EIS_Pickup,
+    EIS_PickUp,
     // UMETA(DisplayName="Pickup"),
     EIS_EquipInProgress,
     // UMETA(DisplayName="EquipInProgress"),
@@ -176,10 +177,10 @@ struct FWeaponDamageData
     GENERATED_USTRUCT_BODY()
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
-    float FastAttackDamage{10.0f};
+    float DefaultDamage{10.0f};
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
-    float StrongAttackDamage{30.0f};
+    float StrongAttackModifier{1.5f};
 };
 
 // Pickup

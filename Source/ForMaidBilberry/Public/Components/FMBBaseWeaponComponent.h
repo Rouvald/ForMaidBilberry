@@ -81,6 +81,8 @@ protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Animations")
     TMap<EWeaponType, FWeaponAnimationsData> WeaponsAnimationsData;
 
+    bool bIsEquipAnimInProgress{false};
+
     virtual void BeginPlay() override;
 
     virtual void InitWeaponComponent();
@@ -100,15 +102,6 @@ protected:
 
 private:
     bool bIsAttackAnimInProgress{false};
-    bool bIsEquipAnimInProgress{false};
-
-    /*UPROPERTY()
-    TArray<AFMBBaseWeapon*> Weapons;*/
-
-    /*UPROPERTY()
-    TArray<AFMBBaseShield*> Shields;*/
-
-    // int32 CurrentWeaponIndex{0};
 
     void CheckWeaponAnimationsData();
     void CheckAttackAnimNotifyState(UAnimMontage* Animation);
@@ -116,9 +109,6 @@ private:
     void OnAttackNotifyStateBegin(USkeletalMeshComponent* MeshComp);
     void OnAttackNotifyStateEnd(USkeletalMeshComponent* MeshComp);
     void OnAttackNotifyAnimEnd(USkeletalMeshComponent* MeshComp);
-    void OnEquipFinished(USkeletalMeshComponent* MeshComp);
-
-    // void EquipShield();
 
     bool CanDoAttack(const EStaminaSpend AttackStaminaSpend) const;
     void SpendStamina(const EStaminaSpend StaminaSpend) const;

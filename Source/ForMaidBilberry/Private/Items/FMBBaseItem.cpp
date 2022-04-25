@@ -9,6 +9,8 @@
 #include "FMBUtils.h"
 #include "Components/SphereComponent.h"
 #include "Components/WidgetComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "Sound/SoundCue.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogFMBBaseItem, All, All)
 
@@ -23,15 +25,6 @@ AFMBBaseItem::AFMBBaseItem()
     SetRootComponent(ItemMesh);
     ItemMesh->SetCollisionResponseToAllChannels(ECR_Ignore);
     ItemMesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Block);
-    // ItemMesh->SetMassOverrideInKg(NAME_None, 50.0f);
-    // ItemMesh->SetRelativeLocation(FVector{0.0f, 0.0f,0.0f});
-    // ItemMesh->SetupAttachment(DefaultRootComponent);
-    // ItemMesh->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
-
-    /*BoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollision"));
-    BoxCollision->SetupAttachment(GetRootComponent());
-    BoxCollision->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
-    BoxCollision->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Block);*/
 
     AreaCollision = CreateDefaultSubobject<USphereComponent>(TEXT("AreaCollision"));
     AreaCollision->SetupAttachment(GetRootComponent());
@@ -41,14 +34,13 @@ AFMBBaseItem::AFMBBaseItem()
     ItemInfoWidgetComponent->SetupAttachment(GetRootComponent());
     ItemInfoWidgetComponent->SetWidgetSpace(EWidgetSpace::Screen);
     ItemInfoWidgetComponent->SetDrawAtDesiredSize(true);
-    ItemInfoWidgetComponent->SetRelativeLocation(FVector{0.0f, 0.0f, 100.0f});
+    ItemInfoWidgetComponent->SetRelativeLocation(FVector{0.0f, 0.0f, 0.0f});
 }
 
 void AFMBBaseItem::BeginPlay()
 {
     Super::BeginPlay();
     checkf(ItemMesh, TEXT("WeaponMesh == nullptr"));
-    // checkf(BoxCollision, TEXT("BoxCollision == nullptr"));
     checkf(AreaCollision, TEXT("AreaCollision == nullptr"));
     checkf(ItemInfoWidgetComponent, TEXT("ItemInfoWidgetComponent == nullptr"));
 
@@ -63,6 +55,7 @@ void AFMBBaseItem::BeginPlay()
 
     SetItemInfo();
     FillItemPropertiesMap();
+    // SetItemState(EItemState::EIS_Falling);
     // UE_LOG(LogFMBBaseItem, Display, TEXT("%s: CurrentItemState: %s"), *GetName(), *UEnum::GetValueAsString(CurrentItemState));
 }
 
@@ -149,6 +142,16 @@ void AFMBBaseItem::SetItemState(const EItemState NewItemState)
     // UE_LOG(LogFMBBaseItem, Warning, TEXT("%s: CurrentItemState: %s"), *GetName(), *UEnum::GetValueAsString(CurrentItemState));
 }
 
+void AFMBBaseItem::SetItemInfoWidgetVisibility(bool bIsVisible) const
+{
+    ItemInfoWidgetComponent->SetVisibility(bIsVisible);
+}
+
+/*float AFMBBaseItem::UpdateItemInfoProperties() const
+{
+    return 0.0f;
+}*/
+
 void AFMBBaseItem::FillItemPropertiesMap()
 {
     /* @todo: Future refactoring */
@@ -166,7 +169,7 @@ void AFMBBaseItem::FillItemPropertiesMap()
         ECollisionEnabled::NoCollision
     });
 
-    ItemStatePropertiesMap.Add(EItemState::EIS_Pickup, FItemStateProperties{
+    ItemStatePropertiesMap.Add(EItemState::EIS_PickUp, FItemStateProperties{
         false,
         false,
         true,
@@ -261,18 +264,6 @@ void AFMBBaseItem::ThrowWeapon()
 
     ItemMesh->AddImpulse(ThrowingDirection);
 
-    /*FVector TraceStart{}, TraceEnd{};
-    if (!FMBUtils::GetTraceData(GetPlayerCharacter(), TraceStart, TraceEnd, 200.0f)) return;
-
-    UE_LOG(LogFMBBaseItem, Display, TEXT("TraceStart: %f, %f, %f ==== TraceEnd: %f, %f, %f"), TraceStart.X, TraceStart.Y, TraceStart.Z,
-    TraceEnd.X, TraceEnd.Y, TraceEnd.Z);
-
-    const auto Pawn{Cast<APawn>(GetOwner())};
-    if (!Pawn) return;
-
-    SetActorLocation(TraceEnd);
-    ItemMesh->AddImpulse(Pawn->GetActorForwardVector()*100.0f);*/
-
     bIsWeaponFalling = true;
 }
 
@@ -281,17 +272,21 @@ void AFMBBaseItem::FallingHit /*()*/(
 {
     if (GetWorld())
     {
-        GetWorldTimerManager().SetTimer(ThrowingTimerHandle, this, &AFMBBaseItem::StopFalling, WeaponFallingTime, true);
+        if (!GetWorldTimerManager().IsTimerActive(ThrowingTimerHandle))
+        {
+            UGameplayStatics::PlaySoundAtLocation(GetWorld(), FallingHitSound, GetActorLocation());
+            GetWorldTimerManager().SetTimer(ThrowingTimerHandle, this, &AFMBBaseItem::StopFalling, WeaponFallingTime, true);
+        }
     }
 }
 
 void AFMBBaseItem::StopFalling()
 {
-    if(!GetVelocity().IsZero()) return;
+    if (!GetVelocity().IsZero()) return;
     if (CurrentItemState != EItemState::EIS_Falling) return;
 
     bIsWeaponFalling = false;
-    OnItemStateChanged.Broadcast(EItemState::EIS_Pickup);
+    OnItemStateChanged.Broadcast(EItemState::EIS_PickUp);
 
     if (GetWorld())
     {

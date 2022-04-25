@@ -19,12 +19,12 @@ public:
     void SetItemName(const FName& Name) const;
 
     UFUNCTION(BlueprintCallable, Category = "UI")
-    FText GetItemFastAttackDamage() const;
-    void SetItemFastAttackDamage(float NewFastAttackDamage);
+    FText GetItemDamage() const;
+    void SetItemDamage(float NewDamage);
 
-    UFUNCTION(BlueprintCallable, Category = "UI")
+    /*UFUNCTION(BlueprintCallable, Category = "UI")
     FText GetItemStrongAttackDamage() const;
-    void SetItemStrongAttackDamage(float NewStrongAttackDamage);
+    void SetItemStrongAttackDamage(float NewStrongAttackDamage);*/
 
     UFUNCTION(BlueprintCallable, Category = "UI")
     FText GetItemHealthAmount() const;
@@ -42,7 +42,7 @@ private:
     UPROPERTY(meta = (BindWidget, AllowPrivateAccess = "true"))
     UImage* ItemImage{nullptr};
 
-    float FastAttackDamage{0.0f};
+    float Damage{0.0f};
     float StrongAttackDamage{0.0f};
     float HealthAmount{0.0f};
 };

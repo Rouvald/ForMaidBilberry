@@ -33,7 +33,7 @@ protected:
     float RespawnTime{5.0f};*/
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sound")
-    USoundCue* TakenPickUpSound{nullptr};
+    USoundCue* PickUpWasUsedSound{nullptr};
 
     virtual bool CanUsePickUp(APawn* Pawn);
     virtual void PickUpWasUsed();

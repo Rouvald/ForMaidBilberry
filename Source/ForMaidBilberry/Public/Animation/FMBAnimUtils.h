@@ -1,5 +1,8 @@
 ﻿#pragma once
 
+#include "Animation/AnimNotifies/AnimNotify.h"
+#include "Animation/AnimNotifies/AnimNotifyState.h"
+
 class FMBAnimUtils
 {
 public:

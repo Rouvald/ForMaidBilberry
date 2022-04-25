@@ -25,25 +25,28 @@ void UFMBItemInfoWidget::SetItemName(const FName& Name) const
 }
 
 /* Fast Attack damage */
-void UFMBItemInfoWidget::SetItemFastAttackDamage(float NewFastAttackDamage)
+void UFMBItemInfoWidget::SetItemDamage(float NewDamage)
 {
-    FastAttackDamage = NewFastAttackDamage;
+    Damage = NewDamage;
 }
-FText UFMBItemInfoWidget::GetItemFastAttackDamage() const
+
+FText UFMBItemInfoWidget::GetItemDamage() const
 {
-    return FText::FromString(FString::SanitizeFloat(FastAttackDamage, 2));
+    return Damage > 0.0f ? FText::FromString("+" + FString::SanitizeFloat(Damage, /*2*/ 0))
+                         : FText::FromString(FString::SanitizeFloat(Damage, /*2*/ 0));
 }
+
 //
 
 /* Strong Attack damage */
-void UFMBItemInfoWidget::SetItemStrongAttackDamage(float NewStrongAttackDamage)
+/*void UFMBItemInfoWidget::SetItemStrongAttackDamage(float NewStrongAttackDamage)
 {
     StrongAttackDamage = NewStrongAttackDamage;
 }
 FText UFMBItemInfoWidget::GetItemStrongAttackDamage() const
 {
-    return FText::FromString(FString::SanitizeFloat(StrongAttackDamage, 2));
-}
+    return FText::FromString(FString::SanitizeFloat(StrongAttackDamage, /*2#1#0));
+}*/
 //
 
 /* Health amount */
@@ -51,10 +54,12 @@ void UFMBItemInfoWidget::SetItemHealthAmount(float NewHealthAmount)
 {
     HealthAmount = NewHealthAmount;
 }
+
 FText UFMBItemInfoWidget::GetItemHealthAmount() const
 {
-    return FText::FromString("+" + (FString::SanitizeFloat(HealthAmount, 2)));
+    return FText::FromString("+" + FString::SanitizeFloat(HealthAmount, /*2*/ 0));
 }
+
 //
 
 void UFMBItemInfoWidget::SetItemImage(UTexture2D* ItemTexture2D) const

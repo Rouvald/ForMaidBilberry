@@ -7,6 +7,8 @@
 #include "Components/SphereComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "NiagaraComponent.h"
+#include "Components/WidgetComponent.h"
+#include "Sound/SoundCue.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogFMBBasePickUp, All, All)
 
@@ -18,6 +20,8 @@ AFMBBasePickUp::AFMBBasePickUp()
     BoxCollision->SetBoxExtent(FVector{11.0f, 11.0f, 13.0f});*/
 
     AreaCollision->SetRelativeLocation(ItemMesh->GetRelativeLocation());
+
+    ItemInfoWidgetComponent->SetRelativeLocation(FVector{0.0f, 0.0f, 15.0f});
 
     /*CollisionComponent = CreateDefaultSubobject<USphereComponent>("CollisionComponent");
     CollisionComponent->InitSphereRadius(40.0f);
@@ -52,6 +56,7 @@ void AFMBBasePickUp::PickUpWasUsed()
             WeaponComponent->PickUpWasUsed();
         }
     }
+    UGameplayStatics::PlaySoundAtLocation(GetWorld(), PickUpWasUsedSound, GetActorLocation());
 }
 
 /*void AFMBBasePickUp::NotifyActorBeginOverlap(AActor* OtherActor)

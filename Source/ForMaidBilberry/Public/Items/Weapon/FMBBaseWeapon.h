@@ -25,6 +25,8 @@ public:
 
     virtual void MeleeAttack(const EChooseAttack ChooseAttack);
 
+    // virtual void SetItemInfoWidgetVisibility(bool bIsVisible) const override;
+
     // UFUNCTION(BlueprintCallable)
     // FWeaponAnimationData GetWeaponAnimationData() const {return WeaponAnimationData;}
 
@@ -88,6 +90,8 @@ protected:
     void MakeDamage(const FHitResult& HitResult);
 
     void StartDrawTrace();
+
+    // virtual float UpdateItemInfoProperties() const override;
 
     void SpawnSwordSlashSound() const;
 };

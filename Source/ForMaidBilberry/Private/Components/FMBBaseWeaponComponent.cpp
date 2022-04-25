@@ -75,13 +75,14 @@ AFMBBaseWeapon* UFMBBaseWeaponComponent::SpawnWeapon() const
         UE_LOG(LogFMBBaseWeaponComponent, Display, TEXT("Error: spawn weapon"));
         return nullptr;
     }
-    DefaultWeapon->SetOwner(Character);
+    // DefaultWeapon->OnItemStateChanged.Broadcast(EItemState::EIS_PickUp);
     return DefaultWeapon;
 }
 
 void UFMBBaseWeaponComponent::EquipWeapon(AFMBBaseWeapon* EquippedWeapon)
 {
     if (!EquippedWeapon || !Character) return;
+    EquippedWeapon->OnItemStateChanged.Broadcast(EItemState::EIS_Equipped);
     EquippedWeapon->SetOwner(Character);
 
     if (WeaponsAnimationsData.Contains(EquippedWeapon->GetWeaponType()))
@@ -90,7 +91,6 @@ void UFMBBaseWeaponComponent::EquipWeapon(AFMBBaseWeapon* EquippedWeapon)
     }
     FMBUtils::AttachItemToSocket(EquippedWeapon, Character->GetMesh(), CurrentWeaponAnimationsData.WeaponEquipSocketName);
     CurrentWeapon = EquippedWeapon;
-    CurrentWeapon->OnItemStateChanged.Broadcast(EItemState::EIS_Equipped);
 }
 
 void UFMBBaseWeaponComponent::FastMeleeAttack()
@@ -153,16 +153,6 @@ void UFMBBaseWeaponComponent::InitAnimation(const FWeaponAnimationsData& WeaponA
         UE_LOG(LogFMBBaseWeaponComponent, Error, TEXT("Rolling Finished anim notify don't set"));
         checkNoEntry();
     }
-    /*const auto EquipFinished = FMBAnimUtils::FindNotifyByClass<UFMBAnimFinishedNotify>(WeaponAnimationData.Equip);
-    if (EquipFinished)
-    {
-        EquipFinished->OnNotify.AddUObject(this, &UFMBBaseWeaponComponent::OnEquipFinished);
-    }
-    else
-    {
-        UE_LOG(LogFMBBaseWeaponComponent, Error, TEXT("Equip weapon anim notify don't set"));
-        checkNoEntry();
-    }*/
     if (WeaponAnimationData.FastAttack)
     {
         CheckAttackAnimNotifyState(WeaponAnimationData.FastAttack);
@@ -218,12 +208,6 @@ void UFMBBaseWeaponComponent::OnAttackNotifyAnimEnd(USkeletalMeshComponent* Mesh
 {
     if (!Character || Character->GetMesh() != MeshComp) return;
     bIsAttackAnimInProgress = false;
-}
-
-void UFMBBaseWeaponComponent::OnEquipFinished(USkeletalMeshComponent* MeshComp)
-{
-    if (!Character || Character->GetMesh() != MeshComp) return;
-    bIsEquipAnimInProgress = false;
 }
 
 /*void UFMBBaseWeaponComponent::EquipShield()

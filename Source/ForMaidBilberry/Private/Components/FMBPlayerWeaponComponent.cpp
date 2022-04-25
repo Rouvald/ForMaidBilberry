@@ -15,6 +15,9 @@ void UFMBPlayerWeaponComponent::BeginPlay()
 
     InitWeaponComponent();
 
+    CurrentWeaponIndex = 0;
+    CurrentPickUpIndex = 0;
+
     Weapons.Init(nullptr, MaxWeapons);
     PickUps.Init(nullptr, MaxPickUps);
 
@@ -95,8 +98,6 @@ void UFMBPlayerWeaponComponent::EndPlay(const EEndPlayReason::Type EndPlayReason
     DestroyPickUps();
 
     TestLogs();
-
-    Super::EndPlay(EndPlayReason);
 }
 
 void UFMBPlayerWeaponComponent::DestroyWeapons()
@@ -104,6 +105,7 @@ void UFMBPlayerWeaponComponent::DestroyWeapons()
     if (CurrentWeapon)
     {
         OnItemSelected.Broadcast(CurrentWeaponIndex, CurrentWeapon->GetItemData().ItemType, false);
+        OnItemSelected.Broadcast(0, EItemType::EIT_Weapon, true);
         CurrentWeapon = nullptr;
     }
     for (int8 Index = 0; Index < MaxWeapons; ++Index)

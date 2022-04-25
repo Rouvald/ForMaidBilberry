@@ -69,7 +69,7 @@ private:
     float RotationYaw{1.0f};*/
 
     FTimerHandle ThrowingTimerHandle;
-    float WeaponFallingTime{0.3f};
+    float WeaponFallingTime{0.1f};
     bool bIsWeaponFalling{false};
 
     UFUNCTION()
@@ -81,6 +81,8 @@ private:
         UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
     UFUNCTION()
-    void StopFalling /*()*/ (UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse,
+    void FallingHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse,
         const FHitResult& Hit);
+
+    void StopFalling();
 };

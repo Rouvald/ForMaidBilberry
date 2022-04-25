@@ -58,7 +58,7 @@ void AFMBBaseItem::BeginPlay()
     AreaCollision->OnComponentEndOverlap.AddDynamic(this, &AFMBBaseItem::OnAreaEndOverlap);
     OnItemStateChanged.AddUObject(this, &AFMBBaseItem::SetItemState);
 
-    ItemMesh->OnComponentHit.AddDynamic(this, &AFMBBaseItem::StopFalling);
+    ItemMesh->OnComponentHit.AddDynamic(this, &AFMBBaseItem::FallingHit);
     ItemMesh->SetMassOverrideInKg(NAME_None, 50.0f);
 
     SetItemInfo();
@@ -146,7 +146,7 @@ void AFMBBaseItem::SetItemState(const EItemState NewItemState)
 
     CurrentItemState = NewItemState;
     SetItemProperties(NewItemState);
-    // UE_LOG(LogFMBBaseItem, Display, TEXT("%s: CurrentItemState: %s"), *GetName(), *UEnum::GetValueAsString(CurrentItemState));
+    // UE_LOG(LogFMBBaseItem, Warning, TEXT("%s: CurrentItemState: %s"), *GetName(), *UEnum::GetValueAsString(CurrentItemState));
 }
 
 void AFMBBaseItem::FillItemPropertiesMap()
@@ -163,11 +163,7 @@ void AFMBBaseItem::FillItemPropertiesMap()
         ECollisionResponse::ECR_Ignore,
         ECollisionEnabled::NoCollision,
         ECollisionResponse::ECR_Ignore,
-        ECollisionEnabled::NoCollision/*,
-        ECollisionResponse::ECR_Ignore,
-        ECollisionEnabled::NoCollision,
-        ECollisionChannel::ECC_Visibility,
-        ECollisionResponse::ECR_Ignore*/
+        ECollisionEnabled::NoCollision
     });
 
     ItemStatePropertiesMap.Add(EItemState::EIS_Pickup, FItemStateProperties{
@@ -280,17 +276,27 @@ void AFMBBaseItem::ThrowWeapon()
     bIsWeaponFalling = true;
 }
 
-void AFMBBaseItem::StopFalling /*()*/(
+void AFMBBaseItem::FallingHit /*()*/(
     UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
+    if (GetWorld())
+    {
+        GetWorldTimerManager().SetTimer(ThrowingTimerHandle, this, &AFMBBaseItem::StopFalling, WeaponFallingTime, true);
+    }
+}
+
+void AFMBBaseItem::StopFalling()
+{
+    if(!GetVelocity().IsZero()) return;
     if (CurrentItemState != EItemState::EIS_Falling) return;
 
     bIsWeaponFalling = false;
-
-    const FRotator MeshRotation{0.0f, ItemMesh->GetComponentRotation().Yaw, 1.0f};
-    ItemMesh->SetWorldRotation(MeshRotation, false, nullptr, ETeleportType::TeleportPhysics);
-
     OnItemStateChanged.Broadcast(EItemState::EIS_Pickup);
+
+    if (GetWorld())
+    {
+        GetWorldTimerManager().ClearTimer(ThrowingTimerHandle);
+    }
 }
 
 AFMBPlayerCharacter* AFMBBaseItem::GetPlayerCharacter() const

@@ -1,4 +1,4 @@
-// For Maid Bilberry Game. All Rights Recerved
+// For Maid Bilberry Game. All Rights Reserved
 
 #include "Weapon/FMBBaseWeapon.h"
 #include "DrawDebugHelpers.h"
@@ -51,33 +51,25 @@ void AFMBBaseWeapon::SetItemInfo() const
     const auto ItemInfoWidget{Cast<UFMBItemInfoWidget>(ItemInfoWidgetComponent->GetWidget())};
     if (ItemInfoWidget)
     {
-        ItemInfoWidget->SetItemDamage(WeaponDamageData.DefaultDamage);
-        // ItemInfoWidget->SetItemStrongAttackDamage(WeaponDamageData.DefaultDamage*WeaponDamageData.StrongAttackModifier);
+        ItemInfoWidget->SetItemProperty(WeaponDamageData.DefaultDamage);
     }
 }
 
-/*void AFMBBaseWeapon::SetItemInfoWidgetVisibility(bool bIsVisible) const
+void AFMBBaseWeapon::UpdateItemInfoProperty(const AFMBPlayerCharacter* PlayerCharacter) const
 {
-    Super::SetItemInfoWidgetVisibility(bIsVisible);
-    const auto ItemInfoWidget{Cast<UFMBItemInfoWidget>(ItemInfoWidgetComponent->GetWidget())};
-    if (ItemInfoWidget)
-    {
-        ItemInfoWidget->SetItemDamage(UpdateItemInfoProperties());
-    }
-}
-
-float AFMBBaseWeapon::UpdateItemInfoProperties() const
-{
-    const auto PlayerCharacter{GetPlayerCharacter()};
-    if (!PlayerCharacter) return 0.0f;
+    if (!PlayerCharacter) return;
 
     const auto WeaponComponent{PlayerCharacter->FindComponentByClass<UFMBPlayerWeaponComponent>()};
-    if (!WeaponComponent) return 0.0f;
+    if (!WeaponComponent) return;
 
-    return WeaponComponent->GetCurrentWeapon()
-               ? WeaponDamageData.DefaultDamage - WeaponComponent->GetCurrentWeapon()->GetWeaponDamageData().DefaultDamage
-               : WeaponDamageData.DefaultDamage;
-}*/
+    const auto ItemInfoWidget{Cast<UFMBItemInfoWidget>(ItemInfoWidgetComponent->GetWidget())};
+    if (!ItemInfoWidget) return;
+
+    ItemInfoWidget->SetItemProperty(
+        WeaponComponent->GetCurrentWeapon()
+            ? WeaponDamageData.DefaultDamage - WeaponComponent->GetCurrentWeapon()->GetWeaponDamageData().DefaultDamage
+            : WeaponDamageData.DefaultDamage);
+}
 
 void AFMBBaseWeapon::MeleeAttack(const EChooseAttack ChooseAttack)
 {

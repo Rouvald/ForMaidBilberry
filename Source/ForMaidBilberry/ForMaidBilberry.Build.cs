@@ -1,4 +1,4 @@
-// For Maid Bilberry Game. All Rights Recerved
+// For Maid Bilberry Game. All Rights Reserved
 
 using UnrealBuildTool;
 
@@ -8,14 +8,15 @@ public class ForMaidBilberry : ModuleRules
     {
         PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
         PublicDependencyModuleNames.AddRange(new string[] {
-            "Core",            //
-            "CoreUObject",     //
-            "Engine",          //
-            "InputCore",       //
-            "Niagara",         //
-            "PhysicsCore",     //
-            "GameplayTasks",   //
-            "NavigationSystem" //
+            "Core",             //
+            "CoreUObject",      //
+            "Engine",           //
+            "InputCore",        //
+            "Niagara",          //
+            "PhysicsCore",      //
+            "GameplayTasks",    //
+            "NavigationSystem", //
+            "SlateCore"         //
         });
         PrivateDependencyModuleNames.AddRange(new string[] {});
         PublicIncludePaths.AddRange(new string[] {

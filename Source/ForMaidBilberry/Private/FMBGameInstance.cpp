@@ -1,4 +1,4 @@
-// For Maid Bilberry Game. All Rights Recerved
+// For Maid Bilberry Game. All Rights Reserved
 
 #include "FMBGameInstance.h"
 #include "Sound/FMBSoundFuncLib.h"

@@ -1,4 +1,4 @@
-// For Maid Bilberry Game. All Rights Recerved
+// For Maid Bilberry Game. All Rights Reserved
 
 #include "Menu/UI/FMBSelectLevelWidget.h"
 #include "FMBGameInstance.h"

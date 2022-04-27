@@ -142,15 +142,21 @@ void AFMBBaseItem::SetItemState(const EItemState NewItemState)
     // UE_LOG(LogFMBBaseItem, Warning, TEXT("%s: CurrentItemState: %s"), *GetName(), *UEnum::GetValueAsString(CurrentItemState));
 }
 
-void AFMBBaseItem::SetItemInfoWidgetVisibility(bool bIsVisible) const
+void AFMBBaseItem::SetItemInfoWidgetVisibility(const AFMBPlayerCharacter* PlayerCharacter, bool bIsVisible) const
 {
     ItemInfoWidgetComponent->SetVisibility(bIsVisible);
+    UpdateItemInfoProperty(PlayerCharacter);
 }
 
-/*float AFMBBaseItem::UpdateItemInfoProperties() const
+void AFMBBaseItem::UpdateItemInfoProperty(const AFMBPlayerCharacter* PlayerCharacter) const
 {
-    return 0.0f;
-}*/
+    if (!PlayerCharacter) return;
+    const auto ItemInfoWidget{Cast<UFMBItemInfoWidget>(ItemInfoWidgetComponent->GetWidget())};
+    if (ItemInfoWidget)
+    {
+        ItemInfoWidget->SetItemProperty(0.0f);
+    }
+}
 
 void AFMBBaseItem::FillItemPropertiesMap()
 {
@@ -282,9 +288,11 @@ void AFMBBaseItem::FallingHit /*()*/(
 
 void AFMBBaseItem::StopFalling()
 {
-    if (!GetVelocity().IsZero()) return;
-    if (CurrentItemState != EItemState::EIS_Falling) return;
+    if (!GetWorld() || CurrentItemState != EItemState::EIS_Falling) return;
+    WeaponFallingTimeCounter += GetWorldTimerManager().GetTimerElapsed(ThrowingTimerHandle);
 
+    if (WeaponFallingTimeCounter <= MaxWeaponFallingTime && !GetVelocity().IsZero()) return;
+    
     bIsWeaponFalling = false;
     OnItemStateChanged.Broadcast(EItemState::EIS_PickUp);
 
@@ -292,6 +300,7 @@ void AFMBBaseItem::StopFalling()
     {
         GetWorldTimerManager().ClearTimer(ThrowingTimerHandle);
     }
+    WeaponFallingTimeCounter = 0.0f;
 }
 
 AFMBPlayerCharacter* AFMBBaseItem::GetPlayerCharacter() const

@@ -25,15 +25,20 @@ void UFMBItemInfoWidget::SetItemName(const FName& Name) const
 }
 
 /* Fast Attack damage */
-void UFMBItemInfoWidget::SetItemDamage(float NewDamage)
+void UFMBItemInfoWidget::SetItemProperty(float NewProperty)
 {
-    Damage = NewDamage;
+    Property = NewProperty;
 }
 
-FText UFMBItemInfoWidget::GetItemDamage() const
+FText UFMBItemInfoWidget::GetItemProperty() const
 {
-    return Damage > 0.0f ? FText::FromString("+" + FString::SanitizeFloat(Damage, /*2*/ 0))
-                         : FText::FromString(FString::SanitizeFloat(Damage, /*2*/ 0));
+    return Property > 0.0f ? FText::FromString("+" + FString::SanitizeFloat(Property, /*2*/ 0))
+                           : FText::FromString(FString::SanitizeFloat(Property, /*2*/ 0));
+}
+
+FSlateColor UFMBItemInfoWidget::GetItemPropertyColor() const
+{
+    return Property > 0 ? FSlateColor{ItemInfoColorGreen} : FSlateColor{ItemInfoColorRed};
 }
 
 //
@@ -50,15 +55,15 @@ FText UFMBItemInfoWidget::GetItemStrongAttackDamage() const
 //
 
 /* Health amount */
-void UFMBItemInfoWidget::SetItemHealthAmount(float NewHealthAmount)
+/*void UFMBItemInfoWidget::SetItemHealthAmount(float NewHealthAmount)
 {
     HealthAmount = NewHealthAmount;
 }
 
 FText UFMBItemInfoWidget::GetItemHealthAmount() const
 {
-    return FText::FromString("+" + FString::SanitizeFloat(HealthAmount, /*2*/ 0));
-}
+    return FText::FromString("+" + FString::SanitizeFloat(HealthAmount, /*2#1# 0));
+}*/
 
 //
 

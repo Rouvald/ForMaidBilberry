@@ -38,6 +38,8 @@ public:
 
     void GetPickupItem(AFMBBaseItem* Item);
 
+    FORCEINLINE AFMBBasePickUp* GetCurrentPickUp() const { return CurrentPickUp; }
+
     FORCEINLINE bool GetIsBlocking() const { return bIsShieldBlocking; }
 
     FORCEINLINE int8 GetMaxWeapons() const { return MaxWeapons; }

@@ -1,4 +1,4 @@
-// For Maid Bilberry Game. All Rights Recerved
+// For Maid Bilberry Game. All Rights Reserved
 
 #include "PickUps/FMBHealthPickUp.h"
 
@@ -6,6 +6,7 @@
 #include "FMBPlayerCharacter.h"
 #include "Components/WidgetComponent.h"
 #include "UI/FMBItemInfoWidget.h"
+#include "Components/FMBPlayerWeaponComponent.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogFMBHealthPickUp, All, All)
 
@@ -24,7 +25,32 @@ void AFMBHealthPickUp::SetItemInfo() const
     const auto ItemInfoWidget{Cast<UFMBItemInfoWidget>(ItemInfoWidgetComponent->GetWidget())};
     if (ItemInfoWidget)
     {
-        ItemInfoWidget->SetItemHealthAmount(HealthAmount);
+        ItemInfoWidget->SetItemProperty(HealthAmount);
+    }
+}
+
+void AFMBHealthPickUp::UpdateItemInfoProperty(const AFMBPlayerCharacter* PlayerCharacter) const
+{
+    if (!PlayerCharacter) return;
+
+    const auto WeaponComponent{PlayerCharacter->FindComponentByClass<UFMBPlayerWeaponComponent>()};
+    if (!WeaponComponent) return;
+
+    const auto ItemInfoWidget{Cast<UFMBItemInfoWidget>(ItemInfoWidgetComponent->GetWidget())};
+    if (!ItemInfoWidget) return;
+
+    if (WeaponComponent->GetCurrentPickUp())
+    {
+        if (WeaponComponent->GetCurrentPickUp()->GetPickUpType() != EPickUpType::EPT_HealthFlask) return;
+
+        const auto HealthPickUp{Cast<AFMBHealthPickUp>(WeaponComponent->GetCurrentPickUp())};
+        if (!HealthPickUp) return;
+
+        ItemInfoWidget->SetItemProperty(HealthAmount - HealthPickUp->GetHealthAmount());
+    }
+    else
+    {
+        ItemInfoWidget->SetItemProperty(HealthAmount);
     }
 }
 

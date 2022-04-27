@@ -14,9 +14,9 @@ class UFMBItemIconWidget;
  *
  */
 UCLASS()
-class FORMAIDBILBERRY_API UFMBPickUpItemBoxWidget : public UUserWidget
+class FORMAIDBILBERRY_API UFMBPickUpItemBoxWidget : public UUserWidget //-V1062
 {
-    GENERATED_BODY()
+    GENERATED_BODY() //-V522
 protected:
     UPROPERTY(meta = (BindWidget))
     UHorizontalBox* PickUpIconBox;

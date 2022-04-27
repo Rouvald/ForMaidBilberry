@@ -49,7 +49,6 @@ void UFMBItemInteractionComponent::TakeItemButtonPressed()
 
 // void UFMBItemInteractionComponent::TakeItemButtonReleased() {}
 
-/* todo: check FOnItemAreaOverlapSignature in FMBCoreTypes */
 void UFMBItemInteractionComponent::ItemInfoVisibilityTimer(const AFMBBaseItem* Item, bool bIsOverlap)
 {
     const FTimerDelegate ItemTimerDelegate = FTimerDelegate::CreateUObject(this, &UFMBItemInteractionComponent::UpdateItemInfoVisibility);
@@ -71,6 +70,7 @@ void UFMBItemInteractionComponent::ItemInfoVisibilityTimer(const AFMBBaseItem* I
     }
     // UE_LOG(LogFMBItemInteractionComponent, Display, TEXT("HittedItems: %d"), HittedItems.Num());
 }
+
 void UFMBItemInteractionComponent::UpdateItemInfoVisibility()
 {
     HideAllHittedItems();
@@ -82,9 +82,11 @@ void UFMBItemInteractionComponent::UpdateItemInfoVisibility()
     HitItem = Cast<AFMBBaseItem>(HitItemResult.GetActor());
     if (HitItem)
     {
-        HittedItems.Contains(HitItem) ? HitItem->SetItemInfoWidgetVisibility(true) : HitItem->SetItemInfoWidgetVisibility(false);
+        HittedItems.Contains(HitItem) ? HitItem->SetItemInfoWidgetVisibility(PlayerCharacter, true)
+                                      : HitItem->SetItemInfoWidgetVisibility(PlayerCharacter, false);
     }
 }
+
 bool UFMBItemInteractionComponent::MakeHitItemVisibility(FHitResult& HitResult) const
 {
     if (!GetWorld()) return false;
@@ -100,6 +102,7 @@ bool UFMBItemInteractionComponent::MakeHitItemVisibility(FHitResult& HitResult) 
 
     return HitResult.bBlockingHit;
 }
+
 void UFMBItemInteractionComponent::HideAllHittedItems() const
 {
     for (const auto HittedItem : HittedItems)

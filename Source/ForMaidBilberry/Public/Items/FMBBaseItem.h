@@ -27,7 +27,7 @@ public:
     FORCEINLINE UStaticMeshComponent* GetItemMesh() const { return ItemMesh; }
     FORCEINLINE const FItemData& GetItemData() const { return ItemData; }
 
-    virtual void SetItemInfoWidgetVisibility(bool bIsVisible) const;
+    virtual void SetItemInfoWidgetVisibility(const AFMBPlayerCharacter* PlayerCharacter, bool bIsVisible) const;
 
     void ChangeItemCount(const bool bIsIncrease);
 
@@ -65,7 +65,7 @@ protected:
     void FillItemPropertiesMap();
     void SetItemProperties(const EItemState NewItemState) const;
 
-    // virtual float UpdateItemInfoProperties() const;
+    virtual void UpdateItemInfoProperty(const AFMBPlayerCharacter* PlayerCharacter) const;
 
     AFMBPlayerCharacter* GetPlayerCharacter() const;
     AController* GetController() const;
@@ -76,6 +76,8 @@ private:
 
     FTimerHandle ThrowingTimerHandle;
     float WeaponFallingTime{0.1f};
+    float MaxWeaponFallingTime{5.0f};
+    float WeaponFallingTimeCounter{0.0f};
     bool bIsWeaponFalling{false};
 
     UFUNCTION()

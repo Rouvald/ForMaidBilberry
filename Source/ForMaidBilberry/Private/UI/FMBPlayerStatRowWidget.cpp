@@ -1,4 +1,4 @@
-// For Maid Bilberry Game. All Rights Recerved
+// For Maid Bilberry Game. All Rights Reserved
 
 #include "UI/FMBPlayerStatRowWidget.h"
 #include "Components/Image.h"

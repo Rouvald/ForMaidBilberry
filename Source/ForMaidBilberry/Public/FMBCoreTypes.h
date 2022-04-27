@@ -49,7 +49,6 @@ class AFMBBaseItem;
 class UNiagaraSystem;
 class USoundCue;
 
-/* todo: can add Player to compare weapon damage and show in Item info widget damage difference */
 DECLARE_MULTICAST_DELEGATE_TwoParams(FOnItemAreaOverlapSignature, const AFMBBaseItem*, bool);
 
 UENUM(BlueprintType)

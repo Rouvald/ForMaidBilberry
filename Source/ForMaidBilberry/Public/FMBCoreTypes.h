@@ -175,10 +175,10 @@ struct FWeaponDamageData
 {
     GENERATED_USTRUCT_BODY()
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
     float DefaultDamage{10.0f};
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon")
     float StrongAttackModifier{1.5f};
 };
 
@@ -188,6 +188,7 @@ UENUM(BlueprintType)
 enum class EPickUpType : uint8
 {
     EPT_HealthFlask UMETA(DisplayName = "HealthFlask"),
+    EPT_StaminaFlask UMETA(DisplayName = "StaminaFlask"),
     EPT_Poison UMETA(DisplayName = "Poison"),
 
     EPT_Max UMETA(DisplayName = "Max")

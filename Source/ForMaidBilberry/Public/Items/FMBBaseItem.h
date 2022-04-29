@@ -51,6 +51,9 @@ protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Properties")
     FItemData ItemData;
 
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Properties")
+    EItemState DefaultItemState{EItemState::EIS_Falling};
+
     EItemState CurrentItemState{EItemState::EIS_PickUp};
 
     UPROPERTY()

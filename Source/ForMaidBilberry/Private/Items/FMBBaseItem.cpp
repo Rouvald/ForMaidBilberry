@@ -55,7 +55,7 @@ void AFMBBaseItem::BeginPlay()
 
     SetItemInfo();
     FillItemPropertiesMap();
-    // SetItemState(EItemState::EIS_Falling);
+    SetItemState(DefaultItemState);
     // UE_LOG(LogFMBBaseItem, Display, TEXT("%s: CurrentItemState: %s"), *GetName(), *UEnum::GetValueAsString(CurrentItemState));
 }
 

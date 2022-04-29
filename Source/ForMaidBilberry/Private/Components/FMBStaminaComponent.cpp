@@ -3,6 +3,7 @@
 #include "Components/FMBStaminaComponent.h"
 #include "FMBCharacterMovementComponent.h"
 #include "FMBCoreTypes.h"
+#include "FMBHealthComponent.h"
 #include "FMBPlayerCharacter.h"
 #include "FMBUtils.h"
 
@@ -39,6 +40,17 @@ void UFMBStaminaComponent::SpendStamina(const EStaminaSpend StaminaSpend)
     StopHealStamina();
 
     SetStamina(GetStamina() - StaminaSpends[StaminaSpend]);
+}
+
+bool UFMBStaminaComponent::TryAddStamina(float StaminaAmount)
+{
+    if (IsStaminaFull() || !PlayerCharacter) return false;
+
+    const auto HealthComponent{PlayerCharacter->FindComponentByClass<UFMBHealthComponent>()};
+    if (!HealthComponent || HealthComponent->IsDead()) return false;
+
+    SetStamina(Stamina + StaminaAmount);
+    return true;
 }
 
 void UFMBStaminaComponent::SetStamina(float NewStamina)

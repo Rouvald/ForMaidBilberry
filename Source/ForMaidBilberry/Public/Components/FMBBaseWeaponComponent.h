@@ -63,14 +63,8 @@ protected:
     UFMBStaminaComponent* StaminaComponent{nullptr};
     //
 
-    UPROPERTY(EditDefaultsOnly, Category = "Weapon")
-    TSubclassOf<AFMBBaseWeapon> WeaponClass;
-
     UPROPERTY()
     AFMBBaseWeapon* CurrentWeapon{nullptr};
-
-    /*UPROPERTY()
-    AFMBBaseWeapon* ArmoryWeapon{nullptr};*/
 
     UPROPERTY()
     FWeaponAnimationsData CurrentWeaponAnimationsData;
@@ -101,6 +95,9 @@ protected:
     virtual void InitAnimation(const FWeaponAnimationsData& WeaponAnimationData);
 
 private:
+    UPROPERTY(EditDefaultsOnly, Category = "Weapon")
+    TSubclassOf<AFMBBaseWeapon> WeaponClass;
+
     bool bIsAttackAnimInProgress{false};
 
     void CheckWeaponAnimationsData();

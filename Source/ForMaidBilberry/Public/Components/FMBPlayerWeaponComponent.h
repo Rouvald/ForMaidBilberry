@@ -46,14 +46,14 @@ public:
     FORCEINLINE int8 GetMaxPickUps() const { return MaxPickUps; }
 
 protected:
-    UPROPERTY(EditDefaultsOnly, Category = "Weapon")
-    TSubclassOf<AFMBBaseShield> ShieldClass;
+    /*UPROPERTY(EditDefaultsOnly, Category = "Weapon")
+    TSubclassOf<AFMBBaseShield> ShieldClass;*/
 
-    UPROPERTY(EditDefaultsOnly, Category = "Weapon")
-    TMap<EWeaponType, FName> WeaponShieldMaps;
+    /*UPROPERTY(EditDefaultsOnly, Category = "Weapon")
+    TMap<EWeaponType, FName> WeaponShieldMaps;*/
 
-    UPROPERTY(EditDefaultsOnly, Category = "Weapon")
-    FName ShieldEquipSocketName{"WeaponEquipSocket_L"};
+    /*UPROPERTY(EditDefaultsOnly, Category = "Weapon")
+    FName ShieldEquipSocketName{"WeaponEquipSocket_L"};*/
 
     UPROPERTY(EditDefaultsOnly, Category = "PickUp")
     FName PickUpEquipSocketName{"PickUpEquipSocket"};

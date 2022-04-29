@@ -31,6 +31,8 @@ public:
     void StartStaminaRunning();
     void StopStaminaRunning();
 
+    bool TryAddStamina(float StaminaAmount);
+
     FORCEINLINE FStaminaSpendData GetStaminaSpendData() const { return StaminaSpendData; }
 
 protected:

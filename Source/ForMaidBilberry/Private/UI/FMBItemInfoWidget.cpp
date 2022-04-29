@@ -32,13 +32,13 @@ void UFMBItemInfoWidget::SetItemProperty(float NewProperty)
 
 FText UFMBItemInfoWidget::GetItemProperty() const
 {
-    return Property > 0.0f ? FText::FromString("+" + FString::SanitizeFloat(Property, /*2*/ 0))
-                           : FText::FromString(FString::SanitizeFloat(Property, /*2*/ 0));
+    return Property >= 0.0f ? FText::FromString("+" + FString::SanitizeFloat(Property, /*2*/ 0))
+                            : FText::FromString(FString::SanitizeFloat(Property, /*2*/ 0));
 }
 
 FSlateColor UFMBItemInfoWidget::GetItemPropertyColor() const
 {
-    return Property > 0 ? FSlateColor{ItemInfoColorGreen} : FSlateColor{ItemInfoColorRed};
+    return Property >= 0.0f ? FSlateColor{ItemInfoColorGreen} : FSlateColor{ItemInfoColorRed};
 }
 
 //

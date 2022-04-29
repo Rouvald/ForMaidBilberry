@@ -54,9 +54,9 @@ void AFMBBasePickUp::PickUpWasUsed()
         if (WeaponComponent)
         {
             WeaponComponent->PickUpWasUsed();
+            UGameplayStatics::PlaySoundAtLocation(GetWorld(), PickUpWasUsedSound, PLayerCharacter->GetActorLocation());
         }
     }
-    UGameplayStatics::PlaySoundAtLocation(GetWorld(), PickUpWasUsedSound, GetActorLocation());
 }
 
 /*void AFMBBasePickUp::NotifyActorBeginOverlap(AActor* OtherActor)

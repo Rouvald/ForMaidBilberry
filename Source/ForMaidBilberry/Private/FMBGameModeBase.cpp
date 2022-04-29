@@ -263,7 +263,7 @@ bool AFMBGameModeBase::ClearPause()
     return IsPauseClear;
 }
 
-void AFMBGameModeBase::SetDefaultPlayerName() const
+void AFMBGameModeBase::SetDefaultPlayerName()
 {
     if (!GetWorld()) return;
 
@@ -273,7 +273,10 @@ void AFMBGameModeBase::SetDefaultPlayerName() const
     const auto PlayerState = Cast<AFMBPlayerState>(PlayerController->PlayerState);
     if (!PlayerState) return;
 
-    PlayerState->SetPlayerName(FMBDefaultPlayerName.ToString());
+    auto PlayerName{PlayerState->GetPlayerName()};
+    const auto Index{PlayerName.Find("-")};
+    PlayerName = PlayerName.LeftChop(PlayerName.Len() - Index);
+    PlayerState->SetPlayerName(PlayerName);
 }
 
 /*void AFMBGameModeBase::CreateTeamsInfo()

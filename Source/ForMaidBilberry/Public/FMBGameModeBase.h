@@ -54,8 +54,8 @@ protected:
     UPROPERTY(EditDefaultsOnly, Category = "Game")
     FGameData GameData;
 
-    UPROPERTY(EditDefaultsOnly, Category = "Game")
-    FName FMBDefaultPlayerName{"Player"};
+    /*UPROPERTY(EditDefaultsOnly, Category = "Game")
+    FName FMBDefaultPlayerName{"Player"};*/
 
     UPROPERTY(VisibleAnywhere, Category = "Game", meta = (ToolTip = "This tag must have at least 1 PlayerStart in the Level."))
     FName PlayerStartTagName{"Player"};
@@ -75,7 +75,7 @@ private:
     EDayTime CurrentDayTime{EDayTime::EDT_Max};
 
     void SpawnBots();
-    void SetDefaultPlayerName() const;
+    void SetDefaultPlayerName();
     void SetStartUpDayTime();
     void SetDayTime(const EDayTime NewDayTime);
 

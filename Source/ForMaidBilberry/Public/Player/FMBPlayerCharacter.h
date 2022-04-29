@@ -28,8 +28,6 @@ public:
     virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
     virtual bool IsRunning() override;
 
-    // FORCEINLINE bool GetIsFPP() const { return FPPCameraComponent->IsActive(); }
-
 protected:
     FName FPPCameraSocketName = "FPPCameraSocket";
 
@@ -61,17 +59,6 @@ protected:
     virtual void OnDeath() override;
 
 private:
-    /*UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Camera", meta = (AllowPrivateAccess = "true"))
-    float DefaultTurnAroundRate{45.0f};
-
-    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Camera", meta = (AllowPrivateAccess = "true"))
-    float DefaultLookUpRate{45.0f};*/
-
-    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
-    FVector2D TargetArmLengthVector2D{300.0f, 800.0f};
-
-    float DefaultTargetArmLength{500.0f};
-
     FTimerHandle ReportNoiseTimerHandle;
 
     bool bWantToRun{false};
@@ -82,27 +69,8 @@ private:
 
     virtual void Jump() override;
 
-    /*void TurnAroundAtRate(float Rate);
-    void LookUpAtRate(float Rate);*/
-
     void OnStartRunning();
     void OnStopRunning();
 
-    /*UFUNCTION()
-    void OnCameraCollisionBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
-        int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
-    UFUNCTION()
-    void OnCameraCollisionEndOverlap(
-        UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
-
-    void CheckCameraOverlap() const;*/
-
     void MakeReportNoise();
-    // void SwitchCamera();
-
-    // void ReturnDefaultSpringArm();
-    // void ChangeSpringArm(bool bIsDistance);
-    // void DistanceSpringArm();
-    // void InterpSpringArm(const float Start, const float End) const;
 };

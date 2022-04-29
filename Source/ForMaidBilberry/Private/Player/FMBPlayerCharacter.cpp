@@ -16,8 +16,6 @@
 
 DEFINE_LOG_CATEGORY_STATIC(LogFMBPlayerCharacter, All, All)
 
-// constexpr static float DeltaSpringArm = 10.0f;
-
 AFMBPlayerCharacter::AFMBPlayerCharacter(const FObjectInitializer& ObjInit) : Super(ObjInit)
 {
     PrimaryActorTick.bCanEverTick = true;
@@ -32,19 +30,13 @@ AFMBPlayerCharacter::AFMBPlayerCharacter(const FObjectInitializer& ObjInit) : Su
     SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>("SpringArmComponent");
     SpringArmComponent->SetupAttachment(GetRootComponent());
     SpringArmComponent->SocketOffset = FVector(0.0f, 0.0f, 50.0f);
-    SpringArmComponent->TargetArmLength = DefaultTargetArmLength;
+    SpringArmComponent->TargetArmLength = 500.0f;
     SpringArmComponent->bUsePawnControlRotation = true;
 
     TPPCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("TPPCameraComponent"));
     TPPCameraComponent->SetupAttachment(SpringArmComponent);
     TPPCameraComponent->bUsePawnControlRotation = false;
     TPPCameraComponent->SetAutoActivate(false);
-
-    /*TPPCameraCollisionComponent = CreateDefaultSubobject<USphereComponent>("TPPCameraCollisionComponent");
-    TPPCameraCollisionComponent->SetupAttachment(TPPCameraComponent);
-    TPPCameraCollisionComponent->SetSphereRadius(10.0f);
-    TPPCameraCollisionComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
-    TPPCameraCollisionComponent->SetCollisionEnabled(ECollisionEnabled::QueryOnly);*/
 
     FPPCameraComponent = CreateDefaultSubobject<UCameraComponent>("FPPCameraComponent");
     FPPCameraComponent->SetupAttachment(GetMesh(), FPPCameraSocketName);
@@ -56,7 +48,7 @@ AFMBPlayerCharacter::AFMBPlayerCharacter(const FObjectInitializer& ObjInit) : Su
 
     StaminaComponent = CreateDefaultSubobject<UFMBStaminaComponent>(TEXT("StaminaComponent"));
     WeaponComponent = CreateDefaultSubobject<UFMBPlayerWeaponComponent>(TEXT("WeaponComponent"));
-    ItemInteractionComponent = CreateDefaultSubobject<UFMBItemInteractionComponent>(TEXT("UFMBItemInteractionComponent"));
+    ItemInteractionComponent = CreateDefaultSubobject<UFMBItemInteractionComponent>(TEXT("ItemInteractionComponent"));
 }
 
 void AFMBPlayerCharacter::BeginPlay()
@@ -65,12 +57,8 @@ void AFMBPlayerCharacter::BeginPlay()
 
     checkf(StaminaComponent, TEXT("StaminaComponent == nullptr"));
     checkf(ItemInteractionComponent, TEXT("ItemInteractionComponent == nullptr"));
-    /*checkf(SpringArmComponent, TEXT("SpringArmComponent == nullptr"));
-    checkf(TPPCameraCollisionComponent, TEXT("TPPCameraCollisionComponent == nullptr"));*/
+    checkf(WeaponComponent, TEXT("WeaponComponent == nullptr"));
     GetWorldTimerManager().SetTimer(ReportNoiseTimerHandle, this, &AFMBPlayerCharacter::MakeReportNoise, 0.1f, true);
-
-    /*TPPCameraCollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AFMBPlayerCharacter::OnCameraCollisionBeginOverlap);
-    TPPCameraCollisionComponent->OnComponentEndOverlap.AddDynamic(this, &AFMBPlayerCharacter::OnCameraCollisionEndOverlap);*/
 }
 
 /*void AFMBPlayerCharacter::OnCameraCollisionBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
@@ -107,7 +95,6 @@ void AFMBPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 {
     Super::SetupPlayerInputComponent(PlayerInputComponent);
     checkf(PlayerInputComponent, TEXT("PlayerInputComponent == nullptr"));
-    checkf(WeaponComponent, TEXT("WeaponComponent == nullptr"));
     CharacterMovementComponent = Cast<UFMBCharacterMovementComponent>(GetCharacterMovement());
     checkf(CharacterMovementComponent, TEXT("CharacterMovementComponent == nullptr"));
 

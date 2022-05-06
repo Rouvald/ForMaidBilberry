@@ -43,7 +43,7 @@ public:
     FORCEINLINE bool GetIsBlocking() const { return bIsShieldBlocking; }
 
     FORCEINLINE int8 GetMaxWeapons() const { return MaxWeapons; }
-    FORCEINLINE int8 GetMaxPickUps() const { return MaxPickUps; }
+    // FORCEINLINE int8 GetMaxPickUps() const { return MaxPickUps; }
 
 protected:
     /*UPROPERTY(EditDefaultsOnly, Category = "Weapon")
@@ -62,9 +62,8 @@ protected:
     USoundCue* PickedUpSound{nullptr};
 
     virtual void BeginPlay() override;
-    virtual void InitWeaponComponent() override;
 
-    virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+    // virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
     // virtual void EquipItems() override;
 
@@ -79,13 +78,13 @@ private:
     UPROPERTY()
     TArray<AFMBBaseWeapon*> Weapons;
 
-    UPROPERTY()
-    TArray<AFMBBasePickUp*> PickUps;
+    /*UPROPERTY()
+    TArray<AFMBBasePickUp*> PickUps;*/
 
     /* Max Weapons that player can hold. */
     const int8 MaxWeapons{4};
     /* Max PickUps that player can hold. */
-    const int8 MaxPickUps{1};
+    // const int8 MaxPickUps{1};
 
     int8 CurrentWeaponIndex{0};
     int8 LastCurrentWeaponIndex{0};
@@ -103,23 +102,20 @@ private:
 
     // void SpawnEquipShields();
 
+    void SwapItem(AFMBBaseItem* EquippedItem);
     void EquipPickUp(AFMBBasePickUp* EquippedPickUp);
-    void SwapPickUp(AFMBBasePickUp* EquippedPickUp);
+    void EquippingWeapon(AFMBBaseItem* EquippedItem, const FName& WeaponSocketName, const EItemState NewItemState, const int32 NewIndex,
+        const FItemData& NewItemData) const;
 
-    void SwapWeapon(AFMBBaseWeapon* EquippedWeapon);
+    virtual void DropItems() override;
+    virtual void DropItem(AFMBBaseItem* DroppedItem, const int8 CurrentItemIndex = 0) const override;
+    void ThrowItem(AFMBBaseItem* ThrownItem, const int8 CurrentItemIndex);
 
-    void DropItem(AFMBBaseItem* DropItem) const;
+    // int8 FindSimilarPickUpType(const AFMBBasePickUp* EquippedPickUp) const;
 
-    int8 FindSimilarPickUpType(const AFMBBasePickUp* EquippedPickUp) const;
-
-    void ClearCurrentWeapon();
-    void ClearCurrentPickUp();
-
-    // void DestroyCurrentShield();
     void DestroyWeapons();
-    void DestroyCurrentWeapon();
-    void DestroyPickUps();
-    void DestroyCurrentPickUp();
+    void DestroyCurrentItem(AFMBBaseItem* DestroyItem, const int8 CurrentItemIndex);
+    void ClearCurrentItem(const AFMBBaseItem* ClearItem, const int8 CurrentItemIndex);
 
     void EquipNextWeapon();
 

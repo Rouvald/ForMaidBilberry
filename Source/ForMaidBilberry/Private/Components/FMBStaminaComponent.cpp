@@ -31,14 +31,12 @@ void UFMBStaminaComponent::BeginPlay()
 bool UFMBStaminaComponent::CanSpendStamina(const EStaminaSpend StaminaSpend)
 {
     if (!StaminaSpends.Contains(StaminaSpend)) return false;
-
     return FMath::IsWithinInclusive(Stamina - StaminaSpends[StaminaSpend], 0.0f, MaxStamina);
 }
 
 void UFMBStaminaComponent::SpendStamina(const EStaminaSpend StaminaSpend)
 {
     StopHealStamina();
-
     SetStamina(GetStamina() - StaminaSpends[StaminaSpend]);
 }
 

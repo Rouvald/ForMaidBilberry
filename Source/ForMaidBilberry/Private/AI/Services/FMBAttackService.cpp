@@ -29,7 +29,8 @@ void UFMBAttackService::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
                 const auto CurrentDistance = (PerceiveActor->GetActorLocation() - Controller->GetPawn()->GetActorLocation()).Size();
                 if (CurrentDistance <= AttackDistance)
                 {
-                    FMath::RandBool() ? WeaponComponent->FastMeleeAttack() : WeaponComponent->StrongMeleeAttack();
+                    FMath::RandBool() ? WeaponComponent->MeleeAttack(EStaminaSpend::ESS_FastAttack)
+                                      : WeaponComponent->MeleeAttack(EStaminaSpend::ESS_StrongAttack);
                 }
             }
         }

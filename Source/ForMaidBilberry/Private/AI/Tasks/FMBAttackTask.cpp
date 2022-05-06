@@ -30,7 +30,8 @@ EBTNodeResult::Type UFMBAttackTask::ExecuteTask(UBehaviorTreeComponent& OwnerCom
     const auto PerceiveActor = PerceiveComponent->GetEnemyPlayer();
     if (!WeaponComponent || !PerceiveActor) return EBTNodeResult::Failed;
 
-    FMath::RandBool() ? WeaponComponent->FastMeleeAttack() : WeaponComponent->StrongMeleeAttack();
+    FMath::RandBool() ? WeaponComponent->MeleeAttack(EStaminaSpend::ESS_FastAttack)
+                      : WeaponComponent->MeleeAttack(EStaminaSpend::ESS_StrongAttack);
 
     return EBTNodeResult::Succeeded;
 }

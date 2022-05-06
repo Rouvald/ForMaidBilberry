@@ -29,11 +29,11 @@ void AFMBBaseMeleeWeapon::BeginPlay()
     SwordTrailFXComponent->Deactivate();
 }
 
-void AFMBBaseMeleeWeapon::UpdateItemInfoProperty(const AFMBPlayerCharacter* PlayerCharacter) const
+void AFMBBaseMeleeWeapon::UpdateItemInfoProperty(const AFMBPlayerCharacter* CurrentPlayerCharacter) const
 {
-    if (!PlayerCharacter) return;
+    if (!CurrentPlayerCharacter) return;
 
-    const auto WeaponComponent{PlayerCharacter->FindComponentByClass<UFMBPlayerWeaponComponent>()};
+    const auto WeaponComponent{CurrentPlayerCharacter->FindComponentByClass<UFMBPlayerWeaponComponent>()};
     if (!WeaponComponent) return;
 
     const auto ItemInfoWidget{Cast<UFMBItemInfoWidget>(ItemInfoWidgetComponent->GetWidget())};
@@ -48,11 +48,7 @@ void AFMBBaseMeleeWeapon::UpdateItemInfoProperty(const AFMBPlayerCharacter* Play
 void AFMBBaseMeleeWeapon::MeleeAttack(const EChooseAttack ChooseAttack)
 {
     if (!GetWorld()) return;
-
-    if (ChooseDamageAmount.Contains(ChooseAttack))
-    {
-        DamageAmount = ChooseDamageAmount[ChooseAttack];
-    }
+    DamageAmount = ChooseDamageAmount.FindChecked(ChooseAttack);
     StartDrawTrace();
 }
 

@@ -113,8 +113,11 @@ void AFMBPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
     PlayerInputComponent->BindAction("Run", IE_Pressed, this, &AFMBPlayerCharacter::OnStartRunning);
     PlayerInputComponent->BindAction("Run", IE_Released, this, &AFMBPlayerCharacter::OnStopRunning);
 
-    PlayerInputComponent->BindAction("FastAttack", IE_Pressed, WeaponComponent, &UFMBBaseWeaponComponent::FastMeleeAttack);
-    PlayerInputComponent->BindAction("StrongAttack", IE_Pressed, WeaponComponent, &UFMBBaseWeaponComponent::StrongMeleeAttack);
+    DECLARE_DELEGATE_OneParam(FOnAttackTypeSignature, EStaminaSpend);
+    PlayerInputComponent->BindAction<FOnAttackTypeSignature>(
+        "FastAttack", IE_Pressed, WeaponComponent, &UFMBBaseWeaponComponent::MeleeAttack, EStaminaSpend::ESS_FastAttack);
+    PlayerInputComponent->BindAction<FOnAttackTypeSignature>(
+        "StrongAttack", IE_Pressed, WeaponComponent, &UFMBBaseWeaponComponent::MeleeAttack, EStaminaSpend::ESS_StrongAttack);
 
     // PlayerInputComponent->BindAction("UsePickUp", IE_Pressed, WeaponComponent, &UFMBBaseWeaponComponent::UsePickUp);
 

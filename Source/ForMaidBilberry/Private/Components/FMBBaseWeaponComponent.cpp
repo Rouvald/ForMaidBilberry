@@ -22,9 +22,6 @@ void UFMBBaseWeaponComponent::BeginPlay()
 {
     Super::BeginPlay();
 
-    // checkf(WeaponClasses.Num() > 0, TEXT("Character don't have weapon"));
-    // CurrentWeaponIndex = 0;
-
     Character = Cast<AFMBBaseCharacter>(GetOwner());
     if (Character)
     {
@@ -45,23 +42,19 @@ void UFMBBaseWeaponComponent::InitWeaponComponent()
 
 void UFMBBaseWeaponComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
-    if (CurrentWeapon)
+    /*if (CurrentWeapon)
     {
         CurrentWeapon->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
         CurrentWeapon->Destroy();
         CurrentWeapon = nullptr;
-    }
-    /*if(!CurrentWeapon)
-    UE_LOG(LogFMBBaseWeaponComponent, Display, TEXT("currentweapon == nullptr"));*/
-
+    }*/
+    DropItems();
     Super::EndPlay(EndPlayReason);
 }
 
 void UFMBBaseWeaponComponent::EquipItems()
 {
-    if (!GetWorld()) return;
-    if (!Character) return;
-
+    if (!GetWorld() || !Character) return;
     EquipWeapon(SpawnWeapon());
 }
 
@@ -72,7 +65,7 @@ AFMBBaseWeapon* UFMBBaseWeaponComponent::SpawnWeapon() const
     const auto DefaultWeapon{GetWorld()->SpawnActor<AFMBBaseWeapon>(WeaponClass)};
     if (!DefaultWeapon)
     {
-        UE_LOG(LogFMBBaseWeaponComponent, Display, TEXT("Error: spawn weapon"));
+        UE_LOG(LogFMBBaseWeaponComponent, Warning, TEXT("Error: spawn weapon"));
         return nullptr;
     }
     // DefaultWeapon->OnItemStateChanged.Broadcast(EItemState::EIS_PickUp);
@@ -93,28 +86,26 @@ void UFMBBaseWeaponComponent::EquipWeapon(AFMBBaseWeapon* EquippedWeapon)
     CurrentWeapon = EquippedWeapon;
 }
 
-void UFMBBaseWeaponComponent::FastMeleeAttack()
+void UFMBBaseWeaponComponent::MeleeAttack(EStaminaSpend StaminaSpendType)
 {
-    if (!CanDoAttack(EStaminaSpend::ESS_FastAttack)) return;
-    SpendStamina(EStaminaSpend::ESS_FastAttack);
+    if (!CanDoAttack(StaminaSpendType)) return;
+    SpendStamina(StaminaSpendType);
 
-    bIsAttackAnimInProgress = true;
-    PlayAnimMontage(CurrentWeaponAnimationsData.FastAttack);
-}
-
-void UFMBBaseWeaponComponent::StrongMeleeAttack()
-{
-    if (!CanDoAttack(EStaminaSpend::ESS_StrongAttack)) return;
-    SpendStamina(EStaminaSpend::ESS_StrongAttack);
-
-    bIsAttackAnimInProgress = true;
-    PlayAnimMontage(CurrentWeaponAnimationsData.StrongAttack);
-}
-
-void UFMBBaseWeaponComponent::SpendStamina(const EStaminaSpend StaminaSpend) const
-{
-    if (!Character || !Character->IsPlayerControlled() || !StaminaComponent) return;
-    StaminaComponent->SpendStamina(StaminaSpend);
+    const auto StartAttackAnim = [&](UAnimMontage* AttackAnim, EChooseAttack NewAttackType)
+    {
+        CurrentAttackType = NewAttackType;
+        bIsAttackAnimInProgress = true;
+        PlayAnimMontage(AttackAnim);
+    };
+    if (StaminaSpendType == EStaminaSpend::ESS_FastAttack)
+    {
+        StartAttackAnim(CurrentWeaponAnimationsData.FastAttack, EChooseAttack::ECA_FastAttack);
+        return;
+    }
+    if (StaminaSpendType == EStaminaSpend::ESS_StrongAttack)
+    {
+        StartAttackAnim(CurrentWeaponAnimationsData.StrongAttack, EChooseAttack::ECA_StrongAttack);
+    }
 }
 
 void UFMBBaseWeaponComponent::PlayAnimMontage(UAnimMontage* Animation) const
@@ -125,17 +116,12 @@ void UFMBBaseWeaponComponent::PlayAnimMontage(UAnimMontage* Animation) const
 
 void UFMBBaseWeaponComponent::CheckWeaponAnimationsData()
 {
-    if (WeaponsAnimationsData.Contains(EWeaponType::EWT_NoWeapon))
+    for (const auto WeaponsAnimationData : WeaponsAnimationsData)
     {
-        InitAnimation(WeaponsAnimationsData[EWeaponType::EWT_NoWeapon]);
-    }
-    if (WeaponsAnimationsData.Contains(EWeaponType::EWT_SwordShield))
-    {
-        InitAnimation(WeaponsAnimationsData[EWeaponType::EWT_SwordShield]);
-    }
-    if (WeaponsAnimationsData.Contains(EWeaponType::EWT_TwoHandSword))
-    {
-        InitAnimation(WeaponsAnimationsData[EWeaponType::EWT_TwoHandSword]);
+        if (WeaponsAnimationData.Key != EWeaponType::EWT_Max)
+        {
+            InitAnimation(WeaponsAnimationData.Value);
+        }
     }
 }
 
@@ -190,8 +176,8 @@ void UFMBBaseWeaponComponent::CheckAttackAnimNotifyState(UAnimMontage* Animation
 
 void UFMBBaseWeaponComponent::OnAttackNotifyStateBegin(USkeletalMeshComponent* MeshComp)
 {
-    if (!Character || Character->GetMesh() != MeshComp) return;
-    CurrentWeapon->MeleeAttack(EChooseAttack::ECA_FastAttack);
+    if (!Character || Character->GetMesh() != MeshComp || !CurrentWeapon) return;
+    CurrentWeapon->MeleeAttack(CurrentAttackType);
 }
 
 void UFMBBaseWeaponComponent::OnAttackNotifyStateEnd(USkeletalMeshComponent* MeshComp)
@@ -242,10 +228,31 @@ void UFMBBaseWeaponComponent::StopDrawTrace()
     }
 }
 
+void UFMBBaseWeaponComponent::DropItems()
+{
+    if (CurrentWeapon)
+    {
+        DropItem(CurrentWeapon);
+        CurrentWeapon = nullptr;
+    }
+}
+
+void UFMBBaseWeaponComponent::DropItem(AFMBBaseItem* DroppedItem, const int8 CurrentItemIndex) const
+{
+    if (!DroppedItem) return;
+    const auto ItemMesh = DroppedItem->GetItemMesh();
+    if (!ItemMesh) return;
+
+    const FDetachmentTransformRules DetachmentTransformRules{EDetachmentRule::KeepWorld, true};
+    ItemMesh->DetachFromComponent(DetachmentTransformRules);
+
+    DroppedItem->OnItemStateChanged.Broadcast(EItemState::EIS_Falling);
+    DroppedItem->ThrowWeapon();
+}
+
 bool UFMBBaseWeaponComponent::CanDoAttack(const EStaminaSpend AttackStaminaSpend) const
 {
-    if (!CurrentWeapon) return false;
-    if (!CanAttack()) return false;
+    if (!CurrentWeapon || !CanAttack() || !CanEquip()) return false;
 
     if (Character && Character->IsPlayerControlled())
     {
@@ -254,33 +261,8 @@ bool UFMBBaseWeaponComponent::CanDoAttack(const EStaminaSpend AttackStaminaSpend
     return true;
 }
 
-bool UFMBBaseWeaponComponent::CanAttack() const
+void UFMBBaseWeaponComponent::SpendStamina(const EStaminaSpend StaminaSpend) const
 {
-    if (bIsAttackAnimInProgress) return false;
-
-    if (!CanEquip()) return false;
-
-    // if (!MovementComponent /*|| MovementComponent->IsFalling()*/ || !(MovementComponent->CanRolling())) return false;
-
-    return true;
+    if (!Character || !Character->IsPlayerControlled() || !StaminaComponent) return;
+    StaminaComponent->SpendStamina(StaminaSpend);
 }
-
-/*UTexture2D* UFMBBaseWeaponComponent::GetCurrentWeaponUIImage() const
-{
-    if (CurrentWeapon)
-    {
-        return CurrentWeapon->GetItemData().ItemIcon;
-    }
-    return nullptr;
-}*/
-
-// work if u have only 2 weapons //
-/*bool UFMBBaseWeaponComponent::GetArmoryWeaponUIData(FItemData& WeaponUIData) const
-{
-    if (ArmoryWeapon)
-    {
-        WeaponUIData = ArmoryWeapon->GetWeaponUIData();
-        return true;
-    }
-    return false;
-}*/

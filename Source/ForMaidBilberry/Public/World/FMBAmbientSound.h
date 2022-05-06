@@ -32,6 +32,12 @@ private:
     UPROPERTY()
     AFMBGameModeBase* FMBGameMode;
 
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sound", meta = (AllowPrivateAccess = "true"))
+    FVector2D FadeInVector{8.0f, 1.0f};
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sound", meta = (AllowPrivateAccess = "true"))
+    FVector2D FadeOutVector{4.0f, 0.0f};
+
     void SetAmbientSound(const EDayTime NewDayTime) const;
 
     AFMBGameModeBase* GetFMBGameMode() const;

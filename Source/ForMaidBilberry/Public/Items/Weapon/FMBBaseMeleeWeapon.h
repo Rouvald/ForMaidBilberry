@@ -60,5 +60,5 @@ private:
 
     void SpawnSwordSlashSound() const;
 
-    virtual void UpdateItemInfoProperty(const AFMBPlayerCharacter* PlayerCharacter) const override;
+    virtual void UpdateItemInfoProperty(const AFMBPlayerCharacter* CurrentPlayerCharacter) const override;
 };

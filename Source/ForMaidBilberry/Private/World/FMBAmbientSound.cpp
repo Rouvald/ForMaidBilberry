@@ -41,12 +41,12 @@ void AFMBAmbientSound::SetAmbientSound(const EDayTime NewDayTime) const
     switch (NewDayTime)
     {
     case EDayTime::EDT_Day:
-        NightSound->FadeOut(2.0f, 0.0f);
-        DaySound->FadeIn(4.0f, 1.0f);
+        NightSound->FadeOut(FadeOutVector.X, FadeOutVector.Y);
+        DaySound->FadeIn(FadeInVector.X, FadeInVector.Y);
         break;
     case EDayTime::EDT_Night:
-        DaySound->FadeOut(2.0f, 0.0f);
-        NightSound->FadeIn(4.0f, 1.0f);
+        DaySound->FadeOut(FadeOutVector.X, FadeOutVector.Y);
+        NightSound->FadeIn(FadeInVector.X, FadeInVector.Y);
         break;
     default:
         break;

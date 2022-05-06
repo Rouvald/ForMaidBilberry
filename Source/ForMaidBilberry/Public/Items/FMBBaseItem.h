@@ -10,6 +10,7 @@
 class UBoxComponent;
 class USphereComponent;
 class UWidgetComponent;
+class AFMBBaseCharacter;
 class AFMBPlayerCharacter;
 
 UCLASS()
@@ -22,12 +23,10 @@ public:
 
     AFMBBaseItem();
 
-    virtual void Tick(float DeltaSeconds) override;
-
     FORCEINLINE UStaticMeshComponent* GetItemMesh() const { return ItemMesh; }
     FORCEINLINE const FItemData& GetItemData() const { return ItemData; }
 
-    virtual void SetItemInfoWidgetVisibility(const AFMBPlayerCharacter* PlayerCharacter, bool bIsVisible) const;
+    virtual void SetItemInfoWidgetVisibility(const AFMBPlayerCharacter* CurrentPlayerCharacter, bool bIsVisible) const;
 
     void ChangeItemCount(const bool bIsIncrease);
 
@@ -68,9 +67,9 @@ protected:
     void FillItemPropertiesMap();
     void SetItemProperties(const EItemState NewItemState) const;
 
-    virtual void UpdateItemInfoProperty(const AFMBPlayerCharacter* PlayerCharacter) const;
+    virtual void UpdateItemInfoProperty(const AFMBPlayerCharacter* CurrentPlayerCharacter) const;
 
-    AFMBPlayerCharacter* GetPlayerCharacter() const;
+    AFMBBaseCharacter* GetBaseCharacter() const;
     AController* GetController() const;
 
 private:

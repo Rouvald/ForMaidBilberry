@@ -16,10 +16,7 @@ DEFINE_LOG_CATEGORY_STATIC(LogFMBBaseItem, All, All)
 
 AFMBBaseItem::AFMBBaseItem()
 {
-    PrimaryActorTick.bCanEverTick = true;
-
-    /*DefaultRootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("DefaultRootComponent"));
-    RootComponent = DefaultRootComponent;*/
+    PrimaryActorTick.bCanEverTick = false;
 
     ItemMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ItemMesh"));
     SetRootComponent(ItemMesh);
@@ -48,9 +45,10 @@ void AFMBBaseItem::BeginPlay()
 
     AreaCollision->OnComponentBeginOverlap.AddDynamic(this, &AFMBBaseItem::OnAreaBeginOverlap);
     AreaCollision->OnComponentEndOverlap.AddDynamic(this, &AFMBBaseItem::OnAreaEndOverlap);
+    ItemMesh->OnComponentHit.AddDynamic(this, &AFMBBaseItem::FallingHit);
+
     OnItemStateChanged.AddUObject(this, &AFMBBaseItem::SetItemState);
 
-    ItemMesh->OnComponentHit.AddDynamic(this, &AFMBBaseItem::FallingHit);
     ItemMesh->SetMassOverrideInKg(NAME_None, 50.0f);
 
     SetItemInfo();
@@ -59,50 +57,22 @@ void AFMBBaseItem::BeginPlay()
     // UE_LOG(LogFMBBaseItem, Display, TEXT("%s: CurrentItemState: %s"), *GetName(), *UEnum::GetValueAsString(CurrentItemState));
 }
 
-void AFMBBaseItem::Tick(float DeltaSeconds)
-{
-    Super::Tick(DeltaSeconds);
-
-    /*if(bIsRotateYaw)
-    {
-        UE_LOG(LogFMBBaseItem, Display, TEXT("%s, bIsRotateYaw == true, %f"), *this->GetName(), this->GetActorRotation().Yaw);
-        AddActorWorldRotation(FRotator(0.0f, RotationYaw, 0.0f));
-    }*/
-}
-
 void AFMBBaseItem::ChangeItemCount(const bool bIsIncrease)
 {
+    // Item count can be < 0.
     if (ItemData.ItemCount < 1) return;
 
     bIsIncrease ? ++ItemData.ItemCount : --ItemData.ItemCount;
 }
-
-/*void AFMBBaseItem::StartItemInterping()
-{
-    if (!Character) return;
-    BaseCharacter = Character;
-    ItemBaseLocation = GetActorLocation();
-    bIsItemInterping = true;
-    SetItemState(EItemState::EIS_EquipInProgress);
-
-    GetWorldTimerManager().SetTimer(ItemInterpingTimerHandle, this, &AWFBaseItem::FinishItemInterping, ItemZCurveTime);
-
-    /*if (BaseCharacter->GetFollowCamera())
-    {
-        const float CameraRotationYaw{BaseCharacter->GetFollowCamera()->GetComponentRotation().Yaw};
-        const float ItemRotationYaw{GetActorRotation().Yaw};
-        DefaultRotationYawOffset = ItemRotationYaw - CameraRotationYaw;
-    }#1#
-}*/
 
 void AFMBBaseItem::OnAreaBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
     int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
     if (!OtherActor) return;
 
-    const auto Character = Cast<AFMBPlayerCharacter>(OtherActor);
-    if (!Character) return;
-    const auto ItemInteractionComponent = Character->FindComponentByClass<UFMBItemInteractionComponent>();
+    const auto OtherPlayerCharacter = Cast<AFMBPlayerCharacter>(OtherActor);
+    if (!OtherPlayerCharacter) return;
+    const auto ItemInteractionComponent = OtherPlayerCharacter->FindComponentByClass<UFMBItemInteractionComponent>();
     if (!ItemInteractionComponent) return;
 
     ItemInteractionComponent->OnItemAreaOverlap.Broadcast(this, true);
@@ -113,9 +83,9 @@ void AFMBBaseItem::OnAreaEndOverlap(
 {
     if (!OtherActor) return;
 
-    const auto Character = Cast<AFMBPlayerCharacter>(OtherActor);
-    if (!Character) return;
-    const auto ItemInteractionComponent = Character->FindComponentByClass<UFMBItemInteractionComponent>();
+    const auto OtherPlayerCharacter = Cast<AFMBPlayerCharacter>(OtherActor);
+    if (!OtherPlayerCharacter) return;
+    const auto ItemInteractionComponent = OtherPlayerCharacter->FindComponentByClass<UFMBItemInteractionComponent>();
     if (!ItemInteractionComponent) return;
 
     ItemInteractionComponent->OnItemAreaOverlap.Broadcast(this, false);
@@ -130,7 +100,6 @@ void AFMBBaseItem::SetItemInfo() const
         ItemInfoWidget->SetItemName(ItemData.ItemName);
         ItemInfoWidget->SetItemImage(ItemData.ItemIcon);
     }
-    // OnItemStateChanged.Broadcast(EItemState::EIS_Pickup);
 }
 
 void AFMBBaseItem::SetItemState(const EItemState NewItemState)
@@ -142,15 +111,15 @@ void AFMBBaseItem::SetItemState(const EItemState NewItemState)
     // UE_LOG(LogFMBBaseItem, Warning, TEXT("%s: CurrentItemState: %s"), *GetName(), *UEnum::GetValueAsString(CurrentItemState));
 }
 
-void AFMBBaseItem::SetItemInfoWidgetVisibility(const AFMBPlayerCharacter* PlayerCharacter, bool bIsVisible) const
+void AFMBBaseItem::SetItemInfoWidgetVisibility(const AFMBPlayerCharacter* CurrentPlayerCharacter, bool bIsVisible) const
 {
     ItemInfoWidgetComponent->SetVisibility(bIsVisible);
-    UpdateItemInfoProperty(PlayerCharacter);
+    UpdateItemInfoProperty(CurrentPlayerCharacter);
 }
 
-void AFMBBaseItem::UpdateItemInfoProperty(const AFMBPlayerCharacter* PlayerCharacter) const
+void AFMBBaseItem::UpdateItemInfoProperty(const AFMBPlayerCharacter* CurrentPlayerCharacter) const
 {
-    if (!PlayerCharacter) return;
+    if (!CurrentPlayerCharacter) return;
     const auto ItemInfoWidget{Cast<UFMBItemInfoWidget>(ItemInfoWidgetComponent->GetWidget())};
     if (ItemInfoWidget)
     {
@@ -254,18 +223,18 @@ void AFMBBaseItem::SetItemProperties(const EItemState NewItemState) const
 
 void AFMBBaseItem::ThrowWeapon()
 {
-    const auto PlayerCharacter{GetPlayerCharacter()};
-    if (!PlayerCharacter) return;
+    const auto BaseCharacter {GetBaseCharacter()};
+    if (!BaseCharacter) return;
 
     const FRotator MeshRotation{0.0f, ItemMesh->GetComponentRotation().Yaw, 0.0f};
     ItemMesh->SetWorldRotation(MeshRotation, false, nullptr, ETeleportType::TeleportPhysics);
 
     FVector TraceStart{}, TraceEnd{};
-    if (!FMBUtils::GetTraceData(PlayerCharacter, TraceStart, TraceEnd, 80.0f)) return;
+    if (!FMBUtils::GetTraceData(BaseCharacter, TraceStart, TraceEnd, 80.0f)) return;
 
     SetActorLocation(TraceEnd);
 
-    auto ThrowingDirection{PlayerCharacter->GetActorForwardVector()};
+    auto ThrowingDirection{BaseCharacter->GetActorForwardVector()};
     ThrowingDirection *= 30000.0f;
 
     ItemMesh->AddImpulse(ThrowingDirection);
@@ -273,8 +242,8 @@ void AFMBBaseItem::ThrowWeapon()
     bIsWeaponFalling = true;
 }
 
-void AFMBBaseItem::FallingHit /*()*/(
-    UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
+void AFMBBaseItem::FallingHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse,
+    const FHitResult& Hit)
 {
     if (GetWorld())
     {
@@ -292,7 +261,7 @@ void AFMBBaseItem::StopFalling()
     WeaponFallingTimeCounter += GetWorldTimerManager().GetTimerElapsed(ThrowingTimerHandle);
 
     if (WeaponFallingTimeCounter <= MaxWeaponFallingTime && !GetVelocity().IsZero()) return;
-    
+
     bIsWeaponFalling = false;
     OnItemStateChanged.Broadcast(EItemState::EIS_PickUp);
 
@@ -303,9 +272,9 @@ void AFMBBaseItem::StopFalling()
     WeaponFallingTimeCounter = 0.0f;
 }
 
-AFMBPlayerCharacter* AFMBBaseItem::GetPlayerCharacter() const
+AFMBBaseCharacter* AFMBBaseItem::GetBaseCharacter() const
 {
-    return Cast<AFMBPlayerCharacter>(GetOwner());
+    return Cast<AFMBBaseCharacter>(GetOwner());
 }
 
 AController* AFMBBaseItem::GetController() const

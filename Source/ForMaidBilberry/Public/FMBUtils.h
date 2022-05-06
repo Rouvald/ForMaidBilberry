@@ -34,13 +34,6 @@ public:
         const auto ShootDirection = ViewRotation.Vector();
         TraceEnd = TraceStart + ShootDirection * TraceDistance;
         return true;
-        /*if (!PlayerPawn) return false;
-
-        if (!PlayerPawn->GetController()) return false;
-
-        PlayerPawn->GetController()->GetPlayerViewPoint(ViewLocation, ViewRotation);
-
-        return true;*/
     }
 
     static bool AreBothBots(const AController* Controller1, const AController* Controller2)

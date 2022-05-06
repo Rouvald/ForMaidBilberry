@@ -20,39 +20,17 @@ class FORMAIDBILBERRY_API UFMBBaseWeaponComponent : public UActorComponent
 public:
     UFMBBaseWeaponComponent();
 
-    void FastMeleeAttack();
-    void StrongMeleeAttack();
-
+    void MeleeAttack(EStaminaSpend StaminaSpendType);
     void StopDrawTrace();
 
-    // bool GetAttackAnimInProgress() const { return bIsAttackAnimInProgress;}
-    // bool GetEquipAnimInProgress() const { return bIsEquipAnimInProgress;}
-
-    bool CanAttack() const;
-
+    FORCEINLINE bool CanAttack() const { return !bIsAttackAnimInProgress; };
     FORCEINLINE bool CanEquip() const { return !bIsEquipAnimInProgress; }
-
-    // UTexture2D* GetCurrentWeaponUIImage() const;
-    // bool GetArmoryWeaponUIData(FItemData& WeaponUIData) const;
-
-    /*UFUNCTION(BlueprintCallable)
-    const TArray<AFMBBaseWeapon*>& GetWeapons() const { return Weapons.Num() ? nullptr : Weapons; }*/
-
-    // const TArray<TSubclassOf<AFMBBaseWeapon>>& GetWeaponClasses() const { return WeaponClasses; }
 
     FORCEINLINE AFMBBaseWeapon* GetCurrentWeapon() const { return CurrentWeapon; }
     FORCEINLINE FWeaponAnimationsData GetCurrentWeaponAnimationsData() const { return CurrentWeaponAnimationsData; }
-    // FORCEINLINE int32 GetCurrentWeaponIndex() const { return CurrentWeaponIndex; }
-
     FORCEINLINE const TMap<EWeaponType, FWeaponAnimationsData>& GetWeaponAnimationsData() const { return WeaponsAnimationsData; }
 
 protected:
-    // UPROPERTY(EditDefaultsOnly, Category="Shield")
-    // UStaticMeshComponent* Shield;
-
-    /*UPROPERTY(EditDefaultsOnly, Category = "Weapon")
-    TArray<TSubclassOf<AFMBBaseWeapon>> WeaponClasses;*/
-    //
     UPROPERTY()
     AFMBBaseCharacter* Character{nullptr};
 
@@ -79,18 +57,19 @@ protected:
 
     virtual void BeginPlay() override;
 
-    virtual void InitWeaponComponent();
+    void InitWeaponComponent();
 
     void PlayAnimMontage(UAnimMontage* Animation) const;
 
     virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
-    // int32 GetCurrentWeaponIndex() const {return CurrentWeaponIndex;}
-
     virtual void EquipItems();
 
     AFMBBaseWeapon* SpawnWeapon() const;
     virtual void EquipWeapon(AFMBBaseWeapon* EquippedWeapon);
+
+    virtual void DropItems();
+    virtual void DropItem(AFMBBaseItem* DroppedItem, const int8 CurrentItemIndex = 0) const;
 
     virtual void InitAnimation(const FWeaponAnimationsData& WeaponAnimationData);
 
@@ -99,6 +78,7 @@ private:
     TSubclassOf<AFMBBaseWeapon> WeaponClass;
 
     bool bIsAttackAnimInProgress{false};
+    EChooseAttack CurrentAttackType{EChooseAttack::ECA_Max};
 
     void CheckWeaponAnimationsData();
     void CheckAttackAnimNotifyState(UAnimMontage* Animation);

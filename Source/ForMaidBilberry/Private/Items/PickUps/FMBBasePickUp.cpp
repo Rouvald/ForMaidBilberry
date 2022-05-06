@@ -14,8 +14,6 @@ DEFINE_LOG_CATEGORY_STATIC(LogFMBBasePickUp, All, All)
 
 AFMBBasePickUp::AFMBBasePickUp()
 {
-    PrimaryActorTick.bCanEverTick = false;
-
     /*BoxCollision->SetRelativeLocation(FVector{0.0f, 0.0f, 12.0f});
     BoxCollision->SetBoxExtent(FVector{11.0f, 11.0f, 13.0f});*/
 
@@ -47,16 +45,13 @@ bool AFMBBasePickUp::CanUsePickUp(APawn* Pawn)
 
 void AFMBBasePickUp::PickUpWasUsed()
 {
-    const auto PLayerCharacter{GetPlayerCharacter()};
-    if (PLayerCharacter)
-    {
-        const auto WeaponComponent{PLayerCharacter->FindComponentByClass<UFMBPlayerWeaponComponent>()};
-        if (WeaponComponent)
-        {
-            WeaponComponent->PickUpWasUsed();
-            UGameplayStatics::PlaySoundAtLocation(GetWorld(), PickUpWasUsedSound, PLayerCharacter->GetActorLocation());
-        }
-    }
+    const auto BaseCharacter{GetBaseCharacter()};
+    if (!BaseCharacter) return;
+    const auto WeaponComponent{BaseCharacter->FindComponentByClass<UFMBPlayerWeaponComponent>()};
+    if (!WeaponComponent) return;
+
+    WeaponComponent->PickUpWasUsed();
+    UGameplayStatics::PlaySoundAtLocation(GetWorld(), PickUpWasUsedSound, BaseCharacter->GetActorLocation());
 }
 
 /*void AFMBBasePickUp::NotifyActorBeginOverlap(AActor* OtherActor)

@@ -40,19 +40,17 @@ void UFMBPickUpItemBoxWidget::InitPickUpItem()
     if (!PickUpIconBox) return;
     PickUpIconBox->ClearChildren();
 
-    PickUpIconWidgets.Init(nullptr, PlayerWeaponComponent->GetMaxPickUps());
+    PickUpIconWidgets.Init(nullptr, /*PlayerWeaponComponent->GetMaxPickUps()*/ 1);
 
-    for (int8 Index = 0; Index < PlayerWeaponComponent->GetMaxPickUps(); ++Index)
-    {
-        const auto PickUpIconWidget = CreateWidget<UFMBItemIconWidget>(GetWorld(), PickUpIconWidgetClass);
-        if (!PickUpIconWidget) return;
+    const auto PickUpIconWidget = CreateWidget<UFMBItemIconWidget>(GetWorld(), PickUpIconWidgetClass);
+    if (!PickUpIconWidget) return;
 
-        PickUpIconWidget->SetVisibleItemImage(false);
-        PickUpIconWidget->SetItemIconSize(EItemType::EIT_PickUp);
+    PickUpIconWidget->SetVisibleItemImage(false);
+    PickUpIconWidget->SetItemIconSize(EItemType::EIT_PickUp);
 
-        PickUpIconBox->AddChild(PickUpIconWidget);
-        PickUpIconWidgets[Index] = PickUpIconWidget;
-    }
+    PickUpIconBox->AddChild(PickUpIconWidget);
+    PickUpIconWidgets[0] = PickUpIconWidget;
+
     // UE_LOG(LogFMBWeaponItemBoxWidget, Error, TEXT("%i"), WeaponIconBox->HasAnyChildren()) ;
 }
 

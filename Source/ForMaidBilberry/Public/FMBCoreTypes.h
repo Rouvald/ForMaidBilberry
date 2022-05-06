@@ -131,12 +131,11 @@ struct FItemData
     FName ItemName{"BaseItem"};
 };
 
-DECLARE_EVENT_TwoParams(UFMBPlayerWeaponComponent, FOnItemPickedUpSignature, int8, const FItemData&);
-DECLARE_EVENT_ThreeParams(UFMBPlayerWeaponComponent, FOnItemIconVisiblitySignature, int8, const EItemType, bool bIsVisible);
-DECLARE_EVENT_ThreeParams(UFMBPlayerWeaponComponent, FOnItemSelectedSignature, int8, const EItemType, bool bIsVisible);
-DECLARE_EVENT_TwoParams(UFMBPlayerWeaponComponent, FOnItemCountChangeSignature, int8, const FItemData&);
-DECLARE_EVENT_ThreeParams(UFMBPlayerWeaponComponent, FOnItemCountVisibilitySignature, int8, const EItemType, bool bIsVisible);
-
+DECLARE_MULTICAST_DELEGATE_TwoParams(FOnItemPickedUpSignature, int8, const FItemData&);
+DECLARE_MULTICAST_DELEGATE_ThreeParams(FOnItemIconVisiblitySignature, int8, const EItemType, bool bIsVisible);
+DECLARE_MULTICAST_DELEGATE_ThreeParams(FOnItemSelectedSignature, int8, const EItemType, bool bIsVisible);
+DECLARE_MULTICAST_DELEGATE_TwoParams(FOnItemCountChangeSignature, int8, const FItemData&);
+DECLARE_MULTICAST_DELEGATE_ThreeParams(FOnItemCountVisibilitySignature, int8, const EItemType, bool bIsVisible);
 // Weapon
 
 USTRUCT(BlueprintType)

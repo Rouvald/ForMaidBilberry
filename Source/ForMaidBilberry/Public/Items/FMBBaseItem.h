@@ -30,7 +30,7 @@ public:
 
     void ChangeItemCount(const bool bIsIncrease);
 
-    void ThrowWeapon();
+    void ThrowItem();
 
     // void StartItemInterping();
 
@@ -80,7 +80,7 @@ private:
     float WeaponFallingTime{0.1f};
     float MaxWeaponFallingTime{5.0f};
     float WeaponFallingTimeCounter{0.0f};
-    bool bIsWeaponFalling{false};
+    bool bIsItemFalling{false};
 
     UFUNCTION()
     void OnAreaBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,

@@ -21,10 +21,10 @@ class FORMAIDBILBERRY_API UFMBPlayerWeaponComponent : public UFMBBaseWeaponCompo
     GENERATED_BODY()
 public:
     FOnItemPickedUpSignature OnItemPickedUp;
-    FOnItemIconVisiblitySignature OnItemIconVisibility;
+    FOnItemIconVisibilitySignature OnItemIconVisibility;
     FOnItemSelectedSignature OnItemSelected;
     FOnItemCountChangeSignature OnItemCountChange;
-    FOnItemCountVisibilitySignature OnItemCountVisible;
+    FOnItemCountVisibilitySignature OnItemCountVisibility;
 
     void NextWeapon(bool bIsWheelDown);
     void ChooseWeapon(int8 NewWeaponIndex);

@@ -115,7 +115,7 @@ void UFMBPlayerWeaponComponent::DestroyCurrentItem(AFMBBaseItem* DestroyItem, co
     if (!DestroyItem) return;
     OnItemSelected.Broadcast(CurrentItemIndex, DestroyItem->GetItemData().ItemType, false);
     OnItemIconVisibility.Broadcast(CurrentItemIndex, DestroyItem->GetItemData().ItemType, false);
-    OnItemCountVisible.Broadcast(CurrentItemIndex, DestroyItem->GetItemData().ItemType, false);
+    OnItemCountVisibility.Broadcast(CurrentItemIndex, DestroyItem->GetItemData().ItemType, false);
     DestroyItem->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
     ClearCurrentItem(DestroyItem, CurrentItemIndex);
     DestroyItem->Destroy();
@@ -187,7 +187,7 @@ void UFMBPlayerWeaponComponent::OnChangeEquipWeapon(USkeletalMeshComponent* Mesh
         if (PickUps[Index])
         {
             OnItemIconVisibility.Broadcast(Index, PickUps[Index]->GetItemData().ItemType, false);
-            OnItemCountVisible.Broadcast(Index, PickUps[Index]->GetItemData().ItemType, false);
+            OnItemCountVisiblity.Broadcast(Index, PickUps[Index]->GetItemData().ItemType, false);
             PickUps[Index]->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
             if (PickUps[Index]->Destroy())
             {
@@ -201,7 +201,7 @@ void UFMBPlayerWeaponComponent::OnChangeEquipWeapon(USkeletalMeshComponent* Mesh
 {
     OnItemSelected.Broadcast(CurrentWeaponIndex, CurrentWeapon->GetItemData().ItemType, false);
     OnItemIconVisibility.Broadcast(CurrentWeaponIndex, CurrentWeapon->GetItemData().ItemType, false);
-    OnItemCountVisible.Broadcast(CurrentWeaponIndex, CurrentWeapon->GetItemData().ItemType, false);
+    OnItemCountVisiblity.Broadcast(CurrentWeaponIndex, CurrentWeapon->GetItemData().ItemType, false);
     CurrentWeapon->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
     if (CurrentWeapon->Destroy())
     {
@@ -213,7 +213,7 @@ void UFMBPlayerWeaponComponent::DestroyCurrentPickUp()
 {
     OnItemSelected.Broadcast(CurrentPickUpIndex, CurrentPickUp->GetItemData().ItemType, false);
     OnItemIconVisibility.Broadcast(CurrentPickUpIndex, CurrentPickUp->GetItemData().ItemType, false);
-    OnItemCountVisible.Broadcast(CurrentPickUpIndex, CurrentPickUp->GetItemData().ItemType, false);
+    OnItemCountVisiblity.Broadcast(CurrentPickUpIndex, CurrentPickUp->GetItemData().ItemType, false);
     CurrentPickUp->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
     if (CurrentPickUp->Destroy())
     {
@@ -421,11 +421,11 @@ void UFMBPlayerWeaponComponent::EquippingWeapon(AFMBBaseItem* EquippedItem, cons
 
 void UFMBPlayerWeaponComponent::DropItem(AFMBBaseItem* DroppedItem, const int8 CurrentItemIndex) const
 {
+    if (!DroppedItem) return;
     Super::DropItem(DroppedItem, CurrentItemIndex);
 
-    // if(!DroppedItem) return;
     OnItemIconVisibility.Broadcast(CurrentItemIndex, DroppedItem->GetItemData().ItemType, false);
-    OnItemCountVisible.Broadcast(CurrentItemIndex, DroppedItem->GetItemData().ItemType, false);
+    OnItemCountVisibility.Broadcast(CurrentItemIndex, DroppedItem->GetItemData().ItemType, false);
     if (DroppedItem->GetItemData().ItemType == EItemType::EIT_PickUp)
     {
         OnItemSelected.Broadcast(CurrentItemIndex, DroppedItem->GetItemData().ItemType, false);

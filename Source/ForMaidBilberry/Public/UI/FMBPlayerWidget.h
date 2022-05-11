@@ -9,6 +9,8 @@
 #include "FMBPlayerWidget.generated.h"
 
 class UVerticalBox;
+class UFMBItemsBoxWidget;
+class USpacer;
 /**
  *
  */
@@ -18,40 +20,36 @@ class FORMAIDBILBERRY_API UFMBPlayerWidget : public UFMBBaseWidget
     GENERATED_BODY()
 
 public:
-    UFUNCTION(Category = "UI")
+    UFUNCTION(BlueprintCallable, Category = "UI")
     float GetHealthPercent() const;
 
-    UFUNCTION(Category = "UI")
+    UFUNCTION(BlueprintCallable, Category = "UI")
     float GetStaminaPercent() const;
 
-    /*UFUNCTION(Category = "UI")
-    UTexture2D* GetCurrentWeaponUIImage() const;*/
-
-    // UFUNCTION(BlueprintCallable, Category = "UI")
-    // bool GetArmoryWeaponUIData(FItemData& WeaponUIData) const;
-
-    UFUNCTION(Category = "UI")
+    UFUNCTION(BlueprintCallable, Category = "UI")
     ESlateVisibility IsPlayerAlive() const;
 
-    UFUNCTION(Category = "UI")
+    UFUNCTION(BlueprintCallable, Category = "UI")
     ESlateVisibility IsPlayerSpectating() const;
-
-    /*UFUNCTION(BlueprintCallable, Category = "UI")
-    bool IsFPPCamera() const;*/
-
-    /*UFUNCTION(BlueprintCallable, Category = "UI")
-    ESlateVisibility CrossHairVisibility() const;*/
-
     /*UFUNCTION(BlueprintImplementableEvent, Category = "UI")
     void OnTakeDamage();*/
 
 protected:
-    UPROPERTY(meta = (BindWidgetAnim), Transient)
-    UWidgetAnimation* BloodyScreenAnim{nullptr};
-
     virtual void NativeOnInitialized() override;
 
 private:
+    UPROPERTY(meta = (BindWidget))
+    UVerticalBox* ItemsVerticalBox{nullptr};
+
+    UPROPERTY(meta = (BindWidgetAnim), Transient)
+    UWidgetAnimation* BloodyScreenAnim{nullptr};
+
+    UPROPERTY(EditDefaultsOnly, Category = "UI")
+    TSubclassOf<UUserWidget> ItemBoxWidgetClass;
+
+    void InitItemVerticalBoxes() const;
+    UFMBItemsBoxWidget* CreateItemBoxWidget(const EItemType ItemBoxType) const;
+    USpacer* CreateSpacer(const FVector2D& SpacerSize) const;
     void OnHealthChange(float Health, float HealthDelta);
     void OnNewPawn(APawn* NewPawn);
 };

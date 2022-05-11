@@ -247,7 +247,7 @@ void UFMBBaseWeaponComponent::DropItem(AFMBBaseItem* DroppedItem, const int8 Cur
     ItemMesh->DetachFromComponent(DetachmentTransformRules);
 
     DroppedItem->OnItemStateChanged.Broadcast(EItemState::EIS_Falling);
-    DroppedItem->ThrowWeapon();
+    DroppedItem->ThrowItem();
 }
 
 bool UFMBBaseWeaponComponent::CanDoAttack(const EStaminaSpend AttackStaminaSpend) const

@@ -61,7 +61,7 @@ void UFMBStaminaComponent::SetStamina(float NewStamina)
 void UFMBStaminaComponent::DecreaseRunningStamina()
 {
     if (!GetWorld() || !PlayerCharacter) return;
-    if (!PlayerCharacter->IsRunning())
+    if (!PlayerCharacter->IsRunning() || PlayerCharacter->GetVelocity().Size() < 10.0f)
     {
         StopStaminaRunning();
         return;

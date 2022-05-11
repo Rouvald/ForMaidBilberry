@@ -1,11 +1,15 @@
 // For Maid Bilberry Game. All Rights Reserved
 
 #include "UI/FMBPlayerWidget.h"
-
+#include "UI/FMBItemsBoxWidget.h"
 #include "FMBPlayerCharacter.h"
 #include "Components/FMBHealthComponent.h"
 #include "Components/FMBStaminaComponent.h"
 #include "FMBUtils.h"
+#include "Blueprint/WidgetTree.h"
+#include "Components/Spacer.h"
+#include "Components/VerticalBox.h"
+#include "Components/VerticalBoxSlot.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogFMBPlayerHUDWidget, All, All)
 
@@ -18,6 +22,7 @@ void UFMBPlayerWidget::NativeOnInitialized()
         GetOwningPlayer()->GetOnNewPawnNotifier().AddUObject(this, &UFMBPlayerWidget::OnNewPawn);
         OnNewPawn(GetOwningPlayerPawn());
     }
+    InitItemVerticalBoxes();
 }
 
 void UFMBPlayerWidget::OnNewPawn(APawn* NewPawn)
@@ -27,6 +32,44 @@ void UFMBPlayerWidget::OnNewPawn(APawn* NewPawn)
     {
         HealthComponent->OnHealthChange.AddUObject(this, &UFMBPlayerWidget::OnHealthChange);
     }
+}
+
+void UFMBPlayerWidget::InitItemVerticalBoxes() const
+{
+    if (!ItemsVerticalBox) return;
+    ItemsVerticalBox->ClearChildren();
+
+    const auto SetWidgetHorizontalAlignment = [](UPanelSlot* PanelSlot /*, const EHorizontalAlignment HorizontalAlignment*/)
+    {
+        if (const auto VertSlot = Cast<UVerticalBoxSlot>(PanelSlot))
+        {
+            VertSlot->SetHorizontalAlignment(EHorizontalAlignment::HAlign_Right);
+        }
+    };
+    SetWidgetHorizontalAlignment(ItemsVerticalBox->AddChild(CreateItemBoxWidget(EItemType::EIT_PickUp)));
+    SetWidgetHorizontalAlignment(ItemsVerticalBox->AddChild(CreateSpacer(FVector2D{0.0f, 15.0f})));
+    SetWidgetHorizontalAlignment(ItemsVerticalBox->AddChild(CreateItemBoxWidget(EItemType::EIT_Weapon)));
+}
+
+UFMBItemsBoxWidget* UFMBPlayerWidget::CreateItemBoxWidget(const EItemType ItemBoxType) const
+{
+    const auto ItemBoxWidget{CreateWidget<UFMBItemsBoxWidget>(GetWorld(), ItemBoxWidgetClass)};
+    if (!ItemBoxWidget) return nullptr;
+
+    ItemBoxWidget->FillItemIcons(ItemBoxType);
+    ItemBoxWidget->SetWidgetItemType(ItemBoxType);
+    ItemBoxWidget->SetItemsIconSize(ItemBoxType);
+    return ItemBoxWidget;
+}
+
+USpacer* UFMBPlayerWidget::CreateSpacer(const FVector2D& SpacerSize) const
+{
+    if (!WidgetTree) return nullptr;
+    const auto SpacerWidget = WidgetTree->ConstructWidget<USpacer>(USpacer::StaticClass());
+    if (!SpacerWidget) return nullptr;
+
+    SpacerWidget->SetSize(SpacerSize);
+    return SpacerWidget;
 }
 
 void UFMBPlayerWidget::OnHealthChange(float Health, float HealthDelta)
@@ -57,26 +100,6 @@ float UFMBPlayerWidget::GetStaminaPercent() const
     return StaminaComponent->GetStaminaPercent();
 }
 
-/*UTexture2D* UFMBPlayerWidget::GetCurrentWeaponUIImage() const
-{
-    const auto WeaponComponent{FMBUtils::GetFMBPlayerComponent<UFMBBaseWeaponComponent>(GetOwningPlayerPawn())};
-    if (!WeaponComponent) return nullptr;
-
-    // WeaponUIData.WeaponName = CheckWeaponName(WeaponUIData);
-
-    return WeaponComponent->GetCurrentWeaponUIImage();
-}*/
-
-/*bool UFMBPlayerWidget::GetArmoryWeaponUIData(FItemData& WeaponUIData) const
-{
-    const auto WeaponComponent{FMBUtils::GetFMBPlayerComponent<UFMBBaseWeaponComponent>(GetOwningPlayerPawn())};
-    if (!WeaponComponent) return false;
-
-    // WeaponUIData.WeaponName = CheckWeaponName(WeaponUIData);
-
-    return WeaponComponent->GetArmoryWeaponUIData(WeaponUIData);
-}*/
-
 ESlateVisibility UFMBPlayerWidget::IsPlayerAlive() const
 {
     const auto HealthComponent{FMBUtils::GetFMBPlayerComponent<UFMBHealthComponent>(GetOwningPlayerPawn())};
@@ -88,15 +111,3 @@ ESlateVisibility UFMBPlayerWidget::IsPlayerSpectating() const
     return GetOwningPlayer() && GetOwningPlayer()->GetStateName() == NAME_Spectating ? ESlateVisibility::Visible
                                                                                      : ESlateVisibility::Collapsed;
 }
-
-/*bool UFMBPlayerWidget::IsFPPCamera() const
-{
-    const auto Character{Cast<AFMBPlayerCharacter>(GetOwningPlayerPawn())};
-    return Character && Character->GetIsFPP() /* ? ESlateVisibility::Visible : ESlateVisibility::Collapsed#1#;
-}*/
-
-/*ESlateVisibility UFMBPlayerWidget::CrossHairVisibility() const
-{
-    return (GetOwningPlayer() && GetOwningPlayer()->GetStateName() == NAME_Spectating) || IsFPPCamera() ? ESlateVisibility::Visible
-                                                                                                        : ESlateVisibility::Collapsed;
-}*/

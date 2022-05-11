@@ -221,25 +221,26 @@ void AFMBBaseItem::SetItemProperties(const EItemState NewItemState) const
     //
 }
 
-void AFMBBaseItem::ThrowWeapon()
+void AFMBBaseItem::ThrowItem()
 {
-    const auto BaseCharacter {GetBaseCharacter()};
+    const auto BaseCharacter{GetBaseCharacter()};
     if (!BaseCharacter) return;
 
     const FRotator MeshRotation{0.0f, ItemMesh->GetComponentRotation().Yaw, 0.0f};
     ItemMesh->SetWorldRotation(MeshRotation, false, nullptr, ETeleportType::TeleportPhysics);
+
+    bIsItemFalling = true;
 
     FVector TraceStart{}, TraceEnd{};
     if (!FMBUtils::GetTraceData(BaseCharacter, TraceStart, TraceEnd, 80.0f)) return;
 
     SetActorLocation(TraceEnd);
 
-    auto ThrowingDirection{BaseCharacter->GetActorForwardVector()};
+    const auto AngleBetween{FMath::Acos(FVector::DotProduct(BaseCharacter->GetActorForwardVector(), TraceEnd))};
+    auto ThrowingDirection{BaseCharacter->GetActorForwardVector().RotateAngleAxis(AngleBetween, FVector{1.0f, 0.0f, 0.0f})};
     ThrowingDirection *= 30000.0f;
 
     ItemMesh->AddImpulse(ThrowingDirection);
-
-    bIsWeaponFalling = true;
 }
 
 void AFMBBaseItem::FallingHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse,
@@ -262,7 +263,7 @@ void AFMBBaseItem::StopFalling()
 
     if (WeaponFallingTimeCounter <= MaxWeaponFallingTime && !GetVelocity().IsZero()) return;
 
-    bIsWeaponFalling = false;
+    bIsItemFalling = false;
     OnItemStateChanged.Broadcast(EItemState::EIS_PickUp);
 
     if (GetWorld())

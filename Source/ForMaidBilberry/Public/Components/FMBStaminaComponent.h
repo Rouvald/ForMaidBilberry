@@ -15,9 +15,9 @@ class FORMAIDBILBERRY_API UFMBStaminaComponent : public UActorComponent
     GENERATED_BODY()
 
 public:
-    UFMBStaminaComponent();
-
     FOnStaminaChangeSignature OnStaminaChange;
+
+    UFMBStaminaComponent();
 
     FORCEINLINE float GetStaminaPercent() const { return Stamina / MaxStamina; }
     FORCEINLINE float GetStamina() const { return Stamina; }

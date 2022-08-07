@@ -22,6 +22,6 @@ void AFMBDevDamageActor::Tick(float DeltaTime)
     Super::Tick(DeltaTime);
 
     DrawDebugSphere(GetWorld(), GetActorLocation(), Radius, 32, SphereColor);
-    UGameplayStatics::ApplyRadialDamage(GetWorld(), Damage, GetActorLocation(), Radius, //
+    UGameplayStatics::ApplyRadialDamage(GetWorld(), Damage, GetActorLocation(), Radius,  //
         nullptr, {}, this, nullptr, bDoFullDamage);
 }

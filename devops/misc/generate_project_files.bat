@@ -6,7 +6,7 @@ set versionSelector=%~3
 set projectPath=%CD%\%~4
 
 :: switch engine version
-::"%versionSelector%" -switchversionsilent "%projectPath%" "%enginePath%"
+"%versionSelector%" -switchversionsilent "%projectPath%" "%enginePath%"
 
 :: generate project files
-"%enginePath%\%UBTRelativePath%" -projectfiles - progress -project="%projectPath%"
+"%enginePath%\%UBTRelativePath%" -projectfiles -progress -project="%projectPath%"

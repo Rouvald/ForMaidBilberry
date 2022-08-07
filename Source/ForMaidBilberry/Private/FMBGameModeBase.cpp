@@ -71,21 +71,15 @@ void AFMBGameModeBase::SetStartUpDayTime()
 
     switch (GameData.DefaultDayTime)
     {
-    case EDayTime::EDT_Day:
-        CurrentDaySecondTime = WholeDayInSeconds / 2;
-        break;
-    /*case EDayTime::EDT_Morning:
-        CurrentDaySecondTime = WholeDayInSeconds / 4;
-        break;
-    case EDayTime::EDT_Evening:
-        CurrentDaySecondTime = WholeDayInSeconds * 3 / 4;
-        break;*/
-    case EDayTime::EDT_Night:
-        CurrentDaySecondTime = 0.0f;
-        break;
-    default /*case EDayTime::EDT_Max*/:
-        UE_LOG(LogFMBGameModeBase, Warning, TEXT("Incorrect Day time."));
-        break;
+        case EDayTime::EDT_Day: CurrentDaySecondTime = WholeDayInSeconds / 2; break;
+        /*case EDayTime::EDT_Morning:
+            CurrentDaySecondTime = WholeDayInSeconds / 4;
+            break;
+        case EDayTime::EDT_Evening:
+            CurrentDaySecondTime = WholeDayInSeconds * 3 / 4;
+            break;*/
+        case EDayTime::EDT_Night: CurrentDaySecondTime = 0.0f; break;
+        default /*case EDayTime::EDT_Max*/: UE_LOG(LogFMBGameModeBase, Warning, TEXT("Incorrect Day time.")); break;
     }
     SetDayTime(GameData.DefaultDayTime);
     GetWorldTimerManager().SetTimer(DayTimerHandle, this, &AFMBGameModeBase::DayTimerUpdate, DayTimeRate, true);

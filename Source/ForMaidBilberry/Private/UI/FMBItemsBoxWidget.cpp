@@ -33,18 +33,24 @@ void UFMBItemsBoxWidget::OnNewPawn(APawn* Pawn)
     }
 }
 
+void UFMBItemsBoxWidget::InitItemsBoxWidget(EItemType ItemType)
+{
+    FillItemIcons(ItemType);
+    SetItemsIconSize(ItemType);
+}
+
 void UFMBItemsBoxWidget::FillItemIcons(const EItemType NewItemType)
 {
     if (!PlayerWeaponComponent || !ItemIconBox) return;
     ItemIconBox->ClearChildren();
 
-    WidgetItemType = NewItemType;
-    WidgetItemIcons =
-        NewItemType == EItemType::EIT_Weapon ? PlayerWeaponComponent->GetMaxWeapons() : 1 /*PlayerWeaponComponent->GetMaxPickUps()*/;
+    SetWidgetItemType(NewItemType);
+    /* Set max item icons, for pickups 1 or PlayerWeaponComponent->GetMaxPickUps() */
+    WidgetItemIconsAmount = NewItemType == EItemType::EIT_Weapon ? PlayerWeaponComponent->GetMaxWeapons() : 1;
 
-    ItemIconWidgets.Init(nullptr, WidgetItemIcons);
+    ItemIconWidgets.Init(nullptr, WidgetItemIconsAmount);
 
-    for (int8 Index = 0; Index < WidgetItemIcons; ++Index)
+    for (int8 Index = 0; Index < WidgetItemIconsAmount; ++Index)
     {
         const auto WeaponIconWidget = CreateWidget<UFMBItemIconWidget>(GetWorld(), ItemIconWidgetClass);
         if (!WeaponIconWidget) continue;

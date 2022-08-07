@@ -91,14 +91,13 @@ void AFMBDayNightCycle::InterpSunIntensity(const EDayTime NewDayTime)
     float CurrentLightIntensity{0.0f};
     switch (NewDayTime)
     {
-    case EDayTime::EDT_Day:
-        CurrentLightIntensity = FMath::FInterpTo(DayLightIntensity, NightLightIntensity, GetWorld()->GetDeltaSeconds(), 15.0f);
-        break;
-    case EDayTime::EDT_Night:
-        CurrentLightIntensity = FMath::FInterpTo(NightLightIntensity, DayLightIntensity, GetWorld()->GetDeltaSeconds(), 15.0f);
-        break;
-    default:
-        break;
+        case EDayTime::EDT_Day:
+            CurrentLightIntensity = FMath::FInterpTo(DayLightIntensity, NightLightIntensity, GetWorld()->GetDeltaSeconds(), 15.0f);
+            break;
+        case EDayTime::EDT_Night:
+            CurrentLightIntensity = FMath::FInterpTo(NightLightIntensity, DayLightIntensity, GetWorld()->GetDeltaSeconds(), 15.0f);
+            break;
+        default: break;
     }
     // UE_LOG(LogFMBDayNightCycle, Display, TEXT("Intensity: %f"), CurrentLightIntensity);
     // UE_LOG(LogFMBDayNightCycle, Display, TEXT("Pitch: %f"), LightSource->GetActorRotation().Pitch);

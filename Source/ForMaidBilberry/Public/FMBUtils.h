@@ -11,7 +11,8 @@ public:
         Item->AttachToComponent(MeshComp, AttachmentRules, SocketName);
     }
 
-    template <typename T> static T* GetFMBPlayerComponent(AActor* PlayerPawn)
+    template <typename T>
+    static T* GetFMBPlayerComponent(AActor* PlayerPawn)
     {
         if (!PlayerPawn) return nullptr;
 

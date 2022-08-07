@@ -6,7 +6,8 @@
 class FMBAnimUtils
 {
 public:
-    template <typename T> static T* FindNotifyByClass(UAnimSequenceBase* Animation)
+    template <typename T>
+    static T* FindNotifyByClass(UAnimSequenceBase* Animation)
     {
         if (!Animation) return nullptr;
 

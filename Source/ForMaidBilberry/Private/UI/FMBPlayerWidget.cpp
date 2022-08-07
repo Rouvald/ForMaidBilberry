@@ -53,13 +53,12 @@ void UFMBPlayerWidget::InitItemVerticalBoxes() const
 
 UFMBItemsBoxWidget* UFMBPlayerWidget::CreateItemBoxWidget(const EItemType ItemBoxType) const
 {
-    const auto ItemBoxWidget{CreateWidget<UFMBItemsBoxWidget>(GetWorld(), ItemBoxWidgetClass)};
-    if (!ItemBoxWidget) return nullptr;
-
-    ItemBoxWidget->FillItemIcons(ItemBoxType);
-    ItemBoxWidget->SetWidgetItemType(ItemBoxType);
-    ItemBoxWidget->SetItemsIconSize(ItemBoxType);
-    return ItemBoxWidget;
+    const auto ItemsBoxWidget = CreateWidget<UFMBItemsBoxWidget>(GetWorld(), ItemBoxWidgetClass);
+    if (ItemsBoxWidget)
+    {
+        ItemsBoxWidget->InitItemsBoxWidget(ItemBoxType);
+    }
+    return ItemsBoxWidget;
 }
 
 USpacer* UFMBPlayerWidget::CreateSpacer(const FVector2D& SpacerSize) const

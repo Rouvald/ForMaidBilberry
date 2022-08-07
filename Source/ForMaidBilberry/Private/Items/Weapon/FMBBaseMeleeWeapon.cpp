@@ -106,13 +106,13 @@ void AFMBBaseMeleeWeapon::MakeHit(FHitResult& HitResult, const FVector& TraceSta
     CollisionParams.AddIgnoredActor(this);
     CollisionParams.bReturnPhysicalMaterial = true;
 
-    GetWorld()->SweepSingleByChannel(HitResult, //
-        TraceStart,                             //
-        TraceEnd,                               //
-        FQuat::Identity,                        //
-        ECollisionChannel::ECC_Visibility,      //
-        ColCapsule,                             //
-        CollisionParams                         //
+    GetWorld()->SweepSingleByChannel(HitResult,  //
+        TraceStart,                              //
+        TraceEnd,                                //
+        FQuat::Identity,                         //
+        ECollisionChannel::ECC_Visibility,       //
+        ColCapsule,                              //
+        CollisionParams                          //
     );
     // DrawDebugCylinder(GetWorld(), TraceStart, TraceEnd, TraceRadius, 12, FColor::Purple, false, 0.1f);
     // GetWorld()->LineTraceSingleByChannel(HitResult, TraceStart, TraceEnd, ECollisionChannel::ECC_Visibility, CollisionParams);
@@ -158,11 +158,11 @@ void AFMBBaseMeleeWeapon::MakeDamage(const FHitResult& HitResult)
 
 void AFMBBaseMeleeWeapon::SpawnSwordSlashSound() const
 {
-    UGameplayStatics::SpawnSoundAttached(SwordSlashSound, //
-        ItemMesh,                                         //
-        SwordTrailSocketName,                             //
-        FVector::ZeroVector,                              //
-        FRotator::ZeroRotator,                            //
-        EAttachLocation::SnapToTarget,                    //
+    UGameplayStatics::SpawnSoundAttached(SwordSlashSound,  //
+        ItemMesh,                                          //
+        SwordTrailSocketName,                              //
+        FVector::ZeroVector,                               //
+        FRotator::ZeroRotator,                             //
+        EAttachLocation::SnapToTarget,                     //
         true);
 }

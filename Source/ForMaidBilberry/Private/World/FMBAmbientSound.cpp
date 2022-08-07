@@ -40,16 +40,15 @@ void AFMBAmbientSound::SetAmbientSound(const EDayTime NewDayTime) const
     // UE_LOG(LogFMBAmbientSound, Display, TEXT("%s"), *UEnum::GetValueAsString(NewDayTime));
     switch (NewDayTime)
     {
-    case EDayTime::EDT_Day:
-        NightSound->FadeOut(FadeOutVector.X, FadeOutVector.Y);
-        DaySound->FadeIn(FadeInVector.X, FadeInVector.Y);
-        break;
-    case EDayTime::EDT_Night:
-        DaySound->FadeOut(FadeOutVector.X, FadeOutVector.Y);
-        NightSound->FadeIn(FadeInVector.X, FadeInVector.Y);
-        break;
-    default:
-        break;
+        case EDayTime::EDT_Day:
+            NightSound->FadeOut(FadeOutVector.X, FadeOutVector.Y);
+            DaySound->FadeIn(FadeInVector.X, FadeInVector.Y);
+            break;
+        case EDayTime::EDT_Night:
+            DaySound->FadeOut(FadeOutVector.X, FadeOutVector.Y);
+            NightSound->FadeIn(FadeInVector.X, FadeInVector.Y);
+            break;
+        default: break;
     }
 }
 

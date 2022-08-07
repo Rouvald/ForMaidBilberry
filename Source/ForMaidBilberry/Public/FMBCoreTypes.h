@@ -13,7 +13,7 @@ struct FWeaponAnimationsData
     GENERATED_USTRUCT_BODY()
 
     UPROPERTY(EditDefaultsOnly, Category = "Weapon", meta = (ToolTip = "2 sockets: WeaponEquipSocket_R or WeaponEquipSocket_L"))
-    FName WeaponEquipSocketName = "WeaponEquipSocket_R"; // WeaponEquipSocket_R or WeaponEquipSocket_L
+    FName WeaponEquipSocketName = "WeaponEquipSocket_R";  // WeaponEquipSocket_R or WeaponEquipSocket_L
 
     /*UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Animation")
     UAnimSequence* Jump_Start{nullptr};
@@ -65,7 +65,7 @@ enum class EItemState : uint8
     EIS_Falling,
     // UMETA(DisplayName="Falling"),
 
-    EIS_MAX // UMETA(DisplayName = "MAX")
+    EIS_MAX  // UMETA(DisplayName = "MAX")
 };
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnItemStateChangedSignature, EItemState);
@@ -265,13 +265,13 @@ struct FGameData
     bool CanBotsRespawn{false};
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game", meta = (ClampMin = "3", ClampMax = "30"))
-    int32 RespawnTime{5}; // in second
+    int32 RespawnTime{5};  // in second
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sky")
     EDayTime DefaultDayTime{EDayTime::EDT_Day};
 
     UPROPERTY(EditDefaultsOnly, Category = "Sky", meta = (ClampMin = "5", ClampMax = "60", ToolTip = "Day in minutes"))
-    float MaxDayMinuteTime{30.0f}; // in minutes
+    float MaxDayMinuteTime{30.0f};  // in minutes
 };
 
 UENUM(BlueprintType)

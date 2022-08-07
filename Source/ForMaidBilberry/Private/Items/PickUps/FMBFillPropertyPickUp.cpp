@@ -48,22 +48,21 @@ bool AFMBFillPropertyPickUp::CanUsePickUp(APawn* Pawn)
 {
     switch (PickUpType)
     {
-    case EPickUpType::EPT_HealthFlask:
-    {
-        const auto HealthComponent{Pawn->FindComponentByClass<UFMBHealthComponent>()};
-        if (!HealthComponent) return false;
+        case EPickUpType::EPT_HealthFlask:
+        {
+            const auto HealthComponent{Pawn->FindComponentByClass<UFMBHealthComponent>()};
+            if (!HealthComponent) return false;
 
-        return HealthComponent->TryToAddHealth(FillPropertyAmount);
-    }
-    case EPickUpType::EPT_StaminaFlask:
-    {
-        const auto StaminaComponent{Pawn->FindComponentByClass<UFMBStaminaComponent>()};
-        if (!StaminaComponent) return false;
+            return HealthComponent->TryToAddHealth(FillPropertyAmount);
+        }
+        case EPickUpType::EPT_StaminaFlask:
+        {
+            const auto StaminaComponent{Pawn->FindComponentByClass<UFMBStaminaComponent>()};
+            if (!StaminaComponent) return false;
 
-        return StaminaComponent->TryAddStamina(FillPropertyAmount);
-    }
-    default:
-        break;
+            return StaminaComponent->TryAddStamina(FillPropertyAmount);
+        }
+        default: break;
     }
     return false;
 }

@@ -1,6 +1,6 @@
 {
 	"FileVersion": 3,
-	"EngineAssociation": "4.26",
+	"EngineAssociation": "4.27",
 	"Category": "",
 	"Description": "",
 	"Modules": [
@@ -18,6 +18,10 @@
 	"Plugins": [
 		{
 			"Name": "Water",
+			"Enabled": true
+		},
+		{
+			"Name": "FunctionalTestingEditor",
 			"Enabled": true
 		}
 	]

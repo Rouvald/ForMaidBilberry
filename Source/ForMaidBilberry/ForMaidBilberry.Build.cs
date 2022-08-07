@@ -8,36 +8,36 @@ public class ForMaidBilberry : ModuleRules
     {
         PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
         PublicDependencyModuleNames.AddRange(new string[] {
-            "Core",             //
-            "CoreUObject",      //
-            "Engine",           //
-            "InputCore",        //
-            "Niagara",          //
-            "PhysicsCore",      //
-            "GameplayTasks",    //
-            "NavigationSystem", //
-            "SlateCore"         //
+            "Core",              //
+            "CoreUObject",       //
+            "Engine",            //
+            "InputCore",         //
+            "Niagara",           //
+            "PhysicsCore",       //
+            "GameplayTasks",     //
+            "NavigationSystem",  //
+            "SlateCore"          //
         });
         PrivateDependencyModuleNames.AddRange(new string[] {});
         PublicIncludePaths.AddRange(new string[] {
-            "ForMaidBilberry/Public/Player",                  //
-            "ForMaidBilberry/Public/Components",              //
-            "ForMaidBilberry/Public/Dev",                     //
-            "ForMaidBilberry/Public/UI",                      //
-            "ForMaidBilberry/Public/AI",                      //
-            "ForMaidBilberry/Public/AI/Tasks",                //
-            "ForMaidBilberry/Public/AI/Services",             //
-            "ForMaidBilberry/Public/Menu",                    //
-            "ForMaidBilberry/Public/Menu/UI",                 //
-            "ForMaidBilberry/Public/Sound",                   //
-            "ForMaidBilberry/Public/Sky",                     //
-            "ForMaidBilberry/Public/GameModes",               //
-            "ForMaidBilberry/Public/Environment",             //
-            "ForMaidBilberry/Public/World",                   //
-            "ForMaidBilberry/Public/Items/",                  //
-            "ForMaidBilberry/Public/Items/Weapon",            //
-            "ForMaidBilberry/Public/Items/Weapon/Components", //
-            "ForMaidBilberry/Public/Items/PickUps"            //
+            "ForMaidBilberry/Public/Player",                   //
+            "ForMaidBilberry/Public/Components",               //
+            "ForMaidBilberry/Public/Dev",                      //
+            "ForMaidBilberry/Public/UI",                       //
+            "ForMaidBilberry/Public/AI",                       //
+            "ForMaidBilberry/Public/AI/Tasks",                 //
+            "ForMaidBilberry/Public/AI/Services",              //
+            "ForMaidBilberry/Public/Menu",                     //
+            "ForMaidBilberry/Public/Menu/UI",                  //
+            "ForMaidBilberry/Public/Sound",                    //
+            "ForMaidBilberry/Public/Sky",                      //
+            "ForMaidBilberry/Public/GameModes",                //
+            "ForMaidBilberry/Public/Environment",              //
+            "ForMaidBilberry/Public/World",                    //
+            "ForMaidBilberry/Public/Items/",                   //
+            "ForMaidBilberry/Public/Items/Weapon",             //
+            "ForMaidBilberry/Public/Items/Weapon/Components",  //
+            "ForMaidBilberry/Public/Items/PickUps"             //
         });
         // Uncomment if you are using Slate UI
         // PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });

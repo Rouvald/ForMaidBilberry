@@ -73,9 +73,9 @@ void AFMBAIBaseCharacter::OnDeath()
 
 void AFMBAIBaseCharacter::UpdateWidgetsVisibility() const
 {
-    if (!GetWorld() ||                                                 //
-        !GetWorld()->GetFirstPlayerController() ||                     //
-        !GetWorld()->GetFirstPlayerController()->GetPawnOrSpectator()) //
+    if (!GetWorld() ||                                                  //
+        !GetWorld()->GetFirstPlayerController() ||                      //
+        !GetWorld()->GetFirstPlayerController()->GetPawnOrSpectator())  //
         return;
 
     const auto PlayerLocation{GetWorld()->GetFirstPlayerController()->GetPawnOrSpectator()->GetActorLocation()};

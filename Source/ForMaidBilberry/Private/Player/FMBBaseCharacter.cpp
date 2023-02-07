@@ -82,7 +82,7 @@ void AFMBBaseCharacter::OnGroundLanded(const FHitResult& HitResult)
     // UE_LOG(BaseCharacterLog, Display, TEXT("VelocityZ %f"), VelocityZ);
 
     if (VelocityZ < LandedVelocityZ.X) return;
-
+    // FMath::IsNearlyEqual()
     const auto FinalDamage = FMath::GetMappedRangeValueClamped(LandedVelocityZ, LandedDamage, VelocityZ);
     // UE_LOG(BaseCharacterLog, Display, TEXT("FinalDamage %f"), FinalDamage);
     TakeDamage(FinalDamage, FDamageEvent{}, nullptr, nullptr);

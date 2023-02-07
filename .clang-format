@@ -16,8 +16,6 @@ BraceWrapping:
   BeforeElse:      true   
   BeforeLambdaBody: true
   SplitEmptyFunction: true
-  SplitEmptyRecord : true
-  SplitEmptyNamespace : true
 ColumnLimit: '140'
 AccessModifierOffset: '-4'
 SortIncludes: false

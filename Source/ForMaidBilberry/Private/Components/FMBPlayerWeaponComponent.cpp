@@ -28,14 +28,19 @@ void UFMBPlayerWeaponComponent::BeginPlay()
     CurrentWeaponIndex = 0;
     CurrentPickUpIndex = 0;
 
-    OnItemSelected.Broadcast(0, EItemType::EIT_Weapon, true);
+    // OnItemSelected.Broadcast(0, EItemType::EIT_Weapon, true);
+    // CurrentWeaponAnimationsData = WeaponsAnimationsData.FindChecked(EWeaponType::EWT_NoWeapon);
+    ChangeWeaponAnimation(EItemType::EIT_Weapon, EWeaponType::EWT_NoWeapon);
     // TestLogs();
 }
 
 void UFMBPlayerWeaponComponent::InitAnimation(const FWeaponAnimationsData& WeaponAnimationData)
 {
     Super::InitAnimation(WeaponAnimationData);
-    if (!Character) return;
+    if (!Character)
+    {
+        return;
+    }
 
     const auto ChangeEquipWeapon = FMBAnimUtils::FindNotifyByClass<UFMBChangeEquipWeaponAnimNotify>(WeaponAnimationData.Equip);
     if (ChangeEquipWeapon)
@@ -69,23 +74,40 @@ void UFMBPlayerWeaponComponent::InitAnimation(const FWeaponAnimationsData& Weapo
 
 void UFMBPlayerWeaponComponent::DropItems()
 {
-    if (CurrentWeapon)
-    {
-        OnItemSelected.Broadcast(CurrentWeaponIndex, CurrentWeapon->GetItemData().ItemType, false);
-        CurrentWeapon = nullptr;
-    }
+    /* @note: cleaning weapons icons and dropping weapons */
+    CurrentWeapon = nullptr;
     for (int8 Index = 0; Index < MaxWeapons; ++Index)
     {
+        OnItemSelected.Broadcast(Index, EItemType::EIT_Weapon, false);
         if (Weapons[Index])
         {
             DropItem(Weapons[Index], Index);
         }
     }
-    if (CurrentPickUp)
+    /* @note: cleaning pickups icons and dropping pickups */
+    /* @note: for now it's worked only for 1 pickup */
+    /*for (int8 Index = 0; Index < MaxPickUps; ++Index)
+    {*/
+    OnItemSelected.Broadcast(CurrentPickUpIndex, EItemType::EIT_PickUp, false);
+    DropItem(CurrentPickUp, CurrentPickUpIndex);
+    CurrentPickUp = nullptr;
+    /*}*/
+}
+
+void UFMBPlayerWeaponComponent::DropItem(AFMBBaseItem* DroppedItem, const int8 CurrentItemIndex) const
+{
+    if (!DroppedItem)
     {
-        OnItemSelected.Broadcast(CurrentPickUpIndex, CurrentPickUp->GetItemData().ItemType, false);
-        DropItem(CurrentPickUp, CurrentPickUpIndex);
-        CurrentPickUp = nullptr;
+        return;
+    }
+
+    Super::DropItem(DroppedItem, CurrentItemIndex);
+
+    OnItemIconVisibility.Broadcast(CurrentItemIndex, DroppedItem->GetItemData().ItemType, false);
+    OnItemCountVisibility.Broadcast(CurrentItemIndex, DroppedItem->GetItemData().ItemType, false);
+    if (DroppedItem->GetItemData().ItemType == EItemType::EIT_PickUp)
+    {
+        OnItemSelected.Broadcast(CurrentItemIndex, DroppedItem->GetItemData().ItemType, false);
     }
 }
 
@@ -112,7 +134,10 @@ void UFMBPlayerWeaponComponent::DestroyWeapons()
 
 void UFMBPlayerWeaponComponent::DestroyCurrentItem(AFMBBaseItem* DestroyItem, const int8 CurrentItemIndex)
 {
-    if (!DestroyItem) return;
+    if (!DestroyItem)
+    {
+        return;
+    }
     OnItemSelected.Broadcast(CurrentItemIndex, DestroyItem->GetItemData().ItemType, false);
     OnItemIconVisibility.Broadcast(CurrentItemIndex, DestroyItem->GetItemData().ItemType, false);
     OnItemCountVisibility.Broadcast(CurrentItemIndex, DestroyItem->GetItemData().ItemType, false);
@@ -123,7 +148,11 @@ void UFMBPlayerWeaponComponent::DestroyCurrentItem(AFMBBaseItem* DestroyItem, co
 
 void UFMBPlayerWeaponComponent::ClearCurrentItem(const AFMBBaseItem* ClearItem, const int8 CurrentItemIndex)
 {
-    if (!ClearItem) return;
+    if (!ClearItem)
+    {
+        return;
+    }
+
     if (ClearItem->GetItemData().ItemType == EItemType::EIT_Weapon)
     {
         CurrentWeapon = nullptr;
@@ -137,13 +166,19 @@ void UFMBPlayerWeaponComponent::ClearCurrentItem(const AFMBBaseItem* ClearItem, 
 
 void UFMBPlayerWeaponComponent::OnEquipFinished(USkeletalMeshComponent* MeshComp)
 {
-    if (!Character || Character->GetMesh() != MeshComp) return;
+    if (!Character || Character->GetMesh() != MeshComp)
+    {
+        return;
+    }
     bIsEquipAnimInProgress = false;
 }
 
 void UFMBPlayerWeaponComponent::OnChangeEquipWeapon(USkeletalMeshComponent* MeshComp)
 {
-    if (!Character || Character->GetMesh() != MeshComp) return;
+    if (!Character || Character->GetMesh() != MeshComp)
+    {
+        return;
+    }
 
     if (CurrentWeaponIndex < 0 || CurrentWeaponIndex > Weapons.Num())
     {
@@ -158,11 +193,6 @@ void UFMBPlayerWeaponComponent::OnChangeEquipWeapon(USkeletalMeshComponent* Mesh
     }
     CurrentWeapon = Weapons[CurrentWeaponIndex];
     OnItemSelected.Broadcast(LastCurrentWeaponIndex, EItemType::EIT_Weapon, false);
-    const auto ChangeWeaponAnimation = [&](const EItemType ItemType, const EWeaponType WeaponType)
-    {
-        CurrentWeaponAnimationsData = WeaponsAnimationsData.FindChecked(WeaponType);
-        OnItemSelected.Broadcast(CurrentWeaponIndex, ItemType, true);
-    };
     if (CurrentWeapon)
     {
         CurrentWeapon->OnItemStateChanged.Broadcast(EItemState::EIS_Equipped);
@@ -173,6 +203,12 @@ void UFMBPlayerWeaponComponent::OnChangeEquipWeapon(USkeletalMeshComponent* Mesh
     {
         ChangeWeaponAnimation(EItemType::EIT_Weapon, EWeaponType::EWT_NoWeapon);
     }
+}
+
+void UFMBPlayerWeaponComponent::ChangeWeaponAnimation(const EItemType ItemType, const EWeaponType WeaponType)
+{
+    CurrentWeaponAnimationsData = WeaponsAnimationsData.FindChecked(WeaponType);
+    OnItemSelected.Broadcast(CurrentWeaponIndex, ItemType, true);
 }
 
 /*void UFMBPlayerWeaponComponent::DestroyPickUps()
@@ -255,7 +291,10 @@ void UFMBPlayerWeaponComponent::DestroyCurrentPickUp()
 
 void UFMBPlayerWeaponComponent::NextWeapon(bool bIsWheelDown)
 {
-    if (!CanEquip() || !CanAttack()) return;
+    if (!CanEquip() || !CanAttack())
+    {
+        return;
+    }
     LastCurrentWeaponIndex = CurrentWeaponIndex;
     int8 CurrentWeaponIndexTemp{CurrentWeaponIndex};
     bIsWheelDown ? ++CurrentWeaponIndexTemp : --CurrentWeaponIndexTemp;
@@ -273,7 +312,10 @@ void UFMBPlayerWeaponComponent::NextWeapon(bool bIsWheelDown)
 
 void UFMBPlayerWeaponComponent::ChooseWeapon(int8 NewWeaponIndex)
 {
-    if (!CanEquip() || !CanAttack() || CurrentWeaponIndex == NewWeaponIndex) return;
+    if (!CanEquip() || !CanAttack() || CurrentWeaponIndex == NewWeaponIndex)
+    {
+        return;
+    }
     if (FMath::IsWithin<int8>(NewWeaponIndex, 0, MaxWeapons))
     {
         LastCurrentWeaponIndex = CurrentWeaponIndex;
@@ -284,21 +326,25 @@ void UFMBPlayerWeaponComponent::ChooseWeapon(int8 NewWeaponIndex)
 
 void UFMBPlayerWeaponComponent::EquipNextWeapon()
 {
-    if (!Character) return;
-
     bIsEquipAnimInProgress = true;
     PlayAnimMontage(CurrentWeaponAnimationsData.Equip);
 }
 
 void UFMBPlayerWeaponComponent::ThrowWeapon()
 {
-    if (!CanEquip() || !CanAttack()) return;
+    if (!CanEquip() || !CanAttack())
+    {
+        return;
+    }
     ThrowItem(CurrentWeapon, CurrentWeaponIndex);
 }
 
 void UFMBPlayerWeaponComponent::ThrowPickUp()
 {
-    if (!CanEquip() || !CanAttack()) return;
+    if (!CanEquip() || !CanAttack())
+    {
+        return;
+    }
     ThrowItem(CurrentPickUp, CurrentPickUpIndex);
 }
 
@@ -310,13 +356,19 @@ void UFMBPlayerWeaponComponent::ThrowItem(AFMBBaseItem* ThrownItem, const int8 C
 
 void UFMBPlayerWeaponComponent::UsePickUp()
 {
-    if (!Character || !CurrentPickUp) return;
+    if (!Character || !CurrentPickUp)
+    {
+        return;
+    }
     CurrentPickUp->UsePickUp();
 }
 
 void UFMBPlayerWeaponComponent::PickUpWasUsed()
 {
-    if (!Character || !CurrentPickUp) return;
+    if (!Character || !CurrentPickUp)
+    {
+        return;
+    }
 
     CurrentPickUp->ChangeItemCount(false);
     OnItemCountChange.Broadcast(CurrentPickUpIndex, CurrentPickUp->GetItemData());
@@ -330,13 +382,19 @@ void UFMBPlayerWeaponComponent::PickUpWasUsed()
 
 void UFMBPlayerWeaponComponent::GetPickupItem(AFMBBaseItem* Item)
 {
-    if (!Item) return;
+    if (!Item)
+    {
+        return;
+    }
     SwapItem(Item);
 }
 
 void UFMBPlayerWeaponComponent::SwapItem(AFMBBaseItem* EquippedItem)
 {
-    if (!Character || !ItemInteractionComponent || !EquippedItem) return;
+    if (!Character || !ItemInteractionComponent || !EquippedItem)
+    {
+        return;
+    }
 
     const auto SwappingItem = [&](AFMBBaseItem* DroppedItem, const int8 DroppedItemIndex, const int8 NewIndex = 0)
     {
@@ -364,7 +422,13 @@ void UFMBPlayerWeaponComponent::SwapItem(AFMBBaseItem* EquippedItem)
 
 void UFMBPlayerWeaponComponent::EquipWeapon(AFMBBaseWeapon* EquippedWeapon)
 {
-    if (!Character || !EquippedWeapon) return;
+    /* @todo: in start game player don't have weapon(s) -> create logic for no weapon animation
+     *        Need avoid !EquippedWeapon checking if player don't have weapons in start game
+     */
+    if (!Character || !EquippedWeapon)
+    {
+        return;
+    }
 
     EquippedWeapon->SetOwner(Character);
     if (CurrentWeapon)
@@ -391,7 +455,10 @@ void UFMBPlayerWeaponComponent::EquipWeapon(AFMBBaseWeapon* EquippedWeapon)
 
 void UFMBPlayerWeaponComponent::EquipPickUp(AFMBBasePickUp* EquippedPickUp)
 {
-    if (!EquippedPickUp || !Character) return;
+    if (!EquippedPickUp || !Character)
+    {
+        return;
+    }
 
     EquippedPickUp->SetOwner(Character);
     if (CurrentPickUp && EquippedPickUp->GetPickUpType() == CurrentPickUp->GetPickUpType())
@@ -418,19 +485,6 @@ void UFMBPlayerWeaponComponent::EquippingWeapon(AFMBBaseItem* EquippedItem, cons
     EquippedItem->OnItemStateChanged.Broadcast(NewItemState);
     OnItemPickedUp.Broadcast(NewIndex, NewItemData);
 };
-
-void UFMBPlayerWeaponComponent::DropItem(AFMBBaseItem* DroppedItem, const int8 CurrentItemIndex) const
-{
-    if (!DroppedItem) return;
-    Super::DropItem(DroppedItem, CurrentItemIndex);
-
-    OnItemIconVisibility.Broadcast(CurrentItemIndex, DroppedItem->GetItemData().ItemType, false);
-    OnItemCountVisibility.Broadcast(CurrentItemIndex, DroppedItem->GetItemData().ItemType, false);
-    if (DroppedItem->GetItemData().ItemType == EItemType::EIT_PickUp)
-    {
-        OnItemSelected.Broadcast(CurrentItemIndex, DroppedItem->GetItemData().ItemType, false);
-    }
-}
 
 /*int8 UFMBPlayerWeaponComponent::FindSimilarPickUpType(const AFMBBasePickUp* EquippedPickUp) const
 {

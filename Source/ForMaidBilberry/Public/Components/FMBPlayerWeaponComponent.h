@@ -84,7 +84,7 @@ private:
     /* Max Weapons that player can hold. */
     const int8 MaxWeapons{4};
     /* Max PickUps that player can hold. */
-    // const int8 MaxPickUps{1};
+    const int8 MaxPickUps{1};
 
     int8 CurrentWeaponIndex{0};
     int8 LastCurrentWeaponIndex{0};
@@ -121,6 +121,8 @@ private:
 
     void OnChangeEquipWeapon(USkeletalMeshComponent* MeshComp);
     void OnEquipFinished(USkeletalMeshComponent* MeshComp);
+
+    void ChangeWeaponAnimation(const EItemType ItemType, const EWeaponType WeaponType);
 
     AFMBPlayerCharacter* GetPlayerCharacter() const;
 

@@ -127,6 +127,7 @@ void AFMBPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
     PlayerInputComponent->BindAction<FOnWeaponChangeSignature>(
         "NextWeaponWheelUp", IE_Pressed, WeaponComponent, &UFMBPlayerWeaponComponent::NextWeapon, false);
 
+    // @note: possible refactoring, if weapon;s number wil bee better or less than 4
     DECLARE_DELEGATE_OneParam(FOnWeaponChangeIndexSignature, int8);
     PlayerInputComponent->BindAction<FOnWeaponChangeIndexSignature>(
         "ChooseWeapon1", IE_Pressed, WeaponComponent, &UFMBPlayerWeaponComponent::ChooseWeapon, static_cast<int8>(0));

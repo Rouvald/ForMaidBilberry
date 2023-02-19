@@ -57,7 +57,7 @@ protected:
 
     virtual void BeginPlay() override;
 
-    void InitWeaponComponent();
+    // void InitWeaponComponent();
 
     void PlayAnimMontage(UAnimMontage* Animation) const;
 

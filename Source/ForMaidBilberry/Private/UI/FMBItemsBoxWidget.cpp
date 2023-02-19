@@ -31,6 +31,11 @@ void UFMBItemsBoxWidget::OnNewPawn(APawn* Pawn)
         PlayerWeaponComponent->OnItemCountVisibility.AddUObject(this, &UFMBItemsBoxWidget::OnItemCountVisibility);
         PlayerWeaponComponent->OnItemIconVisibility.AddUObject(this, &UFMBItemsBoxWidget::OnItemIconVisibility);
     }
+    /*@todo: not good decision (after revival first weapon frame turn off)
+     *         main problem that weapon component created and pass early than UI (ItemBoxWidget) ->
+     *         -> called OnItemSelected.Broadcast in WeaponComponent don't worked properly ("broadcast in sky")
+     */
+    OnItemSelected(0, EItemType::EIT_Weapon, true);
 }
 
 void UFMBItemsBoxWidget::InitItemsBoxWidget(EItemType ItemType)
@@ -41,7 +46,10 @@ void UFMBItemsBoxWidget::InitItemsBoxWidget(EItemType ItemType)
 
 void UFMBItemsBoxWidget::FillItemIcons(const EItemType NewItemType)
 {
-    if (!PlayerWeaponComponent || !ItemIconBox) return;
+    if (!PlayerWeaponComponent || !ItemIconBox)
+    {
+        return;
+    }
     ItemIconBox->ClearChildren();
 
     SetWidgetItemType(NewItemType);
@@ -53,7 +61,10 @@ void UFMBItemsBoxWidget::FillItemIcons(const EItemType NewItemType)
     for (int8 Index = 0; Index < WidgetItemIconsAmount; ++Index)
     {
         const auto WeaponIconWidget = CreateWidget<UFMBItemIconWidget>(GetWorld(), ItemIconWidgetClass);
-        if (!WeaponIconWidget) continue;
+        if (!WeaponIconWidget)
+        {
+            continue;
+        }
 
         WeaponIconWidget->SetVisibleItemImage(false);
 
@@ -79,7 +90,10 @@ void UFMBItemsBoxWidget::SetItemsIconSize(const EItemType ItemType)
 
 void UFMBItemsBoxWidget::OnItemPickedUp(int8 ItemIndex, const FItemData& Data)
 {
-    if (Data.ItemType != WidgetItemType) return;
+    if (Data.ItemType != WidgetItemType)
+    {
+        return;
+    }
 
     if (ItemIconWidgets[ItemIndex] && ItemIconWidgets.Num() > ItemIndex)
     {
@@ -90,7 +104,10 @@ void UFMBItemsBoxWidget::OnItemPickedUp(int8 ItemIndex, const FItemData& Data)
 
 void UFMBItemsBoxWidget::OnItemSelected(int8 ItemIndex, const EItemType ItemType, bool bIsVisible)
 {
-    if (ItemType != WidgetItemType) return;
+    if (ItemType != WidgetItemType)
+    {
+        return;
+    }
 
     if (ItemIconWidgets[ItemIndex] && ItemIconWidgets.Num() > ItemIndex)
     {
@@ -100,7 +117,10 @@ void UFMBItemsBoxWidget::OnItemSelected(int8 ItemIndex, const EItemType ItemType
 
 void UFMBItemsBoxWidget::OnItemCountChange(int8 ItemIndex, const FItemData& Data)
 {
-    if (Data.ItemType != WidgetItemType) return;
+    if (Data.ItemType != WidgetItemType)
+    {
+        return;
+    }
 
     if (ItemIconWidgets[ItemIndex] && ItemIconWidgets.Num() > ItemIndex)
     {
@@ -110,7 +130,10 @@ void UFMBItemsBoxWidget::OnItemCountChange(int8 ItemIndex, const FItemData& Data
 
 void UFMBItemsBoxWidget::OnItemCountVisibility(int8 ItemIndex, const EItemType ItemType, bool bIsVisible)
 {
-    if (ItemType != WidgetItemType) return;
+    if (ItemType != WidgetItemType)
+    {
+        return;
+    }
 
     if (ItemIconWidgets[ItemIndex] && ItemIconWidgets.Num() > ItemIndex)
     {
@@ -120,7 +143,10 @@ void UFMBItemsBoxWidget::OnItemCountVisibility(int8 ItemIndex, const EItemType I
 
 void UFMBItemsBoxWidget::OnItemIconVisibility(int8 ItemIndex, const EItemType ItemType, bool bIsVisible)
 {
-    if (ItemType != WidgetItemType) return;
+    if (ItemType != WidgetItemType)
+    {
+        return;
+    }
 
     if (ItemIconWidgets[ItemIndex] && ItemIconWidgets.Num() > ItemIndex)
     {

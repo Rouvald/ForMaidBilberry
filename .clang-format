@@ -19,12 +19,12 @@ BraceWrapping:
 ColumnLimit: '140'
 AccessModifierOffset: '-4'
 SortIncludes: false
+AllowShortIfStatementsOnASingleLine: true
 AllowShortBlocksOnASingleLine: false
 AlignAfterOpenBracket: DontAlign
 AllowShortFunctionsOnASingleLine: Inline
 PointerAlignment: Left
 SpacesBeforeTrailingComments: 2
-AllowShortIfStatementsOnASingleLine: true
 AllowShortCaseLabelsOnASingleLine: true
 IndentCaseLabels: true
 AlwaysBreakTemplateDeclarations: Yes

@@ -28,17 +28,18 @@ void UFMBBaseWeaponComponent::BeginPlay()
         MovementComponent = Character->FindComponentByClass<UFMBCharacterMovementComponent>();
         StaminaComponent = Character->FindComponentByClass<UFMBStaminaComponent>();
         CheckWeaponAnimationsData();
+        EquipItems();
     }
-    InitWeaponComponent();
+    // InitWeaponComponent();
 }
 
-void UFMBBaseWeaponComponent::InitWeaponComponent()
+/*void UFMBBaseWeaponComponent::InitWeaponComponent()
 {
     if (Character)
     {
         EquipItems();
     }
-}
+}*/
 
 void UFMBBaseWeaponComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
